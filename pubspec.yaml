@@ -1,0 +1,22 @@
+name: painel_tab
+description: Painel de mesa e porta-retratos editavel para tablet Android.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  wakelock_plus: ^1.2.8
+  video_player: ^2.9.2
+  image_picker: ^1.1.2
+  path_provider: ^2.1.4
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
