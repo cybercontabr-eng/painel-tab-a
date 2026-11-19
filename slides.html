@@ -752,6 +752,10 @@
   [data-scene=cifra]{background:radial-gradient(120% 100% at 50% 30%,#1e0f30 0%,#05060f 100%);--green:#ff9fc4}
   [data-scene=empilha] .cam,[data-scene=cofre] .cam,[data-scene=cifra] .cam{animation:none!important;transform:none!important}
   [data-scene=empilha],[data-scene=cofre],[data-scene=cifra]{touch-action:none}
+  [data-scene=quizpp]{background:radial-gradient(120% 100% at 50% 20%,#2a1830 0%,#120a1a 55%,#05030a 100%);--green:#ffb3cf}
+  [data-scene=quiz] .cam,[data-scene=quizpp] .cam{animation:none!important;transform:none!important}
+  [data-scene=quiz],[data-scene=quizpp]{touch-action:none}
+  [data-scene=quiz] .tap-hint{display:none}
 
   /* ---- homenagem Dr. Carlos ---- */
   [data-scene=carlos]{background:radial-gradient(120% 95% at 50% 45%,#0f2f3a 0%,#08192a 58%,#02070d 100%)}
@@ -1398,6 +1402,9 @@
       <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Velha</span><em>natalina</em></h1></div>
       <div class="tap-hint">👆 toque numa casa para jogar</div>
     </div></section>
+    <section class="scene" data-scene="quizpp"><div class="cam">
+      <div class="game-top copy"><div class="label">● Desafio jurídico</div><h1 class="title"><span>Quiz de</span><em>processo penal</em></h1></div>
+    </div></section>
     <section class="scene" data-scene="quiz"><div class="cam">
       <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Quiz de</span><em>segurança</em></h1></div>
       <div class="tap-hint">👆 toque na resposta certa</div>
@@ -1520,10 +1527,10 @@ const CONFIG = {
   duracaoEspecial: {              // cenas que precisam de mais tempo (segundos)
     terminal: 36, decripta: 32, chuva: 24, hash: 20, circuito: 22, atena: 22, sged: 24, tor: 20, consulta: 24,
     inst: 20, medi: 20, ops: 22, coordenadora: 16, contagem: 24, retro: 22, phishing: 22, senha: 24, golpe: 22,
-    particulas: 24, lareira2: 20, soc: 22, virada: 24, floco: 20, estrela: 20, desejos: 22, warp: 18, consulta2: 24, teclado: 22, aurora: 20, fabricio: 16, terminal2: 24, consulta3: 24, presentes: 15, globoneve: 15, fogos: 15, treno: 20, bolas: 15, boneco: 15, pisca: 15, raspa: 15, caca: 15, pegue: 15, memoria: 15, rena: 15, velha: 15, quiz: 15, sinos: 15, palavras: 15, puzzle: 15, difs: 15, labirinto: 15, corrida: 15, carlos: 16, memlogos: 15, memequipe: 15, empilha: 15, cofre: 15, cifra: 15
+    particulas: 24, lareira2: 20, soc: 22, virada: 24, floco: 20, estrela: 20, desejos: 22, warp: 18, consulta2: 24, teclado: 22, aurora: 20, fabricio: 16, terminal2: 24, consulta3: 24, presentes: 15, globoneve: 15, fogos: 15, treno: 20, bolas: 15, boneco: 15, pisca: 15, raspa: 15, caca: 15, pegue: 15, memoria: 15, rena: 15, velha: 15, quiz: 15, sinos: 15, palavras: 15, puzzle: 15, difs: 15, labirinto: 15, corrida: 15, carlos: 16, memlogos: 15, memequipe: 15, empilha: 15, cofre: 15, cifra: 15, quizpp: 15
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'puzzle', 'hash', 'cofre', 'logoholo', 'bolas', 'phishing', 'pegue', 'aurora', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'coordenadora', 'rena', 'logocodigo', 'fabricio', 'carlos', 'corrida', 'globoneve', 'particulas', 'lareira2', 'boneco', 'teclado', 'cifra', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'raspa', 'soc', 'labirinto', 'fogos', 'chuva', 'sinos', 'espiral', 'estrela', 'virada'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'puzzle', 'hash', 'cofre', 'logoholo', 'bolas', 'phishing', 'pegue', 'aurora', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'coordenadora', 'rena', 'logocodigo', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'lareira2', 'boneco', 'teclado', 'cifra', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'raspa', 'soc', 'labirinto', 'fogos', 'chuva', 'sinos', 'espiral', 'estrela', 'virada'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   abertura: false,               // abertura completa em 3D no início de cada volta
   fps3d: 30,
@@ -4551,41 +4558,88 @@ function H_medalha() {
     }
   };
 
-  /* ---------- quiz natalino de segurança ---------- */
-  const QZ = [
-    ['Chegou no WhatsApp: “Ganhe um panetone grátis, clique no link”. O que fazer?', ['Clicar rápido antes que acabe', 'Desconfiar e não clicar', 'Repassar para todos os contatos'], 1],
-    ['Pediram o código que chegou por SMS para “confirmar sua compra de Natal”.', ['Passar o código', 'Nunca passar o código', 'Passar só se a pessoa for educada'], 1],
-    ['Qual destas senhas é a mais forte?', ['natal2026', '123456', 'lareira azul come panetone 27'], 2],
-    ['Loja com preço 70% abaixo do normal, que só aceita Pix.', ['Ótima oportunidade', 'Sinal de golpe: pesquise antes', 'Pagar e torcer'], 1],
-    ['Um familiar diz que trocou de número e pede um Pix urgente.', ['Fazer o Pix na hora', 'Ligar no número antigo e confirmar', 'Mandar só a metade'], 1],
-    ['O que mais protege sua conta além da senha?', ['Verificação em duas etapas', 'Senha anotada no celular', 'Usar a mesma senha em tudo'], 0]
+  /* ---------- quizzes (segurança e processo penal) ---------- */
+  const QZ_SEG = [
+    ['Um “funcionário do banco” liga e pede para você instalar um app de suporte (tipo AnyDesk) para “proteger a conta”. O maior risco é:', ['Gastar dados móveis', 'Ele passar a controlar seu celular remotamente', 'O app deixar o celular lento', 'Nenhum, se a ligação veio do 0800 do banco'], 1, 'Apps de acesso remoto dão controle total do aparelho. Banco não pede isso, e o número na tela pode ser falsificado.'],
+    ['Qual destes endereços pertence de fato ao domínio do Banco do Brasil (bb.com.br)?', ['bb.com.br.seguranca-app.net', 'seguranca.bb.com.br', 'bb-com-br.seguranca.com', 'www.bbcom.br/seguranca'], 1, 'O que vale é o final do endereço, antes da primeira barra: em seguranca.bb.com.br o domínio é bb.com.br.'],
+    ['O cadeado (https) na barra do navegador garante que:', ['O site é oficial e confiável', 'A conexão é criptografada, não que o site seja legítimo', 'O site foi verificado pela polícia', 'Não existe vírus na página'], 1, 'Sites de golpe também usam https. O cadeado só protege o caminho dos dados, não diz quem está do outro lado.'],
+    ['Golpistas transferem seu número para outro chip (SIM swap). Qual verificação em duas etapas resiste melhor a isso?', ['Código por SMS', 'Código por ligação de voz', 'App autenticador ou chave de acesso (passkey)', 'Pergunta secreta'], 2, 'Com o número sequestrado, SMS e ligações vão para o golpista. Autenticador e passkey ficam presos ao seu aparelho.'],
+    ['Você recebe várias notificações seguidas pedindo para aprovar um login que você não fez. O certo é:', ['Aprovar uma para parar as notificações', 'Negar todas e trocar a senha imediatamente', 'Ignorar, é falha do app', 'Desinstalar o app autenticador'], 1, 'É ataque de “fadiga de MFA”: o golpista já tem sua senha e aposta que você vai aprovar por cansaço.'],
+    ['Um contato manda no WhatsApp o arquivo “comprovante_pix.apk”. O que é isso?', ['Um PDF compactado', 'Um aplicativo Android que pode ser malware', 'Uma foto do comprovante', 'Um link do banco'], 1, 'APK é instalador de app. Comprovante de verdade é imagem ou PDF; .apk recebido por mensagem é sinal clássico de malware.'],
+    ['Um áudio com a voz idêntica à do seu filho pede um Pix urgente. A melhor defesa combinada antes é:', ['Pedir uma foto dele', 'Ter uma palavra-código da família e ligar de volta no número conhecido', 'Fazer um Pix de valor menor', 'Pedir que ele mande outro áudio'], 1, 'Vozes podem ser clonadas por IA com poucos segundos de gravação. Palavra-código e retorno pelo canal conhecido quebram o golpe.'],
+    ['Na hora de pagar um Pix por QR code de uma cobrança, o que conferir antes de confirmar?', ['Só o valor', 'Nome e instituição de quem vai receber', 'A cor do QR code', 'Se o QR code está centralizado'], 1, 'QR codes podem ser trocados ou adulterados. O app mostra o recebedor antes da confirmação; se o nome não bate, pare.'],
+    ['Um “advogado” do seu processo pede pagamento de custas por Pix para liberar um valor que você vai receber. O certo é:', ['Pagar, pois ele sabe o número do processo', 'Confirmar direto com o advogado ou o tribunal por canal oficial', 'Pagar metade agora', 'Mandar seus dados para agilizar'], 1, 'No golpe do falso advogado, os dados do processo são públicos. Valores liberados pela Justiça não exigem Pix prévio.'],
+    ['Uma senha sua apareceu em um vazamento. Além de trocá-la, o mais importante é:', ['Trocar também em todo site onde usava a mesma senha e ativar duas etapas', 'Esperar o site avisar', 'Só adicionar um número no final', 'Apagar seus e-mails antigos'], 0, 'Golpistas testam senhas vazadas em vários serviços (credential stuffing). Senha única por site e duas etapas cortam isso.'],
+    ['O que torna uma passkey (chave de acesso) resistente a phishing?', ['Ela é uma senha bem longa', 'Ela só funciona no site verdadeiro para o qual foi criada', 'Ela muda todo dia por SMS', 'Ela fica salva num e-mail'], 1, 'A passkey usa criptografia de chave pública ligada ao domínio. Num site falso ela simplesmente não funciona.'],
+    ['Wi-Fi gratuito do shopping abre um aviso: “instale esta atualização de segurança para navegar”. Você:', ['Instala para ter internet', 'Fecha e não instala; atualização vem da loja oficial ou do sistema', 'Instala e depois desinstala', 'Desliga o antivírus para instalar'], 1, 'Redes abertas podem injetar páginas falsas. Atualização legítima nunca é exigida por um portal de Wi-Fi.']
   ];
-  const quiz = {
-    id: 'quiz', name: 'jogo · quiz de segurança', el: $('[data-scene=quiz]'),
-    setup() { this.sp = []; this.qi = this.qi || 0; this.hit = this.hit || 0; this.tot = this.tot || 0; },
-    enter() { this.t0 = null; this.ans = -1; this.at = 0; this.shown = 0; this.lastTap = -99; },
-    geo(i) { const w = Math.min(W * .74, H * 1.3), h = Math.min(H * .1, 70), x = (W - w) / 2, y = H * .52 + i * (h + H * .025); return { x, y, w, h }; },
-    answer(i) { if (this.ans >= 0) return; this.ans = i; this.at = this.T; this.tot++; const ok = i === QZ[this.qi][2]; if (ok) this.hit++; const g = this.geo(i); burst(this.sp, g.x + g.w / 2, g.y + g.h / 2, ok ? 40 : 14, ok ? ['#3dffa8', '#fff', '#ffd36b'] : ['#ff4d6d', '#ff8f9a'], ok ? 320 : 160); },
-    tap(x, y) { this.lastTap = this.T || 0; for (let i = 0; i < 3; i++) { const g = this.geo(i); if (x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h) this.answer(i); } },
+  const QZ_PP = [
+    ['Segundo o STF (ADIs 6298, 6299, 6300 e 6305), a competência do juiz das garantias termina com:', ['O recebimento da denúncia', 'O oferecimento da denúncia ou queixa', 'A citação do réu', 'A sentença'], 1, 'O STF deu interpretação conforme ao art. 3º-B/3º-C: oferecida a denúncia, o juiz da instrução decide o recebimento e as questões pendentes.'],
+    ['Após a Lei 15.358/2026 (Lei Antifacção), a audiência de custódia, pelo texto do art. 310 do CPP, ocorre:', ['Em até 48 horas, sempre presencial', 'Em até 24 horas, por videoconferência como regra', 'Em até 72 horas, a critério do juiz', 'Só se a defesa pedir'], 1, 'O art. 310 manteve as 24 horas e passou a prever videoconferência em tempo real; o ato presencial ficou para casos excepcionais. Há ações no STF contestando o ponto.'],
+    ['Desde o Pacote Anticrime, o juiz pode decretar prisão preventiva de ofício?', ['Sim, em qualquer fase', 'Sim, mas só na ação penal', 'Não: depende de requerimento do MP, querelante, assistente ou representação policial', 'Só no Tribunal do Júri'], 2, 'O art. 311 do CPP (Lei 13.964/2019) retirou a decretação de ofício, em linha com o sistema acusatório.'],
+    ['De quanto em quanto tempo o órgão que decretou a preventiva deve revisar a necessidade de mantê-la?', ['30 dias', '60 dias', '90 dias', '180 dias'], 2, 'Art. 316, parágrafo único. Para o STF, passar do prazo não revoga a prisão automaticamente: o juiz deve ser instado a reavaliar.'],
+    ['Requisitos objetivos do acordo de não persecução penal (art. 28-A):', ['Pena máxima de até 2 anos e réu primário', 'Infração sem violência ou grave ameaça, pena mínima inferior a 4 anos e confissão formal e circunstanciada', 'Pena mínima de até 1 ano e reparação do dano', 'Qualquer crime, se a vítima concordar'], 1, 'Além disso, não cabe, por exemplo, quando é cabível transação penal ou em crimes de violência doméstica ou contra a mulher por razões do sexo feminino.'],
+    ['No HC 185.913 (2024), o STF decidiu que o ANPP retroage para alcançar:', ['Só investigações sem denúncia recebida', 'Processos em curso sem trânsito em julgado quando a Lei 13.964/2019 entrou em vigor, mesmo sem confissão prévia', 'Só fatos posteriores a 2020', 'Também condenações já transitadas em julgado'], 1, 'O MP deve se manifestar motivadamente sobre o acordo na primeira oportunidade em que falar nos autos.'],
+    ['Tema 1068 do STF (2024): condenação pelo Tribunal do Júri pode ser executada imediatamente?', ['Só se a pena for de 15 anos ou mais', 'Sim, independentemente do total da pena, pela soberania dos veredictos', 'Só depois do trânsito em julgado', 'Só depois de confirmada pelo tribunal'], 1, 'O STF afastou o limite de 15 anos do art. 492, I, “e”, do CPP, incluído pelo Pacote Anticrime.'],
+    ['Pela Lei 15.272/2025, a prisão preventiva pode se basear apenas na gravidade abstrata do crime?', ['Sim, nos crimes hediondos', 'Não: periculosidade e risco têm de ser concretamente demonstrados', 'Sim, se houver clamor público', 'Sim, se o réu for reincidente'], 1, 'Art. 312, § 4º. O § 3º lista critérios de periculosidade, como modus operandi, organização criminosa e risco de reiteração.'],
+    ['Preso em flagrante por crime com violência ou grave ameaça: pela Lei 15.272/2025, o que MP ou autoridade policial devem requerer ao juiz?', ['Interceptação telefônica', 'Coleta de material biológico para perfil genético', 'Quebra de sigilo bancário', 'Prisão temporária automática'], 1, 'Art. 310-A: a coleta ocorre de preferência na audiência de custódia ou em até 10 dias, respeitando a cadeia de custódia.'],
+    ['Réu preso: qual o prazo para o Ministério Público oferecer a denúncia (regra do CPP)?', ['5 dias', '10 dias', '15 dias', '30 dias'], 0, 'Art. 46: 5 dias com o réu preso e 15 dias com o réu solto, contados do recebimento do inquérito.'],
+    ['Quando começa a cadeia de custódia (art. 158-A do CPP)?', ['Na chegada do vestígio ao laboratório', 'Com a preservação do local de crime ou com o procedimento em que se detecta o vestígio', 'Com a juntada do laudo', 'Com o recebimento da denúncia'], 1, 'Art. 158-A, § 1º. A quebra da cadeia de custódia pode comprometer o valor da prova.'],
+    ['Segundo o STF, quando o MP decide arquivar o inquérito:', ['Arquiva sozinho, sem comunicar ninguém', 'Submete ao juiz e comunica vítima, investigado e polícia; o juiz pode remeter à revisão ministerial em caso de patente ilegalidade', 'Precisa da concordância da vítima', 'Depende de homologação do tribunal de 2º grau'], 1, 'Interpretação conforme do art. 28 do CPP nas ADIs do juiz das garantias. A vítima também pode provocar a revisão.'],
+    ['Na audiência de instrução, o que o art. 400-A do CPP (Lei 14.245/2021) proíbe?', ['Perguntas da defesa à vítima', 'Manifestações sobre circunstâncias alheias aos fatos ou que ofendam a dignidade da vítima', 'A presença do réu', 'Gravação audiovisual'], 1, 'A regra protege vítimas e testemunhas, sobretudo em crimes contra a dignidade sexual, e responsabiliza quem descumpre.'],
+    ['A revisão criminal pode ser proposta:', ['Só em 2 anos após o trânsito em julgado', 'A qualquer tempo, antes ou depois de extinta a pena, só em favor do réu', 'Pelo MP para agravar a pena', 'Só enquanto o réu estiver preso'], 1, 'Arts. 621 e 622 do CPP: não há revisão pro societate.']
+  ];
+  const mkQuiz = (id, name, QZ, recLbl) => ({
+    id, name, el: $(`[data-scene=${id}]`), N: 8,
+    setup() { this.sp = []; this.newRound(); },
+    newRound() {
+      this.qs = QZ.map((q, i) => i).sort(() => Math.random() - .5).slice(0, this.N).map(i => { const q = QZ[i], ord = q[1].map((_, k) => k).sort(() => Math.random() - .5); return { q: q[0], op: ord.map(k => q[1][k]), ok: ord.indexOf(q[2]), ex: q[3] }; });
+      this.qi = 0; this.hit = 0; this.ans = -1; this.at = 0; this.over = 0;
+    },
+    enter() { this.t0 = null; if (!NE.on) this.newRound(); },
+    leave() { if (NE.on && NE.scene === id) NE.finish(); },
+    geo(i) { const w = Math.min(W * .8, H * 1.45), h = Math.min(H * .074, 60), x = (W - w) / 2, y = H * .475 + i * (h + H * .014); return { x, y, w, h }; },
+    next() { if (this.qi + 1 >= this.qs.length) { this.over = this.T; burst(this.sp, W / 2, H * .55, this.hit * 15 + 10, CP_COLS, 380); if (REC.qualifies(id, this.hit)) NE.start(id, id, this.hit, false, `${this.hit} de ${this.N}`); } else { this.qi++; this.ans = -1; } },
+    answer(i) { if (this.ans >= 0) return; const q = this.qs[this.qi]; this.ans = i; this.at = this.T; const ok = i === q.ok; if (ok) this.hit++; const g = this.geo(i); burst(this.sp, g.x + g.w / 2, g.y + g.h / 2, ok ? 40 : 14, ok ? ['#3dffa8', '#fff', '#ffd36b'] : ['#ff4d6d', '#ff8f9a'], ok ? 320 : 160); },
+    tap(x, y) {
+      if (NE.tap(x, y)) return;
+      if (this.over) { if (this.T - this.over > 1.5) this.newRound(); return; }
+      if (this.ans >= 0) { if (this.T - this.at > .8) this.next(); return; }
+      for (let i = 0; i < 4; i++) { const g = this.geo(i); if (x > g.x && x < g.x + g.w && y > g.y && y < g.y + g.h) this.answer(i); }
+    },
     frame(t, dt) {
-      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50), q = QZ[this.qi];
-      if (!this.shown) this.shown = T;
-      if (this.ans >= 0 && T - this.at > 3) { this.qi = (this.qi + 1) % QZ.length; this.ans = -1; this.shown = T; this.autoA = 0; }
-      const lines = wrapTxt(q[0], Math.min(W * .8, H * 1.4), u * 1.55, 400, SERIF);
-      lines.forEach((l, i) => T2(l, W / 2, H * .33 + i * u * 2.1, u * 1.55, '#fff3d6', 400, 'center', SERIF));
-      q[1].forEach((op, i) => {
-        const g = this.geo(i), right = i === q[2], picked = i === this.ans;
-        let bg = 'rgba(255,255,255,.07)', bd = 'rgba(255,255,255,.22)';
-        if (this.ans >= 0 && right) { bg = 'rgba(61,255,168,.18)'; bd = '#3dffa8'; } else if (picked) { bg = 'rgba(255,77,109,.18)'; bd = '#ff4d6d'; }
-        ctx.fillStyle = bg; rr2(g.x, g.y, g.w, g.h, g.h * .3); ctx.fill(); ctx.strokeStyle = bd; ctx.lineWidth = 2; ctx.stroke();
-        T2('ABC'[i], g.x + g.h * .5, g.y + g.h / 2, u * 1.1, '#ffd36b', 700, 'center');
-        T2(op, g.x + g.h, g.y + g.h / 2, u * 1.1, '#f1e8d6', 500, 'left');
-        if (this.ans >= 0 && (right || picked)) T2(right ? '✓' : '✗', g.x + g.w - g.h * .5, g.y + g.h / 2, u * 1.4, right ? '#3dffa8' : '#ff4d6d', 700, 'center');
-      });
+      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50);
+      if (this.over && T - this.over > 9 && !NE.on) this.newRound();
+      if (!this.over && this.ans >= 0 && T - this.at > 12) this.next();
+      if (this.over) {
+        T2(`${this.hit} de ${this.N}`, W / 2, H * .5, u * 6, '#ffe3a0', 700, 'center', SERIF);
+        T2(this.hit === this.N ? 'gabaritou! 🏆' : this.hit >= this.N * .75 ? 'mandou muito bem!' : this.hit >= this.N / 2 ? 'nada mal, tente de novo!' : 'essa rodada foi difícil, tente outra!', W / 2, H * .62, u * 1.5, '#fff3d6', 400, 'center', SERIF);
+        T2('toque para jogar outra rodada', W / 2, H * .7, u * 1, 'rgba(255,255,255,.6)', 600, 'center');
+      } else {
+        const q = this.qs[this.qi], lines = wrapTxt(q.q, Math.min(W * .84, H * 1.5), u * 1.32, 400, SERIF);
+        lines.forEach((l, i) => T2(l, W / 2, H * .345 + i * u * 1.85 - (lines.length - 1) * u * .5, u * 1.32, '#fff3d6', 400, 'center', SERIF));
+        q.op.forEach((op, i) => {
+          const g = this.geo(i), right = i === q.ok, picked = i === this.ans;
+          let bg = 'rgba(255,255,255,.07)', bd = 'rgba(255,255,255,.22)';
+          if (this.ans >= 0 && right) { bg = 'rgba(61,255,168,.18)'; bd = '#3dffa8'; } else if (picked) { bg = 'rgba(255,77,109,.18)'; bd = '#ff4d6d'; }
+          ctx.fillStyle = bg; rr2(g.x, g.y, g.w, g.h, g.h * .3); ctx.fill(); ctx.strokeStyle = bd; ctx.lineWidth = 2; ctx.stroke();
+          T2('ABCD'[i], g.x + g.h * .45, g.y + g.h / 2, u * 1.05, '#ffd36b', 700, 'center');
+          const ol = wrapTxt(op, g.w - g.h * 1.8, u * 1.1, 500, 'sans-serif'), fs = ol.length > 1 ? u * .9 : u * 1.1, ol2 = ol.length > 2 ? wrapTxt(op, g.w - g.h * 1.8, fs, 500, 'sans-serif') : ol;
+          ol2.forEach((l, k) => T2(l, g.x + g.h * .9, g.y + g.h / 2 + (k - (ol2.length - 1) / 2) * fs * 1.2, fs, '#f1e8d6', 500, 'left', 'sans-serif'));
+          if (this.ans >= 0 && (right || picked)) T2(right ? '✓' : '✗', g.x + g.w - g.h * .45, g.y + g.h / 2, u * 1.3, right ? '#3dffa8' : '#ff4d6d', 700, 'center');
+        });
+        if (this.ans >= 0) { const ok = this.ans === q.ok, el = wrapTxt((ok ? 'Certo! ' : 'Resposta: ' + 'ABCD'[q.ok] + '. ') + q.ex, Math.min(W * .86, H * 1.55), u * .95, 500, 'sans-serif').slice(0, 3);
+          el.forEach((l, k) => T2(l, W / 2, H * .835 + k * u * 1.4, u * .95, ok ? '#9fffd0' : '#ffc2cc', 500, 'center', 'sans-serif'));
+          if (T - this.at > .8) T2('toque para a próxima ›', W * .92, H * .26, u * .8, 'rgba(255,255,255,.55)', 600, 'right'); }
+      }
       stepBurst(this.sp, dt, 300);
-      scoreBox(`pergunta ${this.qi + 1} de ${QZ.length} · acertos ${this.hit}/${this.tot}`, W / 2, H * .24, u);
+      scoreBox(this.over ? 'fim da rodada!' : `pergunta ${this.qi + 1} de ${this.N} · acertos ${this.hit}`, W / 2, H * .235, u);
+      T2(REC.line(id).replace('🏆', '🏆 ' + recLbl + ':'), W / 2, H * .278, u * .74, '#ffe3a0', 600, 'center', 'sans-serif');
+      NE.frame(id);
     }
-  };
+  });
+  const quiz = mkQuiz('quiz', 'jogo · quiz de segurança', QZ_SEG, 'mais acertos');
+  const quizpp = mkQuiz('quizpp', 'jogo · quiz de processo penal', QZ_PP, 'mais acertos');
 
   /* ---------- genius dos sinos ---------- */
   const SN_C = ['#ff4d6d', '#ffd36b', '#5ea8ff', '#c58bff'];
@@ -4856,10 +4910,10 @@ function H_medalha() {
   const difs = {
     id: 'difs', name: 'jogo · sete diferenças', el: $('[data-scene=difs]'),
     setup() { this.sp = []; this.newGame(); },
-    newGame() { this.d = DF_ALL.slice().sort(() => Math.random() - .5).slice(0, 7).map(d => ({ ...d, f: 0 })); this.t0g = null; this.done = 0; this.miss = []; this.cv = null; },
+    newGame() { this.d = DF_ALL.slice().sort(() => Math.random() - .5).slice(0, 7).map(d => ({ ...d, f: 0 })); this.t0g = null; this.done = 0; this.miss = []; this.dimg = null; },
     render() { const { w, h } = this.geo(), mk = flags => { const c = document.createElement('canvas'); c.width = Math.round(w); c.height = Math.round(h); dfScene(c.getContext('2d'), c.width, c.height, flags); return c; };
-      const fl = {}; this.d.forEach(d => fl[d.k] = 1); this.cv = [mk({}), mk(fl)]; this.cvW = w; },
-    enter() { this.t0 = null; if (!NE.on) { this.newGame(); this.cv = null; } },
+      const fl = {}; this.d.forEach(d => fl[d.k] = 1); this.dimg = [mk({}), mk(fl)]; this.cvW = w; },
+    enter() { this.t0 = null; if (!NE.on) { this.newGame(); this.dimg = null; } },
     leave() { if (NE.on && NE.scene === 'difs') NE.finish(); },
     geo() { const w = Math.min(W * .44, H * .55 * 100 / 75), h = w * .75, gap = W * .025, x0 = (W - w * 2 - gap) / 2, y0 = H * .31; return { w, h, gap, x0, y0 }; },
     tap(x, y) {
@@ -4873,10 +4927,10 @@ function H_medalha() {
     },
     frame(t, dt) {
       const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50), { w, h, gap, x0, y0 } = this.geo();
-      if (!this.cv || this.cvW !== w) this.render();
+      if (!this.dimg || this.cvW !== w) this.render();
       if (this.done && T - this.done > 5 && !NE.on) { this.newGame(); this.render(); }
       if (this.t0g !== null && !this.done && T - this.t0g > 240) { this.newGame(); this.render(); }
-      [0, 1].forEach(k => { const x = x0 + k * (w + gap); ctx.save(); rr2(x, y0, w, h, 12); ctx.clip(); ctx.drawImage(this.cv[k], x, y0, w, h); ctx.restore(); ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 2; rr2(x, y0, w, h, 12); ctx.stroke();
+      [0, 1].forEach(k => { const x = x0 + k * (w + gap); ctx.save(); rr2(x, y0, w, h, 12); ctx.clip(); ctx.drawImage(this.dimg[k], x, y0, w, h); ctx.restore(); ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 2; rr2(x, y0, w, h, 12); ctx.stroke();
         this.d.forEach(d => { if (!d.f) return; ctx.strokeStyle = '#3dffa8'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x + d.x / 100 * w, y0 + d.y / 75 * h, (d.r + 1) / 100 * w, 0, TAU); ctx.stroke(); }); });
       this.miss = this.miss.filter(m => T - m.t < .6); this.miss.forEach(m => { ctx.globalAlpha = 1 - (T - m.t) / .6; T2('✗', m.x, m.y, u * 2, '#ff4d6d', 700, 'center'); }); ctx.globalAlpha = 1;
       stepBurst(this.sp, dt, 380);
@@ -5288,8 +5342,8 @@ function H_medalha() {
 
   window.__G8 = { empilha, cofre, cifra };
 
-  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra];
-  const CANVAS = new Set(['logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra']);
+  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp];
+  const CANVAS = new Set(['logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp']);
   ALL.forEach(s => { s.cam = s.el.querySelector('.cam'); s.canvas = CANVAS.has(s.id); });
   const order = CONFIG.cenas.map(id => ALL.find(s => s.id === id)).filter(Boolean);
   const params = new URLSearchParams(location.search);
