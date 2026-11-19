@@ -1,0 +1,19 @@
+PAINEL CYBERGAECO — COMO PUBLICAR (GitHub Pages)
+
+1. No GitHub, abra o repositório (ex.: painel-tab-a) ou crie um novo PÚBLICO.
+2. Clique em "Add file" > "Upload files" e arraste TODOS os arquivos desta pasta
+   (index.html, slides.html, sw.js, os 2 manifest e os 2 ícones). Se quiser, crie
+   antes uma pasta "natal" (digite natal/ no nome) para não misturar com o resto.
+3. Clique em "Commit changes".
+4. Settings > Pages > Source: "Deploy from a branch" > Branch: main / (root) > Save.
+5. Em 1 a 2 minutos o endereço fica assim:
+   https://SEU-USUARIO.github.io/NOME-DO-REPO/            (painel do tablet)
+   https://SEU-USUARIO.github.io/NOME-DO-REPO/slides.html (só os slides)
+   (se usou a pasta natal, acrescente /natal/ antes)
+
+NO TABLET (Chrome):
+- Abra o endereço, toque nos 3 pontinhos > "Adicionar à tela inicial" / "Instalar app".
+- Abra pelo ícone novo: abre em tela cheia, como app.
+- Em https a tela sempre ligada usa o recurso oficial do navegador (o aviso verde aparece no topo).
+- Atualizações: publique os arquivos novos no GitHub; o tablet pega sozinho
+  (ao abrir e todo dia às 4h da manhã).
