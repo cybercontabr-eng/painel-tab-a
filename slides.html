@@ -4132,7 +4132,15 @@ function H_medalha() {
   /* ================= recordes e teclado na tela ================= */
   const REC = {
     key: 'cgRecordes', mem: {},
-    all() { try { const v = localStorage.getItem(this.key); if (v) return JSON.parse(v); } catch (e) {} return this.mem; },
+    seed: { memoria: [{ n: 'GABRIELLA', s: 10 }] },
+    all() {
+      let o = null; try { const v = localStorage.getItem(this.key); if (v) o = JSON.parse(v); } catch (e) {}
+      if (!o) o = this.mem;
+      if (!o.__seed1) { const asc = { memoria: 1, palavras: 1, puzzle: 1, difs: 1, labirinto: 1, corrida: 1 };
+        for (const g in this.seed) { const L = (o[g] || []).slice(); this.seed[g].forEach(e => { if (!L.some(x => x.n === e.n && x.s === e.s)) L.push(e); }); L.sort((a, b) => asc[g] ? a.s - b.s : b.s - a.s); o[g] = L.slice(0, 5); }
+        o.__seed1 = 1; this.save(o); }
+      return o;
+    },
     save(o) { this.mem = o; try { localStorage.setItem(this.key, JSON.stringify(o)); } catch (e) {} },
     list(g) { return this.all()[g] || []; },
     qualifies(g, s, asc) { if (!(s > 0)) return false; const L = this.list(g); if (L.length < 5) return true; const l = L[L.length - 1].s; return asc ? s < l : s > l; },
