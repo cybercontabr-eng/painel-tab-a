@@ -747,6 +747,11 @@
   [data-scene=corrida]{background:radial-gradient(120% 100% at 50% 20%,#1c0e2e 0%,#05060f 100%);--green:#ffd36b}
   [data-scene=palavras] .cam,[data-scene=puzzle] .cam,[data-scene=difs] .cam,[data-scene=labirinto] .cam,[data-scene=corrida] .cam{animation:none!important;transform:none!important}
   [data-scene=palavras],[data-scene=puzzle],[data-scene=difs],[data-scene=labirinto],[data-scene=corrida]{touch-action:none}
+  [data-scene=empilha]{background:linear-gradient(180deg,#0b1636 0%,#1a2350 60%,#2a1f4f 100%);--green:#ffd36b}
+  [data-scene=cofre]{background:radial-gradient(120% 100% at 30% 30%,#18223e 0%,#05060f 100%);--green:#ffd36b}
+  [data-scene=cifra]{background:radial-gradient(120% 100% at 50% 30%,#1e0f30 0%,#05060f 100%);--green:#ff9fc4}
+  [data-scene=empilha] .cam,[data-scene=cofre] .cam,[data-scene=cifra] .cam{animation:none!important;transform:none!important}
+  [data-scene=empilha],[data-scene=cofre],[data-scene=cifra]{touch-action:none}
 
   /* ---- homenagem Dr. Carlos ---- */
   [data-scene=carlos]{background:radial-gradient(120% 95% at 50% 45%,#0f2f3a 0%,#08192a 58%,#02070d 100%)}
@@ -1411,6 +1416,15 @@
     <section class="scene" data-scene="difs"><div class="cam">
       <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Sete</span><em>diferenças</em></h1></div>
     </div></section>
+    <section class="scene" data-scene="empilha"><div class="cam">
+      <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Empilhe os</span><em>presentes</em></h1></div>
+    </div></section>
+    <section class="scene" data-scene="cofre"><div class="cam">
+      <div class="game-top copy"><div class="label">● Desafio CyberGaeco</div><h1 class="title"><span>Quebre o</span><em>cofre</em></h1></div>
+    </div></section>
+    <section class="scene" data-scene="cifra"><div class="cam">
+      <div class="game-top copy"><div class="label">● Desafio CyberGaeco</div><h1 class="title"><span>Decifre a</span><em>mensagem</em></h1></div>
+    </div></section>
     <section class="scene" data-scene="labirinto"><div class="cam">
       <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Labirinto</span><em>do Noel</em></h1></div>
     </div></section>
@@ -1506,10 +1520,10 @@ const CONFIG = {
   duracaoEspecial: {              // cenas que precisam de mais tempo (segundos)
     terminal: 36, decripta: 32, chuva: 24, hash: 20, circuito: 22, atena: 22, sged: 24, tor: 20, consulta: 24,
     inst: 20, medi: 20, ops: 22, coordenadora: 16, contagem: 24, retro: 22, phishing: 22, senha: 24, golpe: 22,
-    particulas: 24, lareira2: 20, soc: 22, virada: 24, floco: 20, estrela: 20, desejos: 22, warp: 18, consulta2: 24, teclado: 22, aurora: 20, fabricio: 16, terminal2: 24, consulta3: 24, presentes: 15, globoneve: 15, fogos: 15, treno: 20, bolas: 15, boneco: 15, pisca: 15, raspa: 15, caca: 15, pegue: 15, memoria: 15, rena: 15, velha: 15, quiz: 15, sinos: 15, palavras: 15, puzzle: 15, difs: 15, labirinto: 15, corrida: 15, carlos: 16, memlogos: 15, memequipe: 15
+    particulas: 24, lareira2: 20, soc: 22, virada: 24, floco: 20, estrela: 20, desejos: 22, warp: 18, consulta2: 24, teclado: 22, aurora: 20, fabricio: 16, terminal2: 24, consulta3: 24, presentes: 15, globoneve: 15, fogos: 15, treno: 20, bolas: 15, boneco: 15, pisca: 15, raspa: 15, caca: 15, pegue: 15, memoria: 15, rena: 15, velha: 15, quiz: 15, sinos: 15, palavras: 15, puzzle: 15, difs: 15, labirinto: 15, corrida: 15, carlos: 16, memlogos: 15, memequipe: 15, empilha: 15, cofre: 15, cifra: 15
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'puzzle', 'hash', 'logoholo', 'bolas', 'phishing', 'pegue', 'aurora', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'coordenadora', 'rena', 'logocodigo', 'fabricio', 'carlos', 'corrida', 'globoneve', 'particulas', 'lareira2', 'boneco', 'teclado', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'treno', 'velha', 'retro', 'raspa', 'soc', 'labirinto', 'fogos', 'chuva', 'sinos', 'espiral', 'estrela', 'virada'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'puzzle', 'hash', 'cofre', 'logoholo', 'bolas', 'phishing', 'pegue', 'aurora', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'coordenadora', 'rena', 'logocodigo', 'fabricio', 'carlos', 'corrida', 'globoneve', 'particulas', 'lareira2', 'boneco', 'teclado', 'cifra', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'raspa', 'soc', 'labirinto', 'fogos', 'chuva', 'sinos', 'espiral', 'estrela', 'virada'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   abertura: false,               // abertura completa em 3D no início de cada volta
   fps3d: 30,
@@ -5043,8 +5057,239 @@ function H_medalha() {
     try { cur.tap(x, y); } catch (e) {}
     return true;
   };
-  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe];
-  const CANVAS = new Set(['logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe']);
+
+  /* ================= v8: empilhe, cofre, cifra ================= */
+  /* ---------- empilhe os presentes ---------- */
+  const EP_COLS = ['#d6223a', '#2f7bff', '#ffcf3f', '#2fd6c4', '#b04dff', '#ff7ab8', '#3dbb5a', '#ff8a2f'];
+  const empilha = {
+    id: 'empilha', name: 'jogo · empilhe os presentes', el: $('[data-scene=empilha]'),
+    setup() { this.sp = []; this.snow = Array.from({ length: 60 }, () => ({ x: Math.random(), y: Math.random(), r: rnd(1, 2.6), v: rnd(.02, .06) })); this.newGame(); },
+    newGame() { this.w0 = .24; this.st = [{ x: .5, w: .3, base: 1 }]; this.camY = 0; this.over = 0; this.score = 0; this.combo = 0; this.fl = []; this.pf = null; this.spawn(); },
+    spawn() { const top = this.st[this.st.length - 1], n = this.st.length, w = top.base ? this.w0 : top.w;
+      this.cur = { x: n % 2 ? .16 : .84, w, dir: n % 2 ? 1 : -1, v: .34 + Math.min(.5, (n - 1) * .022), c: EP_COLS[(n - 1) % EP_COLS.length] }; },
+    bh() { return H * .058; }, baseY() { return H * .95; },
+    yW(i) { return this.baseY() - (i + 1) * this.bh(); },
+    enter() { this.t0 = null; if (!NE.on) this.newGame(); },
+    leave() { if (NE.on && NE.scene === 'empilha') NE.finish(); },
+    drop() {
+      const p = this.st[this.st.length - 1], c = this.cur, pw = p.base ? this.w0 : p.w;
+      const l = Math.max(c.x - c.w / 2, p.x - pw / 2), r = Math.min(c.x + c.w / 2, p.x + pw / 2), ov = r - l, n = this.st.length, y = this.yW(n);
+      if (ov <= 0) { this.fl.push({ x: c.x, w: c.w, y, vy: 0, rot: 0, vr: (c.x < p.x ? -1 : 1) * 2, c: c.c }); this.cur = null; this.over = this.T;
+        if (REC.qualifies('empilha', this.score)) NE.start('empilha', 'empilha', this.score, false, this.score + (this.score > 1 ? ' presentes' : ' presente')); return; }
+      if (Math.abs(c.x - p.x) < .009 && !p.base) { this.combo++; const w = this.combo >= 3 ? Math.min(this.w0, c.w + .012) : c.w; this.st.push({ x: p.x, w, c: c.c });
+        this.pf = { t: this.T, y }; burst(this.sp, p.x * W, y + this.camY, 26, ['#fff', '#ffe3a0', c.c], 240); }
+      else { this.combo = 0; const cw = c.w - ov, cx = c.x > p.x ? r + cw / 2 : l - cw / 2; if (cw > .002) this.fl.push({ x: cx, w: cw, y, vy: 0, rot: 0, vr: (c.x > p.x ? 1 : -1) * 2.4, c: c.c }); this.st.push({ x: (l + r) / 2, w: ov, c: c.c }); }
+      this.score++; this.spawn();
+    },
+    tap(x, y) {
+      if (NE.tap(x, y)) return;
+      if (this.over) { if (this.T - this.over > 1.2) this.newGame(); return; }
+      if (y < H * .2) return; this.drop();
+    },
+    box(cx, y, w, h, c, rot, bow) {
+      const x = cx * W, pw = w * W; ctx.save(); ctx.translate(x, y + h / 2); if (rot) ctx.rotate(rot);
+      const g = ctx.createLinearGradient(0, -h / 2, 0, h / 2); g.addColorStop(0, shade(c, .25)); g.addColorStop(1, shade(c, -.3)); ctx.fillStyle = g; rr2(-pw / 2, -h / 2, pw, h, Math.min(6, h * .15)); ctx.fill();
+      const rib = c === '#ffcf3f' ? '#d6223a' : '#ffe3a0', rw = Math.min(pw * .16, h * .34);
+      if (pw > rw * 1.6) { ctx.fillStyle = rib; ctx.fillRect(-rw / 2, -h / 2, rw, h); }
+      ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.fillRect(-pw / 2 + 3, -h / 2 + 2, pw - 6, h * .14);
+      if (bow) { ctx.fillStyle = rib; ctx.beginPath(); ctx.ellipse(-h * .28, -h / 2 - h * .14, h * .3, h * .17, -.4, 0, TAU); ctx.ellipse(h * .28, -h / 2 - h * .14, h * .3, h * .17, .4, 0, TAU); ctx.fill(); ctx.beginPath(); ctx.arc(0, -h / 2 - h * .1, h * .11, 0, TAU); ctx.fill(); }
+      ctx.restore();
+    },
+    frame(t, dt) {
+      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50), bh = this.bh(), n = this.st.length;
+      if (this.over && T - this.over > 7 && !NE.on) this.newGame();
+      // neve ao fundo
+      ctx.fillStyle = 'rgba(255,255,255,.55)'; this.snow.forEach(f => { f.y += f.v * dt; if (f.y > 1) { f.y = 0; f.x = Math.random(); } ctx.beginPath(); ctx.arc(f.x * W + Math.sin(T + f.y * 9) * 8, f.y * H, f.r, 0, TAU); ctx.fill(); });
+      // câmera acompanha a torre
+      const target = Math.max(0, (n + 1) * bh - (this.baseY() - H * .42)); this.camY += (target - this.camY) * Math.min(1, dt * 4);
+      if (this.cur) { const c = this.cur; c.x += c.dir * c.v * dt; if (c.x > .84) { c.x = .84; c.dir = -1; } if (c.x < .16) { c.x = .16; c.dir = 1; } }
+      // pedestal
+      const by = this.yW(0) + this.camY; ctx.fillStyle = '#3a2412'; rr2(W * .32, by, W * .36, H, 10); ctx.fill(); ctx.fillStyle = '#5a3a1e'; ctx.fillRect(W * .32, by, W * .36, bh * .3);
+      ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(W * .32, by - 4, W * .36, 6);
+      for (let i = 1; i < n; i++) { const b = this.st[i], y = this.yW(i) + this.camY; if (y > H + bh) continue; this.box(b.x, y, b.w, bh - 2, b.c, 0, i === n - 1 && !this.cur); }
+      if (this.pf && T - this.pf.t < .5) { const k = (T - this.pf.t) / .5, b = this.st[n - 1]; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 3; rr2(b.x * W - b.w * W / 2 - k * 14, this.pf.y + this.camY - k * 8, b.w * W + k * 28, bh + k * 16, 8); ctx.stroke(); }
+      if (this.cur) { const c = this.cur, y = this.yW(n) + this.camY; ga(c.c, c.w * W * .7, c.x * W, y + bh / 2, .14); this.box(c.x, y, c.w, bh - 2, c.c, 0, true);
+        ctx.strokeStyle = 'rgba(255,255,255,.18)'; ctx.setLineDash([4, 6]); ctx.beginPath(); ctx.moveTo(c.x * W, y + bh); ctx.lineTo(c.x * W, y + bh * 1.6); ctx.stroke(); ctx.setLineDash([]); }
+      for (let i = this.fl.length - 1; i >= 0; i--) { const f = this.fl[i]; f.vy += H * 2.2 * dt; f.y += f.vy * dt; f.rot += f.vr * dt; f.x += f.vr * .02 * dt; if (f.y + this.camY > H + 200) { this.fl.splice(i, 1); continue; } this.box(f.x, f.y + this.camY, f.w, bh - 2, f.c, f.rot, false); }
+      stepBurst(this.sp, dt, 380);
+      // placar grande
+      T2(String(this.score), W * .87, H * .5, u * 6, '#ffe3a0', 700, 'center'); T2(this.score === 1 ? 'presente' : 'presentes', W * .87, H * .5 + u * 4.2, u * 1.1, 'rgba(255,255,255,.7)', 600, 'center');
+      if (this.combo >= 2 && this.cur) T2('perfeito ×' + this.combo, W * .13, H * .5, u * 1.4, '#3dffa8', 700, 'center');
+      scoreBox(this.over ? `a torre caiu! ${this.score} presentes · toque para jogar de novo` : this.score === 0 ? 'toque na tela para soltar o presente em cima da pilha' : 'o que passar da borda cai · acerte em cheio para ganhar bônus', W / 2, H * .25, u, this.over ? '#ff8fb1' : '#ffd36b');
+      T2(REC.line('empilha').replace('🏆', '🏆 maior torre:'), W / 2, H * .292, u * .78, '#ffe3a0', 600, 'center', 'sans-serif');
+      NE.frame('empilha');
+    }
+  };
+
+  /* ---------- quebre o cofre ---------- */
+  const cofre = {
+    id: 'cofre', name: 'jogo · quebre o cofre', el: $('[data-scene=cofre]'),
+    MAX: 10,
+    setup() { this.sp = []; this.keys = []; this.newGame(); },
+    newGame() { this.code = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - .5).slice(0, 4); this.hist = []; this.inp = []; this.done = 0; this.lost = 0; this.t0g = null; this.shake = -9; this.dup = null; this.hot = null; },
+    enter() { this.t0 = null; if (!NE.on) this.newGame(); },
+    leave() { if (NE.on && NE.scene === 'cofre') NE.finish(); },
+    press(k) {
+      this.hot = { k, t: this.T };
+      if (k === '⌫') { this.inp.pop(); return; }
+      if (k === '✓') { if (this.inp.length < 4) { this.shake = this.T; return; } this.check(); return; }
+      const d = +k; if (this.inp.length >= 4) return; if (this.inp.includes(d)) { this.dup = { d, t: this.T }; return; }
+      if (this.t0g === null) this.t0g = this.T; this.inp.push(d);
+    },
+    check() {
+      const g = this.inp.slice(); let a = 0, b = 0; g.forEach((v, i) => { if (this.code[i] === v) a++; else if (this.code.includes(v)) b++; });
+      this.hist.push({ g, a, b, t: this.T }); this.inp = [];
+      if (a === 4) { this.done = this.T; const n = this.hist.length; burst(this.sp, W * .175, H * .6, 140, ['#ffd36b', '#fff', '#3dffa8', '#ff8fb1'], 420); if (REC.qualifies('cofre', n, true)) NE.start('cofre', 'cofre', n, true, n + (n > 1 ? ' tentativas' : ' tentativa')); }
+      else if (this.hist.length >= this.MAX) this.lost = this.T; else this.shake = this.T;
+    },
+    tap(x, y) {
+      if (NE.tap(x, y)) return;
+      if (this.done || this.lost) { if (this.T - (this.done || this.lost) > 1.5) this.newGame(); return; }
+      const k = this.keys.find(k => x > k.x && x < k.x + k.w && y > k.y && y < k.y + k.h); if (k) this.press(k.k);
+    },
+    vault(cx, cy, R, T) {
+      const open = this.done ? sm((T - this.done) / 1.2) : 0, sh = T - this.shake < .35 ? Math.sin((T - this.shake) * 70) * R * .03 : 0;
+      ctx.save(); ctx.translate(cx + sh, cy);
+      // corpo
+      const bw = R * 2.5; let g = ctx.createLinearGradient(0, -bw / 2, 0, bw / 2); g.addColorStop(0, '#4a5470'); g.addColorStop(1, '#1e2436'); ctx.fillStyle = g; rr2(-bw / 2, -bw / 2, bw, bw, R * .16); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.18)'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = '#141a28'; ctx.beginPath(); ctx.arc(0, 0, R * 1.04, 0, TAU); ctx.fill();
+      // interior (aparece ao abrir)
+      if (open > 0) { ga('#ffd36b', R * 1.6, 0, 0, .5 * open); ctx.fillStyle = '#2a1a08'; ctx.beginPath(); ctx.arc(0, 0, R, 0, TAU); ctx.fill();
+        [['#d6223a', -.45, .25, .5], ['#2f7bff', .3, .3, .45], ['#ffcf3f', -.05, -.25, .42]].forEach(([c, dx, dy, s]) => { this.giftMini(dx * R, dy * R, s * R, c); });
+        T2('🎄', 0, -R * .62, R * .3, '#fff', 400, 'center', 'sans-serif'); }
+      // porta
+      ctx.save(); ctx.translate(-R, 0); ctx.scale(1 - open * .85, 1); ctx.translate(R, 0);
+      g = ctx.createRadialGradient(-R * .3, -R * .35, R * .1, 0, 0, R); g.addColorStop(0, '#9aa6c4'); g.addColorStop(.6, '#5c6886'); g.addColorStop(1, '#343c56'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, R * .96, 0, TAU); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = R * .02; ctx.beginPath(); ctx.arc(0, 0, R * .82, 0, TAU); ctx.stroke();
+      for (let i = 0; i < 8; i++) { const a = i * TAU / 8; ctx.fillStyle = '#2a3046'; ctx.beginPath(); ctx.arc(Math.cos(a) * R * .89, Math.sin(a) * R * .89, R * .045, 0, TAU); ctx.fill(); }
+      // disco do segredo
+      const rot = (this.inp.length + this.hist.length * 4) * .9 + Math.sin(T * .6) * .05; ctx.save(); ctx.rotate(rot);
+      ctx.fillStyle = '#1e2436'; ctx.beginPath(); ctx.arc(0, 0, R * .42, 0, TAU); ctx.fill(); ctx.strokeStyle = '#ffd36b'; ctx.lineWidth = 2;
+      for (let i = 0; i < 40; i++) { const a = i * TAU / 40, l = i % 4 ? .05 : .1; ctx.beginPath(); ctx.moveTo(Math.cos(a) * R * .4, Math.sin(a) * R * .4); ctx.lineTo(Math.cos(a) * R * (.4 - l), Math.sin(a) * R * (.4 - l)); ctx.stroke(); }
+      ctx.fillStyle = '#c9d2ea'; ctx.beginPath(); ctx.arc(0, 0, R * .18, 0, TAU); ctx.fill(); ctx.restore();
+      ctx.fillStyle = '#ffd36b'; ctx.beginPath(); ctx.moveTo(0, -R * .47); ctx.lineTo(-R * .04, -R * .54); ctx.lineTo(R * .04, -R * .54); ctx.fill();
+      // manivela
+      ctx.strokeStyle = '#c9d2ea'; ctx.lineWidth = R * .06; ctx.lineCap = 'round'; const ha = this.done ? open * 1.6 : 0;
+      for (let i = 0; i < 3; i++) { const a = ha + i * TAU / 3; ctx.beginPath(); ctx.moveTo(R * .62, 0); ctx.lineTo(R * .62 + Math.cos(a) * R * .18, Math.sin(a) * R * .18); ctx.stroke(); }
+      ctx.lineCap = 'butt'; ctx.restore();
+      // LED
+      const led = this.done ? '#3dffa8' : this.lost ? '#ff4d6d' : (T * 2 % 2 < 1 ? '#ffd36b' : '#7a5a1e'); ga(led, R * .3, bw * .38, -bw * .38, .5); ctx.fillStyle = led; ctx.beginPath(); ctx.arc(bw * .38, -bw * .38, R * .05, 0, TAU); ctx.fill();
+      ctx.restore();
+      T2(this.done ? 'ABERTO' : this.lost ? 'TRAVADO' : 'COFRE DO NOEL', cx, cy + R * 1.5, R * .16, this.done ? '#3dffa8' : this.lost ? '#ff6b7a' : 'rgba(255,255,255,.75)', 700, 'center');
+    },
+    giftMini(x, y, s, c) { ctx.fillStyle = c; ctx.fillRect(x - s / 2, y - s / 2, s, s); ctx.fillStyle = '#ffe3a0'; ctx.fillRect(x - s * .08, y - s / 2, s * .16, s); ctx.fillRect(x - s / 2, y - s * .08, s, s * .16); },
+    dot(x, y, r, c) { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); },
+    frame(t, dt) {
+      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50);
+      if ((this.done || this.lost) && T - (this.done || this.lost) > 7 && !NE.on) this.newGame();
+      if (this.t0g !== null && !this.done && !this.lost && T - this.t0g > 300) this.newGame();
+      const R = Math.min(W * .105, H * .18); this.vault(W * .175, H * .6, R, T);
+      // visor da tentativa
+      const cx = W * .47, sz = Math.min(W * .055, H * .085), sy = H * .37, sh = T - this.shake < .35 && !this.done ? Math.sin((T - this.shake) * 70) * 6 : 0;
+      for (let i = 0; i < 4; i++) { const x = cx + (i - 2) * sz * 1.18 + sz * .09 + sh; ctx.fillStyle = '#0a0e20'; rr2(x, sy - sz / 2, sz, sz, sz * .16); ctx.fill(); ctx.strokeStyle = i === this.inp.length && !this.done && !this.lost ? '#ffd36b' : 'rgba(255,255,255,.25)'; ctx.lineWidth = 2; ctx.stroke();
+        const v = this.done || this.lost ? this.code[i] : this.inp[i]; if (v !== undefined) T2(String(v), x + sz / 2, sy + 2, sz * .62, this.done ? '#3dffa8' : this.lost ? '#ff8fb1' : '#fff', 700, 'center'); }
+      if (this.dup && T - this.dup.t < 1.2) T2(`o ${this.dup.d} já está na senha · os números não se repetem`, cx, sy + sz * .82, u * .85, '#ff8fb1', 600, 'center', 'sans-serif');
+      // histórico
+      const hy = H * .47, rh = Math.min(H * .042, (H * .9 - hy) / this.MAX), dr = rh * .17;
+      this.dot(cx - sz * 2.3, hy - rh * .2, dr, '#3dffa8'); T2('certo no lugar', cx - sz * 2.3 + dr * 2, hy - rh * .2, u * .8, 'rgba(255,255,255,.75)', 600, 'left', 'sans-serif');
+      this.dot(cx + sz * .3, hy - rh * .2, dr, '#ffd36b'); T2('existe, lugar errado', cx + sz * .3 + dr * 2, hy - rh * .2, u * .8, 'rgba(255,255,255,.75)', 600, 'left', 'sans-serif');
+      for (let i = 0; i < this.MAX; i++) { const y = hy + (i + .9) * rh, h = this.hist[i];
+        ctx.fillStyle = i % 2 ? 'rgba(255,255,255,.03)' : 'rgba(255,255,255,.06)'; rr2(cx - sz * 2.4, y - rh * .45, sz * 4.8, rh * .9, rh * .2); ctx.fill();
+        T2(String(i + 1).padStart(2, '0'), cx - sz * 2.15, y, rh * .42, 'rgba(255,255,255,.35)', 600, 'left');
+        if (!h) continue; const nw = T - h.t < .3 ? sm((T - h.t) / .3) : 1; ctx.globalAlpha = nw;
+        h.g.forEach((v, j) => T2(String(v), cx - sz * 1.1 + j * rh * .78, y, rh * .58, '#fff', 700, 'center'));
+        for (let j = 0; j < 4; j++) this.dot(cx + sz * 1.05 + j * dr * 2.9, y, dr, j < h.a ? '#3dffa8' : j < h.a + h.b ? '#ffd36b' : 'rgba(255,255,255,.14)');
+        ctx.globalAlpha = 1; }
+      // teclado
+      const ks = Math.min(W * .072, H * .105), gap = ks * .16, kx = W * .955 - 3 * ks - 2 * gap, ky = H * .35; this.keys = [];
+      ['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', '✓'].forEach((k, i) => { const x = kx + (i % 3) * (ks + gap), y = ky + Math.floor(i / 3) * (ks + gap), used = /\d/.test(k) && this.inp.includes(+k), hot = this.hot && this.hot.k === k && T - this.hot.t < .15;
+        ctx.fillStyle = hot ? '#ffd36b' : k === '✓' ? (this.inp.length === 4 ? '#3dffa8' : 'rgba(61,255,168,.25)') : k === '⌫' ? 'rgba(255,107,122,.55)' : used ? 'rgba(255,255,255,.04)' : 'rgba(255,255,255,.11)';
+        rr2(x, y, ks, ks, ks * .2); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.18)'; ctx.lineWidth = 1.5; ctx.stroke();
+        T2(k, x + ks / 2, y + ks / 2 + 1, ks * .44, hot || (k === '✓' && this.inp.length === 4) ? '#0a1020' : used ? 'rgba(255,255,255,.3)' : '#fff', 700, 'center', k === '⌫' || k === '✓' ? 'sans-serif' : MONO);
+        this.keys.push({ k, x, y, w: ks, h: ks }); });
+      stepBurst(this.sp, dt, 380);
+      const n = this.hist.length;
+      scoreBox(this.done ? `cofre aberto em ${n} ${n > 1 ? 'tentativas' : 'tentativa'}! ✓` : this.lost ? `o cofre travou! a senha era ${this.code.join('')} · toque para tentar de novo` : n === 0 ? 'descubra a senha de 4 números diferentes · você tem 10 tentativas' : `tentativa ${n + 1} de ${this.MAX}`, W / 2, H * .25, u, this.lost ? '#ff8fb1' : '#ffd36b');
+      T2(REC.line('cofre').replace('🏆', '🏆 menos tentativas:'), W / 2, H * .292, u * .78, '#ffe3a0', 600, 'center', 'sans-serif');
+      NE.frame('cofre');
+    }
+  };
+
+  /* ---------- decifre a mensagem ---------- */
+  const CF_FR = ['FELIZ NATAL EQUIPE CYBERGAECO', 'O NOEL USA SENHA FORTE', 'DESCONFIE DE PIX URGENTE', 'BOAS FESTAS E UM FELIZ ANO NOVO', 'HO HO HO FELIZ NATAL', 'NUNCA COMPARTILHE SUA SENHA',
+    'PAZ AMOR E SENHAS FORTES', 'QUE O NOVO ANO TRAGA MUITA LUZ', 'ANTES DE CLICAR CONFIRA O LINK', 'FELIZ NATAL DO MPGO E DO GAECO'];
+  const CF_ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+  const cifra = {
+    id: 'cifra', name: 'jogo · decifre a mensagem', el: $('[data-scene=cifra]'),
+    setup() { this.sp = []; this.keys = []; this.cells = []; this.lastFr = -1; this.newGame(); },
+    newGame() {
+      const A = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']; let p; do { p = A.slice().sort(() => Math.random() - .5); } while (p.some((c, i) => c === A[i]));
+      this.enc = {}; this.dec = {}; A.forEach((c, i) => { this.enc[c] = p[i]; this.dec[p[i]] = c; });
+      let k; do { k = Math.floor(rnd(0, CF_FR.length)); } while (k === this.lastFr && CF_FR.length > 1); this.lastFr = k; this.fr = CF_FR[k];
+      this.ct = [...this.fr].map(ch => /[A-Z]/.test(ch) ? this.enc[ch] : ch); this.sol = {};
+      const L = [...new Set([...this.fr].filter(c => /[A-Z]/.test(c)))].sort(() => Math.random() - .5); L.slice(0, 2).forEach(c => this.sol[this.enc[c]] = 1);
+      this.nL = L.length; this.err = 0; this.t0g = null; this.done = 0; this.bad = null; this.ok = null; this.hot = null;
+      const M = 18, words = this.fr.split(' '), lines = []; let line = ''; words.forEach(w => { const tt = line ? line + ' ' + w : w; if (tt.length > M && line) { lines.push(line); line = w; } else line = tt; }); if (line) lines.push(line);
+      this.lines = lines; this.selNext();
+    },
+    selNext() { this.sel = this.ct.find(c => /[A-Z]/.test(c) && !this.sol[c]) || null; },
+    nSol() { return Object.keys(this.sol).length; },
+    enter() { this.t0 = null; if (!NE.on) this.newGame(); },
+    leave() { if (NE.on && NE.scene === 'cifra') NE.finish(); },
+    press(k) {
+      this.hot = { k, t: this.T }; if (!this.sel) return;
+      if (Object.keys(this.sol).some(c => this.dec[c] === k)) return; // letra já descoberta
+      if (this.t0g === null) this.t0g = this.T;
+      if (this.dec[this.sel] === k) { this.sol[this.sel] = 1; this.ok = { c: this.sel, t: this.T };
+        this.cells.filter(c => c.c === this.sel).forEach(c => burst(this.sp, c.x + c.w / 2, c.y + c.h * .35, 10, ['#3dffa8', '#fff'], 180));
+        if (this.nSol() >= this.nL) { this.done = this.T; this.sel = null; const s = Math.max(1, Math.round(this.T - this.t0g)); burst(this.sp, W / 2, H * .5, 140, CP_COLS, 420); if (REC.qualifies('cifra', s, true)) NE.start('cifra', 'cifra', s, true, fmtT(s)); }
+        else this.selNext(); }
+      else { this.err++; this.bad = { k, t: this.T }; }
+    },
+    tap(x, y) {
+      if (NE.tap(x, y)) return;
+      if (this.done) { if (this.T - this.done > 1.5) this.newGame(); return; }
+      const c = this.cells.find(c => x > c.x && x < c.x + c.w && y > c.y && y < c.y + c.h); if (c) { if (!this.sol[c.c]) this.sel = c.c; return; }
+      const k = this.keys.find(k => x > k.x && x < k.x + k.w && y > k.y && y < k.y + k.h); if (k) this.press(k.k);
+    },
+    frame(t, dt) {
+      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50);
+      if (this.done && T - this.done > 8 && !NE.on) this.newGame();
+      if (this.t0g !== null && !this.done && T - this.t0g > 300) this.newGame();
+      // mensagem
+      const maxL = Math.max(...this.lines.map(l => l.length)), top = H * .335, area = H * .3, cs = Math.min(W * .9 / maxL, area / (this.lines.length * 1.62)), ch = cs * 1.5;
+      const oy = top + (area - this.lines.length * ch * 1.08) / 2; let gi = 0; this.cells = [];
+      this.lines.forEach((ln, li) => { const x0 = (W - ln.length * cs) / 2, y = oy + li * ch * 1.08;
+        [...ln].forEach((p, i) => { if (li && i === 0) gi++; const c = this.ct[gi], x = x0 + i * cs; gi++;
+          if (p === ' ') return;
+          const solved = this.sol[c], selc = this.sel === c, okA = this.ok && this.ok.c === c && T - this.ok.t < .6;
+          ctx.fillStyle = selc ? 'rgba(255,211,107,.28)' : okA ? `rgba(61,255,168,${.35 * (1 - (T - this.ok.t) / .6)})` : 'rgba(255,255,255,.05)'; rr2(x + cs * .06, y, cs * .88, ch, cs * .14); ctx.fill();
+          if (selc) { ctx.strokeStyle = '#ffd36b'; ctx.lineWidth = 2; ctx.stroke(); }
+          ctx.fillStyle = solved ? (this.done ? '#ffd36b' : '#3dffa8') : 'rgba(255,255,255,.3)'; ctx.fillRect(x + cs * .2, y + ch * .6, cs * .6, 2);
+          if (solved) T2(p, x + cs / 2, y + ch * .33, cs * .62, this.done ? '#ffe3a0' : '#fff', 700, 'center');
+          else if (selc) T2('?', x + cs / 2, y + ch * .33, cs * .5, '#ffd36b', 700, 'center');
+          T2(c, x + cs / 2, y + ch * .8, cs * .3, solved ? 'rgba(255,255,255,.3)' : '#ff9fc4', 700, 'center');
+          this.cells.push({ x, y, w: cs, h: ch, c }); }); });
+      if (this.done) ga('#ffd36b', W * .4, W / 2, top + area / 2, .12 + .05 * Math.sin(T * 3));
+      // teclado
+      const ks = Math.min(W * .068, H * .07), gap = ks * .14, ky = H * .655, found = new Set(Object.keys(this.sol).map(c => this.dec[c])); this.keys = [];
+      CF_ROWS.forEach((r, ri) => { const tw = r.length * ks + (r.length - 1) * gap; let x = (W - tw) / 2; const y = ky + ri * (ks + gap);
+        [...r].forEach(k => { const used = found.has(k), hot = this.hot && this.hot.k === k && T - this.hot.t < .15, bad = this.bad && this.bad.k === k && T - this.bad.t < .5;
+          ctx.fillStyle = bad ? '#ff4d6d' : hot ? '#ffd36b' : used ? 'rgba(61,255,168,.12)' : 'rgba(255,255,255,.11)'; rr2(x, y, ks, ks, ks * .18); ctx.fill();
+          T2(k, x + ks / 2, y + ks / 2 + 1, ks * .46, hot && !bad ? '#0a1020' : used ? 'rgba(61,255,168,.45)' : '#fff', 700, 'center');
+          this.keys.push({ k, x, y, w: ks, h: ks }); x += ks + gap; }); });
+      stepBurst(this.sp, dt, 380);
+      const el = this.t0g === null ? 0 : (this.done || T) - this.t0g;
+      scoreBox(this.done ? `mensagem decifrada em ${fmtT(el)}! ✓` : this.t0g === null ? 'cada letra foi trocada por outra · toque na letra certa no teclado' : `${this.nSol()} de ${this.nL} letras · erros ${this.err} · tempo ${fmtT(el)}`, W / 2, H * .25, u);
+      T2(REC.line('cifra').replace(/ (\d+)(?=$|   )/g, (m, n) => ' ' + fmtT(+n)), W / 2, H * .292, u * .78, '#ffe3a0', 600, 'center', 'sans-serif');
+      NE.frame('cifra');
+    }
+  };
+
+  window.__G8 = { empilha, cofre, cifra };
+
+  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra];
+  const CANVAS = new Set(['logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra']);
   ALL.forEach(s => { s.cam = s.el.querySelector('.cam'); s.canvas = CANVAS.has(s.id); });
   const order = CONFIG.cenas.map(id => ALL.find(s => s.id === id)).filter(Boolean);
   const params = new URLSearchParams(location.search);
