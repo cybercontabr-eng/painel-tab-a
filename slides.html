@@ -4429,7 +4429,7 @@ function H_medalha() {
     id: 'memoria', name: 'jogo · memória natalina', el: $('[data-scene=memoria]'),
     setup() { this.sp = []; this.deal(); },
     deal() { const a = MEM_IC.concat(MEM_IC).sort(() => Math.random() - .5); this.c = a.map(ic => ({ ic, open: 0, f: 0, done: 0 })); this.sel = []; this.moves = 0; this.seen = {}; this.win = 0; },
-    enter() { this.t0 = null; this.lastTap = -99; this.next = 1; },
+    enter() { this.t0 = null; this.lastTap = -99; this.next = 1; if (!NE.on) this.deal(); },
     geo(i) { const cols = 6, rows = 2, s = Math.min(W * .7 / cols, H * .22), gap = s * .14, tw = cols * s + (cols - 1) * gap, x = (W - tw) / 2 + (i % cols) * (s + gap), y = H * .36 + Math.floor(i / cols) * (s * 1.2 + gap); return { x, y, s, h: s * 1.2 }; },
     flip(i) { const c = this.c[i]; if (!c || c.open || c.done || this.sel.length >= 2 || this.wait) return; c.open = 1; this.seen[i] = c.ic; this.sel.push(i);
       if (this.sel.length === 2) { this.moves++; const [a, b] = this.sel; this.wait = this.T + .9; this.pair = this.c[a].ic === this.c[b].ic; } },
@@ -4721,7 +4721,7 @@ function H_medalha() {
       const AZ = 'ABCDEFGHIJLMNOPRSTUVXZ'; for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (!g[y][x]) g[y][x] = AZ[Math.floor(rnd(0, AZ.length))];
       Object.assign(this, { g, C, R, words: placed, sel: null, t0g: null, done: 0, bad: null });
     },
-    enter() { this.t0 = null; },
+    enter() { this.t0 = null; if (!NE.on) this.newGame(); },
     leave() { if (NE.on && NE.scene === 'palavras') NE.finish(); },
     geo() { const cs = Math.min(W * .58 / this.C, H * .56 / this.R), x0 = W * .06, y0 = H * .33; return { cs, x0, y0 }; },
     tap(x, y) {
@@ -4769,7 +4769,7 @@ function H_medalha() {
       if (this.solved()) return this.newGame(); this.moves = 0; this.t0g = null; this.done = 0; this.anim = null; },
     nb(i) { const N = this.N, x = i % N, y = Math.floor(i / N), o = []; if (x > 0) o.push(i - 1); if (x < N - 1) o.push(i + 1); if (y > 0) o.push(i - N); if (y < N - 1) o.push(i + N); return o; },
     solved() { return this.b.every((v, i) => v === i); },
-    enter() { this.t0 = null; },
+    enter() { this.t0 = null; if (!NE.on) this.newGame(); },
     leave() { if (NE.on && NE.scene === 'puzzle') NE.finish(); },
     geo() { const S = Math.min(W * .4, H * .6), x0 = W / 2 - S * .62, y0 = H * .3; return { S, x0, y0, ts: S / this.N }; },
     tap(x, y) {
@@ -4845,7 +4845,7 @@ function H_medalha() {
     newGame() { this.d = DF_ALL.slice().sort(() => Math.random() - .5).slice(0, 7).map(d => ({ ...d, f: 0 })); this.t0g = null; this.done = 0; this.miss = []; this.cv = null; },
     render() { const { w, h } = this.geo(), mk = flags => { const c = document.createElement('canvas'); c.width = Math.round(w); c.height = Math.round(h); dfScene(c.getContext('2d'), c.width, c.height, flags); return c; };
       const fl = {}; this.d.forEach(d => fl[d.k] = 1); this.cv = [mk({}), mk(fl)]; this.cvW = w; },
-    enter() { this.t0 = null; },
+    enter() { this.t0 = null; if (!NE.on) { this.newGame(); this.cv = null; } },
     leave() { if (NE.on && NE.scene === 'difs') NE.finish(); },
     geo() { const w = Math.min(W * .44, H * .55 * 100 / 75), h = w * .75, gap = W * .025, x0 = (W - w * 2 - gap) / 2, y0 = H * .31; return { w, h, gap, x0, y0 }; },
     tap(x, y) {
@@ -4885,7 +4885,7 @@ function H_medalha() {
       Object.assign(this, { C, R, wall, px: 0, py: 0, fx: 0, fy: 0, path: [], t0g: null, done: 0, hits: 0, vir: Array.from({ length: 3 }, (_, i) => ({ x: Math.floor(rnd(4, C)), y: Math.floor(rnd(1, R)), fx: 0, fy: 0, nx: 0, ny: 0, k: 1, sp: rnd(1.6, 2.4) })) });
       this.vir.forEach(v => { v.fx = v.nx = v.x; v.fy = v.ny = v.y; });
     },
-    enter() { this.t0 = null; },
+    enter() { this.t0 = null; if (!NE.on) this.newGame(); },
     leave() { if (NE.on && NE.scene === 'labirinto') NE.finish(); },
     geo() { const cs = Math.min(W * .7 / this.C, H * .58 / this.R), x0 = W * .06, y0 = H * .31; return { cs, x0, y0 }; },
     open(x, y, d) { const c = this.wall[y][x]; return !c[d]; },
@@ -4999,7 +4999,7 @@ function H_medalha() {
       id, name, el: $(`[data-scene=${id}]`), sp: [],
       setup() { this.deal(); },
       deal() { const idx = imgs.map((_, i) => i), a = idx.concat(idx).sort(() => Math.random() - .5); this.c = a.map(k => ({ k, open: 0, f: 0, done: 0 })); this.sel = []; this.moves = 0; this.win = 0; this.wait = 0; },
-      enter() { this.t0 = null; },
+      enter() { this.t0 = null; if (!NE.on) this.deal(); },
       leave() { if (NE.on && NE.scene === id) NE.finish(); },
       geo(i) { const n = this.c.length, rows = Math.ceil(n / cols), s = Math.min(W * .84 / cols, H * .5 / rows / 1.05), gap = s * .1, tw = cols * s + (cols - 1) * gap, x = (W - tw) / 2 + (i % cols) * (s + gap), y = H * .335 + Math.floor(i / cols) * (s * 1.05 + gap); return { x, y, s, h: s * 1.05 }; },
       flip(i) { const c = this.c[i]; if (!c || c.open || c.done || this.sel.length >= 2 || this.wait) return; c.open = 1; this.sel.push(i);
