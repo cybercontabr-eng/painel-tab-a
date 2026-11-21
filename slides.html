@@ -1283,10 +1283,11 @@ html,body,#stage{background:#18050c}
           <div class="label" style="--d:.3s">Segurança digital · senhas</div>
           <h1 class="title sm"><span>Senha forte</span><em>+ 2 etapas</em></h1>
           <div class="chips">
-            <div class="chip" style="--d:2s"><i>✓</i>Frase longa vale mais que símbolo</div>
-            <div class="chip" style="--d:2.5s"><i>✓</i>Uma senha diferente para cada conta</div>
-            <div class="chip gold" style="--d:3s"><i>★</i>Ative a verificação em duas etapas</div>
-            <div class="chip warn" style="--d:3.5s"><i>!</i>Ninguém do banco pede seu código</div>
+            <div class="chip" style="--d:2s"><i>✓</i>Frase longa (3+ palavras) com maiúscula, número e símbolo</div>
+            <div class="chip" style="--d:2.4s"><i>✓</i>Senha do trabalho só no trabalho: nunca nas redes sociais</div>
+            <div class="chip" style="--d:2.8s"><i>✓</i>Uma senha para cada conta (um gerenciador ajuda)</div>
+            <div class="chip gold" style="--d:3.2s"><i>★</i>Ative a verificação em duas etapas (prefira app ao SMS)</div>
+            <div class="chip warn" style="--d:3.6s"><i>!</i>Ninguém do banco ou da TI pede sua senha ou código</div>
           </div>
         </div>
       </div>
@@ -1791,10 +1792,11 @@ html,body,#stage{background:#18050c}
  <div class="ok" id="adm-msg"></div>
  <section><h5>📌 Aviso do slide "Hoje"</h5><label class="chk"><input type="checkbox" id="av-on"> mostrar aviso</label><label>Título</label><input id="av-t" maxlength="70" placeholder="Ex.: Confraternização na sexta, 17h"><label>Texto</label><textarea id="av-x" maxlength="240" placeholder="Detalhes do aviso (opcional)"></textarea>
   <label>Início do recesso (para a contagem regressiva)</label><input id="rc-d" type="date"></section>
- <section><h5>🎂 Aniversariantes</h5><div id="an-l"></div><button id="an-add" type="button">+ adicionar pessoa</button><div class="ah">Só aparece o nome e o dia. O slide mostra quem faz aniversário no mês (ou no próximo, se o mês atual não tiver ninguém).</div></section>
+ <section><h5>🎂 Aniversariantes</h5><div id="an-l"></div><button id="an-add" type="button">+ adicionar pessoa</button><div class="ah">Só aparece o nome e o dia. O slide mostra só quem faz aniversário no mês atual; se ninguém fizer, ele não aparece.</div></section>
  <section><h5>🖥️ Painel</h5><label class="chk"><input type="checkbox" id="pn-auto"> avançar os slides automaticamente</label><div class="ah">Desligado, o painel fica parado no slide atual.</div></section>
  <section><h5>☁️ Backup na nuvem</h5><div id="cl-st" class="ah"></div><label>Projeto e chave do Firebase (projectId:apiKey)</label><input id="cl-k" placeholder="meu-projeto:AIza..." autocomplete="off"><button id="cl-on" type="button">Conectar</button><button id="cl-off" type="button">Desligar</button></section>
  <section><h5>🏆 Recordes</h5><button class="dng" id="rc-zero" type="button">Zerar todos os recordes</button><div class="ah">Pede confirmação com um segundo toque.</div></section>
+  <section><h5>🧹 Zerar murais e telas coletivas</h5><div id="zr-l" class="zr"></div><button class="dng" id="zr-all" type="button">Zerar TUDO acima</button><div class="ah">Cada botão pede confirmação com um segundo toque. Com a nuvem ligada, o zerar também vale para a nuvem.</div></section>
  <section><h5>🔒 Segurança</h5><button id="pin-new" type="button">Trocar PIN</button><div class="ah">Recados do muro só podem ser apagados com o modo administrador aberto.</div></section>
 </div></div>
 <div id="sx-zones" hidden><div id="sx-l"></div><div id="sx-c"></div><div id="sx-r"></div></div>
@@ -3521,8 +3523,8 @@ function H_medalha() {
   const PW = [
     ['123456', .08, '#d2333f', 'muito fraca', 'quebrada na hora'],
     ['natal2026', .22, '#e0623a', 'fraca', 'quebrada em segundos'],
-    ['Natal@2026', .48, '#e2b04a', 'média', 'cai em ataque de dicionário'],
-    ['lareira azul come panetone 27', 1, '#7fd19a', 'forte ✓', 'frase longa: muito difícil de adivinhar']
+    ['Natal@2026', .48, '#e2b04a', 'média', 'previsível: cai em ataque de dicionário'],
+    ['Lareira#Azul-Come.Panetone27', 1, '#7fd19a', 'forte ✓', 'frase longa + símbolos: muito difícil']
   ];
   const senha = {
     id: 'senha', name: 'senha forte e duas etapas', el: $('[data-scene=senha]'),
@@ -7028,7 +7030,7 @@ function H_medalha() {
   const arvore = {
     id: 'arvore', name: 'mural · árvore coletiva', el: $('[data-scene=arvore]'),
     setup() { this.sp = []; this.D = avLoad(); this.snow = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random(), r: rnd(1, 2.6), v: rnd(.03, .08) })); },
-    enter() { this.t0 = null; this.D = avLoad(); this.newO = null; this.left = 3; this.cool = 0; this.ini = null; },
+    enter() { this.t0 = null; this.D = avLoad(); this.newO = null; this.left = 3; this.cool = 0; this.ini = null; this.lastO = -9; },
     leave() { this.iniDone(); },
     holding() { return !!this.ini || (this.left < 3 && performance.now() - (this.lastP || 0) < 20000); },
     KB: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ⌫✓',
@@ -7115,7 +7117,7 @@ function H_medalha() {
       T2(`${this.D.o.length} ${this.D.o.length === 1 ? 'enfeite' : 'enfeites'}`, px, H * .44 + u * 8, u * 1, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
       if (this.cool && T >= this.cool) { this.cool = 0; this.left = 3; }
       if (this.left < 3 && !this.cool && performance.now() - (this.lastP || 0) > 20000) this.left = 3;
-      if (this.cool) T2('✓ seus enfeites estão na árvore', px, H * .44 + u * 10.4, u * 1, '#8dffc4', 700, 'left', 'sans-serif');
+      if (this.cool) T2(`✓ seus enfeites estão na árvore · próxima pessoa em ${Math.max(1, Math.ceil(this.cool - T))} s`, px, H * .44 + u * 10.4, u * 1, '#8dffc4', 700, 'left', 'sans-serif');
       else for (let k = 0; k < 3; k++) { ctx.fillStyle = k < this.left ? '#e8334a' : 'rgba(255,255,255,.15)'; ctx.beginPath(); ctx.arc(px + u * .8 + k * u * 2.2, H * .44 + u * 10.6, u * .7, 0, TAU); ctx.fill(); }
       if (!this.D.o.length) hand(tr.bx, tr.top + ch * .6, T, u * 2.4);
       stepBurst(this.sp, dt, 300);
@@ -7140,7 +7142,7 @@ function H_medalha() {
     EQ: ['Dr. Fabrício', 'Dr. Pedro', 'Dr. Diego', 'Dr. Márcio', 'Duda', 'Gabriel'],
     nome(g) { if (!this.nomes || performance.now() - (this.nomesT || 0) > 60000) { const A = ((CT.get().aniv) || []).map(a => a && a.n && String(a.n).trim()).filter(Boolean); this.nomes = [...new Set([...A, ...this.EQ])]; this.nomesT = performance.now(); }
       return g < this.nomes.length ? '✦ ' + this.nomes[g] : UV_NOMES[(g - this.nomes.length) % UV_NOMES.length]; },
-    enter() { this.t0 = null; this.D = uvLoad(); this.newS = null; this.left = this.POR; this.cool = 0; },
+    enter() { this.t0 = null; this.D = uvLoad(); this.newS = null; this.left = this.POR; this.cool = 0; this.lastS = -9; },
     holding() { return this.left < this.POR && performance.now() - (this.lastP || 0) < 20000; },
     tap(x, y) {
       if (this.cool && this.T < this.cool) return; if ((this.T || 0) - (this.lastS || -9) < .6) return; this.lastS = this.T; this.lastP = performance.now();
@@ -7184,7 +7186,7 @@ function H_medalha() {
       const nc = Math.floor(n / UV_G); T2(`${nc} ${nc === 1 ? 'constelação' : 'constelações'} · ${ng} ${ng === 1 ? 'galáxia' : 'galáxias'}`, px, py + u * 4, u * .95, 'rgba(200,225,255,.7)', 600, 'left', 'sans-serif');
       if (this.cool && T >= this.cool) { this.cool = 0; this.left = this.POR; }
       if (this.left < this.POR && !this.cool && performance.now() - (this.lastP || 0) > 20000) this.left = this.POR;
-      if (this.cool) T2('✓ sua estrela está no céu', px, py + u * 6.2, u * 1, '#8dffc4', 700, 'left', 'sans-serif');
+      if (this.cool) T2(`✓ sua estrela está no céu · próxima em ${Math.max(1, Math.ceil(this.cool - T))} s`, px, py + u * 6.2, u * 1, '#8dffc4', 700, 'left', 'sans-serif');
       else for (let k = 0; k < this.POR; k++) T2(k < this.left ? '★' : '☆', px + k * u * 1.8, py + u * 6.4, u * 1.4, k < this.left ? '#ffe9a8' : 'rgba(255,255,255,.3)', 400, 'left', 'sans-serif');
       { const pp = this.D.p || 0; T2('✨ poeira estelar', px, py + u * 8.6, u * .85, 'rgba(255,233,168,.75)', 600, 'left', 'sans-serif'); for (let k = 0; k < UV_PO; k++) { ctx.fillStyle = k < pp ? '#ffe9a8' : 'rgba(255,255,255,.15)'; ctx.beginPath(); ctx.arc(px + u * .45 + k * u * 1.15, py + u * 10, u * .32, 0, TAU); ctx.fill(); } }
       if (!S.length) T2('👆', W * .45, H * .6 + Math.sin(T * 4) * u * .5, u * 2.4, '#fff', 400, 'center', 'sans-serif');
@@ -7301,9 +7303,9 @@ function H_medalha() {
     if (r >= 1 && q < .09 + .05 * d) return 'ferro'; if (q < .17) return 'cobre'; if (q < .27) return 'carvao'; return r < 2 ? 'terra' : (esR(w, i, 2) < .25 ? 'terra' : 'pedra'); };
   const esLoad = () => { const d = LS.get(ES_KEY, null); return d && d.h ? d : { w: 1, h: {}, f: [], tot: 0, ach: {} }; };
   const escava = {
-    id: 'escava', name: 'mural · escavação coletiva', el: $('[data-scene=escava]'), POR: 6,
+    id: 'escava', name: 'mural · escavação coletiva', el: $('[data-scene=escava]'), POR: 10,
     setup() { this.sp = []; this.D = esLoad(); },
-    enter() { this.t0 = null; this.D = esLoad(); this.left = this.POR; this.cool = 0; this.nm = null; this.rev = null; },
+    enter() { this.t0 = null; this.D = esLoad(); this.left = this.POR; this.cool = 0; this.nm = null; this.rev = null; this.lastH = -9; this.blocked = null; this.newW = 0; },
     leave() { this.nmDone(); },
     holding() { return !!this.nm || (this.left < this.POR && performance.now() - (this.lastP || 0) < 20000); },
     geo() { const cell = Math.min(W * .62 / ES_C, H * .6 / ES_R), gw = cell * ES_C; return { cell, x0: W * .05 + (W * .64 - gw) / 2, y0: H * .3 }; },
@@ -7317,7 +7319,7 @@ function H_medalha() {
       const g = this.geo(), c = Math.floor((x - g.x0) / g.cell), r = Math.floor((y - g.y0) / g.cell); if (c < 0 || r < 0 || c >= ES_C || r >= ES_R) return;
       const i = r * ES_C + c; this.D = esLoad(); if (this.dug(i)) return; if (!this.open(i)) { this.blocked = { t: T, i }; return; }
       this.lastH = T; this.lastP = performance.now(); const t = esTipo(this.D.w, i), hp = ES_T[t].hp; this.D.h[i] = (this.D.h[i] || 0) + 1; this.D.tot = (this.D.tot || 0) + 1;
-      this.left--; if (this.left <= 0) this.cool = T + 8; const cx = g.x0 + (c + .5) * g.cell, cy = g.y0 + (r + .5) * g.cell;
+      this.left--; if (this.left <= 0) this.cool = T + 6; const cx = g.x0 + (c + .5) * g.cell, cy = g.y0 + (r + .5) * g.cell;
       burst(this.sp, cx, cy, 8, [ES_T[t].c, '#a08060', ES_T[t].o || '#999'], 150);
       if (this.D.h[i] >= hp) { this.D.ach[t] = (this.D.ach[t] || 0) + 1; burst(this.sp, cx, cy, t === 'diamante' || t === 'ouro' ? 60 : 16, [ES_T[t].o || ES_T[t].c, '#fff'], 260);
         if (t === 'ouro' || t === 'diamante') { this.rev = { t: T, k: t }; this.nm = { k: t, txt: '', last: T }; this.cool = 0; this.left = this.POR; }
@@ -7361,7 +7363,7 @@ function H_medalha() {
         T2(`${dia ? '💎' : '🥇'} ${f.n}`, px + u * 1.1, y + u * 1.12, u * .95, '#2a1a08', 700, 'left', 'sans-serif'); T2(new Date(f.t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }), px + pw - u * 1, y + u * 1.12, u * .75, 'rgba(42,26,8,.75)', 700, 'right', 'sans-serif'); });
       // limite por pessoa
       if (this.cool && T >= this.cool) { this.cool = 0; this.left = this.POR; } if (this.left < this.POR && !this.cool && performance.now() - (this.lastP || 0) > 20000) this.left = this.POR;
-      const ly = g.y0 + g.cell * ES_R + u * 1.4; if (!(this.blocked && T - this.blocked.t < .6)) { if (this.cool) T2('⛏️ sua vez acabou · a próxima pessoa já pode cavar', g.x0 + g.cell * ES_C / 2, ly, u * .95, '#9fd8a8', 700, 'center', 'sans-serif'); else T2('⛏️'.repeat(this.left) + '   toque nos blocos para cavar · os mais fundos guardam ouro e diamante', g.x0 + g.cell * ES_C / 2, ly, u * .9, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif'); }
+      const ly = g.y0 + g.cell * ES_R + u * 1.4; if (!(this.blocked && T - this.blocked.t < .6)) { if (this.cool) T2(`⛏️ sua vez acabou · picareta de volta em ${Math.max(1, Math.ceil(this.cool - T))} s`, g.x0 + g.cell * ES_C / 2, ly, u * .95, '#9fd8a8', 700, 'center', 'sans-serif'); else T2('⛏️'.repeat(this.left) + '   toque nos blocos para cavar · os mais fundos guardam ouro e diamante', g.x0 + g.cell * ES_C / 2, ly, u * .9, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif'); }
       if (this.newW && T - this.newW < 3) T2('⛰️ terreno novo!', g.x0 + g.cell * ES_C / 2, g.y0 + g.cell * ES_R / 2, u * 2.6, '#fff', 700, 'center', 'sans-serif');
     }
   };
@@ -7410,10 +7412,10 @@ function H_medalha() {
   const milhao = {
     id: 'milhao', name: 'mural · o botão de um milhão', el: $('[data-scene=milhao]'),
     setup() { this.sp = []; this.fl = []; this.D = miLoad(); },
-    enter() { this.t0 = null; this.D = miLoad(); this.mine = 0; this.party = null; },
+    enter() { this.t0 = null; this.D = miLoad(); this.mine = 0; this.party = null; this.press = 0; this.fl.length = 0; this.sp.length = 0; },
     holding() { return performance.now() - (this.lastP || 0) < 15000; },
     btn() { const r = Math.min(W, H) * .17; return { x: W * .4, y: H * .6, r }; },
-    tap(x, y) { const T = this.T || 0, b = this.btn(); if (Math.hypot(x - b.x, y - b.y) > b.r * 1.15) return; if (T - (this.lastT || -9) < .08) return; this.lastT = T; this.lastP = performance.now();
+    tap(x, y) { const T = this.T || 0, b = this.btn(); if (Math.hypot(x - b.x, y - b.y) > b.r * 1.15) return; const now = performance.now(); if (now - (this.lastMs || 0) < 30) return; this.lastMs = now; this.lastP = now;
       const d = miLoad(), before = d.n; d.n++; LS.set(MI_KEY, d); this.D = d; this.mine++; this.press = T; this.fl.push({ x: x + rnd(-20, 20), y: y - b.r * .6, t: T });
       const m = MI_MS.find(m => before < m[0] && d.n >= m[0]); if (m) { this.party = { t: T, m }; for (let k = 0; k < 4; k++) burst(this.sp, rnd(W * .15, W * .85), rnd(H * .3, H * .7), 50, ['#f2c46d', '#9fd8a8', '#ff8fa0', '#fff'], 420); } },
     frame(t, dt) {
@@ -7768,8 +7770,8 @@ function H_medalha() {
   const aniver = {
     id: 'aniver', name: 'aniversariantes do mês', el: $('[data-scene=aniver]'),
     setup() { this.sp = []; this.conf = []; },
-    skip() { const C = CT.get(), m = new Date().getMonth(); return !anivDe(C.aniv, m).length && !anivDe(C.aniv, (m + 1) % 12).length; },
-    enter() { this.t0 = null; const C = CT.get(), now = new Date(); this.m = now.getMonth(); this.L = anivDe(C.aniv, this.m); if (!this.L.length) { this.m = (this.m + 1) % 12; this.L = anivDe(C.aniv, this.m); } this.today = this.m === now.getMonth() ? now.getDate() : -1; this.boom = 0; },
+    skip() { const C = CT.get(), m = new Date().getMonth(); return !anivDe(C.aniv, m).length; },
+    enter() { this.t0 = null; const C = CT.get(), now = new Date(); this.m = now.getMonth(); this.L = anivDe(C.aniv, this.m); this.today = this.m === now.getMonth() ? now.getDate() : -1; this.boom = 0; },
     load() { this.enter(); },
     frame(t, dt) {
       const T = T3(this, t), u = Math.min(W / 88, H / 50), L = this.L || [];
@@ -7887,13 +7889,13 @@ function H_medalha() {
     const rawSet = (k, v) => { st.applying = true; try { _set.call(localStorage, k, JSON.stringify(v)); } catch (e) {} st.applying = false; };
     Storage.prototype.setItem = function (k, v) { _set.call(this, k, v); if (this === localStorage && !st.applying && KEYS.includes(k)) { st.dirty.add(k); clearTimeout(st.pt); st.pt = setTimeout(push, 2500); } };
     const byKey = (arr, f) => { const m = new Map(); (arr || []).forEach(x => m.set(f(x), x)); return [...m.values()]; };
-    const merge = (k, L, R) => {
+    const merge0 = (k, L, R) => {
       if (!R) return L; if (!L) return R;
       try {
         if (k === 'cgConteudo') return (L.ts || 0) >= (R.ts || 0) ? L : R;
         if (k === 'cgMuralDel') return [...new Set([...(L || []), ...(R || [])])].slice(-800);
         if (k === 'cgMural') { const del = new Set([...(rawGet('cgMuralDel') || []), ...(st.remoteDel || [])]); return byKey([...L, ...R], x => x.t + '|' + x.m).filter(x => !del.has(x.t)).sort((a, b) => b.t - a.t).slice(0, 600); }
-        if (k === 'cgRecordes') { const o = { __seed1: 1 }; new Set([...Object.keys(L), ...Object.keys(R)]).forEach(g => { if (g.startsWith('__')) return; const asc = ASC.test(g); o[g] = byKey([...(L[g] || []), ...(R[g] || [])], e => e.n + '|' + e.s).sort((a, b) => asc ? a.s - b.s : b.s - a.s).slice(0, 5); }); return o; }
+        if (k === 'cgRecordes') { const o = { __seed1: 1 }; new Set([...Object.keys(L), ...Object.keys(R)]).forEach(g => { if (g.startsWith('__') || g === 'z') return; const asc = ASC.test(g); o[g] = byKey([...(L[g] || []), ...(R[g] || [])], e => e.n + '|' + e.s).sort((a, b) => asc ? a.s - b.s : b.s - a.s).slice(0, 5); }); return o; }
         const newer = (a, b, f) => (f(a) || '') >= (f(b) || '') ? a : b;
         if (k === 'cgEmojis') { if (L.d !== R.d) return newer(L, R, x => x.d === hojeKey() ? '~' : x.d); return { d: L.d, e: byKey([...L.e, ...R.e], x => x.t + '|' + x.k + '|' + x.x).sort((a, b) => a.t - b.t).slice(-900) }; }
         if (k === 'cgSlideRx') { if (L.d !== R.d) return L.d === hojeKey() ? L : R; const c = JSON.parse(JSON.stringify(L.c)); Object.entries(R.c || {}).forEach(([s, m]) => { c[s] = c[s] || {}; Object.entries(m).forEach(([e, n]) => c[s][e] = Math.max(c[s][e] || 0, n)); }); return { d: L.d, c }; }
@@ -7908,6 +7910,11 @@ function H_medalha() {
         if (k === 'cgEnquete') { if (L.d !== R.d || L.q !== R.q) return L.d === hojeKey() ? L : R; return { d: L.d, q: L.q, v: L.v.map((n, i) => Math.max(n, R.v[i] || 0)) }; }
       } catch (e) {}
       return L;
+    };
+    const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
+    const merge = (k, L, R) => {
+      if (isObj(L) && isObj(R) && (L.z || 0) !== (R.z || 0)) return (L.z || 0) > (R.z || 0) ? L : R;
+      const r = merge0(k, L, R); if (isObj(r)) { const z = Math.max((isObj(L) && L.z) || 0, (isObj(R) && R.z) || 0); if (z) r.z = z; } return r;
     };
     const enc = v => ({ fields: { v: { stringValue: JSON.stringify(v) }, ts: { integerValue: String(Date.now()) } } });
     const dec = d => { try { return JSON.parse(d.fields.v.stringValue); } catch (e) { return null; } };
@@ -8282,7 +8289,7 @@ function H_medalha() {
       const today = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
       let D = null; const load = () => { try { D = JSON.parse(localStorage.getItem(RXK) || 'null'); } catch (e) { D = null; } if (!D || D.d !== today()) D = { d: today(), c: {} }; };
       const save = () => { try { localStorage.setItem(RXK, JSON.stringify(D)); } catch (e) {} };
-      const ok = s => s && !s.tap && !(window.__GAME_IDS && window.__GAME_IDS.has(s.id)) && !(window.__INTER_IDS && window.__INTER_IDS.has(s.id));
+      const ok = s => s && !s.tap && s.id !== 'amados' && s.id !== 'recordes' && !(window.__GAME_IDS && window.__GAME_IDS.has(s.id)) && !(window.__INTER_IDS && window.__INTER_IDS.has(s.id));
       const tot = id => Object.values(D.c[id] || {}).reduce((a, b) => a + b, 0);
       const up = (e, x, big) => { if (fly.childElementCount > 60) return; const el = document.createElement('i'); el.textContent = e; el.style.left = x + 'px'; el.style.setProperty('--dx', (Math.random() * 16 - 8) + 'vw'); el.style.setProperty('--d', (3.4 + Math.random() * 1.8) + 's'); el.style.setProperty('--s', (big ? 6 : 3.6 + Math.random() * 2) + 'vmin'); el.addEventListener('animationend', () => el.remove()); fly.appendChild(el); };
       let seen = null, timers = [];
@@ -8360,8 +8367,33 @@ function H_medalha() {
       $('#pin-new').onclick = () => { A.hidden = true; openPin('new', openAdm); };
       $('#cl-on').onclick = () => { const v = $('#cl-k').value.trim(), [pp, kk] = v.split(':'); if (!pp || !kk) { msg('Use o formato projeto:chave'); return; } try { localStorage.setItem('cgCloud', JSON.stringify({ p: pp, k: kk })); } catch (e) {} msg('Conectando… o painel vai recarregar.'); setTimeout(() => location.reload(), 900); };
       $('#cl-off').onclick = () => { try { localStorage.removeItem('cgCloud'); } catch (e) {} msg('Nuvem desligada. Recarregando…'); setTimeout(() => location.reload(), 900); };
+      const ZR = [
+        ['estrelas', '✨ Universo de estrelas', () => ({ n: 0, s: [], p: 0 }), 'cgEstrelas'],
+        ['arvore', '🎄 Árvore coletiva', () => ({ wk: semanaKey(), n: 0, o: [] }), 'cgArvore'],
+        ['escava', '⛏️ Escavação (terreno, minérios e placas)', () => ({ w: 1, h: {}, f: [], tot: 0, ach: {} }), 'cgEscava'],
+        ['placas', '🏅 Só as placas de honra da escavação', null, 'cgEscava'],
+        ['milhao', '🔴 Botão de um milhão', () => ({ n: 0 }), 'cgMilhao'],
+        ['mosaico', '🧩 Mosaico coletivo', () => ({ wk: semanaKey(), img: mosWeek() % MOS.length, r: [], n: 0 }), 'cgMosaico'],
+        ['muro', '📝 Muro de recados', null, 'cgMural'],
+        ['reacoes', '😊 Reações do dia', () => ({ d: hojeKey(), e: [] }), 'cgEmojis'],
+        ['slrx', '❤️ Reações nos slides e Mais amados da semana', null, 'cgSlideRx'],
+        ['enquete', '📊 Votos da enquete de hoje', null, 'cgEnquete'],
+        ['presentes', '🎁 Contador de presentes abertos', () => ({ d: hojeKey(), n: 0 }), 'cgPresentes']
+      ];
+      const zrDo = id => { const z = Date.now(), set = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }, get = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || 'null') || d; } catch (e) { return d; } };
+        const it = ZR.find(x => x[0] === id); if (!it) return;
+        if (id === 'placas') { const d = get('cgEscava', { w: 1, h: {}, f: [], tot: 0, ach: {} }); d.f = []; d.z = z; set('cgEscava', d); }
+        else if (id === 'muro') { const L = get('cgMural', []), del = get('cgMuralDel', []); set('cgMuralDel', [...new Set([...del, ...L.map(x => x.t)])].slice(-800)); set('cgMural', []); }
+        else if (id === 'slrx') { set('cgSlideRx', { d: (() => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); })(), c: {}, z }); set('cgSlideRxW', { wk: semanaKey(), c: {}, z }); }
+        else if (id === 'enquete') { const d = get('cgEnquete', null); if (d && d.v) { d.v = d.v.map(() => 0); d.z = z; set('cgEnquete', d); } }
+        else { const v = it[2](); v.z = z; set(it[3], v); }
+        try { if (cur && cur.enter) cur.enter(); } catch (e) {} };
+      const zrL = $('#zr-l'); ZR.forEach(([id, nome]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'dng'; b.textContent = 'Zerar · ' + nome; let ask = 0;
+        b.onclick = () => { if (!ask) { ask = 1; b.textContent = 'Toque de novo para zerar · ' + nome; setTimeout(() => { ask = 0; b.textContent = 'Zerar · ' + nome; }, 4000); return; } ask = 0; zrDo(id); b.textContent = 'Zerar · ' + nome; msg(nome + ': zerado.'); };
+        zrL.appendChild(b); });
+      let zrAllAsk = 0; $('#zr-all').onclick = () => { if (!zrAllAsk) { zrAllAsk = 1; $('#zr-all').textContent = 'Toque de novo para zerar TUDO'; setTimeout(() => { zrAllAsk = 0; $('#zr-all').textContent = 'Zerar TUDO acima'; }, 4000); return; } zrAllAsk = 0; ZR.forEach(x => { if (x[0] !== 'placas') zrDo(x[0]); }); $('#zr-all').textContent = 'Zerar TUDO acima'; msg('Murais e telas coletivas zerados.'); };
       let zeroAsk = 0; $('#rc-zero').onclick = () => { if (!zeroAsk) { zeroAsk = 1; $('#rc-zero').textContent = 'Toque de novo para confirmar'; setTimeout(() => { zeroAsk = 0; $('#rc-zero').textContent = 'Zerar todos os recordes'; }, 4000); return; }
-        try { localStorage.setItem('cgRecordes', JSON.stringify({ __seed1: 1 })); } catch (e) {} zeroAsk = 0; $('#rc-zero').textContent = 'Zerar todos os recordes'; msg('Recordes zerados.'); };
+        try { localStorage.setItem('cgRecordes', JSON.stringify({ __seed1: 1, z: Date.now() })); } catch (e) {} zeroAsk = 0; $('#rc-zero').textContent = 'Zerar todos os recordes'; msg('Recordes zerados.'); };
       setInterval(() => { if (!A.hidden) { cloudSt(); if (!window.__adminOk()) closeAdm(); } }, 2000);
       // entradas: link no menu e toque longo no canto superior esquerdo
       $('#sx-adml').addEventListener('click', e => { e.stopPropagation(); window.__adminOk() ? openAdm() : openPin(); });
