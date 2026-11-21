@@ -815,6 +815,8 @@
   [data-scene=reflexo],[data-scene=d2048],[data-scene=basquete],[data-scene=tubos],[data-scene=corte],[data-scene=penalti],[data-scene=arvore]{touch-action:none}
   [data-scene=estrelas]{background:radial-gradient(120% 100% at 50% 30%,#141033 0%,#05040f 60%,#020208 100%);touch-action:none}
   [data-scene=estrelas] .cam{animation:none!important;transform:none!important}
+  [data-scene=amados]{background:radial-gradient(120% 100% at 50% 20%,#3a1430 0%,#16081a 55%,#07030a 100%)}
+  [data-scene=amados] .cam{animation:none!important;transform:none!important}
   [data-scene=tempo]{background:radial-gradient(120% 100% at 40% 40%,#1c1a3a 0%,#06060f 100%);--green:#ffd36b}
   [data-scene=tempo] .cam{animation:none!important;transform:none!important}
   [data-scene=tempo]{touch-action:none}
@@ -1639,6 +1641,9 @@
     <section class="scene" data-scene="recordes"><div class="cam">
       <div class="game-top copy"><div class="label">● Hall da fama</div><h1 class="title"><span>Nossos</span><em>recordistas</em></h1></div>
     </div></section>
+    <section class="scene" data-scene="amados"><div class="cam">
+      <div class="game-top copy"><div class="label">● Reações</div><h1 class="title"><span>Os mais amados</span><em>da semana</em></h1></div>
+    </div></section>
     <section class="scene" data-scene="enquete"><div class="cam">
       <div class="game-top copy"><div class="label">● Enquete do dia</div><h1 class="title"><span>E aí,</span><em>o que você acha?</em></h1></div>
     </div></section>
@@ -1756,13 +1761,13 @@
 const CONFIG = {
   segundosPorCena: 18,            // tempo padrão de cada cena
   duracaoEspecial: {              // cenas que precisam de mais tempo (segundos)
-    arvore: 22, pixel: 22, estrelas: 22,
+    arvore: 22, pixel: 22, estrelas: 22, amados: 16,
     terminal: 36, decripta: 32, chuva: 24, hash: 20, circuito: 22, atena: 22, sged: 24, tor: 20, consulta: 24,
     inst: 20, medi: 20, ops: 22, coordenadora: 16, contagem: 24, retro: 50, phishing: 22, senha: 24, golpe: 22,
     particulas: 24, lareira2: 20, soc: 22, virada: 24, floco: 20, estrela: 20, desejos: 22, warp: 18, consulta2: 24, teclado: 22, aurora: 20, fabricio: 16, terminal2: 24, consulta3: 24, presentes: 15, globoneve: 15, fogos: 15, treno: 20, bolas: 15, boneco: 15, pisca: 15, raspa: 15, caca: 15, pegue: 15, memoria: 15, rena: 15, velha: 15, quiz: 15, sinos: 15, palavras: 15, puzzle: 15, difs: 15, labirinto: 15, corrida: 15, carlos: 16, memlogos: 15, memequipe: 15, empilha: 15, cofre: 15, cifra: 15, quizpp: 15, campo: 15, detetive: 15, lig4: 15, muro: 22, pixel: 18, reacoes: 18, naval: 15, tempo: 15, forca: 15, recordes: 22, enquete: 18, hoje: 16, aniver: 16, convite: 12
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'coordenadora', 'reacoes', 'arvore', 'estrelas', 'rena', 'logocodigo', 'enquete', 'recordes', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'penalti', 'espiral', 'estrela', 'virada', 'convite'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'coordenadora', 'reacoes', 'arvore', 'estrelas', 'rena', 'logocodigo', 'enquete', 'recordes', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'penalti', 'espiral', 'estrela', 'virada', 'convite'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   vitrine: true,                 // jogos saem da rotação automática (ficam na central e nos convites)
   convidarACada: 4,              // a cada N slides da vitrine entra um convite para jogar
@@ -6498,13 +6503,18 @@ function H_medalha() {
   };
 
   /* ---------- placas de anúncio com as logos (faixa pré-desenhada, leve) ---------- */
-  const AD_IM = [MEMIMG.logos[0], MEMIMG.logos[1], MEMIMG.logos[3], MEMIMG.logos[8]].map(src => { const im = new Image(); im.src = src; return im; }).concat([PZ_IMG[2]]);
+  const AD_IM = [MEMIMG.logos[0], MEMIMG.logos[1], MEMIMG.logos[3], MEMIMG.logos[8], MEMIMG.logos[2]].map(src => { const im = new Image(); im.src = src; return im; });
   let AD_STRIP = null;
   const adStrip = () => {
     if (AD_STRIP) return AD_STRIP; if (!AD_IM.every(im => im && im.complete && im.naturalWidth)) return null;
-    const H0 = 80, pad = 46, ws = AD_IM.map(im => Math.round(H0 * .78 * im.naturalWidth / im.naturalHeight)), tot = ws.reduce((a, b) => a + b + pad, 0);
+    const H0 = 80, pad = 46, ws = AD_IM.map((im, i) => Math.round(H0 * (i === 3 ? .62 : .78) * im.naturalWidth / im.naturalHeight)), tot = ws.reduce((a, b) => a + b + pad, 0);
     const c = document.createElement('canvas'); c.width = tot; c.height = H0; const g = c.getContext('2d'); let x = pad / 2;
-    AD_IM.forEach((im, i) => { g.drawImage(im, x, H0 * .11, ws[i], H0 * .78); x += ws[i] + pad; g.fillStyle = 'rgba(255,211,107,.6)'; g.beginPath(); g.arc(x - pad / 2, H0 / 2, 3, 0, TAU); g.fill(); });
+    const clean = (im, i, w, h) => { const t = document.createElement('canvas'); t.width = w; t.height = h; const q = t.getContext('2d'); q.drawImage(im, 0, 0, w, h); if (i < 3) return t;
+      const d = q.getImageData(0, 0, w, h), a = d.data; for (let k = 0; k < a.length; k += 4) { const r = a[k], gg = a[k + 1], b = a[k + 2], mx = Math.max(r, gg, b);
+        if (i === 3) a[k + 3] = Math.min(a[k + 3], Math.max(0, Math.min(255, (mx - 28) * 6)));
+        else if (r - gg < 60 && a[k + 3] > 0) { a[k] = a[k + 1] = a[k + 2] = 245; } }
+      q.putImageData(d, 0, 0); return t; };
+    AD_IM.forEach((im, i) => { const hh = Math.round(H0 * (i === 3 ? .62 : .78)), ww = Math.round(hh * im.naturalWidth / im.naturalHeight); g.drawImage(clean(im, i, ww, hh), x, (H0 - hh) / 2); x += ws[i] + pad; g.fillStyle = 'rgba(255,211,107,.55)'; g.beginPath(); g.arc(x - pad / 2, H0 / 2, 3, 0, TAU); g.fill(); });
     return (AD_STRIP = c);
   };
   const adBoard = (x, y, w, h, speed, round) => {
@@ -6969,15 +6979,23 @@ function H_medalha() {
   const arvore = {
     id: 'arvore', name: 'mural · árvore coletiva', el: $('[data-scene=arvore]'),
     setup() { this.sp = []; this.D = avLoad(); this.snow = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random(), r: rnd(1, 2.6), v: rnd(.03, .08) })); },
-    enter() { this.t0 = null; this.D = avLoad(); this.newO = null; this.left = 3; this.cool = 0; },
-    holding() { return this.left < 3 && performance.now() - (this.lastP || 0) < 20000; },
+    enter() { this.t0 = null; this.D = avLoad(); this.newO = null; this.left = 3; this.cool = 0; this.ini = null; },
+    leave() { this.iniDone(); },
+    holding() { return !!this.ini || (this.left < 3 && performance.now() - (this.lastP || 0) < 20000); },
+    KB: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ⌫✓',
+    kbGeo() { const u = UU(), ks = u * 2.7, gp = u * .45, x0 = W * .64, y0 = H * .4; return { u, ks, gp, x0, y0, cols: 7 }; },
+    iniDone() { const I = this.ini; this.ini = null; if (!I) return; const txt = I.txt.trim(); if (!txt) return; this.D = avLoad(); const o = this.D.o.find(e => e.t === I.o.t); if (o) { o.i = txt; LS.set(AV_KEY, this.D); } },
+    iniTap(x, y) { const g = this.kbGeo(); for (let k = 0; k < this.KB.length; k++) { const c = k % g.cols, r = Math.floor(k / g.cols), kx = g.x0 + c * (g.ks + g.gp), ky = g.y0 + r * (g.ks + g.gp); if (x > kx && x < kx + g.ks && y > ky && y < ky + g.ks) { const ch = this.KB[k]; this.ini.last = this.T; this.ini.hit = { k, t: this.T };
+          if (ch === '✓') this.iniDone(); else if (ch === '⌫') this.ini.txt = this.ini.txt.slice(0, -1); else if (this.ini.txt.length < 3) { this.ini.txt += ch; this.ini.o.i = this.ini.txt; } return true; } }
+      const sx = g.x0, sy = g.y0 + 4 * (g.ks + g.gp) + g.u * .4; if (x > sx && x < sx + g.u * 8 && y > sy && y < sy + g.u * 2.4) { this.ini.txt = ''; this.ini.o.i = ''; this.iniDone(); return true; } return false; },
     tree() { const g = Math.min(1, (this.D.n || 0) / 240), h = H * (.62 + .09 * sm(g)), bx = W * .34, by = H * .91, w = h * .68; return { g, h, bx, by, top: by - h, w }; },
     halfAt(tr, ty) { return tr.w / 2 * ty; },
     tap(x, y) {
+      if (this.ini) { if (this.iniTap(x, y)) return; this.iniDone(); }
       const tr = this.tree(), ty = (y - tr.top) / (tr.h * .86); if (ty < .08 || ty > 1) return; const hw = this.halfAt(tr, ty), tx = (x - tr.bx) / hw; if (Math.abs(tx) > .95) return;
       if (this.cool && this.T < this.cool) return; if ((this.T || 0) - (this.lastO || -9) < .6) return; this.lastO = this.T; this.lastP = performance.now(); this.left = (this.left || 3) - 1; if (this.left <= 0) this.cool = this.T + 8;
       const o = { x: +tx.toFixed(3), y: +ty.toFixed(3), c: Math.floor(Math.random() * AV_ORN.length), t: Date.now() }; this.D = avLoad(); this.D.o.push(o); if (this.D.o.length > 160) this.D.o.shift(); LS.set(AV_KEY, this.D);
-      this.newO = { o, t: this.T }; burst(this.sp, x, y, 14, ['#ffd36b', '#fff', AV_ORN[o.c]], 160);
+      this.newO = { o, t: this.T }; burst(this.sp, x, y, 14, ['#ffd36b', '#fff', AV_ORN[o.c]], 160); this.ini = { o, txt: '', t: this.T, last: this.T };
     },
     frame(t, dt) {
       const T = this.T = T3(this, t), u = UU(); if (this.D.wk !== semanaKey()) this.D = avLoad();
@@ -7015,10 +7033,11 @@ function H_medalha() {
       // brilhinhos
       for (let i = 0; i < 14; i++) { const ty = .15 + uvR(i * 5 + 1) * .8, x = B + (uvR(i * 5 + 2) * 2 - 1) * this.halfAt(tr, ty) * .8, y = tr.top + ch * ty, k = Math.max(0, Math.sin(T * 1.7 + i * 2.3)); if (k < .6) continue; const r = u * .9 * (k - .6) / .4; ctx.strokeStyle = `rgba(255,255,255,${k * .8})`; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x - r, y); ctx.lineTo(x + r, y); ctx.moveTo(x, y - r); ctx.lineTo(x, y + r); ctx.stroke(); }
       // enfeites das pessoas
-      this.D.o.forEach(o => { const hw = this.halfAt(tr, o.y), x = tr.bx + o.x * hw, y = tr.top + ch * o.y; let s = u * 1.05; if (this.newO && this.newO.o === o) { const k = Math.min(1, (T - this.newO.t) / .3); s *= .4 + .6 * k + .25 * Math.sin(k * Math.PI); }
+      this.D.o.forEach(o => { const hw = this.halfAt(tr, o.y), x = tr.bx + o.x * hw, y = tr.top + ch * o.y; let s = u * (o.i ? 1.35 : 1.05); if (this.newO && this.newO.o === o) { const k = Math.min(1, (T - this.newO.t) / .3); s *= .4 + .6 * k + .25 * Math.sin(k * Math.PI); }
         const c = AV_ORN[o.c]; ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.beginPath(); ctx.arc(x + s * .18, y + s * .22, s, 0, TAU); ctx.fill();
         const gr = ctx.createRadialGradient(x - s * .35, y - s * .35, s * .08, x, y, s); gr.addColorStop(0, '#fff'); gr.addColorStop(.28, c); gr.addColorStop(1, shade(c, -.35)); ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(x, y, s, 0, TAU); ctx.fill();
-        ctx.fillStyle = '#d9b46a'; ctx.fillRect(x - s * .25, y - s * 1.15, s * .5, s * .3); ctx.strokeStyle = 'rgba(217,180,106,.8)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y - s * 1.25, s * .18, 0, TAU); ctx.stroke(); });
+        ctx.fillStyle = '#d9b46a'; ctx.fillRect(x - s * .25, y - s * 1.15, s * .5, s * .3); ctx.strokeStyle = 'rgba(217,180,106,.8)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y - s * 1.25, s * .18, 0, TAU); ctx.stroke();
+        if (o.i) T2(o.i, x, y + s * .06, s * (o.i.length > 2 ? .62 : .8), '#fff', 800, 'center', 'sans-serif'); });
       // estrela com raios
       if (n >= 80) { const k = .85 + .15 * Math.sin(T * 2.4), r = u * 2.8 * k, sy = tr.top - r * .2; ga('#ffd36b', r * 4.5, tr.bx, sy, .35);
         ctx.save(); ctx.translate(tr.bx, sy); ctx.rotate(T * .25); ctx.strokeStyle = 'rgba(255,224,140,.35)'; ctx.lineWidth = 2; ctx.beginPath(); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; ctx.moveTo(Math.cos(a) * r * 1.3, Math.sin(a) * r * 1.3); ctx.lineTo(Math.cos(a) * r * (i % 2 ? 1.6 : 1.95), Math.sin(a) * r * (i % 2 ? 1.6 : 1.95)); } ctx.stroke(); ctx.restore();
@@ -7028,6 +7047,15 @@ function H_medalha() {
         ctx.fillStyle = c; ctx.fillRect(x - s / 2, y, s, s); ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(x, y, s / 2, s); ctx.fillStyle = shade(c, .15); ctx.fillRect(x - s * .55, y - s * .02, s * 1.1, s * .2);
         ctx.fillStyle = rb; ctx.fillRect(x - s * .07, y, s * .14, s); ctx.fillRect(x - s / 2, y + s * .45, s, s * .12);
         ctx.beginPath(); ctx.ellipse(x - s * .16, y - s * .06, s * .16, s * .09, -.5, 0, TAU); ctx.ellipse(x + s * .16, y - s * .06, s * .16, s * .09, .5, 0, TAU); ctx.fill(); } }
+      // teclado das iniciais (opcional)
+      if (this.ini && T - this.ini.last > 12) this.iniDone();
+      if (this.ini) { const g = this.kbGeo();
+        T2('Quer pôr suas iniciais no enfeite?', g.x0, g.y0 - g.u * 4.6, g.u * 1.05, '#ffd36b', 700, 'left', 'sans-serif');
+        ctx.fillStyle = 'rgba(255,255,255,.08)'; rr2(g.x0, g.y0 - g.u * 3.6, g.u * 9, g.u * 2.6, 8); ctx.fill(); T2(this.ini.txt || '—', g.x0 + g.u * 4.5, g.y0 - g.u * 2.3, g.u * 1.6, '#fff', 700, 'center', 'sans-serif');
+        for (let k = 0; k < this.KB.length; k++) { const c = k % g.cols, r = Math.floor(k / g.cols), kx = g.x0 + c * (g.ks + g.gp), ky = g.y0 + r * (g.ks + g.gp), ch = this.KB[k], hit = this.ini.hit && this.ini.hit.k === k && T - this.ini.hit.t < .15;
+          ctx.fillStyle = hit ? '#ffd36b' : ch === '✓' ? 'rgba(61,255,168,.25)' : 'rgba(255,255,255,.1)'; rr2(kx, ky, g.ks, g.ks, 7); ctx.fill(); T2(ch, kx + g.ks / 2, ky + g.ks / 2 + 1, g.ks * .45, hit ? '#1a1206' : '#fff', 700, 'center', 'sans-serif'); }
+        const sy = g.y0 + 4 * (g.ks + g.gp) + g.u * .4; ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 1; rr2(g.x0, sy, g.u * 8, g.u * 2.4, 8); ctx.stroke(); T2('pular', g.x0 + g.u * 4, sy + g.u * 1.2, g.u * .95, 'rgba(255,255,255,.75)', 700, 'center', 'sans-serif');
+        stepBurst(this.sp, dt, 300); return; }
       // painel
       const px = W * .66;
       T2(String(n), px, H * .44, u * 5.4, '#fff', 400, 'left', SERIF);
@@ -7060,6 +7088,9 @@ function H_medalha() {
     id: 'estrelas', name: 'mural · universo de estrelas', el: $('[data-scene=estrelas]'),
     setup() { this.sp = []; this.D = uvLoad(); this.bg = Array.from({ length: 220 }, () => ({ x: Math.random(), y: Math.random(), r: rnd(.3, 1.1), p: rnd(0, TAU) })); },
     POR: 1,
+    EQ: ['Dr. Fabrício', 'Dr. Pedro', 'Dr. Diego', 'Dr. Márcio', 'Duda', 'Gabriel'],
+    nome(g) { if (!this.nomes || performance.now() - (this.nomesT || 0) > 60000) { const A = ((CT.get().aniv) || []).map(a => a && a.n && String(a.n).trim()).filter(Boolean); this.nomes = [...new Set([...A, ...this.EQ])]; this.nomesT = performance.now(); }
+      return g < this.nomes.length ? '✦ ' + this.nomes[g] : UV_NOMES[(g - this.nomes.length) % UV_NOMES.length]; },
     enter() { this.t0 = null; this.D = uvLoad(); this.newS = null; this.left = this.POR; this.cool = 0; },
     holding() { return this.left < this.POR && performance.now() - (this.lastP || 0) < 20000; },
     tap(x, y) {
@@ -7090,7 +7121,7 @@ function H_medalha() {
         const P = L.map(s => [s.x * W, s.y * H]), used = [0]; ctx.strokeStyle = `rgba(168,216,255,${a})`; ctx.lineWidth = 1.2; ctx.beginPath();
         while (used.length < P.length) { let bi = -1, bj = -1, bd = 1e9; used.forEach(i => P.forEach((p, j) => { if (used.includes(j)) return; const d = Math.hypot(p[0] - P[i][0], p[1] - P[i][1]); if (d < bd) { bd = d; bi = i; bj = j; } })); used.push(bj); ctx.moveTo(P[bi][0], P[bi][1]); ctx.lineTo(P[bj][0], P[bj][1]); }
         ctx.stroke();
-        if (full) { const cx = P.reduce((s, p) => s + p[0], 0) / P.length, my = Math.max(...P.map(p => p[1])); T2(UV_NOMES[g % UV_NOMES.length], cx, my + u * 1.6, u * .85, `rgba(200,225,255,${a})`, 400, 'center', SERIF); }
+        if (full) { const cx = P.reduce((s, p) => s + p[0], 0) / P.length, my = Math.max(...P.map(p => p[1])); T2(this.nome(+g), cx, my + u * 1.6, u * .85, `rgba(200,225,255,${a})`, 400, 'center', SERIF); }
       });
       // estrelas
       S.forEach((s, i) => { const x = s.x * W, y = s.y * H; let r = u * (.28 + (i % 3) * .1); const tw = .7 + .3 * Math.sin(T * 2 + i * 1.7);
@@ -7115,7 +7146,40 @@ function H_medalha() {
 
 
 
-  /* ---------- forca natalina (boneco de neve derrete a cada erro) ---------- */
+  /* ---------- os mais amados da semana (reações nos slides) ---------- */
+  const AMW_KEY = 'cgSlideRxW';
+  const amwLoad = () => { const d = LS.get(AMW_KEY, null); return d && d.wk === semanaKey() && d.c ? d : { wk: semanaKey(), c: {} }; };
+  window.__amwAdd = (id, em) => { const d = amwLoad(); const c = d.c[id] || (d.c[id] = {}); c[em] = (c[em] || 0) + 1; LS.set(AMW_KEY, d); };
+  const amados = {
+    id: 'amados', name: 'os mais amados da semana', el: $('[data-scene=amados]'),
+    setup() { this.im = {}; this.fl = []; },
+    list() { const d = amwLoad(); return Object.entries(d.c).map(([id, m]) => ({ id, m, n: Object.values(m).reduce((a, b) => a + b, 0), s: ALL.find(x => x.id === id) })).filter(x => x.s && x.n > 0).sort((a, b) => b.n - a.n).slice(0, 3); },
+    skip() { return !this.list().length; },
+    enter() { this.t0 = null; this.L = this.list(); this.fl.length = 0; },
+    thumb(id) { if (this.im[id]) return this.im[id]; const T0 = window.__THUMBS; if (!T0 || !T0[id]) return null; const im = new Image(); im.src = T0[id]; return (this.im[id] = im); },
+    frame(t, dt) {
+      const T = T3(this, t), u = Math.min(W / 88, H / 50), L = this.L || [], n = L.length; if (!n) return;
+      const cw = Math.min(W * .27, (W * .86 - u * 2 * (n - 1)) / n), chh = cw * .62, gap = u * 2, tot = n * cw + (n - 1) * gap, x0 = (W - tot) / 2, ord = n === 3 ? [1, 0, 2] : n === 2 ? [0, 1] : [0];
+      ord.forEach((ri, col) => { const e = L[ri]; if (!e) return; const k = sm(Math.min(1, Math.max(0, (T - .3 - (2 - ri) * .35) / .6))), x = x0 + col * (cw + gap), lift = ri === 0 ? H * .05 : 0, y = H * .34 - lift + (1 - k) * u * 3;
+        ctx.globalAlpha = k; ctx.fillStyle = ri === 0 ? 'rgba(255,211,107,.14)' : 'rgba(255,255,255,.06)'; rr2(x - u * .8, y - u * .8, cw + u * 1.6, chh + u * 9.4, 16); ctx.fill(); ctx.strokeStyle = ri === 0 ? 'rgba(255,211,107,.6)' : 'rgba(255,255,255,.18)'; ctx.lineWidth = 1.5; ctx.stroke();
+        const im = this.thumb(e.id); ctx.save(); rr2(x, y, cw, chh, 10); ctx.clip(); if (im && im.complete && im.naturalWidth) ctx.drawImage(im, x, y, cw, chh); else { ctx.fillStyle = '#1a1f36'; ctx.fillRect(x, y, cw, chh); } ctx.restore();
+        if (ri === 0) ga('#ffd36b', cw * .6, x + cw / 2, y, .18 + .06 * Math.sin(T * 2));
+        T2(['🥇', '🥈', '🥉'][ri], x + u * 1.6, y + u * 1.6, u * 2.2, '#000', 400, 'center', 'sans-serif');
+        const nm = e.s.name.replace(/^(jogo|mural) · /, ''); ctx.font = `700 ${u * 1.2}px sans-serif`; const fs = Math.min(u * 1.2, u * 1.2 * (cw - u) / Math.max(1, ctx.measureText(nm).width));
+        T2(nm.charAt(0).toUpperCase() + nm.slice(1), x + cw / 2, y + chh + u * 2, fs, '#fff', 700, 'center', 'sans-serif');
+        const top = Object.entries(e.m).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([em, c]) => `${em} ${c}`).join('   ');
+        T2(top, x + cw / 2, y + chh + u * 4.4, u * 1.05, 'rgba(255,255,255,.85)', 600, 'center', 'sans-serif');
+        T2(`${e.n} ${e.n === 1 ? 'reação' : 'reações'}`, x + cw / 2, y + chh + u * 6.6, u * .9, ri === 0 ? '#ffd36b' : 'rgba(255,255,255,.6)', 700, 'center', 'sans-serif');
+        ctx.globalAlpha = 1;
+        if (k >= 1 && Math.random() < dt * .8) { const em = Object.keys(e.m)[Math.floor(Math.random() * Object.keys(e.m).length)]; this.fl.push({ x: x + cw * (.2 + Math.random() * .6), y: y + chh, em, t: T }); } });
+      this.fl = this.fl.filter(f => T - f.t < 2.2); this.fl.forEach(f => { const a = (T - f.t) / 2.2; ctx.globalAlpha = 1 - a; T2(f.em, f.x, f.y - a * H * .18, u * 1.6, '#000', 400, 'center', 'sans-serif'); }); ctx.globalAlpha = 1;
+      T2('reaja nos slides com os emojis do lado direito ❤️ — o ranking zera toda segunda', W / 2, H * .9, u * .95, 'rgba(255,255,255,.55)', 600, 'center', 'sans-serif');
+    }
+  };
+  window.__G14 = { amados };
+
+  
+/* ---------- forca natalina (boneco de neve derrete a cada erro) ---------- */
   const FO_W = [
     ['PRESENTE', 'o que se troca no Natal'], ['RENA', 'puxa o trenó'], ['PANETONE', 'tem frutas cristalizadas'], ['RABANADA', 'pão frito com açúcar e canela'], ['GUIRLANDA', 'enfeite redondo da porta'],
     ['ESTRELA', 'vai no topo da árvore'], ['TRENÓ', 'o veículo do Noel'], ['PRESÉPIO', 'cena do nascimento'], ['CEIA', 'jantar da noite de Natal'], ['CHAMINÉ', 'por onde o Noel entra'],
@@ -7214,7 +7278,7 @@ function H_medalha() {
       const T = T3(this, t), u = Math.min(W / 88, H / 50);
       // confete dourado bem leve ao fundo
       this.conf.forEach(c => { c.y += c.v * dt * .4; if (c.y > 1) { c.y = 0; c.x = Math.random(); } ctx.globalAlpha = .35; ctx.fillStyle = c.c; ctx.fillRect(c.x * W, c.y * H, 3, 6); }); ctx.globalAlpha = 1;
-      if (!this.G.length) { T2('Ainda não há recordistas.', W / 2, H * .5, u * 2.4, '#fff3d6', 400, 'center', SERIF); T2('Jogue, bata um recorde e deixe seu nome aqui! 🏆', W / 2, H * .6, u * 1.3, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif'); adBoard(W * .04, H * .9, W * .74, H * .055, 18, u * .6); return; }
+      if (!this.G.length) { T2('Ainda não há recordistas.', W / 2, H * .5, u * 2.4, '#fff3d6', 400, 'center', SERIF); T2('Jogue, bata um recorde e deixe seu nome aqui! 🏆', W / 2, H * .6, u * 1.3, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif'); return; }
       // pódio dos campeões (quem tem mais recordes)
       const px = W * .04, pw = W * .36, base = H * .84, sw = pw / 3, hs = [H * .2, H * .28, H * .14], ord = [1, 0, 2], cols = [['#e3e7ef', '#9aa3b5'], ['#ffe08a', '#d49a2a'], ['#f0b88a', '#a8642e']];
       T2('👑 CAMPEÕES', px + pw / 2, H * .27, u * 1.05, '#ffd36b', 700, 'center', 'sans-serif');
@@ -7243,7 +7307,6 @@ function H_medalha() {
         const rest = g.L.slice(1).map((e, k) => `${k ? '🥉' : '🥈'} ${e.n} ${hfFmt(g.k, e.s)}`).join('    '); if (rest) T2(rest, x + u * 1.5, y + ch * .8, this.fit(rest, cw - u * 2.7, u * .8, 600), 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
         ctx.globalAlpha = 1; });
       if (pages > 1) for (let p = 0; p < pages; p++) { ctx.fillStyle = p === this.page ? '#ffd36b' : 'rgba(255,255,255,.3)'; ctx.beginPath(); ctx.arc(ax + aw / 2 + (p - (pages - 1) / 2) * u * 1.8, ay + H * .62 + u * 1.2, p === this.page ? 5 : 3.5, 0, TAU); ctx.fill(); }
-      adBoard(W * .04, H * .9, W * .74, H * .055, 18, u * .6);
     }
   };
 
@@ -7430,8 +7493,8 @@ function H_medalha() {
     }
   };
 
-  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, penalti, arvore, estrelas, forca, recordes, enquete, hoje, aniver, convite];
-  const CANVAS = new Set(['logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'penalti', 'arvore', 'estrelas', 'forca', 'recordes', 'enquete', 'hoje', 'aniver', 'convite']);
+  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, penalti, arvore, estrelas, amados, forca, recordes, enquete, hoje, aniver, convite];
+  const CANVAS = new Set(['logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'penalti', 'arvore', 'estrelas', 'amados', 'forca', 'recordes', 'enquete', 'hoje', 'aniver', 'convite']);
   ALL.forEach(s => { s.cam = s.el.querySelector('.cam'); s.canvas = CANVAS.has(s.id); });
 
   /* ---------- jogos: botão "Iniciar jogo" e espera de até 2 min sem toque ---------- */
@@ -7443,7 +7506,6 @@ function H_medalha() {
   const recCorner = s => {
     if (NE.on) return; const id = s.recId ? s.recId() : s.id, hf = HF_G.find(g => g[0] === id), k = hf ? hf[2] : RC_X[id]; if (!k) return;
     const L = REC.list(id).slice(0, 3), u = Math.min(W / 88, H / 50), x = u * 2, y = H * .14, lh = u * 1.9, w = u * 17, h = u * 2.6 + Math.max(1, L.length) * lh;
-    if (AD_G.has(s.id)) adBoard(x, y + h + u * .8, w, u * 3, 16, u * .7);
     ctx.save(); ctx.globalAlpha = 1; ctx.fillStyle = 'rgba(6,8,20,.55)'; rr2(x, y, w, h, u * .9); ctx.fill(); ctx.strokeStyle = 'rgba(255,211,107,.28)'; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
     T2('🏆 RECORDISTAS', x + u * 1, y + u * 1.35, u * .8, '#ffd36b', 700, 'left', 'sans-serif');
     if (!L.length) { T2('seja o primeiro!', x + u * 1, y + u * 2.6 + lh * .5, u * .9, 'rgba(255,255,255,.75)', 600, 'left', 'sans-serif'); return; }
@@ -7479,7 +7541,7 @@ function H_medalha() {
 
   /* ================= backup na nuvem (Firebase Firestore via REST) ================= */
   const SY = (() => {
-    const KEYS = ['cgMural', 'cgMuralDel', 'cgPixel', 'cgEmojis', 'cgRecordes', 'cgSlideRx', 'cgPresentes', 'cgEnquete', 'cgConteudo', 'cgMosaico', 'cgArvore', 'cgEstrelas'];
+    const KEYS = ['cgMural', 'cgMuralDel', 'cgPixel', 'cgEmojis', 'cgRecordes', 'cgSlideRx', 'cgPresentes', 'cgEnquete', 'cgConteudo', 'cgMosaico', 'cgArvore', 'cgEstrelas', 'cgSlideRxW'];
     const ASC = /^(memoria|memlogos|memequipe|puzzle|palavras|difs|labirinto|corrida|cofre|campo|detetive|naval|tempo.*|rf\d+)$/;
     const st = { on: false, last: 0, err: '', busy: false, dirty: new Set(), applying: false };
     window.__cloud = st;
@@ -7505,6 +7567,7 @@ function H_medalha() {
         const newer = (a, b, f) => (f(a) || '') >= (f(b) || '') ? a : b;
         if (k === 'cgEmojis') { if (L.d !== R.d) return newer(L, R, x => x.d === hojeKey() ? '~' : x.d); return { d: L.d, e: byKey([...L.e, ...R.e], x => x.t + '|' + x.k + '|' + x.x).sort((a, b) => a.t - b.t).slice(-900) }; }
         if (k === 'cgSlideRx') { if (L.d !== R.d) return L.d === hojeKey() ? L : R; const c = JSON.parse(JSON.stringify(L.c)); Object.entries(R.c || {}).forEach(([s, m]) => { c[s] = c[s] || {}; Object.entries(m).forEach(([e, n]) => c[s][e] = Math.max(c[s][e] || 0, n)); }); return { d: L.d, c }; }
+        if (k === 'cgSlideRxW') { if (L.wk !== R.wk) return L.wk === semanaKey() ? L : R; const c = JSON.parse(JSON.stringify(L.c || {})); Object.entries(R.c || {}).forEach(([s2, m]) => { c[s2] = c[s2] || {}; Object.entries(m).forEach(([e2, n2]) => c[s2][e2] = Math.max(c[s2][e2] || 0, n2)); }); return { wk: L.wk, c }; }
         if (k === 'cgMosaico') { if (L.wk !== R.wk) return L.wk === semanaKey() ? L : R; return { wk: L.wk, img: L.img, n: Math.max(L.n || 0, R.n || 0), r: [...new Set([...(L.r || []), ...(R.r || [])])] }; }
         if (k === 'cgArvore') { if (L.wk !== R.wk) return L.wk === semanaKey() ? L : R; return { wk: L.wk, n: Math.max(L.n || 0, R.n || 0), o: byKey([...(L.o || []), ...(R.o || [])], x => x.t + '|' + x.x).sort((a, b) => a.t - b.t).slice(-160) }; }
         if (k === 'cgEstrelas') { const s = byKey([...(L.s || []), ...(R.s || [])], x => x.t + '|' + x.x).sort((a, b) => a.t - b.t).slice(-700); return { n: Math.max(L.n || 0, R.n || 0, s.length), s }; }
@@ -7901,7 +7964,7 @@ function H_medalha() {
       }, 300);
       bar.addEventListener('pointerdown', e => e.stopPropagation());
       bar.querySelectorAll('button').forEach(b => b.addEventListener('pointerdown', ev => { ev.stopPropagation(); ev.preventDefault(); if (!cur || !ok(cur)) return; if (!D) load();
-        const em = b.dataset.e, c = D.c[cur.id] || (D.c[cur.id] = {}); c[em] = (c[em] || 0) + 1; save(); label(cur);
+        const em = b.dataset.e, c = D.c[cur.id] || (D.c[cur.id] = {}); c[em] = (c[em] || 0) + 1; save(); label(cur); if (window.__amwAdd) window.__amwAdd(cur.id, em);
         const r = b.getBoundingClientRect(); up(em, r.left - innerWidth * .07, true); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); setTimeout(() => b.classList.remove('pop'), 150);
         if (autoOn && nextAt !== Infinity) nextAt = Math.max(nextAt, performance.now() + 6000); }));
     })();
