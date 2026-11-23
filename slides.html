@@ -947,8 +947,10 @@
   #sx-adm .stl{list-style:none;padding:0;margin:4px 0 8px}#sx-adm .stl li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid rgba(241,232,214,.08);font-size:14px}#sx-adm .stl b{color:#e2b04a}
   #sx-adm section[hidden]{display:none}
   #sx-sleep{position:fixed;inset:0;z-index:58;background:#000;cursor:none;touch-action:none}#sx-sleep[hidden]{display:none}
-  #sx-sleep .ck{position:absolute;color:rgba(241,232,214,.28);text-align:center;font:300 clamp(3rem,12vmin,7rem)/1 var(--serif,serif);transition:left 2s,top 2s}
-  #sx-sleep .ck small{display:block;font:500 clamp(.8rem,2.2vmin,1.1rem)/1.6 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(241,232,214,.22);margin-top:1.2vmin}
+  #sx-sleep .lg{position:absolute;left:50%;top:50%;height:62vh;width:auto;transform:translate(-50%,-50%);opacity:.07;filter:grayscale(.3);animation:sxlg 40s ease-in-out infinite alternate;pointer-events:none}
+  @keyframes sxlg{from{transform:translate(-52%,-49%) scale(.98)}to{transform:translate(-48%,-51%) scale(1.02)}}
+  #sx-sleep .ck{position:absolute;color:rgba(241,232,214,.16);text-align:center;font:300 clamp(3rem,12vmin,7rem)/1 var(--serif,serif);transition:left 2s,top 2s}
+  #sx-sleep .ck small{display:block;font:500 clamp(.8rem,2.2vmin,1.1rem)/1.6 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(241,232,214,.11);margin-top:1.2vmin}
   #sx-menu .admlink{background:none!important;border:0!important;color:rgba(241,232,214,.4)!important;font-size:clamp(.7rem,1.6vmin,.9rem)!important;letter-spacing:.1em;padding:1vmin!important}
 
   /* visual minimalista */
@@ -1875,7 +1877,7 @@ html,body,#stage{background:#18050c}
   <label>Início do recesso (para a contagem regressiva)</label><input id="rc-d" type="date"></section>
  <section data-tab="geral"><h5>🎂 Aniversariantes</h5><div id="an-l"></div><button id="an-add" type="button">+ adicionar pessoa</button><div class="ah">O slide mostra quem faz aniversário no mês atual. No dia, com foto (📷), vira um slide de festa com as fotos em molduras.</div></section>
  <section data-tab="geral"><h5>⏰ Horário da apresentação</h5><label class="chk"><input type="checkbox" id="hr-on"> apresentar só no horário abaixo</label>
-  <div class="dts"><div><label>Começa às</label><input type="time" id="hr-ini" value="07:30"></div><div><label>Termina às</label><input type="time" id="hr-fim" value="19:00"></div></div>
+  <div class="dts"><div><label>Começa às</label><input type="time" id="hr-ini" value="08:00"></div><div><label>Termina às</label><input type="time" id="hr-fim" value="21:00"></div></div>
   <label>Dias</label><div id="hr-d" class="flt"><button type="button" data-d="1">seg</button><button type="button" data-d="2">ter</button><button type="button" data-d="3">qua</button><button type="button" data-d="4">qui</button><button type="button" data-d="5">sex</button><button type="button" data-d="6">sáb</button><button type="button" data-d="0">dom</button></div>
   <label>Fora do horário</label><select id="hr-m"><option value="relogio">Tela escura só com um relógio discreto</option><option value="preto">Tela totalmente preta</option></select>
   <div class="ah" id="hr-st"></div><div class="ah">Fora do horário o painel para de animar (gasta menos bateria). Um toque na tela acorda o painel por 5 minutos.</div></section>
@@ -8686,7 +8688,7 @@ function H_medalha() {
         slBuild(C.sl); $('#sl-pad').value = (C.sl && C.sl.padrao) || ''; $('#sl-pad').placeholder = CONFIG.segundosPorCena;
         $('#avs-l').innerHTML = ''; (C.avisos || []).forEach(avRow); GAL = JSON.parse(JSON.stringify(C.gal || [])); galR();
         $('#eq-l').innerHTML = ''; (C.enq || []).forEach(eqRow);
-        const hr = C.hr || {}; $('#hr-on').checked = !!hr.on; $('#hr-ini').value = hr.ini || '07:30'; $('#hr-fim').value = hr.fim || '19:00'; $('#hr-m').value = hr.modo || 'relogio'; const ds = hr.dias || [1, 2, 3, 4, 5]; $('#hr-d').querySelectorAll('button').forEach(b => b.classList.toggle('on', ds.includes(+b.dataset.d))); hrSt();
+        const hr = hrCfg(); $('#hr-on').checked = !!hr.on; $('#hr-ini').value = hr.ini || '08:00'; $('#hr-fim').value = hr.fim || '21:00'; $('#hr-m').value = hr.modo || 'relogio'; const ds = hr.dias || [1, 2, 3, 4, 5]; $('#hr-d').querySelectorAll('button').forEach(b => b.classList.toggle('on', ds.includes(+b.dataset.d))); hrSt();
         menu.classList.remove('on'); A.hidden = false; tab(tabCur); nextAt = Infinity; }
       const closeAdm = () => { A.hidden = true; schedule(); };
       $('#an-add').onclick = () => row();
@@ -8697,7 +8699,7 @@ function H_medalha() {
         const gal = GAL.filter(g => FT.src(g.f)).map(g => ({ f: g.f, c: (g.c || '').trim() })), sl = slRead();
         const C = Object.assign({}, getC(), { ts: Date.now(), aviso: { on: $('#av-on').checked ? 1 : 0, t: $('#av-t').value.trim(), x: $('#av-x').value.trim() }, recesso: $('#rc-d').value || '', aniv, avisos: avs, enq, gal });
         if (sl) C.sl = sl; else delete C.sl;
-        C.hr = { on: $('#hr-on').checked ? 1 : 0, ini: $('#hr-ini').value || '07:30', fim: $('#hr-fim').value || '19:00', dias: [...$('#hr-d').querySelectorAll('button.on')].map(b => +b.dataset.d), modo: $('#hr-m').value };
+        C.hr = { v: 2, on: $('#hr-on').checked ? 1 : 0, ini: $('#hr-ini').value || '07:30', fim: $('#hr-fim').value || '19:00', dias: [...$('#hr-d').querySelectorAll('button.on')].map(b => +b.dataset.d), modo: $('#hr-m').value };
         try { localStorage.setItem('cgConteudo', JSON.stringify(C)); } catch (e) { msg('⚠️ Não foi possível salvar: memória cheia.'); return; }
         const usados = new Set([...aniv.flatMap(a => a.f || []), ...avs.map(a => a.foto).filter(Boolean), ...gal.map(g => g.f)]); Object.entries(FT.get().f).forEach(([id, v]) => { if (!v.del && !usados.has(id)) FT.del(id); }); ftSz();
         if ($('#pn-auto').checked !== autoOn) setAuto($('#pn-auto').checked);
@@ -8708,15 +8710,16 @@ function H_medalha() {
       // ---- horário da apresentação ----
       $('#hr-d').querySelectorAll('button').forEach(b => b.onclick = () => b.classList.toggle('on'));
       const hm = s => { const [h, m] = String(s || '0:0').split(':').map(Number); return h * 60 + (m || 0); };
-      const hrCfg = () => getC().hr || null;
+      const HR_PADRAO = { on: 1, ini: '08:00', fim: '21:00', dias: [1, 2, 3, 4, 5], modo: 'relogio', v: 2 };
+      const hrCfg = () => { const h = getC().hr; return h && h.v === 2 ? h : HR_PADRAO; };
       const noHorario = (hr, d = new Date()) => { if (!hr || !hr.on) return true; const a = hm(hr.ini), b = hm(hr.fim), n = d.getHours() * 60 + d.getMinutes(), dia = d.getDay(), dias = hr.dias || [1, 2, 3, 4, 5];
         if (a === b) return dias.includes(dia); if (a < b) return dias.includes(dia) && n >= a && n < b; return (n >= a && dias.includes(dia)) || (n < b && dias.includes((dia + 6) % 7)); };
       const proxInicio = hr => { const d = new Date(); d.setSeconds(0, 0); for (let i = 1; i < 8 * 24 * 60; i++) { const x = new Date(d.getTime() + i * 60000); if (noHorario(hr, x)) return x; } return null; };
-      const SL = document.createElement('div'); SL.id = 'sx-sleep'; SL.hidden = true; SL.innerHTML = '<div class="ck"></div>'; document.body.appendChild(SL);
+      const SL = document.createElement('div'); SL.id = 'sx-sleep'; SL.hidden = true; SL.innerHTML = '<img class="lg" alt=""><div class="ck"></div>'; document.body.appendChild(SL); try { SL.querySelector('.lg').src = LOGOFX.img.src; } catch (e) {}
       let dormindo = false, acordadoAte = 0;
-      const ckR = () => { const hr = hrCfg(), ck = SL.firstChild; if (!hr || hr.modo === 'preto') { ck.innerHTML = ''; return; } const d = new Date(), p = proxInicio(hr), WD = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+      const ckR = () => { const hr = hrCfg(), ck = SL.querySelector('.ck'); SL.querySelector('.lg').hidden = !!(hr && hr.modo === 'preto'); if (!hr || hr.modo === 'preto') { ck.innerHTML = ''; return; } const d = new Date(), p = proxInicio(hr), WD = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
         ck.innerHTML = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}<small>${p ? 'volta ' + (p.toDateString() === d.toDateString() ? 'hoje' : p.getDate() === new Date(d.getTime() + 864e5).getDate() ? 'amanhã' : WD[p.getDay()]) + ' às ' + String(p.getHours()).padStart(2, '0') + ':' + String(p.getMinutes()).padStart(2, '0') : ''}</small>`;
-        ck.style.left = (10 + Math.random() * 55) + 'vw'; ck.style.top = (12 + Math.random() * 55) + 'vh'; };
+        ck.style.left = (Math.random() < .5 ? 3 + Math.random() * 12 : 67 + Math.random() * 10) + 'vw'; ck.style.top = (8 + Math.random() * 62) + 'vh'; };
       const dormir = () => { if (dormindo) return; dormindo = true; menu.classList.remove('on'); SL.hidden = false; ckR(); try { window.__panel.pause(); } catch (e) {} };
       const acordar2 = () => { if (!dormindo) return; dormindo = false; SL.hidden = true; try { window.__panel.resume(true); } catch (e) {} };
       SL.addEventListener('pointerdown', e => { e.stopPropagation(); e.preventDefault(); acordadoAte = Date.now() + 5 * 60000; acordar2(); });
