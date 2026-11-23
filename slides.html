@@ -4403,7 +4403,13 @@ function H_medalha() {
     ['📄', 'Parecer para elaborar', 'e o assessor de férias', -1], ['🎤', 'Audiência às 8h', 'com 15 testemunhas', -1],
     ['✅', 'Cautelar deferida', 'todos os pedidos, sem cortes', 1], ['🏛️', 'Denúncia recebida', 'sem nenhuma emenda', 1], ['🏁', 'Alegações finais protocoladas', 'dois dias antes do prazo', 1],
     ['🧦', 'Meias de Natal', 'o clássico que nunca falha', 0], ['🎭', 'No amigo secreto, você tirou você mesmo', 'sorteia de novo?', 0], ['📎', 'Um clipe de papel', 'útil mais cedo ou mais tarde', 0],
-    ['🧩', 'Quebra-cabeça de 5 mil peças', 'para preencher as férias', 0], ['🪴', 'Uma suculenta', 'a única planta que sobrevive no escritório', 0]
+    ['🧩', 'Quebra-cabeça de 5 mil peças', 'para preencher as férias', 0], ['🪴', 'Uma suculenta', 'a única planta que sobrevive no escritório', 0],
+    ['➰', 'Um pedaço de arame', 'vai que precisa consertar alguma coisa', 0], ['🗓️', 'Dois dias de folga', 'para descansar à vontade', 1, 'sábado e domingo'], ['🏠', 'Home office integral', 'sem precisar vir ao escritório', 1, 'no período da meia-noite às 4h da manhã'],
+    ['💸', 'Aumento de 100%', 'a partir do mês que vem', 1, 'sobre o vale-cafezinho'], ['🏝️', 'Viagem para o Caribe', 'tudo pago, com acompanhante', 1, 'em realidade virtual, no horário de almoço'], ['🚗', 'Vaga coberta no estacionamento', 'só sua, perto da porta', 1, 'válida aos domingos e feriados'],
+    ['🎤', 'Ingresso VIP para o show', 'do seu artista favorito', 1, 'transmissão pela TV do corredor'], ['🧾', 'Reembolso aprovado', 'de todas as despesas', 1, 'pago em até 180 dias úteis'], ['💻', 'Computador novo', 'topo de linha, só seu', 1, 'chega em 2031, com o sistema de 2009'],
+    ['📵', 'Um dia sem mensagem do trabalho', 'desconectado de verdade', 1, 'exceto grupos, áudios e "é rapidinho"'], ['🪑', 'Cadeira ergonômica', 'que não range', 1, 'rodinhas vendidas separadamente'], ['🍫', 'Caixa de bombons inteirinha', 'só pra você', 1, 'já vem vazia, alguém chegou antes'],
+    ['❄️', 'Ar-condicionado só seu', 'na temperatura que quiser', 1, 'no modo ventilação'], ['🔌', 'Carregador novinho', 'de presente', 0, 'o cabo não serve no seu celular'], ['📆', 'Férias de 30 dias', 'aprovadas sem questionamento', 1, 'divididas em 30 períodos de 1 dia'],
+    ['🎁', 'Uma caixa vazia', 'o importante é a intenção', 0], ['🥤', 'Garrafinha de água personalizada', 'com o seu nome', 0, 'escrito errado'], ['🏆', 'Prêmio de funcionário do mês', 'com foto no mural', 1, 'votação de uma pessoa: você mesmo']
   ];
   const PR_PAL = [['#c8202f', '#ffd36b'], ['#1f6fd1', '#f4ecdc'], ['#7b3fd1', '#7fe3ff'], ['#1f8a5a', '#ff8fb1'], ['#d1661f', '#fff3d6'], ['#b0186a', '#ffd36b'], ['#0f6f7a', '#ffe08a'], ['#2a2f45', '#ff6b7a'], ['#e8e2d4', '#c8202f']];
   const presentes = {
@@ -4448,19 +4454,23 @@ function H_medalha() {
       const slide = this.st === 3 ? sm((T - this.at) / .7) : 0;
       // fila de presentes
       for (let k = this.q.length - 1; k >= 0; k--) { const g = this.q[k], kk = k - slide, gs = this.geo(Math.max(0, kk)), gn = this.geo(kk), x = kk < 0 ? W / 2 + kk * gs.s * 2.2 : lerp(this.geo(Math.floor(kk)).x, this.geo(Math.ceil(kk)).x, kk - Math.floor(kk)), s = kk <= 0 ? this.geo(0).s : lerp(this.geo(Math.floor(kk)).s, this.geo(Math.ceil(kk)).s, kk - Math.floor(kk));
-        const lid = k === 0 && this.st >= 2 ? Math.min(1, (T - (this.st === 2 ? this.at : this.at - 1)) / .6) : 0, alpha = k === 0 && this.st === 3 ? 1 - slide : k >= 3 ? .5 : 1, shake = k === 0 && this.st === 1 ? Math.sin(T * 60) * 6 : 0;
+        const lid = k === 0 && this.st >= 2 ? Math.min(1, (T - (this.st === 2 ? this.at : this.at - 1)) / .45) : 0, alpha = k === 0 && this.st === 3 ? 1 - slide : k >= 3 ? .5 : 1, shake = k === 0 && this.st === 1 ? Math.sin(T * 55) * (2 + (T - this.at) * 22) : 0;
         if (k === 0 && this.st === 0) ga(g.c[1], s * 1.2, x, gs.y - s * .5, .14 + .06 * Math.sin(T * 3));
         this.box(g, x, gs.y + (k === 0 && this.st === 0 ? Math.sin(T * 2.2) * 4 : 0), s, lid, alpha, shake); }
       if (this.st === 0) T2('👆', W / 2, H * .9 + u * 2.2 + Math.sin(T * 4) * u * .4, u * 2, '#fff', 400, 'center', 'sans-serif');
       // cartão da surpresa
-      if (this.st >= 2) { const g = this.q[0], k = this.st === 2 ? sm((T - this.at) / .5) : 1 - slide, cw = Math.min(W * .5, H * .85), ch = H * .3, cx = W / 2, cy = H * .47 - (1 - k) * H * .06, kind = g.pr[3];
+      if (this.st === 2 && T - this.at < 1.6) { const g = this.q[0], a = T - this.at, gb = this.geo(0), rk = Math.min(1, a / .3) * Math.max(0, 1 - (a - .8) / .8), R = Math.min(W, H) * .42;
+        if (g.pr[3] >= 0) { ctx.save(); ctx.translate(W / 2, H * .47); ctx.rotate(a * .6); ctx.globalAlpha = rk * (g.pr[3] > 0 ? .3 : .16); ctx.fillStyle = g.pr[3] > 0 ? '#ffe9a8' : '#e2d6ff'; for (let r = 0; r < 12; r++) { ctx.rotate(TAU / 12); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, -R * .09); ctx.lineTo(R, R * .09); ctx.fill(); } ctx.restore(); ctx.globalAlpha = 1; }
+        if (a < .55) { const kk = sm(a / .55), ex = W / 2, ey = lerp(gb.y - gb.s * .7, H * .47, kk), es = gb.s * (.25 + .35 * kk); T2(g.pr[0], ex, ey, es, '#000', 400, 'center', 'sans-serif'); } }
+      if (this.st >= 2) { const g = this.q[0], k0 = this.st === 2 ? Math.min(1, Math.max(0, (T - this.at - .35) / .45)) : 1, k = this.st === 2 ? (k0 < 1 ? 1 + 2.7 * Math.pow(k0 - 1, 3) + 1.7 * Math.pow(k0 - 1, 2) : 1) : 1 - slide, cw = Math.min(W * .5, H * .85), ch = H * .3, cx = W / 2, cy = H * .47 - (1 - k) * H * .06, kind = g.pr[3];
         ctx.save(); ctx.globalAlpha = k; ctx.translate(cx, cy); ctx.scale(.85 + .15 * k, .85 + .15 * k);
         ga(kind > 0 ? '#ffd36b' : kind < 0 ? '#9aa3b5' : '#c58bff', cw * .7, 0, 0, .25);
         ctx.fillStyle = 'rgba(255,248,235,.97)'; rr2(-cw / 2, -ch / 2, cw, ch, 18); ctx.fill();
         const tag = kind > 0 ? ['QUE SORTE!', '#1f8a5a'] : kind < 0 ? ['IXI…', '#a8324a'] : ['HUM…', '#7b3fd1']; ctx.fillStyle = tag[1]; rr2(-cw / 2 + u * 1.2, -ch / 2 + u * 1.1, u * 7.4, u * 2.1, u); ctx.fill(); T2(tag[0], -cw / 2 + u * 4.9, -ch / 2 + u * 2.2, u * .9, '#fff', 700, 'center');
         T2(g.pr[0], -cw / 2 + cw * .17, ch * .06, ch * .42, '#000', 400, 'center', 'sans-serif');
-        const tl = wrapTxt(g.pr[1], cw * .62, u * 1.9, 400, SERIF); tl.forEach((l, i) => T2(l, -cw / 2 + cw * .33, -ch * .08 + (i - (tl.length - 1) / 2) * u * 2.3, u * 1.9, '#2a1020', 400, 'left', SERIF));
+        const tl = wrapTxt(g.pr[1] + (g.pr[4] ? '*' : ''), cw * .62, u * 1.9, 400, SERIF); tl.forEach((l, i) => T2(l, -cw / 2 + cw * .33, -ch * .08 + (i - (tl.length - 1) / 2) * u * 2.3, u * 1.9, '#2a1020', 400, 'left', SERIF));
         T2(g.pr[2], -cw / 2 + cw * .33, ch * .1 + (tl.length - 1) * u * 1.1 + u * 1.2, u * 1.05, '#7a5a4a', 600, 'left', 'sans-serif');
+        if (g.pr[4]) { const fk = Math.min(1, Math.max(0, (T - this.at - 1.2) / .6)); ctx.globalAlpha = k * fk; T2('* ' + g.pr[4], cw / 2 - u * 1.2, ch / 2 - u * .9, u * .7, '#a08a7a', 500, 'right', 'sans-serif'); ctx.globalAlpha = k; }
         ctx.restore(); ctx.globalAlpha = 1;
         if (this.st === 2 && T - this.at > 1.6) T2('toque para o próximo presente ›', W / 2, H * .655, u * .95, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif'); }
       this.conf = this.conf.filter(c => (c.l -= dt * .45) > 0);
@@ -7489,8 +7499,9 @@ function H_medalha() {
     pts() { return Math.floor((this.s - 1) * 100); },
     tap(x, y) { if (NE.tap(x, y)) return; const T = this.T || 0;
       if (this.over) { if (T - this.over > 1.2) this.reset(); return; }
-      if (this.st === 'idle') { this.st = 'grow'; this.t1 = T; return; }
-      if (this.st === 'grow') { const p = this.pts(); this.total += p; this.res.push(p); this.st = 'bank'; this.msg = { t: T, txt: `+${p}`, ok: 1 }; burst(this.sp, W * .42, H * .55, 30, [this.col, '#ffd36b', '#fff'], 260); this.next = T + 1.3; } },
+    },
+    bank() { const T = this.T || 0, p = this.pts(); this.total += p; this.res.push(p); this.st = 'bank'; this.msg = { t: T, txt: `+${p}`, ok: 1 }; burst(this.sp, W * .42, H * .55, 30, [this.col, '#ffd36b', '#fff'], 260); this.next = T + 1.3; },
+    drag(type) { if (NE.on || this.over) return; if (type === 'down' && this.st === 'idle') { this.st = 'grow'; this.t1 = this.T || 0; } else if (type === 'up' && this.st === 'grow') this.bank(); },
     frame(t, dt) {
       const T = this.T = T3(this, t), u = UU(); dt = Math.min(dt, .05);
       if (this.st === 'grow') { this.s += dt * (.32 + (this.s - 1) * .3); if (this.s >= this.thr) { this.st = 'boom'; this.res.push(0); this.msg = { t: T, txt: 'BUM! 0 pontos', ok: 0 }; burst(this.sp, W * .42, H * .55, 90, [this.col, '#fff', '#ffd36b'], 520); this.next = T + 1.6; } }
@@ -7508,7 +7519,7 @@ function H_medalha() {
       ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .74, H * .3, W * .22, H * .42, 14); ctx.fill();
       T2(String(this.total), W * .85, H * .38, u * 4, '#ffe3a0', 400, 'center', SERIF); T2('pontos', W * .85, H * .38 + u * 2.4, u * .9, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
       for (let i = 0; i < this.R; i++) { const v = this.res[i], y = H * .5 + i * u * 1.7; T2(`rodada ${i + 1}`, W * .77, y, u * .85, i === this.round && !this.over ? '#f2c46d' : 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); T2(v == null ? '—' : v === 0 ? '💥 0' : String(v), W * .93, y, u * .9, v === 0 ? '#ff8fb1' : '#fff', 700, 'right', 'sans-serif'); }
-      const hint = this.st === 'idle' ? 'toque para começar a encher' : this.st === 'grow' ? 'toque para PARAR e guardar os pontos!' : ''; if (hint && !this.over) T2(hint, cx, H * .235, u * 1.15, this.st === 'grow' ? '#f2c46d' : 'rgba(255,255,255,.85)', 700, 'center', 'sans-serif');
+      const hint = this.st === 'idle' ? 'segure para encher · solte para parar' : this.st === 'grow' ? 'solte antes de estourar!' : ''; if (hint && !this.over) T2(hint, cx, H * .235, u * 1.15, this.st === 'grow' ? '#f2c46d' : 'rgba(255,255,255,.85)', 700, 'center', 'sans-serif');
       if (this.st === 'idle' && !this.round && !this.over) hand(cx + base * 1.4, cy, T, u * 2.2);
       if (this.over) { ctx.fillStyle = 'rgba(30,6,12,.6)'; ctx.fillRect(0, H * .22, W, H * .78); T2(this.total + ' pontos', W / 2, H * .55, u * 4, '#fff', 400, 'center', SERIF); if (T - this.over > 1.2 && !NE.on) { T2('toque para jogar de novo', W / 2, H * .66, u * 1.2, '#f2c46d', 700, 'center', 'sans-serif'); hand(W / 2, H * .74, T, u * 2.2); } }
       NE.frame('explode');
@@ -7851,28 +7862,68 @@ function H_medalha() {
 
   /* ---------- enquete do dia ---------- */
   const EQ = [
+    ['Android ou iPhone?', ['Android', 'iPhone', 'Tenho os dois', 'Ainda uso um tijolão']],
+    ['Windows, Mac ou Linux?', ['Windows', 'Mac', 'Linux', 'O que a TI instalar']],
+    ['Você salva as senhas…', ['Num gerenciador de senhas', 'No navegador', 'Num papel na gaveta', 'Na memória (e esqueço)']],
+    ['Verificação em duas etapas no seu WhatsApp:', ['Ativada', 'Vou ativar hoje', 'O que é isso?']],
+    ['Quantas abas abertas no seu navegador agora?', ['Até 5', '6 a 20', 'Mais de 20', 'Nem conto mais']],
+    ['Áudio de WhatsApp acima de 1 minuto:', ['Ouço normal', 'Ouço em 2x', 'Peço para escrever', 'Finjo que não vi']],
+    ['Notificações do celular:', ['Todas ligadas', 'Só as importantes', 'Tudo no silencioso', 'Mais de 99 não lidas']],
+    ['Você faz backup do celular?', ['Automático na nuvem', 'De vez em quando', 'Nunca fiz', 'Backup é tirar print']],
+    ['A atualização do sistema apareceu. Você…', ['Atualiza na hora', 'Deixa para a noite', 'Clica em "lembrar depois" para sempre']],
+    ['Café: quantas xícaras por dia?', ['Nenhuma', '1 ou 2', '3 a 5', 'Perdi a conta']],
+    ['Reunião ideal:', ['Presencial', 'Por vídeo', 'Por e-mail', 'Não ter reunião']],
+    ['Câmera ligada na videochamada?', ['Sempre', 'Só quando pedem', 'Nunca', 'Depende do cabelo']],
+    ['Você prefere trabalhar com…', ['Silêncio total', 'Música', 'Barulho de escritório', 'Podcast']],
+    ['Mesa de trabalho:', ['Organizada', 'Caos organizado', 'Só caos', 'Que mesa? Trabalho no sofá']],
+    ['Melhor horário para render no trabalho:', ['Cedinho', 'Fim da manhã', 'Depois do almoço', 'Quando o prazo aperta']],
+    ['Almoço no trabalho:', ['Marmita de casa', 'Restaurante', 'Delivery', 'Lanche rápido na mesa']],
+    ['Na sexta-feira à tarde, a produtividade…', ['Continua alta', 'Cai um pouco', 'Já está no fim de semana']],
+    ['Qual o maior vilão do seu dia?', ['Reuniões', 'E-mails', 'Interrupções', 'Sistema lento']],
+    ['Mensagem do trabalho depois do expediente:', ['Respondo na hora', 'Só se for urgente', 'Leio e respondo amanhã', 'Nem abro']],
+    ['Seu celular está com quanto de bateria agora?', ['Mais de 80%', '50 a 80%', '20 a 50%', 'Pedindo socorro']],
+    ['Você já caiu num golpe ou quase caiu?', ['Nunca', 'Quase', 'Já caí', 'Prefiro não comentar']],
+    ['Link estranho chegou no WhatsApp. Você…', ['Apaga na hora', 'Pesquisa antes', 'Avisa a família', 'Encaminha para o CyberGaeco']],
+    ['Wi-Fi público (aeroporto, shopping):', ['Uso tranquilo', 'Uso com VPN', 'Só para coisa boba', 'Nunca uso']],
+    ['Inteligência artificial no seu dia a dia:', ['Uso todo dia', 'Uso às vezes', 'Ainda não uso', 'Tenho medo dela']],
+    ['Streaming favorito:', ['Netflix', 'YouTube', 'Globoplay', 'Outro']],
+    ['Série ou filme?', ['Série', 'Filme', 'Documentário', 'Durmo nos dois']],
+    ['Rede social que você mais abre:', ['Instagram', 'WhatsApp', 'YouTube', 'TikTok']],
+    ['Você lê os termos de uso antes de aceitar?', ['Sempre', 'Às vezes', 'Nunca', 'Alguém lê?']],
+    ['Modo escuro ou modo claro?', ['Escuro', 'Claro', 'Automático', 'Nunca reparei']],
+    ['Fone de ouvido:', ['Sem fio', 'Com fio', 'Os dois', 'Não uso']],
+    ['Pix ou cartão?', ['Pix', 'Cartão de crédito', 'Débito', 'Dinheiro vivo']],
+    ['Você confere a fatura do cartão?', ['Item por item', 'Só o total', 'Só quando assusta', 'Prefiro não saber']],
+    ['Fim de semana perfeito:', ['Viajar', 'Ficar em casa', 'Encontrar amigos', 'Dormir até tarde']],
+    ['Cachorro ou gato?', ['Cachorro', 'Gato', 'Os dois', 'Nenhum']],
+    ['Praia ou montanha?', ['Praia', 'Montanha', 'Cidade grande', 'Interior de Goiás']],
+    ['Pequi:', ['Amo', 'Só no arroz', 'Não chego perto', 'Nunca provei']],
+    ['Pamonha preferida:', ['De sal', 'Doce', 'Com queijo', 'Frita no dia seguinte']],
+    ['O melhor do cerrado é…', ['O pôr do sol', 'O pequi', 'Os ipês', 'A seca (brincadeira)']],
+    ['Atividade física na semana:', ['Todo dia', '2 a 4 vezes', 'Uma vez', 'Subir a escada conta?']],
+    ['Quanto tempo de tela por dia no celular?', ['Menos de 2 h', '2 a 4 h', '4 a 6 h', 'Prefiro não ver']],
+    ['Leitura preferida:', ['Livro físico', 'E-book', 'Audiolivro', 'Só o resumo']],
+    ['Primeira coisa que você faz ao acordar:', ['Olha o celular', 'Toma café', 'Faz exercício', 'Aperta soneca']],
+    ['Despertador:', ['Levanto no primeiro', 'Uma soneca', 'Várias sonecas', 'Acordo sem despertador']],
+    ['Chocolate ou salgadinho?', ['Chocolate', 'Salgadinho', 'Os dois', 'Fruta (sério)']],
+    ['Café com…', ['Açúcar', 'Adoçante', 'Puro', 'Leite']],
     ['Panetone ou chocotone?', ['Panetone', 'Chocotone', 'Nenhum dos dois']],
     ['Uva-passa no arroz da ceia é…', ['Indispensável', 'Eu tolero', 'Crime inafiançável']],
     ['Amigo secreto no trabalho:', ['Adoro', 'Participo por educação', 'Dou um jeito de fugir']],
     ['O prato principal da sua ceia é…', ['Peru ou chester', 'Pernil', 'Bacalhau', 'Outro']],
-    ['No recesso de fim de ano, você…', ['Fica de plantão', 'Responde só mensagem', 'Desliga o celular']],
     ['A melhor parte do fim de ano é…', ['As férias', 'A comida', 'A família reunida', 'O décimo terceiro']],
     ['Sua árvore de Natal…', ['Já está montada', 'Monto no fim de semana', 'Não monto árvore']],
     ['Réveillon ideal:', ['Na praia', 'Em casa', 'Viajando', 'Dormindo antes da meia-noite']],
     ['A promessa para 2027 que você vai cumprir:', ['Academia', 'Estudar mais', 'Economizar', 'Nenhuma, sejamos realistas']],
     ['O presente que você mais gostaria de ganhar:', ['Uma viagem', 'Folga extra', 'Um eletrônico', 'Dinheiro']],
     ['Música de Natal no escritório:', ['Pode tocar o dia todo', 'Só baixinho', 'Por favor, não']],
-    ['Quantas confraternizações você já teve este ano?', ['Nenhuma', '1 ou 2', '3 a 5', 'Perdi a conta']],
     ['O que não pode faltar na ceia?', ['Farofa', 'Salpicão', 'Rabanada', 'Pavê']],
-    ['Fim de ano no trabalho é…', ['Correria total', 'Calmaria', 'Depende do dia']],
-    ['Já esqueceu a senha depois das férias?', ['Sim, várias vezes', 'Uma vez', 'Nunca']],
     ['Salpicão:', ['Com batata palha', 'Sem batata palha', 'Sem salpicão, obrigado']],
     ['Defina 2026 em uma palavra:', ['Intenso', 'Produtivo', 'Desafiador', 'Inesquecível']],
-    ['No último dia útil do ano, você…', ['Trabalha até o fim', 'Sai mais cedo', 'Já está de férias']],
     ['Pavê ou pacumê?', ['Pavê, sem piada', 'Eu ainda rio da piada', 'Não aguento mais essa piada']],
     ['O pior do fim de ano é…', ['O trânsito', 'As compras de última hora', 'Os prazos', 'A balança em janeiro']],
-    ['Lista de metas para 2027:', ['Já está pronta', 'Faço no dia 31', 'Não faço lista']],
-    ['Café na ceia de Natal?', ['Sempre', 'Só no dia seguinte', 'Prefiro espumante']]
+    ['Presente de Natal: você compra…', ['Com antecedência', 'Na última semana', 'No dia 24', 'Dou Pix']],
+    ['Já esqueceu a senha depois das férias?', ['Sim, várias vezes', 'Uma vez', 'Nunca']]
   ];
   const EQ_COL = ['#ffd36b', '#7fe3ff', '#ff8fb1', '#8dffc4'];
   const enquete = {
