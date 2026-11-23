@@ -7788,7 +7788,8 @@ function H_medalha() {
 
 
   /* ================= v13: conteúdo editável, hoje no painel, aniversariantes, convite ================= */
-  const CT = { get() { const d = LS.get('cgConteudo', null); return d || { ts: 0, aviso: { on: 0, t: '', x: '' }, recesso: '', aniv: [] }; } };
+  const ANIV_FIXOS = [{ n: 'Dr. Paulo Penna', d: 23, m: 11 }];   // aniversariantes fixos no código (m = mês 1–12)
+  const CT = { get() { const d = LS.get('cgConteudo', null) || { ts: 0, aviso: { on: 0, t: '', x: '' }, recesso: '', aniv: [] }, L = (d.aniv || []).slice(), nm = s => String(s).toLowerCase().replace(/^(dr|dra)\.?\s+/, '').trim(); ANIV_FIXOS.forEach(f => { if (!L.some(a => nm(a.n) === nm(f.n))) L.push(f); }); return Object.assign({}, d, { aniv: L }); } };
   const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
   const DIAS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
   const DICAS = [
