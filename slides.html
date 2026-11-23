@@ -7642,6 +7642,16 @@ function H_medalha() {
     germes: { q: 'Qual costuma ter mais GERMES?', nota: 'segundo estudos de higiene', fmt: v => ['', 'quase nenhum', 'poucos', 'moderado', 'muitos', 'campeão de germes'][v], nivel: 1, it: [
       ['🧽', 'esponja de cozinha', 5], ['🧺', 'pano de prato', 5], ['🔪', 'tábua de cortar carne', 4], ['📱', 'tela do celular', 4], ['🛒', 'alça de carrinho de mercado', 4], ['🚰', 'pia da cozinha', 4], ['🪥', 'porta-escovas de dente', 4], ['🐶', 'tigela do cachorro', 4],
       ['⌨️', 'teclado do computador', 3], ['💵', 'cédula de dinheiro', 3], ['🛗', 'botão do elevador', 3], ['🚪', 'maçaneta', 3], ['📺', 'controle remoto', 3], ['🚽', 'assento do vaso (limpo)', 2], ['🍽️', 'prato lavado', 1], ['🧼', 'sabonete líquido', 1]] },
+    vida: { q: 'Qual VIVE mais?', nota: 'expectativa de vida aproximada', fmt: v => v < 1 ? Math.round(v * 12) + (Math.round(v * 12) === 1 ? ' mês' : ' meses') : v.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' anos', it: [
+      ['🦟', 'mosquito', 0.05], ['🐞', 'joaninha', 1], ['🐝', 'abelha', 0.12], ['🦋', 'borboleta', 0.08], ['🐙', 'polvo', 1.5], ['🐭', 'camundongo', 2], ['🐹', 'hamster', 2.5], ['🐌', 'caracol', 5], ['🐦', 'beija-flor', 5], ['🐿️', 'esquilo', 6], ['🐠', 'peixe-palhaço', 8], ['🐓', 'galo', 8], ['🐇', 'coelho', 9],
+      ['🦆', 'pato', 10], ['🐑', 'ovelha', 12], ['🐆', 'guepardo', 12], ['🐕', 'cachorro médio', 13], ['🐺', 'lobo', 13], ['🦁', 'leão', 14], ['🐈', 'gato', 15], ['🐖', 'porco', 15], ['🐐', 'cabra', 15], ['🐅', 'tigre', 15], ['🦌', 'rena', 15], ['🐄', 'vaca', 20], ['🐼', 'panda', 20], ['🦘', 'canguru', 20], ['🐧', 'pinguim-imperador', 20],
+      ['🦒', 'girafa', 25], ['🦓', 'zebra', 25], ['🐻', 'urso-pardo', 25], ['🦉', 'coruja', 25], ['🐍', 'cobra píton', 25], ['🐎', 'cavalo', 28], ['🦅', 'águia', 30], ['🦏', 'rinoceronte', 40], ['🐬', 'golfinho', 40], ['🐫', 'camelo', 40], ['🦛', 'hipopótamo', 45], ['🦜', 'papagaio', 50], ['🐊', 'jacaré', 50], ['🦞', 'lagosta', 50],
+      ['🐢', 'tartaruga marinha', 60], ['🐘', 'elefante africano', 65], ['🦈', 'tubarão-branco', 70], ['🐋', 'baleia-azul', 85], ['🐢', 'tartaruga terrestre', 150]] },
+    cidade: { q: 'Qual cidade tem mais HABITANTES?', nota: 'Censo 2022, aproximado', fmt: v => v >= 1e6 ? (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + ' milhões' : Math.round(v / 1000).toLocaleString('pt-BR') + ' mil', it: [
+      ['🇧🇷', 'São Paulo (SP)', 11.45e6], ['🇧🇷', 'Rio de Janeiro (RJ)', 6.21e6], ['🇧🇷', 'Brasília (DF)', 2.82e6], ['🇧🇷', 'Fortaleza (CE)', 2.43e6], ['🇧🇷', 'Salvador (BA)', 2.42e6], ['🇧🇷', 'Belo Horizonte (MG)', 2.32e6], ['🇧🇷', 'Manaus (AM)', 2.06e6], ['🇧🇷', 'Curitiba (PR)', 1.77e6], ['🇧🇷', 'Recife (PE)', 1.49e6], ['🇧🇷', 'Goiânia', 1.44e6],
+      ['🇧🇷', 'Porto Alegre (RS)', 1.33e6], ['🇧🇷', 'Belém (PA)', 1.30e6], ['🇧🇷', 'São Luís (MA)', 1.04e6], ['🇧🇷', 'Maceió (AL)', 957000], ['🇧🇷', 'Campo Grande (MS)', 898000], ['🇧🇷', 'Teresina (PI)', 866000], ['🇧🇷', 'João Pessoa (PB)', 833000], ['🇧🇷', 'Natal (RN)', 751000], ['🇧🇷', 'Cuiabá (MT)', 650000], ['🇧🇷', 'Aracaju (SE)', 602000],
+      ['🇧🇷', 'Florianópolis (SC)', 537000], ['🇧🇷', 'Porto Velho (RO)', 460000], ['🇧🇷', 'Macapá (AP)', 442000], ['🇧🇷', 'Boa Vista (RR)', 413000], ['🇧🇷', 'Anápolis (GO)', 398000], ['🇧🇷', 'Rio Branco (AC)', 364000], ['🇧🇷', 'Vitória (ES)', 322000], ['🇧🇷', 'Palmas (TO)', 302000], ['🇧🇷', 'Foz do Iguaçu (PR)', 285000], ['🇧🇷', 'Rio Verde (GO)', 225000],
+      ['🇧🇷', 'Caldas Novas (GO)', 98000], ['🇧🇷', 'Pirenópolis (GO)', 25000], ['🇧🇷', 'Fernando de Noronha (PE)', 3000]] },
     gente: { q: 'Qual tem mais HABITANTES?', nota: 'população aproximada', fmt: v => (v >= 1e6 ? (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: v >= 1e8 ? 0 : 1 }) + ' milhões' : v.toLocaleString('pt-BR')), it: [
       ['🇧🇷', 'Brasil', 212e6], ['🇨🇳', 'China', 1410e6], ['🇮🇳', 'Índia', 1440e6], ['🇺🇸', 'Estados Unidos', 340e6], ['🇵🇹', 'Portugal', 10.4e6], ['🇦🇷', 'Argentina', 46e6], ['🇯🇵', 'Japão', 124e6], ['🇲🇽', 'México', 130e6],
       ['🇩🇪', 'Alemanha', 84e6], ['🇫🇷', 'França', 68e6], ['🇮🇹', 'Itália', 59e6], ['🇬🇧', 'Reino Unido', 68e6], ['🇷🇺', 'Rússia', 144e6], ['🇳🇬', 'Nigéria', 225e6], ['🇪🇬', 'Egito', 113e6], ['🇿🇦', 'África do Sul', 63e6],
@@ -7664,11 +7674,11 @@ function H_medalha() {
     enter() { this.t0 = null; if (!NE.on) this.reset(); },
     leave() { if (NE.on && NE.scene === 'peso') NE.finish(); },
     band(cat) { const s = this.streak;
-      if (cat.nivel) return s < 4 ? [2, 9] : [1, 9];
-      if (cat.menor) return s < 3 ? [150, 1e9] : s < 6 ? [40, 400] : s < 10 ? [12, 90] : [2, 30];
-      return s < 3 ? [4, 1e12] : s < 6 ? [2.2, 8] : s < 10 ? [1.5, 3.2] : s < 15 ? [1.25, 2] : [1.1, 1.6]; },
+      if (cat.nivel) return s < 2 ? [2, 9] : [1, 9];
+      if (cat.menor) return s < 2 ? [80, 1e9] : s < 5 ? [20, 200] : s < 9 ? [6, 40] : [1, 12];
+      return s < 2 ? [3, 1e12] : s < 5 ? [1.7, 5] : s < 9 ? [1.3, 2.3] : s < 14 ? [1.13, 1.6] : [1.04, 1.3]; },
     newPair() {
-      const keys = QM_CATS.map(c => c[0]).filter(k => k !== 'mix'); let ck = this.mode === 'mix' ? keys[Math.floor(Math.random() * keys.length)] : this.mode; if (this.mode === 'mix' && ck === this.ck && Math.random() < .7) ck = keys[Math.floor(Math.random() * keys.length)];
+      const keys = ['peso', ...Object.keys(QM)]; let ck = keys[Math.floor(Math.random() * keys.length)]; if (ck === this.ck && Math.random() < .75) ck = keys[Math.floor(Math.random() * keys.length)];
       const cat = qmCat(ck), L = cat.it, N = L.length, [lo, hi] = this.band(cat); let seen = LS.get(PS_SEEN, []) || []; if (seen.length > 900) seen = seen.slice(-600); let best = null;
       for (let tries = 0; tries < 500; tries++) { const a = Math.floor(Math.random() * N), b = Math.floor(Math.random() * N); if (a === b) continue; const A = L[a][2], B = L[b][2]; if (A === B) continue;
         const r = cat.nivel || cat.menor ? Math.abs(A - B) : Math.max(A, B) / Math.min(A, B); if (r < lo || r > hi) continue;
@@ -7678,7 +7688,6 @@ function H_medalha() {
       [best.a, best.b].forEach(i => { phImg(L[i][1]); emImg(L[i][0]); }); },
     cards() { const w = W * .27, h = H * .42, y = H * .33; return [{ x: W * .5 - W * .02 - w, y, w, h }, { x: W * .5 + W * .02, y, w, h }]; },
     tap(x, y) { if (NE.tap(x, y)) return; const T = this.T || 0;
-      const ch = this.chips.find(c => x > c.x && x < c.x + c.w && y > c.y && y < c.y + c.h); if (ch && !this.ans) { this.mode = ch.k; this.streak = 0; this.over = 0; this.newPair(); return; }
       if (this.over) { if (T - this.over > 1.2) this.reset(); return; }
       if (this.ans) return; const C = this.cards(); const i = C.findIndex(c => x > c.x && x < c.x + c.w && y > c.y && y < c.y + c.h); if (i < 0) return;
       const v0 = this.P[0][2], v1 = this.P[1][2], win = this.cat.menor ? (v0 < v1 ? 0 : 1) : (v0 > v1 ? 0 : 1), ok = i === win; this.ans = { t: T, i, ok, heavy: win };
@@ -7699,11 +7708,6 @@ function H_medalha() {
       if (A && T - A.t < 1.8) T2(A.ok ? 'acertou! ✓' : 'errou! ✗', W / 2, C[0].y + C[0].h + u * 2, u * 1.5, A.ok ? '#9fd8a8' : '#ff8fb1', 700, 'center', 'sans-serif');
       stepBurst(this.sp, dt, 380);
       ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .845, H * .33, W * .11, H * .16, 14); ctx.fill(); T2(String(this.streak), W * .9, H * .4, u * 3.6, '#ffe3a0', 400, 'center', SERIF); T2('seguidos', W * .9, H * .4 + u * 2.2, u * .8, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
-      // escolha do tema (só antes de começar a sequência)
-      this.chips = [];
-      if (!this.streak && !A && !this.over) { const cw = Math.min(W * .14, C[0].x - W * .045), chh = Math.min(u * 2.5, (H * .58 - u * 4.5) / QM_CATS.length), gap = chh * .2, x = W * .025; let y = H * .33;
-        QM_CATS.forEach(([k, e, nm]) => { const on = this.mode === k; ctx.fillStyle = on ? '#f2c46d' : 'rgba(255,244,227,.08)'; rr2(x, y, cw, chh, chh / 2); ctx.fill(); if (!on) { ctx.strokeStyle = 'rgba(242,196,109,.35)'; ctx.lineWidth = 1; ctx.stroke(); }
-          ctx.font = `700 ${u * .95}px ${SANS}`; const lab = e + '  ' + nm, lw = ctx.measureText(lab).width; T2(lab, x + u * .9, y + chh / 2 + 1, Math.min(u * .95, u * .95 * (cw - u * 1.4) / lw), on ? '#1a1206' : '#fff4e3', 700, 'left', 'sans-serif'); this.chips.push({ k, x, y, w: cw, h: chh }); y += chh + gap; }); }
       if (this.over && T > this.over) { ctx.fillStyle = 'rgba(30,6,12,.6)'; ctx.fillRect(0, H * .22, W, H * .78); T2(this.streak + (this.streak === 1 ? ' acerto seguido' : ' acertos seguidos'), W / 2, H * .55, u * 3.6, '#fff', 400, 'center', SERIF); if (T - this.over > 1.2 && !NE.on) T2('👆', W / 2, H * .68 + Math.sin(T * 4) * u * .4, u * 2.2, '#fff', 400, 'center', 'sans-serif'); }
       NE.frame('peso');
     }
