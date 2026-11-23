@@ -1771,7 +1771,7 @@ html,body,#stage{background:#18050c}
       <div class="game-top copy"><div class="label">● Jogo</div><h1 class="title"><span>Aperte para</span><em>não explodir</em></h1></div>
     </div></section>
     <section class="scene" data-scene="peso"><div class="cam">
-      <div class="game-top copy"><div class="label">● Jogo</div><h1 class="title"><span>Adivinhe</span><em>o peso</em></h1></div>
+      <div class="game-top copy"><div class="label">● Jogo</div><h1 class="title"><span>Qual é</span><em>o mais…?</em></h1></div>
     </div></section>
     <section class="scene" data-scene="enquete"><div class="cam">
       <div class="game-top copy"><div class="label">● Enquete do dia</div><h1 class="title"><span>E aí,</span><em>o que você acha?</em></h1></div>
@@ -7577,43 +7577,120 @@ function H_medalha() {
 ];
   const PS_SEEN = 'cgPesoVistos';
   const psFmt = g => g >= 1e6 ? (g / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' t' : g >= 1000 ? (g / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' kg' : g >= 1 ? Math.round(g).toLocaleString('pt-BR') + ' g' : (g * 1000).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + ' mg';
+  const EM_CODES = ["1f0cf", "1f30a", "1f310", "1f32a", "1f32d", "1f332", "1f333", "1f334", "1f33d", "1f347", "1f349", "1f34a", "1f34b", "1f34c", "1f34d", "1f34e", "1f350", "1f353", "1f354", "1f355", "1f357", "1f35a", "1f35b", "1f35d", "1f35e", "1f35f", "1f366", "1f369", "1f36a", "1f36b", "1f36c", "1f36e", "1f36f", "1f372", "1f373", "1f377", "1f37a", "1f37d", "1f37e", "1f37f", "1f381", "1f382", "1f383", "1f384", "1f386", "1f392", "1f39f", "1f3a1", "1f3a7", "1f3ac", "1f3ae", "1f3b3", "1f3b8", "1f3b9", "1f3ba", "1f3bb", "1f3be", "1f3c0", "1f3c3", "1f3c6", "1f3cb", "1f3cd", "1f3ce", "1f3d0", "1f3d3", "1f3d4", "1f3d9", "1f3db", "1f3dc", "1f3dd", "1f3e0", "1f3e2", "1f404", "1f405", "1f406", "1f407", "1f408", "1f40a", "1f40b", "1f40c", "1f40d", "1f40e", "1f410", "1f411", "1f413", "1f415", "1f416", "1f418", "1f419", "1f41c", "1f41d", "1f41e", "1f41f", "1f420", "1f422", "1f424", "1f426", "1f427", "1f42b", "1f42c", "1f42d", "1f42f", "1f430", "1f431", "1f434", "1f436", "1f437", "1f439", "1f43a", "1f43b", "1f43c", "1f43f", "1f44d", "1f451", "1f453", "1f455", "1f45c", "1f45f", "1f488", "1f48d", "1f48e", "1f4a1", "1f4ac", "1f4b3", "1f4b5", "1f4b8", "1f4bb", "1f4be", "1f4bf", "1f4ce", "1f4d3", "1f4d5", "1f4da", "1f4dc", "1f4e1", "1f4e6", "1f4f1", "1f4f2", "1f4f7", "1f4f8", "1f4fa", "1f4fb", "1f50a", "1f50b", "1f50c", "1f50d", "1f511", "1f514", "1f526", "1f528", "1f52a", "1f52c", "1f52d", "1f56f", "1f579", "1f58a", "1f5a5", "1f5a8", "1f5b1", "1f5c2", "1f5d1", "1f5fa", "1f5fb", "1f5fc", "1f5fd", "1f5ff", "1f680", "1f681", "1f682", "1f684", "1f68c", "1f695", "1f697", "1f699", "1f69a", "1f69c", "1f6a1", "1f6a2", "1f6a4", "1f6aa", "1f6b0", "1f6b2", "1f6b6", "1f6bd", "1f6cb", "1f6cf", "1f6d2", "1f6d7", "1f6de", "1f6e2", "1f6e5", "1f6e9", "1f6f4", "1f6f7", "1f6f9", "1f916", "1f941", "1f947", "1f950", "1f951", "1f954", "1f955", "1f956", "1f957", "1f95a", "1f95b", "1f95c", "1f964", "1f965", "1f966", "1f969", "1f96b", "1f96d", "1f980", "1f981", "1f983", "1f985", "1f986", "1f988", "1f989", "1f98b", "1f98c", "1f98f", "1f992", "1f993", "1f995", "1f998", "1f99b", "1f99c", "1f99e", "1f99f", "1f9c0", "1f9c2", "1f9c3", "1f9c4", "1f9c5", "1f9ca", "1f9cd", "1f9d1-200d-1f680", "1f9e2", "1f9e5", "1f9e6", "1f9ed", "1f9ee", "1f9ef", "1f9f1", "1f9f3", "1f9f4", "1f9f8", "1f9fa", "1f9fb", "1f9fc", "1f9fd", "1fa7a", "1fa91", "1fa92", "1fa99", "1fa9a", "1fa9b", "1faa3", "1faa5", "1faa8", "1faaa", "1fab5", "1fab6", "1fad6", "231a", "2328", "25b6", "2602", "260e", "2615", "2693", "2696", "26bd", "26c4", "26cf", "26ea", "26f0", "26f5", "26fd", "2708", "270d", "270f", "2b50"];   // imagens 3D (Fluent Emoji, MIT) em em/<código>.webp
+  /* ---------- "qual é o mais…?" — categorias além do peso ---------- */
+  const QM_GYN = [-16.6869, -49.2648];
+  const qmKm = (la, lo) => { const R = 6371, r = x => x * Math.PI / 180, a = Math.sin(r(la - QM_GYN[0]) / 2) ** 2 + Math.cos(r(QM_GYN[0])) * Math.cos(r(la)) * Math.sin(r(lo - QM_GYN[1]) / 2) ** 2; return Math.round(2 * R * Math.asin(Math.sqrt(a))); };
+  const QM_LUG = [
+    ['🇧🇷', 'Brasília (DF)', -15.7939, -47.8828], ['🇧🇷', 'Anápolis (GO)', -16.3281, -48.9534], ['🇧🇷', 'Caldas Novas (GO)', -17.7441, -48.6250], ['🇧🇷', 'Pirenópolis (GO)', -15.8521, -48.9590], ['🇧🇷', 'Rio Verde (GO)', -17.7923, -50.9192],
+    ['🇧🇷', 'São Paulo (SP)', -23.5505, -46.6333], ['🇧🇷', 'Rio de Janeiro (RJ)', -22.9068, -43.1729], ['🇧🇷', 'Belo Horizonte (MG)', -19.9167, -43.9345], ['🇧🇷', 'Salvador (BA)', -12.9777, -38.5016], ['🇧🇷', 'Recife (PE)', -8.0476, -34.8770],
+    ['🇧🇷', 'Fortaleza (CE)', -3.7319, -38.5267], ['🇧🇷', 'Manaus (AM)', -3.1190, -60.0217], ['🇧🇷', 'Belém (PA)', -1.4558, -48.4902], ['🇧🇷', 'Porto Alegre (RS)', -30.0346, -51.2177], ['🇧🇷', 'Curitiba (PR)', -25.4284, -49.2733],
+    ['🇧🇷', 'Florianópolis (SC)', -27.5954, -48.5480], ['🇧🇷', 'Cuiabá (MT)', -15.6014, -56.0979], ['🇧🇷', 'Campo Grande (MS)', -20.4697, -54.6201], ['🇧🇷', 'Palmas (TO)', -10.1840, -48.3336], ['🇧🇷', 'Natal (RN)', -5.7945, -35.2110],
+    ['🇧🇷', 'Porto Velho (RO)', -8.7612, -63.9004], ['🇧🇷', 'Rio Branco (AC)', -9.9747, -67.8100], ['🇧🇷', 'Boa Vista (RR)', 2.8235, -60.6758], ['🇧🇷', 'Macapá (AP)', 0.0349, -51.0694], ['🇧🇷', 'São Luís (MA)', -2.5307, -44.3068],
+    ['🇧🇷', 'Teresina (PI)', -5.0920, -42.8038], ['🇧🇷', 'João Pessoa (PB)', -7.1195, -34.8450], ['🇧🇷', 'Maceió (AL)', -9.6658, -35.7353], ['🇧🇷', 'Aracaju (SE)', -10.9472, -37.0731], ['🇧🇷', 'Vitória (ES)', -20.3155, -40.3128],
+    ['🇧🇷', 'Foz do Iguaçu (PR)', -25.5163, -54.5854], ['🇧🇷', 'Fernando de Noronha (PE)', -3.8547, -32.4247], ['🇦🇷', 'Buenos Aires', -34.6037, -58.3816], ['🇨🇱', 'Santiago (Chile)', -33.4489, -70.6693], ['🇺🇾', 'Montevidéu', -34.9011, -56.1645],
+    ['🇵🇪', 'Lima', -12.0464, -77.0428], ['🇨🇴', 'Bogotá', 4.7110, -74.0721], ['🇻🇪', 'Caracas', 10.4806, -66.9036], ['🇵🇾', 'Assunção', -25.2637, -57.5759], ['🇧🇴', 'La Paz', -16.4897, -68.1193],
+    ['🇲🇽', 'Cidade do México', 19.4326, -99.1332], ['🇺🇸', 'Nova York', 40.7128, -74.0060], ['🇺🇸', 'Miami', 25.7617, -80.1918], ['🇺🇸', 'Los Angeles', 34.0522, -118.2437], ['🇨🇦', 'Toronto', 43.6532, -79.3832],
+    ['🇨🇺', 'Havana', 23.1136, -82.3666], ['🇵🇹', 'Lisboa', 38.7223, -9.1393], ['🇪🇸', 'Madri', 40.4168, -3.7038], ['🇫🇷', 'Paris', 48.8566, 2.3522], ['🇬🇧', 'Londres', 51.5074, -0.1278],
+    ['🇮🇹', 'Roma', 41.9028, 12.4964], ['🇩🇪', 'Berlim', 52.5200, 13.4050], ['🇷🇺', 'Moscou', 55.7558, 37.6173], ['🇪🇬', 'Cairo', 30.0444, 31.2357], ['🇿🇦', 'Cidade do Cabo', -33.9249, 18.4241],
+    ['🇦🇴', 'Luanda', -8.8390, 13.2894], ['🇳🇬', 'Lagos', 6.5244, 3.3792], ['🇦🇪', 'Dubai', 25.2048, 55.2708], ['🇮🇳', 'Nova Délhi', 28.6139, 77.2090], ['🇨🇳', 'Pequim', 39.9042, 116.4074],
+    ['🇯🇵', 'Tóquio', 35.6762, 139.6503], ['🇰🇷', 'Seul', 37.5665, 126.9780], ['🇦🇺', 'Sydney', -33.8688, 151.2093], ['🇳🇿', 'Auckland', -36.8485, 174.7633], ['🇮🇱', 'Jerusalém', 31.7683, 35.2137],
+    ['🇹🇷', 'Istambul', 41.0082, 28.9784], ['🇹🇭', 'Bangkok', 13.7563, 100.5018], ['🇸🇬', 'Singapura', 1.3521, 103.8198], ['🇮🇸', 'Reykjavik (Islândia)', 64.1466, -21.9426], ['🧊', 'Polo Norte', 90, 0], ['🐧', 'Polo Sul', -90, 0]
+  ];
+  const QM = {
+    longe: { q: 'Qual fica mais LONGE de Goiânia?', nota: 'distância em linha reta', fmt: v => v.toLocaleString('pt-BR') + ' km', it: QM_LUG.map(l => [l[0], l[1], qmKm(l[2], l[3])]) },
+    caro: { q: 'Qual é o mais CARO?', nota: 'preços aproximados', fmt: v => 'R$ ' + (v >= 1e6 ? (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' milhões' : v.toLocaleString('pt-BR', { maximumFractionDigits: v < 10 ? 2 : 0 })), it: [
+      ['☕', 'cafezinho na padaria', 6], ['🥖', 'pão francês (1 unidade)', 1], ['🍫', 'barra de chocolate', 8], ['🍕', 'pizza grande', 70], ['🍔', 'combo de fast-food', 40], ['🎬', 'ingresso de cinema', 35], ['⛽', 'litro de gasolina', 6.3], ['🥩', 'kg de picanha', 80],
+      ['🍺', 'cerveja long neck', 8], ['🥥', 'água de coco', 8], ['📱', 'iPhone topo de linha', 10000], ['💻', 'notebook', 4000], ['📺', 'TV de 55"', 3000], ['🎮', 'videogame novo', 4000], ['🚗', 'carro popular 0 km', 80000], ['🏍️', 'moto 160 cc', 18000],
+      ['🚲', 'bicicleta comum', 900], ['🏠', 'apartamento de 2 quartos', 350000], ['✈️', 'passagem Goiânia–São Paulo', 700], ['🗺️', 'passagem para a Europa', 5000], ['🎟️', 'ingresso de show internacional', 600], ['⚽', 'camisa oficial de time', 350], ['👟', 'tênis de corrida', 500], ['⌚', 'relógio inteligente', 1500],
+      ['🎧', 'fone sem fio', 300], ['💍', 'par de alianças de ouro', 3000], ['🧳', 'mala de viagem', 400], ['🛋️', 'sofá de 3 lugares', 2500], ['🛏️', 'colchão de casal', 1500], ['🧊', 'geladeira', 3500], ['🎄', 'árvore de Natal de 2 m', 400], ['🦃', 'peru de Natal', 120],
+      ['🍾', 'espumante', 50], ['🎁', 'caixa de bombons', 15], ['🖊️', 'caneta esferográfica', 2], ['📓', 'caderno', 20], ['📚', 'livro', 60], ['💈', 'corte de cabelo', 50], ['🚕', 'corrida de app de 10 km', 30], ['🚌', 'passagem de ônibus urbano', 4.3],
+      ['🐶', 'saco de ração de 15 kg', 200], ['🛩️', 'jatinho particular', 20000000], ['🛥️', 'iate', 5000000], ['🏝️', 'ilha particular', 30000000], ['🖨️', 'impressora', 800], ['🪑', 'cadeira de escritório', 900], ['🍦', 'sorvete de casquinha', 5], ['🎂', 'bolo de aniversário', 120]] },
+    rapido: { q: 'Qual é o mais RÁPIDO?', nota: 'velocidade máxima aproximada', fmt: v => (v >= 1e6 ? (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + ' milhões de' : v < 1 ? v.toLocaleString('pt-BR', { maximumFractionDigits: 2 }) : Math.round(v).toLocaleString('pt-BR')) + ' km/h', it: [
+      ['🐌', 'caracol', 0.05], ['🐢', 'tartaruga terrestre', 0.3], ['🚶', 'pessoa caminhando', 5], ['🏃', 'Usain Bolt', 44], ['🐎', 'cavalo de corrida', 70], ['🐆', 'guepardo', 110], ['🦅', 'falcão-peregrino (mergulho)', 320], ['🐕', 'galgo', 70],
+      ['🐇', 'lebre', 70], ['🐘', 'elefante', 40], ['🦒', 'girafa', 60], ['🐻', 'urso-pardo', 56], ['🦈', 'tubarão-mako', 70], ['🐬', 'golfinho', 50], ['🐝', 'abelha', 25], ['🦟', 'mosquito', 2], ['🚲', 'bicicleta', 20],
+      ['🛴', 'patinete elétrico', 25], ['🏍️', 'moto da MotoGP', 360], ['🏎️', 'carro de Fórmula 1', 370], ['🚗', 'carro na rodovia', 110], ['🚄', 'trem-bala japonês', 320], ['🚀', 'foguete em órbita', 28000], ['✈️', 'avião comercial', 900],
+      ['🚁', 'helicóptero', 250], ['⛵', 'veleiro', 15], ['🚤', 'lancha', 80], ['🌪️', 'vento de furacão forte', 250], ['🔊', 'som (no ar)', 1235], ['💡', 'luz', 1079252849], ['🐦', 'beija-flor', 50], ['🐊', 'jacaré (em terra)', 17],
+      ['🐧', 'pinguim nadando', 36], ['🦘', 'canguru', 70], ['🐺', 'lobo', 60], ['🦁', 'leão', 80], ['🐅', 'tigre', 65], ['🐈', 'gato doméstico', 48], ['🐖', 'porco', 17], ['🐿️', 'esquilo', 20]] },
+    alto: { q: 'Qual é o mais ALTO?', nota: 'altura aproximada', fmt: v => v < 10 ? v.toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + ' m' : Math.round(v).toLocaleString('pt-BR') + ' m', it: [
+      ['🦒', 'girafa', 5.5], ['🐘', 'elefante africano', 3.3], ['🧍', 'pessoa média', 1.7], ['🏀', 'aro de basquete', 3.05], ['🚪', 'porta', 2.1], ['🏠', 'casa de 2 andares', 7], ['🎄', 'árvore de Natal da sala', 2], ['🗽', 'Estátua da Liberdade (com base)', 93],
+      ['⛪', 'Cristo Redentor (com base)', 38], ['🗼', 'Torre Eiffel', 330], ['🏙️', 'Burj Khalifa', 828], ['🏢', 'Empire State Building', 443], ['🏔️', 'Monte Everest', 8849], ['⛰️', 'Pico da Neblina', 2995], ['🌳', 'sequoia-gigante', 84],
+      ['🐴', 'cavalo', 1.6], ['🦖', 'tiranossauro', 4], ['🦕', 'braquiossauro', 13], ['🚌', 'ônibus', 3.2], ['🎡', 'London Eye', 135], ['🌊', 'maior onda já surfada (Nazaré)', 26], ['📡', 'Torre de TV de Brasília', 224], ['🗻', 'Monte Fuji', 3776],
+      ['🚡', 'Pão de Açúcar', 396], ['🏛️', 'torres do Congresso Nacional', 100], ['🌲', 'pinheiro adulto', 30], ['🐻', 'urso-pardo em pé', 2.5], ['🌴', 'coqueiro', 25], ['🗿', 'estátua da Ilha de Páscoa', 4]] },
+    antigo: { q: 'O que surgiu PRIMEIRO?', nota: 'ano aproximado', menor: 1, fmt: v => v < 0 ? (-v).toLocaleString('pt-BR') + ' a.C.' : String(v), it: [
+      ['🛞', 'a roda', -3500], ['✍️', 'a escrita', -3200], ['🏜️', 'as pirâmides do Egito', -2560], ['📜', 'o papel', 105], ['🧭', 'a bússola', 1040], ['🖨️', 'a prensa de Gutenberg', 1440], ['🔭', 'o telescópio', 1608], ['🚂', 'a locomotiva a vapor', 1804],
+      ['📷', 'a fotografia', 1826], ['☎️', 'o telefone', 1876], ['💡', 'a lâmpada', 1879], ['🚗', 'o automóvel', 1886], ['🎬', 'o cinema', 1895], ['✈️', 'o voo do 14-bis', 1906], ['📺', 'a televisão', 1927], ['💻', 'o computador eletrônico', 1945],
+      ['🌐', 'a internet', 1969], ['📱', 'o telefone celular', 1973], ['💾', 'o disquete', 1971], ['🖱️', 'o mouse', 1964], ['🎮', 'o videogame Pong', 1972], ['💿', 'o CD', 1982], ['🔍', 'o Google', 1998], ['👍', 'o Facebook', 2004],
+      ['▶️', 'o YouTube', 2005], ['📲', 'o iPhone', 2007], ['💬', 'o WhatsApp', 2009], ['📸', 'o Instagram', 2010], ['🪙', 'o Bitcoin', 2008], ['🤖', 'o ChatGPT', 2022], ['🧊', 'a geladeira elétrica', 1913], ['🏙️', 'Brasília', 1960],
+      ['🏛️', 'Goiânia', 1933], ['🇧🇷', 'a Independência do Brasil', 1822], ['⚖️', 'a Constituição de 1988', 1988], ['💸', 'o Pix', 2020], ['🧑‍🚀', 'o homem na Lua', 1969], ['⚽', 'a primeira Copa do Mundo', 1930], ['🚢', 'o naufrágio do Titanic', 1912]] },
+    calorias: { q: 'Qual tem mais CALORIAS?', nota: 'por porção comum, aproximado', fmt: v => Math.round(v).toLocaleString('pt-BR') + ' kcal', it: [
+      ['🍎', 'maçã', 80], ['🍌', 'banana', 105], ['🥑', 'abacate inteiro', 320], ['🍫', 'barra de chocolate (90 g)', 480], ['🍕', 'fatia de pizza', 285], ['🍔', 'Big Mac', 550], ['🍟', 'batata frita grande', 490], ['🥤', 'lata de refrigerante', 140],
+      ['🍺', 'lata de cerveja', 150], ['☕', 'café sem açúcar', 2], ['🥚', 'ovo cozido', 75], ['🍩', 'rosquinha', 250], ['🥗', 'salada verde', 30], ['🍛', 'prato de arroz e feijão', 350], ['🧀', 'pão de queijo médio', 80], ['🥖', 'pão francês', 135],
+      ['🥛', 'copo de leite integral', 150], ['🍦', 'casquinha de sorvete', 230], ['🎂', 'fatia de bolo', 350], ['🥜', 'punhado de amendoim', 170], ['🍇', 'cacho de uva (500 g)', 345], ['🥩', 'picanha (200 g)', 600], ['🌭', 'cachorro-quente', 290], ['🍮', 'fatia de pudim', 300],
+      ['🥥', 'água de coco', 60], ['🍿', 'pipoca grande de cinema', 1000], ['🍷', 'taça de vinho', 125], ['🥐', 'croissant', 230], ['🍝', 'prato de macarrão', 400], ['🍲', 'prato de feijoada', 800], ['🍓', 'morangos (1 xícara)', 50], ['🥕', 'cenoura', 25]] },
+    germes: { q: 'Qual costuma ter mais GERMES?', nota: 'segundo estudos de higiene', fmt: v => ['', 'quase nenhum', 'poucos', 'moderado', 'muitos', 'campeão de germes'][v], nivel: 1, it: [
+      ['🧽', 'esponja de cozinha', 5], ['🧺', 'pano de prato', 5], ['🔪', 'tábua de cortar carne', 4], ['📱', 'tela do celular', 4], ['🛒', 'alça de carrinho de mercado', 4], ['🚰', 'pia da cozinha', 4], ['🪥', 'porta-escovas de dente', 4], ['🐶', 'tigela do cachorro', 4],
+      ['⌨️', 'teclado do computador', 3], ['💵', 'cédula de dinheiro', 3], ['🛗', 'botão do elevador', 3], ['🚪', 'maçaneta', 3], ['📺', 'controle remoto', 3], ['🚽', 'assento do vaso (limpo)', 2], ['🍽️', 'prato lavado', 1], ['🧼', 'sabonete líquido', 1]] },
+    gente: { q: 'Qual tem mais HABITANTES?', nota: 'população aproximada', fmt: v => (v >= 1e6 ? (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: v >= 1e8 ? 0 : 1 }) + ' milhões' : v.toLocaleString('pt-BR')), it: [
+      ['🇧🇷', 'Brasil', 212e6], ['🇨🇳', 'China', 1410e6], ['🇮🇳', 'Índia', 1440e6], ['🇺🇸', 'Estados Unidos', 340e6], ['🇵🇹', 'Portugal', 10.4e6], ['🇦🇷', 'Argentina', 46e6], ['🇯🇵', 'Japão', 124e6], ['🇲🇽', 'México', 130e6],
+      ['🇩🇪', 'Alemanha', 84e6], ['🇫🇷', 'França', 68e6], ['🇮🇹', 'Itália', 59e6], ['🇬🇧', 'Reino Unido', 68e6], ['🇷🇺', 'Rússia', 144e6], ['🇳🇬', 'Nigéria', 225e6], ['🇪🇬', 'Egito', 113e6], ['🇿🇦', 'África do Sul', 63e6],
+      ['🇦🇺', 'Austrália', 27e6], ['🇨🇦', 'Canadá', 41e6], ['🇺🇾', 'Uruguai', 3.4e6], ['🇵🇾', 'Paraguai', 6.9e6], ['🇨🇱', 'Chile', 19.7e6], ['🇮🇸', 'Islândia', 390000], ['🇻🇦', 'Vaticano', 800], ['🇲🇨', 'Mônaco', 38000],
+      ['🇸🇬', 'Singapura', 6e6], ['🇮🇩', 'Indonésia', 280e6], ['🇵🇰', 'Paquistão', 245e6], ['🇧🇩', 'Bangladesh', 173e6], ['🇰🇷', 'Coreia do Sul', 51e6], ['🇳🇿', 'Nova Zelândia', 5.3e6], ['🇨🇴', 'Colômbia', 53e6], ['🇵🇪', 'Peru', 34e6]] }
+  };
+  const QM_CATS = [['mix', '🎲', 'Misturado'], ['peso', '⚖️', 'Peso'], ['longe', '📍', 'Distância'], ['caro', '💰', 'Preço'], ['rapido', '⚡', 'Velocidade'], ['alto', '📏', 'Altura'], ['antigo', '⏳', 'Mais antigo'], ['calorias', '🔥', 'Calorias'], ['germes', '🦠', 'Germes'], ['gente', '👥', 'População']];
+  const qmCat = k => k === 'peso' ? { q: 'Qual é o mais PESADO?', nota: 'pesos aproximados', fmt: psFmt, it: PS_IT } : QM[k];
+  const EM_OK = new Set(EM_CODES);
+  const emCode = e => [...e].map(c => c.codePointAt(0)).filter(c => c !== 0xFE0F).map(c => c.toString(16)).join('-');
+  const EM_IMG = {};
+  const emImg = e => { const c = emCode(e); if (!EM_OK.has(c)) return null; if (!EM_IMG[c]) { const im = new Image(); im.src = 'em/' + c + '.webp'; EM_IMG[c] = im; } const im = EM_IMG[c]; return im.complete && im.naturalWidth ? im : null; };
   const peso = {
-    id: 'peso', name: 'jogo · adivinhe o peso', el: $('[data-scene=peso]'),
-    setup() { this.sp = []; this.reset(); },
+    id: 'peso', name: 'jogo · qual é o mais…?', el: $('[data-scene=peso]'), mode: 'mix',
+    setup() { this.sp = []; this.chips = []; this.reset(); },
     reset() { this.streak = 0; this.over = 0; this.ans = null; this.newPair(); },
     enter() { this.t0 = null; if (!NE.on) this.reset(); },
     leave() { if (NE.on && NE.scene === 'peso') NE.finish(); },
-    band() { const s = this.streak; return s < 3 ? [4, 1e9] : s < 6 ? [2.2, 8] : s < 10 ? [1.5, 3.2] : s < 15 ? [1.25, 2] : [1.1, 1.6]; },
-    newPair() { let seen = LS.get(PS_SEEN, []) || []; if (seen.length > 900) seen = seen.slice(-600); const [lo, hi] = this.band(), N = PS_IT.length; let best = null;
-      for (let tries = 0; tries < 400; tries++) { const a = Math.floor(Math.random() * N), b = Math.floor(Math.random() * N); if (a === b) continue; const A = PS_IT[a], B = PS_IT[b], r = Math.max(A[2], B[2]) / Math.min(A[2], B[2]); const key = Math.min(a, b) + '-' + Math.max(a, b);
-        if (r < lo || r > hi || A[2] === B[2]) continue; if (seen.includes(key) && tries < 300) continue; best = { a, b, key }; break; }
-      if (!best) { const a = Math.floor(Math.random() * N); let b = (a + 1) % N; best = { a, b, key: a + '-' + b }; }
-      seen.push(best.key); LS.set(PS_SEEN, seen); this.P = [PS_IT[best.a], PS_IT[best.b]]; this.ans = null; this.pt = this.T || 0; },
-    cards() { const w = W * .26, h = H * .4, y = H * .31; return [{ x: W * .36 - w / 2 - W * .04, y, w, h }, { x: W * .36 + W * .04 + w / 2 - w / 2 + w / 2, y, w, h }].map((c, i) => i ? { ...c, x: W * .5 + W * .02 } : { ...c, x: W * .5 - W * .02 - w }); },
+    band(cat) { const s = this.streak;
+      if (cat.nivel) return s < 4 ? [2, 9] : [1, 9];
+      if (cat.menor) return s < 3 ? [150, 1e9] : s < 6 ? [40, 400] : s < 10 ? [12, 90] : [2, 30];
+      return s < 3 ? [4, 1e12] : s < 6 ? [2.2, 8] : s < 10 ? [1.5, 3.2] : s < 15 ? [1.25, 2] : [1.1, 1.6]; },
+    newPair() {
+      const keys = QM_CATS.map(c => c[0]).filter(k => k !== 'mix'); let ck = this.mode === 'mix' ? keys[Math.floor(Math.random() * keys.length)] : this.mode; if (this.mode === 'mix' && ck === this.ck && Math.random() < .7) ck = keys[Math.floor(Math.random() * keys.length)];
+      const cat = qmCat(ck), L = cat.it, N = L.length, [lo, hi] = this.band(cat); let seen = LS.get(PS_SEEN, []) || []; if (seen.length > 900) seen = seen.slice(-600); let best = null;
+      for (let tries = 0; tries < 500; tries++) { const a = Math.floor(Math.random() * N), b = Math.floor(Math.random() * N); if (a === b) continue; const A = L[a][2], B = L[b][2]; if (A === B) continue;
+        const r = cat.nivel || cat.menor ? Math.abs(A - B) : Math.max(A, B) / Math.min(A, B); if (r < lo || r > hi) continue;
+        const key = ck + ':' + Math.min(a, b) + '-' + Math.max(a, b); if (seen.includes(key) && tries < 380) continue; best = { a, b, key }; break; }
+      if (!best) { let a, b; do { a = Math.floor(Math.random() * N); b = Math.floor(Math.random() * N); } while (a === b || L[a][2] === L[b][2]); best = { a, b, key: ck + ':' + a + '-' + b }; }
+      seen.push(best.key); LS.set(PS_SEEN, seen); this.ck = ck; this.cat = cat; this.P = [L[best.a], L[best.b]]; this.ans = null; this.pt = this.T || 0;
+      [best.a, best.b].forEach(i => emImg(L[i][0])); },
+    cards() { const w = W * .27, h = H * .42, y = H * .33; return [{ x: W * .5 - W * .02 - w, y, w, h }, { x: W * .5 + W * .02, y, w, h }]; },
     tap(x, y) { if (NE.tap(x, y)) return; const T = this.T || 0;
+      const ch = this.chips.find(c => x > c.x && x < c.x + c.w && y > c.y && y < c.y + c.h); if (ch && !this.ans) { this.mode = ch.k; this.streak = 0; this.over = 0; this.newPair(); return; }
       if (this.over) { if (T - this.over > 1.2) this.reset(); return; }
       if (this.ans) return; const C = this.cards(); const i = C.findIndex(c => x > c.x && x < c.x + c.w && y > c.y && y < c.y + c.h); if (i < 0) return;
-      const heavy = this.P[0][2] > this.P[1][2] ? 0 : 1, ok = i === heavy; this.ans = { t: T, i, ok, heavy };
-      if (ok) { this.streak++; burst(this.sp, C[i].x + C[i].w / 2, C[i].y + C[i].h * .4, 30, ['#9fd8a8', '#f2c46d', '#fff'], 260); setTimeout(() => { if (!this.over) this.newPair(); }, 1700); }
-      else { this.over = T + 1.8; if (REC.qualifies('peso', this.streak)) setTimeout(() => NE.start('peso', 'peso', this.streak, false, this.streak + (this.streak === 1 ? ' acerto seguido' : ' acertos seguidos')), 1800); } },
+      const v0 = this.P[0][2], v1 = this.P[1][2], win = this.cat.menor ? (v0 < v1 ? 0 : 1) : (v0 > v1 ? 0 : 1), ok = i === win; this.ans = { t: T, i, ok, heavy: win };
+      if (ok) { this.streak++; burst(this.sp, C[i].x + C[i].w / 2, C[i].y + C[i].h * .4, 30, ['#9fd8a8', '#f2c46d', '#fff'], 260); setTimeout(() => { if (!this.over) this.newPair(); }, 1900); }
+      else { this.over = T + 2; if (REC.qualifies('peso', this.streak)) setTimeout(() => NE.start('peso', 'peso', this.streak, false, this.streak + (this.streak === 1 ? ' acerto seguido' : ' acertos seguidos')), 2000); } },
     frame(t, dt) {
-      const T = this.T = T3(this, t), u = UU(), C = this.cards(), A = this.ans, k0 = sm(Math.min(1, (T - (this.pt || 0)) / .4));
-      T2('Qual é o mais PESADO?', W / 2, H * .25, u * 1.5, '#f2c46d', 700, 'center', 'sans-serif');
-      // balança no meio
-      const tilt = A ? (A.heavy ? 1 : -1) * Math.min(1, (T - A.t) / .5) * .22 : Math.sin(T * 1.5) * .03, bx = W / 2, by = H * .87;
-      ctx.save(); ctx.translate(bx, by - u * 3); ctx.rotate(tilt); ctx.strokeStyle = '#f2c46d'; ctx.lineWidth = u * .35; ctx.beginPath(); ctx.moveTo(-u * 6, 0); ctx.lineTo(u * 6, 0); ctx.stroke(); [-1, 1].forEach(s => { ctx.beginPath(); ctx.arc(s * u * 6, u * 1.2, u * 1.6, 0, Math.PI); ctx.stroke(); }); ctx.restore();
-      ctx.fillStyle = '#f2c46d'; ctx.beginPath(); ctx.moveTo(bx, by - u * 3); ctx.lineTo(bx + u * 1.4, by + u * .6); ctx.lineTo(bx - u * 1.4, by + u * .6); ctx.fill();
+      const T = this.T = T3(this, t), u = UU(), C = this.cards(), A = this.ans, k0 = sm(Math.min(1, (T - (this.pt || 0)) / .4)), cat = this.cat;
+      ctx.globalAlpha = k0; T2(cat.q, W / 2, H * .25, u * 1.7, '#f2c46d', 700, 'center', 'sans-serif'); T2(cat.nota, W / 2, H * .25 + u * 2, u * .85, 'rgba(255,255,255,.5)', 600, 'center', 'sans-serif'); ctx.globalAlpha = 1;
       C.forEach((c, i) => { const it = this.P[i], hi = A && i === A.heavy, sel = A && i === A.i, yy = c.y + (1 - k0) * u * 3;
         ctx.globalAlpha = k0; ctx.fillStyle = A ? (hi ? 'rgba(159,216,168,.2)' : 'rgba(255,244,227,.05)') : 'rgba(255,244,227,.08)'; rr2(c.x, yy, c.w, c.h, 18); ctx.fill(); ctx.strokeStyle = sel ? (A.ok ? '#9fd8a8' : '#ff5f7a') : 'rgba(242,196,109,.3)'; ctx.lineWidth = sel ? 3 : 1.2; ctx.stroke();
-        T2(it[0], c.x + c.w / 2, yy + c.h * .4, Math.min(c.w, c.h) * .38, '#000', 400, 'center', 'sans-serif');
-        ctx.font = `700 ${u * 1.2}px ${SANS}`; const nw = ctx.measureText(it[1]).width, fs = Math.min(u * 1.2, u * 1.2 * (c.w - u * 1.5) / nw); T2(it[1].charAt(0).toUpperCase() + it[1].slice(1), c.x + c.w / 2, yy + c.h * .78, fs, '#fff4e3', 700, 'center', 'sans-serif');
-        if (A) T2('≈ ' + psFmt(it[2]), c.x + c.w / 2, yy + c.h * .9, u * 1.05, hi ? '#9fd8a8' : 'rgba(255,255,255,.65)', 700, 'center', 'sans-serif');
+        const im = emImg(it[0]), S = Math.min(c.w, c.h) * .52, cy = yy + c.h * .4, bob = A ? 0 : Math.sin(T * 1.6 + i * 2) * u * .25;
+        ga(hi ? '#9fd8a8' : '#f2c46d', S * .8, c.x + c.w / 2, cy, .12);
+        if (im) ctx.drawImage(im, c.x + c.w / 2 - S / 2, cy - S / 2 + bob, S, S); else T2(it[0], c.x + c.w / 2, cy + bob, S * .72, '#000', 400, 'center', 'sans-serif');
+        const nm = /^[a-z][A-Z]/.test(it[1]) ? it[1] : it[1].charAt(0).toUpperCase() + it[1].slice(1); ctx.font = `700 ${u * 1.25}px ${SANS}`; const nw = ctx.measureText(nm).width, fs = Math.min(u * 1.25, u * 1.25 * (c.w - u * 1.5) / nw); T2(nm, c.x + c.w / 2, yy + c.h * .79, fs, '#fff4e3', 700, 'center', 'sans-serif');
+        if (A) T2((cat.nivel || cat.menor ? '' : '≈ ') + cat.fmt(it[2]), c.x + c.w / 2, yy + c.h * .91, u * 1.1, hi ? '#9fd8a8' : 'rgba(255,255,255,.65)', 700, 'center', 'sans-serif');
         ctx.globalAlpha = 1; });
-      if (A && T - A.t < 1.6) T2(A.ok ? 'acertou! ✓' : 'errou! ✗', W / 2, C[0].y - u * 1.6 + H * .0, u * 1.4, A.ok ? '#9fd8a8' : '#ff8fb1', 700, 'center', 'sans-serif');
+      T2('ou', W / 2, C[0].y + C[0].h * .42, u * 1.3, 'rgba(255,255,255,.45)', 400, 'center', SERIF);
+      if (A && T - A.t < 1.8) T2(A.ok ? 'acertou! ✓' : 'errou! ✗', W / 2, C[0].y + C[0].h + u * 2, u * 1.5, A.ok ? '#9fd8a8' : '#ff8fb1', 700, 'center', 'sans-serif');
       stepBurst(this.sp, dt, 380);
-      ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .84, H * .3, W * .13, H * .17, 14); ctx.fill(); T2(String(this.streak), W * .905, H * .37, u * 4, '#ffe3a0', 400, 'center', SERIF); T2('seguidos', W * .905, H * .37 + u * 2.4, u * .85, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
-      if (!this.streak && !A && !this.over) T2('toque no objeto que você acha que pesa mais · pesos aproximados', W / 2, H * .965, u * 1, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif');
-      if (this.over && T > this.over) { ctx.fillStyle = 'rgba(30,6,12,.6)'; ctx.fillRect(0, H * .22, W, H * .78); T2(this.streak + (this.streak === 1 ? ' acerto seguido' : ' acertos seguidos'), W / 2, H * .55, u * 3.6, '#fff', 400, 'center', SERIF); if (T - this.over > 1.2 && !NE.on) { T2('toque para jogar de novo', W / 2, H * .66, u * 1.2, '#f2c46d', 700, 'center', 'sans-serif'); hand(W / 2, H * .74, T, u * 2.2); } }
+      ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .845, H * .33, W * .11, H * .16, 14); ctx.fill(); T2(String(this.streak), W * .9, H * .4, u * 3.6, '#ffe3a0', 400, 'center', SERIF); T2('seguidos', W * .9, H * .4 + u * 2.2, u * .8, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
+      // escolha do tema (só antes de começar a sequência)
+      this.chips = [];
+      if (!this.streak && !A && !this.over) { const cw = Math.min(W * .14, C[0].x - W * .045), chh = Math.min(u * 2.5, (H * .58 - u * 4.5) / QM_CATS.length), gap = chh * .2, x = W * .025; let y = H * .33;
+        QM_CATS.forEach(([k, e, nm]) => { const on = this.mode === k; ctx.fillStyle = on ? '#f2c46d' : 'rgba(255,244,227,.08)'; rr2(x, y, cw, chh, chh / 2); ctx.fill(); if (!on) { ctx.strokeStyle = 'rgba(242,196,109,.35)'; ctx.lineWidth = 1; ctx.stroke(); }
+          ctx.font = `700 ${u * .95}px ${SANS}`; const lab = e + '  ' + nm, lw = ctx.measureText(lab).width; T2(lab, x + u * .9, y + chh / 2 + 1, Math.min(u * .95, u * .95 * (cw - u * 1.4) / lw), on ? '#1a1206' : '#fff4e3', 700, 'left', 'sans-serif'); this.chips.push({ k, x, y, w: cw, h: chh }); y += chh + gap; }); }
+      if (this.over && T > this.over) { ctx.fillStyle = 'rgba(30,6,12,.6)'; ctx.fillRect(0, H * .22, W, H * .78); T2(this.streak + (this.streak === 1 ? ' acerto seguido' : ' acertos seguidos'), W / 2, H * .55, u * 3.6, '#fff', 400, 'center', SERIF); if (T - this.over > 1.2 && !NE.on) T2('👆', W / 2, H * .68 + Math.sin(T * 4) * u * .4, u * 2.2, '#fff', 400, 'center', 'sans-serif'); }
       NE.frame('peso');
     }
   };
@@ -7722,7 +7799,7 @@ function H_medalha() {
   /* ---------- hall da fama: recordistas dos jogos ---------- */
   const HF_G = [['memoria', 'Memória natalina', 'j'], ['memlogos', 'Memória do núcleo', 'j'], ['puzzle', 'Quebra-cabeça da logo', 'j'], ['palavras', 'Caça-palavras', 't'], ['difs', 'Sete diferenças', 't'], ['labirinto', 'Labirinto do Noel', 't'],
     ['corrida', 'Corrida das renas', 't'], ['caca', 'Caça aos vírus', 'v'], ['rena', 'Rena saltadora', 'p'], ['empilha', 'Empilhe os presentes', 'pr'], ['cofre', 'Quebre o cofre', 'tt'], ['campo', 'Campo de vírus', 't'],
-    ['naval', 'Batalha naval', 'ti'], ['quiz', 'Quiz de segurança', 'a'], ['quizpp', 'Quiz de processo penal', 'a'], ['tempo5', 'Pare em 5 s', 'ms'], ['tempo10', 'Pare em 10 s', 'ms'], ['tempo5d', 'Pare em 5 s (visor apaga)', 'ms'], ['tempo10d', 'Pare em 10 s (visor apaga)', 'ms'], ['d2048', '2048', 'pt'], ['basquete', 'Basquete de dedo', 'bp'], ['tubos', 'Organize as cores', 'lv'], ['corte', 'Corte perfeito', 'pct'], ['intruso', 'O intruso', 'it'], ['explode', 'Aperte para não explodir', 'pt'], ['penalti', 'Pênaltis', 'gol'], ['peso', 'Adivinhe o peso', 'ps']];
+    ['naval', 'Batalha naval', 'ti'], ['quiz', 'Quiz de segurança', 'a'], ['quizpp', 'Quiz de processo penal', 'a'], ['tempo5', 'Pare em 5 s', 'ms'], ['tempo10', 'Pare em 10 s', 'ms'], ['tempo5d', 'Pare em 5 s (visor apaga)', 'ms'], ['tempo10d', 'Pare em 10 s (visor apaga)', 'ms'], ['d2048', '2048', 'pt'], ['basquete', 'Basquete de dedo', 'bp'], ['tubos', 'Organize as cores', 'lv'], ['corte', 'Corte perfeito', 'pct'], ['intruso', 'O intruso', 'it'], ['explode', 'Aperte para não explodir', 'pt'], ['penalti', 'Pênaltis', 'gol'], ['peso', 'Qual é o mais…?', 'ps']];
   const hfFmt = (k, s) => k === 'ms2' ? s + ' ms' : k === 'pt' ? s + ' pts' : k === 'bp' ? s + ' pts' : k === 'cs' ? s + ' cestas' : k === 'lv' ? 'nível ' + s : k === 'ps' ? s + ' seguidos' : k === 'it' ? s + ' achados' : k === 'pct' ? (s / 10).toFixed(1).replace('.', ',') + '%' : k === 'gol' ? s + ' gols' : hfFmt0(k, s);
   const hfFmt0 = (k, s) => k === 't' ? fmtT(s) : k === 'ms' ? '±' + ((s - 1) / 1000).toFixed(3) + 's' : k === 'j' ? s + ' jogadas' : k === 'v' ? s + ' vírus' : k === 'p' ? s + ' pts' : k === 'pr' ? s + ' presentes' : k === 'tt' ? s + ' tentativas' : k === 'ti' ? s + ' tiros' : k === 'a' ? s + ' de 8' : String(s);
   const HF_IC = { memoria: '🃏', memlogos: '🃏', puzzle: '🧩', palavras: '🔤', difs: '🔍', labirinto: '🌀', corrida: '🦌', caca: '🦠', rena: '🦌', empilha: '🎁', cofre: '🔐', campo: '💣', naval: '⚓', quiz: '🛡️', quizpp: '⚖️', tempo5: '⏱️', tempo10: '⏱️', tempo5d: '⏱️', tempo10d: '⏱️', d2048: '🔢', basquete: '🏀', tubos: '🧪', corte: '✂️', intruso: '🕵️', explode: '🎈', peso: '⚖️', penalti: '⚽' };
@@ -7971,7 +8048,7 @@ function H_medalha() {
   };
 
   /* ---------- convite para jogar (entra na vitrine de tempos em tempos) ---------- */
-  const CV_L = [['reflexo', 'Teste de reflexo', 'Quanto tempo você leva para tocar o alvo?'], ['d2048', '2048', 'Junte os números até chegar a 2048.'], ['basquete', 'Basquete de dedo', 'Arremesse e acerte a cesta.'], ['tubos', 'Organize as cores', 'Separe as cores com poucos movimentos.'], ['corte', 'Corte perfeito', 'Corte bem no meio.'], ['intruso', 'O intruso', 'Ache o único símbolo diferente.'], ['explode', 'Aperte para não explodir', 'Pare antes de estourar!'], ['peso', 'Adivinhe o peso', 'Qual dos dois pesa mais?'], ['penalti', 'Pênaltis', 'Bata pênaltis até o goleiro pegar.'], ['tempo', 'Pare no tempo exato', 'Você consegue parar o cronômetro em 5,00 s?'], ['empilha', 'Empilhe os presentes', 'Até onde a sua torre aguenta?'], ['cofre', 'Quebre o cofre', 'A senha tem 4 números diferentes. Você descobre?'],
+  const CV_L = [['reflexo', 'Teste de reflexo', 'Quanto tempo você leva para tocar o alvo?'], ['d2048', '2048', 'Junte os números até chegar a 2048.'], ['basquete', 'Basquete de dedo', 'Arremesse e acerte a cesta.'], ['tubos', 'Organize as cores', 'Separe as cores com poucos movimentos.'], ['corte', 'Corte perfeito', 'Corte bem no meio.'], ['intruso', 'O intruso', 'Ache o único símbolo diferente.'], ['explode', 'Aperte para não explodir', 'Pare antes de estourar!'], ['peso', 'Qual é o mais…?', 'Mais pesado, mais longe, mais caro… acerte em sequência.'], ['penalti', 'Pênaltis', 'Bata pênaltis até o goleiro pegar.'], ['tempo', 'Pare no tempo exato', 'Você consegue parar o cronômetro em 5,00 s?'], ['empilha', 'Empilhe os presentes', 'Até onde a sua torre aguenta?'], ['cofre', 'Quebre o cofre', 'A senha tem 4 números diferentes. Você descobre?'],
     ['forca', 'Forca natalina', 'Salve o boneco de neve antes que ele derreta.'], ['quizpp', 'Quiz de processo penal', 'Oito perguntas atualizadas. Quantas você acerta?'],
     ['quiz', 'Quiz de segurança', 'Você cairia nesses golpes?'], ['campo', 'Campo de vírus', 'Limpe o campo sem abrir nenhum vírus.'], ['naval', 'Batalha naval', 'Afunde a frota inimiga com menos tiros.'],
     ['difs', 'Sete diferenças', 'Olho de perito: ache as 7 diferenças.'], ['memlogos', 'Memória do núcleo', 'Encontre os pares das logos do MPGO.'],
