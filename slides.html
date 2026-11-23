@@ -946,6 +946,9 @@
   #sx-adm .stb{display:flex;gap:8px;align-items:flex-end;height:150px;margin:6px 0 4px}#sx-adm .stb>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}#sx-adm .stb b{display:block;width:70%;background:#e2b04a;border-radius:6px 6px 0 0;min-height:2px}#sx-adm .stb span{font-size:12px;margin-bottom:3px}#sx-adm .stb i{font-size:11px;color:rgba(241,232,214,.55);font-style:normal;margin-top:4px}
   #sx-adm .stl{list-style:none;padding:0;margin:4px 0 8px}#sx-adm .stl li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid rgba(241,232,214,.08);font-size:14px}#sx-adm .stl b{color:#e2b04a}
   #sx-adm section[hidden]{display:none}
+  #sx-sleep{position:fixed;inset:0;z-index:58;background:#000;cursor:none;touch-action:none}#sx-sleep[hidden]{display:none}
+  #sx-sleep .ck{position:absolute;color:rgba(241,232,214,.28);text-align:center;font:300 clamp(3rem,12vmin,7rem)/1 var(--serif,serif);transition:left 2s,top 2s}
+  #sx-sleep .ck small{display:block;font:500 clamp(.8rem,2.2vmin,1.1rem)/1.6 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:rgba(241,232,214,.22);margin-top:1.2vmin}
   #sx-menu .admlink{background:none!important;border:0!important;color:rgba(241,232,214,.4)!important;font-size:clamp(.7rem,1.6vmin,.9rem)!important;letter-spacing:.1em;padding:1vmin!important}
 
   /* visual minimalista */
@@ -1871,6 +1874,11 @@ html,body,#stage{background:#18050c}
  <section data-tab="geral"><h5>📌 Aviso do slide "Hoje"</h5><label class="chk"><input type="checkbox" id="av-on"> mostrar aviso</label><label>Título</label><input id="av-t" maxlength="70" placeholder="Ex.: Confraternização na sexta, 17h"><label>Texto</label><textarea id="av-x" maxlength="240" placeholder="Detalhes do aviso (opcional)"></textarea>
   <label>Início do recesso (para a contagem regressiva)</label><input id="rc-d" type="date"></section>
  <section data-tab="geral"><h5>🎂 Aniversariantes</h5><div id="an-l"></div><button id="an-add" type="button">+ adicionar pessoa</button><div class="ah">O slide mostra quem faz aniversário no mês atual. No dia, com foto (📷), vira um slide de festa com as fotos em molduras.</div></section>
+ <section data-tab="geral"><h5>⏰ Horário da apresentação</h5><label class="chk"><input type="checkbox" id="hr-on"> apresentar só no horário abaixo</label>
+  <div class="dts"><div><label>Começa às</label><input type="time" id="hr-ini" value="07:30"></div><div><label>Termina às</label><input type="time" id="hr-fim" value="19:00"></div></div>
+  <label>Dias</label><div id="hr-d" class="flt"><button type="button" data-d="1">seg</button><button type="button" data-d="2">ter</button><button type="button" data-d="3">qua</button><button type="button" data-d="4">qui</button><button type="button" data-d="5">sex</button><button type="button" data-d="6">sáb</button><button type="button" data-d="0">dom</button></div>
+  <label>Fora do horário</label><select id="hr-m"><option value="relogio">Tela escura só com um relógio discreto</option><option value="preto">Tela totalmente preta</option></select>
+  <div class="ah" id="hr-st"></div><div class="ah">Fora do horário o painel para de animar (gasta menos bateria). Um toque na tela acorda o painel por 5 minutos.</div></section>
  <section data-tab="geral"><h5>🖥️ Painel</h5><label class="chk"><input type="checkbox" id="pn-auto"> avançar os slides automaticamente</label><div class="ah">Desligado, o painel fica parado no slide atual.</div></section>
  <section data-tab="slides"><h5>🎞️ Slides e jogos</h5><label>Tempo padrão de cada slide (segundos)</label><input id="sl-pad" type="number" min="5" max="120">
   <label>Filtrar</label><input id="sl-q" type="search" placeholder="🔎 nome do slide ou jogo"><div id="sl-f" class="flt"><button type="button" data-f="all" class="on">Todos</button><button type="button" data-f="slide">Slides</button><button type="button" data-f="jogo">Jogos</button><button type="button" data-f="mural">Murais</button><button type="button" data-f="off">Desligados</button></div>
@@ -8678,6 +8686,7 @@ function H_medalha() {
         slBuild(C.sl); $('#sl-pad').value = (C.sl && C.sl.padrao) || ''; $('#sl-pad').placeholder = CONFIG.segundosPorCena;
         $('#avs-l').innerHTML = ''; (C.avisos || []).forEach(avRow); GAL = JSON.parse(JSON.stringify(C.gal || [])); galR();
         $('#eq-l').innerHTML = ''; (C.enq || []).forEach(eqRow);
+        const hr = C.hr || {}; $('#hr-on').checked = !!hr.on; $('#hr-ini').value = hr.ini || '07:30'; $('#hr-fim').value = hr.fim || '19:00'; $('#hr-m').value = hr.modo || 'relogio'; const ds = hr.dias || [1, 2, 3, 4, 5]; $('#hr-d').querySelectorAll('button').forEach(b => b.classList.toggle('on', ds.includes(+b.dataset.d))); hrSt();
         menu.classList.remove('on'); A.hidden = false; tab(tabCur); nextAt = Infinity; }
       const closeAdm = () => { A.hidden = true; schedule(); };
       $('#an-add').onclick = () => row();
@@ -8688,13 +8697,33 @@ function H_medalha() {
         const gal = GAL.filter(g => FT.src(g.f)).map(g => ({ f: g.f, c: (g.c || '').trim() })), sl = slRead();
         const C = Object.assign({}, getC(), { ts: Date.now(), aviso: { on: $('#av-on').checked ? 1 : 0, t: $('#av-t').value.trim(), x: $('#av-x').value.trim() }, recesso: $('#rc-d').value || '', aniv, avisos: avs, enq, gal });
         if (sl) C.sl = sl; else delete C.sl;
+        C.hr = { on: $('#hr-on').checked ? 1 : 0, ini: $('#hr-ini').value || '07:30', fim: $('#hr-fim').value || '19:00', dias: [...$('#hr-d').querySelectorAll('button.on')].map(b => +b.dataset.d), modo: $('#hr-m').value };
         try { localStorage.setItem('cgConteudo', JSON.stringify(C)); } catch (e) { msg('⚠️ Não foi possível salvar: memória cheia.'); return; }
         const usados = new Set([...aniv.flatMap(a => a.f || []), ...avs.map(a => a.foto).filter(Boolean), ...gal.map(g => g.f)]); Object.entries(FT.get().f).forEach(([id, v]) => { if (!v.del && !usados.has(id)) FT.del(id); }); ftSz();
         if ($('#pn-auto').checked !== autoOn) setAuto($('#pn-auto').checked);
         if (cur && cur.load) try { cur.load(); } catch (e) {}
         const nuvem = window.__cloud && window.__cloud.on;
         if (JSON.stringify(sl || null) !== window.__slBoot) { msg('✓ Salvo. Aplicando a nova ordem dos slides…'); setTimeout(() => location.reload(), nuvem ? 4500 : 1200); return; }
-        msg('✓ Salvo' + (nuvem ? ' e enviado para a nuvem' : ' neste aparelho')); };
+        acordadoAte = Date.now() + 60000; msg('✓ Salvo' + (nuvem ? ' e enviado para a nuvem' : ' neste aparelho')); };
+      // ---- horário da apresentação ----
+      $('#hr-d').querySelectorAll('button').forEach(b => b.onclick = () => b.classList.toggle('on'));
+      const hm = s => { const [h, m] = String(s || '0:0').split(':').map(Number); return h * 60 + (m || 0); };
+      const hrCfg = () => getC().hr || null;
+      const noHorario = (hr, d = new Date()) => { if (!hr || !hr.on) return true; const a = hm(hr.ini), b = hm(hr.fim), n = d.getHours() * 60 + d.getMinutes(), dia = d.getDay(), dias = hr.dias || [1, 2, 3, 4, 5];
+        if (a === b) return dias.includes(dia); if (a < b) return dias.includes(dia) && n >= a && n < b; return (n >= a && dias.includes(dia)) || (n < b && dias.includes((dia + 6) % 7)); };
+      const proxInicio = hr => { const d = new Date(); d.setSeconds(0, 0); for (let i = 1; i < 8 * 24 * 60; i++) { const x = new Date(d.getTime() + i * 60000); if (noHorario(hr, x)) return x; } return null; };
+      const SL = document.createElement('div'); SL.id = 'sx-sleep'; SL.hidden = true; SL.innerHTML = '<div class="ck"></div>'; document.body.appendChild(SL);
+      let dormindo = false, acordadoAte = 0;
+      const ckR = () => { const hr = hrCfg(), ck = SL.firstChild; if (!hr || hr.modo === 'preto') { ck.innerHTML = ''; return; } const d = new Date(), p = proxInicio(hr), WD = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+        ck.innerHTML = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}<small>${p ? 'volta ' + (p.toDateString() === d.toDateString() ? 'hoje' : p.getDate() === new Date(d.getTime() + 864e5).getDate() ? 'amanhã' : WD[p.getDay()]) + ' às ' + String(p.getHours()).padStart(2, '0') + ':' + String(p.getMinutes()).padStart(2, '0') : ''}</small>`;
+        ck.style.left = (10 + Math.random() * 55) + 'vw'; ck.style.top = (12 + Math.random() * 55) + 'vh'; };
+      const dormir = () => { if (dormindo) return; dormindo = true; menu.classList.remove('on'); SL.hidden = false; ckR(); try { window.__panel.pause(); } catch (e) {} };
+      const acordar2 = () => { if (!dormindo) return; dormindo = false; SL.hidden = true; try { window.__panel.resume(true); } catch (e) {} };
+      SL.addEventListener('pointerdown', e => { e.stopPropagation(); e.preventDefault(); acordadoAte = Date.now() + 5 * 60000; acordar2(); });
+      const hrTick = () => { const hr = hrCfg(); if (!A.hidden || !P.hidden) return; if (noHorario(hr) || Date.now() < acordadoAte || (cur && cur._gs && cur._gs.on && Date.now() < acordadoAte + 120000)) acordar2(); else dormir(); if (dormindo) ckR(); };
+      const hrSt = () => { const hr = { on: $('#hr-on').checked, ini: $('#hr-ini').value, fim: $('#hr-fim').value, dias: [...$('#hr-d').querySelectorAll('button.on')].map(b => +b.dataset.d) }; if (!hr.on) { $('#hr-st').textContent = 'Desligado: o painel apresenta o tempo todo.'; return; } const ok = noHorario(hr), p = ok ? null : proxInicio(hr); $('#hr-st').textContent = ok ? '✓ Agora está dentro do horário.' : 'Agora está fora do horário' + (p ? ` · volta ${p.getDate()}/${p.getMonth() + 1} às ${String(p.getHours()).padStart(2, '0')}:${String(p.getMinutes()).padStart(2, '0')}` : '') + '.'; };
+      ['#hr-on', '#hr-ini', '#hr-fim'].forEach(s => $(s).addEventListener('input', hrSt)); $('#hr-d').addEventListener('click', hrSt);
+      setInterval(hrTick, 20000); setTimeout(hrTick, 1500); window.__hrTick = hrTick;
       // toques contam para as estatísticas (no máximo 1 a cada 3 s)
       let stLast = 0; Z.addEventListener('pointerdown', () => { const n = performance.now(); if (n - stLast > 3000) { stLast = n; window.__stat && window.__stat('t'); } });
       // se a ordem dos slides mudar por outro aparelho (nuvem), recarrega quando ninguém estiver usando

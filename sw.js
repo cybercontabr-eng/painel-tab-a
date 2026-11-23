@@ -1,5 +1,5 @@
 /* CyberGaeco: rede primeiro (pega sempre a versão nova), cache como reserva para funcionar sem internet */
-const C = 'cybergaeco-1795454658';
+const C = 'cybergaeco-1795464651';
 const ARQ = ['./', './index.html', './slides.html', './manifest.webmanifest', './manifest-slides.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(ARQ)).catch(() => {})); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('cybergaeco-') && k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
