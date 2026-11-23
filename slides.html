@@ -8524,6 +8524,7 @@ function H_medalha() {
       Z.addEventListener('pointerdown', e => { if (e.clientX < innerWidth * .22 && e.clientY < innerHeight * .14) { clearTimeout(holdT); holdT = setTimeout(() => { window.__adminOk() ? openAdm() : openPin(); }, 2500); } }, true);
       ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => Z.addEventListener(ev, () => clearTimeout(holdT)));
       window.__openAdmin = () => window.__adminOk() ? openAdm() : openPin();
+      if (/[?&#]admin\b/.test(location.href)) setTimeout(() => window.__openAdmin(), 900);   // link direto: slides.html?admin
     })();
     document.addEventListener('keydown', e => { if (menu.classList.contains('on') || (e.target && e.target.closest && e.target.closest('input,textarea,select,#sx-adm,#sx-pin'))) return; if (e.key === 'ArrowRight' || e.key === ' ') window.__step(1); else if (e.key === 'ArrowLeft') window.__step(-1); });
   }
