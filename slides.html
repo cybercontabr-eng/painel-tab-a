@@ -801,6 +801,9 @@
   [data-scene=enquete] .cam{animation:none!important;transform:none!important}
   [data-scene=enquete]{touch-action:none}
   [data-scene=hoje]{background:radial-gradient(120% 100% at 20% 40%,#1a2a4a 0%,#060912 100%)}
+  [data-scene=avisos]{background:radial-gradient(120% 100% at 30% 30%,#2a1a3a 0%,#0a0612 100%)}
+  [data-scene=galeria]{background:radial-gradient(120% 100% at 50% 40%,#2a2016 0%,#0b0805 100%)}
+  [data-scene=avisos] .cam,[data-scene=galeria] .cam{animation:none!important;transform:none!important}
   [data-scene=aniver]{background:radial-gradient(120% 100% at 50% 30%,#3a1838 0%,#0c050c 100%);--green:#ffd36b}
   [data-scene=convite]{background:radial-gradient(120% 100% at 30% 40%,#2a1c06 0%,#080602 100%);touch-action:none}
   [data-scene=hoje] .cam,[data-scene=aniver] .cam,[data-scene=convite] .cam{animation:none!important;transform:none!important}
@@ -918,6 +921,31 @@
   #sx-adm .x{background:none;border:0;color:#ff8fb1;font-size:20px;padding:6px 8px;margin:0}
   #sx-adm .ah{font-size:13px;color:rgba(241,232,214,.55);margin-top:6px;position:static;text-transform:none;letter-spacing:0}
   #sx-adm .ok{color:#3dffa8;font-weight:700;min-height:1.3em;margin-top:8px}
+  #adm-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:4px 0 10px}
+  @media (max-width:560px){#sx-adm .top h3{font-size:1.35rem}#sx-adm .slr img{display:none}}
+  #sx-adm #adm-tabs button{margin:0;padding:9px 13px;font-size:14px}#sx-adm #adm-tabs button.on,#sx-adm .flt button.on{background:#e2b04a;color:#140d02;border-color:#e2b04a}
+  #sx-adm .flt{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}#sx-adm .flt button{margin:0;padding:7px 12px;font-size:13px}
+  #sx-adm .slr{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(241,232,214,.08)}
+  #sx-adm .slr[hidden]{display:none}#sx-adm .slr.off{opacity:.42}
+  #sx-adm .slr img{width:60px;height:38px;object-fit:cover;border-radius:6px;flex:none;background:#151a26}
+  #sx-adm .slr .nm2{flex:1;min-width:0;font-size:14px;line-height:1.2}#sx-adm .slr .nm2 small{display:block;color:rgba(241,232,214,.45);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  #sx-adm .slr input[type=checkbox]{width:22px;height:22px;flex:none;margin:0}
+  #sx-adm .slr .sd{width:64px;flex:none;padding:7px 6px;font-size:14px}
+  #sx-adm .slr button{margin:0;padding:7px 10px;font-size:14px}
+  #sx-adm .avc{border:1px solid rgba(241,232,214,.18);border-radius:12px;padding:10px 12px;margin:10px 0}
+  #sx-adm .avc textarea{margin-top:6px;min-height:64px}#sx-adm .dts{display:flex;gap:8px}#sx-adm .dts>div{flex:1}
+  #sx-adm .eqo{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}#sx-adm .eqq{margin-top:6px}
+  #sx-adm .fts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;flex-basis:100%}
+  #sx-adm .fts .tb{position:relative;display:inline-block}#sx-adm .fts img{width:54px;height:70px;object-fit:cover;border-radius:6px;display:block}
+  #sx-adm .fts .tb .x,#sx-adm .gal .x{position:absolute;top:-6px;right:-6px;background:#1a0f14;border:1px solid #ff8fb1;border-radius:50%;width:26px;height:26px;padding:0;font-size:13px;line-height:1}
+  #sx-adm .fts button{margin:0;padding:8px 12px;font-size:13px}
+  #sx-adm .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:6px}
+  #sx-adm .gal .gi{position:relative}#sx-adm .gal img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block}#sx-adm .gal input{margin-top:4px;font-size:13px;padding:6px 8px}
+  #sx-adm .mr{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(241,232,214,.08)}#sx-adm .mr p{flex:1;margin:0;word-break:break-word}#sx-adm .mr small{display:block;color:rgba(241,232,214,.5);font-size:12px;margin-top:2px}#sx-adm .mr button{margin:0;padding:8px 12px}
+  #sx-adm .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}#sx-adm .kpi div{background:rgba(241,232,214,.06);border-radius:10px;padding:10px;text-align:center;font-size:13px;color:rgba(241,232,214,.7)}#sx-adm .kpi b{display:block;font:400 28px/1.1 var(--serif);color:#e2b04a}
+  #sx-adm .stb{display:flex;gap:8px;align-items:flex-end;height:150px;margin:6px 0 4px}#sx-adm .stb>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}#sx-adm .stb b{display:block;width:70%;background:#e2b04a;border-radius:6px 6px 0 0;min-height:2px}#sx-adm .stb span{font-size:12px;margin-bottom:3px}#sx-adm .stb i{font-size:11px;color:rgba(241,232,214,.55);font-style:normal;margin-top:4px}
+  #sx-adm .stl{list-style:none;padding:0;margin:4px 0 8px}#sx-adm .stl li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid rgba(241,232,214,.08);font-size:14px}#sx-adm .stl b{color:#e2b04a}
+  #sx-adm section[hidden]{display:none}
   #sx-menu .admlink{background:none!important;border:0!important;color:rgba(241,232,214,.4)!important;font-size:clamp(.7rem,1.6vmin,.9rem)!important;letter-spacing:.1em;padding:1vmin!important}
 
   /* visual minimalista */
@@ -1746,6 +1774,8 @@ html,body,#stage{background:#18050c}
     <section class="scene" data-scene="hoje"><div class="cam">
       <div class="game-top copy"><div class="label">● Hoje</div><h1 class="title"><span>Hoje no</span><em>CyberGaeco</em></h1></div>
     </div></section>
+    <section class="scene" data-scene="avisos"><div class="cam"></div></section>
+    <section class="scene" data-scene="galeria"><div class="cam"></div></section>
     <section class="scene" data-scene="aniver"><div class="cam">
       <div class="game-top copy"><div class="label">● Parabéns!</div><h1 class="title"><span>Aniversariantes</span><em>do mês</em></h1></div>
     </div></section>
@@ -1835,16 +1865,26 @@ html,body,#stage{background:#18050c}
 <div id="sx-act" hidden></div>
 <div id="sx-pin" hidden><div class="box"><h4 id="pin-t">Digite o PIN</h4><div id="pin-d"></div><div id="pin-m"></div><div id="pin-k"></div><button id="pin-x" type="button">cancelar</button></div></div>
 <div id="sx-adm" hidden><div class="in">
- <div class="top"><h3>⚙ Modo administrador</h3><button class="pri" id="adm-save" type="button">Salvar</button><button id="adm-close" type="button">Sair</button></div>
+ <div class="top"><h3>⚙ Administrador</h3><button class="pri" id="adm-save" type="button">Salvar</button><button id="adm-close" type="button">Sair</button></div>
+ <div id="adm-tabs"><button type="button" data-tab="geral" class="on">🏠 Geral</button><button type="button" data-tab="slides">🎞️ Slides</button><button type="button" data-tab="avisos">📢 Avisos e fotos</button><button type="button" data-tab="mod">🛡️ Moderação</button><button type="button" data-tab="num">📈 Números</button><button type="button" data-tab="sis">🔧 Sistema</button></div>
  <div class="ok" id="adm-msg"></div>
- <section><h5>📌 Aviso do slide "Hoje"</h5><label class="chk"><input type="checkbox" id="av-on"> mostrar aviso</label><label>Título</label><input id="av-t" maxlength="70" placeholder="Ex.: Confraternização na sexta, 17h"><label>Texto</label><textarea id="av-x" maxlength="240" placeholder="Detalhes do aviso (opcional)"></textarea>
+ <section data-tab="geral"><h5>📌 Aviso do slide "Hoje"</h5><label class="chk"><input type="checkbox" id="av-on"> mostrar aviso</label><label>Título</label><input id="av-t" maxlength="70" placeholder="Ex.: Confraternização na sexta, 17h"><label>Texto</label><textarea id="av-x" maxlength="240" placeholder="Detalhes do aviso (opcional)"></textarea>
   <label>Início do recesso (para a contagem regressiva)</label><input id="rc-d" type="date"></section>
- <section><h5>🎂 Aniversariantes</h5><div id="an-l"></div><button id="an-add" type="button">+ adicionar pessoa</button><div class="ah">Só aparece o nome e o dia. O slide mostra só quem faz aniversário no mês atual; se ninguém fizer, ele não aparece.</div></section>
- <section><h5>🖥️ Painel</h5><label class="chk"><input type="checkbox" id="pn-auto"> avançar os slides automaticamente</label><div class="ah">Desligado, o painel fica parado no slide atual.</div></section>
- <section><h5>☁️ Backup na nuvem</h5><div id="cl-st" class="ah"></div><label>Projeto e chave do Firebase (projectId:apiKey)</label><input id="cl-k" placeholder="meu-projeto:AIza..." autocomplete="off"><button id="cl-on" type="button">Conectar</button><button id="cl-off" type="button">Desligar</button></section>
- <section><h5>🏆 Recordes</h5><button class="dng" id="rc-zero" type="button">Zerar todos os recordes</button><div class="ah">Pede confirmação com um segundo toque.</div></section>
-  <section><h5>🧹 Zerar murais e telas coletivas</h5><div id="zr-l" class="zr"></div><button class="dng" id="zr-all" type="button">Zerar TUDO acima</button><div class="ah">Cada botão pede confirmação com um segundo toque. Com a nuvem ligada, o zerar também vale para a nuvem.</div></section>
- <section><h5>🔒 Segurança</h5><button id="pin-new" type="button">Trocar PIN</button><div class="ah">Recados do muro só podem ser apagados com o modo administrador aberto.</div></section>
+ <section data-tab="geral"><h5>🎂 Aniversariantes</h5><div id="an-l"></div><button id="an-add" type="button">+ adicionar pessoa</button><div class="ah">O slide mostra quem faz aniversário no mês atual. No dia, com foto (📷), vira um slide de festa com as fotos em molduras.</div></section>
+ <section data-tab="geral"><h5>🖥️ Painel</h5><label class="chk"><input type="checkbox" id="pn-auto"> avançar os slides automaticamente</label><div class="ah">Desligado, o painel fica parado no slide atual.</div></section>
+ <section data-tab="slides"><h5>🎞️ Slides e jogos</h5><label>Tempo padrão de cada slide (segundos)</label><input id="sl-pad" type="number" min="5" max="120">
+  <label>Filtrar</label><input id="sl-q" type="search" placeholder="🔎 nome do slide ou jogo"><div id="sl-f" class="flt"><button type="button" data-f="all" class="on">Todos</button><button type="button" data-f="slide">Slides</button><button type="button" data-f="jogo">Jogos</button><button type="button" data-f="mural">Murais</button><button type="button" data-f="off">Desligados</button></div>
+  <div id="sl-l"></div><button id="sl-reset" type="button">Restaurar ordem e tempos padrão</button>
+  <div class="ah">Desmarcado = some da rotação, do menu e dos convites. ↑ ↓ mudam a ordem. O tempo vale para slides e murais (jogos não passam sozinhos). Ao salvar, o painel recarrega.</div></section>
+ <section data-tab="avisos"><h5>📢 Avisos em tela cheia</h5><div id="avs-l"></div><button id="avs-add" type="button">+ novo aviso</button><div class="ah">Cada aviso vira um slide próprio entre as datas escolhidas (em branco = sempre). Pode ter uma foto.</div></section>
+ <section data-tab="avisos"><h5>🖼️ Galeria de fotos da equipe</h5><div id="gal-l" class="gal"></div><button id="gal-add" type="button">+ adicionar fotos</button><div class="ah">As fotos passam num slide próprio, uma de cada vez, com a legenda embaixo.</div><div id="ft-sz" class="ah"></div></section>
+ <section data-tab="mod"><h5>📝 Recados do muro</h5><div id="mr-l"></div><div class="ah">Apagar pede um segundo toque para confirmar. Com a nuvem ligada, some também nos outros aparelhos.</div></section>
+ <section data-tab="mod"><h5>📊 Enquete personalizada</h5><div id="eq-l"></div><button id="eq-add" type="button">+ nova enquete</button><div class="ah">Na data escolhida, a enquete do dia usa a sua pergunta no lugar da automática. De 2 a 4 respostas.</div></section>
+ <section data-tab="num"><h5>📈 Uso do painel</h5><div id="st-v"></div></section>
+ <section data-tab="sis"><h5>☁️ Backup na nuvem</h5><div id="cl-st" class="ah"></div><label>Projeto e chave do Firebase (projectId:apiKey)</label><input id="cl-k" placeholder="meu-projeto:AIza..." autocomplete="off"><button id="cl-on" type="button">Conectar</button><button id="cl-off" type="button">Desligar</button></section>
+ <section data-tab="sis"><h5>🏆 Recordes</h5><button class="dng" id="rc-zero" type="button">Zerar todos os recordes</button><div class="ah">Pede confirmação com um segundo toque.</div></section>
+  <section data-tab="sis"><h5>🧹 Zerar murais e telas coletivas</h5><div id="zr-l" class="zr"></div><button class="dng" id="zr-all" type="button">Zerar TUDO acima</button><div class="ah">Cada botão pede confirmação com um segundo toque. Com a nuvem ligada, o zerar também vale para a nuvem.</div></section>
+ <section data-tab="sis"><h5>🔒 Segurança</h5><button id="pin-new" type="button">Trocar PIN</button><div class="ah">Recados do muro só podem ser apagados com o modo administrador aberto.</div></section>
 </div></div>
 <div id="sx-zones" hidden><div id="sx-l"></div><div id="sx-c"></div><div id="sx-r"></div></div>
 <div id="sx-bar"><button id="sx-prev" type="button">◀</button><button id="sx-open" type="button">☰ MENU</button><button id="sx-next" type="button">▶</button><button id="sx-fs" type="button">⛶</button></div>
@@ -1858,13 +1898,13 @@ html,body,#stage{background:#18050c}
 const CONFIG = {
   segundosPorCena: 18,            // tempo padrão de cada cena
   duracaoEspecial: {              // cenas que precisam de mais tempo (segundos)
-    arvore: 22, pixel: 22, estrelas: 22, amados: 16, obrigado: 16, escava: 22, milhao: 18,
+    avisos: 18, galeria: 24, arvore: 22, pixel: 22, estrelas: 22, amados: 16, obrigado: 16, escava: 22, milhao: 18,
     terminal: 36, decripta: 32, chuva: 24, hash: 20, circuito: 22, atena: 22, sged: 24, tor: 20, consulta: 24,
     inst: 20, medi: 20, ops: 22, coordenadora: 16, contagem: 24, retro: 50, phishing: 22, senha: 24, golpe: 22,
     particulas: 24, lareira2: 20, soc: 22, virada: 24, floco: 20, estrela: 20, desejos: 22, warp: 18, consulta2: 24, teclado: 22, aurora: 20, fabricio: 16, terminal2: 24, consulta3: 24, presentes: 15, globoneve: 15, fogos: 15, treno: 20, bolas: 15, boneco: 15, pisca: 15, raspa: 15, caca: 15, pegue: 15, memoria: 15, rena: 15, velha: 15, quiz: 15, sinos: 15, palavras: 15, puzzle: 15, difs: 15, labirinto: 15, corrida: 15, carlos: 16, memlogos: 15, memequipe: 15, empilha: 15, cofre: 15, cifra: 15, quizpp: 15, campo: 15, detetive: 15, lig4: 15, muro: 22, pixel: 18, reacoes: 18, naval: 15, tempo: 15, forca: 15, recordes: 22, enquete: 18, hoje: 16, aniver: 16, convite: 12
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'escava', 'rena', 'logocodigo', 'enquete', 'recordes', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'espiral', 'estrela', 'virada', 'convite'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'escava', 'rena', 'logocodigo', 'enquete', 'recordes', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'espiral', 'estrela', 'virada', 'convite'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   vitrine: true,                 // jogos saem da rotação automática (ficam na central e nos convites)
   convidarACada: 4,              // a cada N slides da vitrine entra um convite para jogar
@@ -7751,8 +7791,8 @@ function H_medalha() {
   const enquete = {
     id: 'enquete', name: 'mural · enquete do dia', el: $('[data-scene=enquete]'),
     setup() { this.sp = []; this.btns = []; this.load(); },
-    qIdx() { const d = new Date(), n = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); return n % EQ.length; },
-    load() { const d = LS.get('cgEnquete', null), k = hojeKey(), q = this.qIdx(); this.D = d && d.d === k && d.q === q && d.v && d.v.length === EQ[q][1].length ? d : { d: k, q, v: EQ[q][1].map(() => 0) }; },
+    qIdx() { const c = eqCustom(); if (c) return 'c:' + c[0]; const d = new Date(), n = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); return n % EQ.length; },
+    load() { const d = LS.get('cgEnquete', null), k = hojeKey(), q = this.qIdx(); this.D = d && d.d === k && d.q === q && d.v && d.v.length === eqQ(q)[1].length ? d : { d: k, q, v: eqQ(q)[1].map(() => 0) }; },
     save() { LS.set('cgEnquete', this.D); },
     enter() { this.t0 = null; this.load(); this.cool = 0; this.pick = -1; this.anim = null; },
     holding() { return false; },
@@ -7766,7 +7806,7 @@ function H_medalha() {
       const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50); this.btns = [];
       if (this.D.d !== hojeKey()) this.load();
       if (this.cool && T >= this.cool) { this.cool = 0; this.pick = -1; }
-      const [q, ops] = EQ[this.D.q], tot = this.D.v.reduce((a, b) => a + b, 0);
+      const [q, ops] = eqQ(this.D.q), tot = this.D.v.reduce((a, b) => a + b, 0);
       const ql = wrapTxt(q, W * .8, u * 2.3, 400, SERIF); ql.forEach((l, i) => T2(l, W / 2, H * .36 + (i - (ql.length - 1) / 2) * u * 2.8, u * 2.3, '#fff3d6', 400, 'center', SERIF));
       const bw = Math.min(W * .78, H * 1.45), bh = Math.min(H * .095, 74), gap = H * .018, bx = (W - bw) / 2, by0 = H * .46 + (4 - ops.length) * (bh + gap) * .3;
       ops.forEach((o, i) => {
@@ -7897,8 +7937,9 @@ function H_medalha() {
     },
     frame(t, dt) {
       const T = T3(this, t), u = Math.min(W / 88, H / 50), L = this.L || [];
-      const aniv = L.find(a => +a.d === this.today && ANIV_IMG[anivNome(a.n)]);
-      if (aniv) return this.festa(T, dt, u, aniv, ANIV_IMG[anivNome(aniv.n)], L);
+      const fotosDe = a => { const P = (a.f || []).map(id => FT.img(id)).filter(Boolean); return P.length ? P : ANIV_IMG[anivNome(a.n)] || null; };
+      const aniv = L.find(a => +a.d === this.today && fotosDe(a));
+      if (aniv) return this.festa(T, dt, u, aniv, fotosDe(aniv), L);
       T2('de ' + MESES[this.m], W / 2, H * .245, u * 1.6, '#ffd36b', 600, 'center', 'sans-serif');
       const n = L.length, cols = n > 8 ? 4 : n > 4 ? 3 : Math.max(1, Math.min(n, 2)), rows = Math.ceil(n / cols) || 1, gw = W * .84, gh = H * .6, cw = Math.min((gw - u * (cols - 1)) / cols, W * .4), ch = Math.min((gh - u * (rows - 1)) / rows, H * .2);
       const x0 = (W - (cols * cw + (cols - 1) * u)) / 2, y0 = H * .31 + (gh - (rows * ch + (rows - 1) * u)) / 2;
@@ -7949,8 +7990,84 @@ function H_medalha() {
     }
   };
 
-  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, intruso, explode, penalti, peso, arvore, estrelas, amados, escava, milhao, obrigado, forca, recordes, enquete, hoje, aniver, convite];
-  const CANVAS = new Set(['logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'arvore', 'estrelas', 'amados', 'escava', 'milhao', 'obrigado', 'forca', 'recordes', 'enquete', 'hoje', 'aniver', 'convite']);
+  /* ================= admin v2: fotos, avisos em tela cheia, galeria, enquete personalizada, estatísticas ================= */
+  const FT = {
+    _c: {},
+    get() { return LS.get('cgFotos', null) || { f: {} }; },
+    src(id) { const d = this.get().f[id]; return d && !d.del ? d.d : null; },
+    img(id) { const s = this.src(id); if (!s) return null; const c = this._c[id]; if (c && c.s === s) return c.im; const im = new Image(); im.src = s; this._c[id] = { s, im }; return im; },
+    put(id, d) { const D = this.get(); D.f[id] = { d, ts: Date.now() }; LS.set('cgFotos', D); return !!this.src(id); },
+    del(id) { const D = this.get(); if (D.f[id]) { D.f[id] = { del: 1, ts: Date.now() }; LS.set('cgFotos', D); } },
+    size() { try { return (localStorage.getItem('cgFotos') || '').length; } catch (e) { return 0; } }
+  };
+  window.__FT = FT;
+  const isoHoje = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+  const wrapL = (s, mw, font) => { ctx.font = font; const out = []; String(s || '').split('\n').forEach(par => { let line = ''; par.split(/\s+/).filter(Boolean).forEach(w => { const tt = line ? line + ' ' + w : w; if (ctx.measureText(tt).width > mw && line) { out.push(line); line = w; } else line = tt; }); out.push(line); }); return out; };
+  const fotoQuadro = (im, cx, cy, bw, bh, rot, alpha, cap) => {
+    const ok = im && im.complete && im.naturalWidth, r = ok ? im.naturalWidth / im.naturalHeight : .75; let w = bw, h = bw / r; if (h > bh) { h = bh; w = bh * r; }
+    const pad = Math.min(w, h) * .05, capH = cap ? Math.max(pad * 2.4, h * .1) : pad;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx, cy); ctx.rotate(rot);
+    ctx.shadowColor = 'rgba(0,0,0,.5)'; ctx.shadowBlur = w * .06; ctx.shadowOffsetY = w * .02; ctx.fillStyle = '#fbf7ef'; ctx.fillRect(-w / 2 - pad, -h / 2 - pad, w + pad * 2, h + pad + capH); ctx.shadowColor = 'transparent';
+    if (ok) ctx.drawImage(im, -w / 2, -h / 2, w, h); else { ctx.fillStyle = '#ccc'; ctx.fillRect(-w / 2, -h / 2, w, h); }
+    if (cap) { let fs = capH * .46; ctx.font = `400 ${fs}px ${SERIF}`; const mw = ctx.measureText(cap).width; if (mw > w) fs *= w / mw; T2(cap, 0, h / 2 + capH / 2 + 1, fs, '#3a2a1a', 400, 'center', SERIF); }
+    ctx.restore();
+  };
+
+  /* avisos em tela cheia (cadastrados no admin, com período e foto opcional) */
+  const avAtivos = () => { const h = isoHoje(); return (CT.get().avisos || []).filter(a => a && (a.t || a.x) && (!a.ini || a.ini <= h) && (!a.fim || a.fim >= h)); };
+  const avisos = {
+    id: 'avisos', name: 'avisos', el: $('[data-scene=avisos]'), k: -1, PER: 9,
+    setup() {},
+    skip() { return !avAtivos().length; },
+    enter() { this.t0 = null; this.L = avAtivos(); this.k = (this.k + 1) % Math.max(1, this.L.length); },
+    load() { this.L = avAtivos(); },
+    frame(t, dt) {
+      const T = T3(this, t), u = Math.min(W / 88, H / 50), L = this.L || []; if (!L.length) return;
+      const n = Math.floor(T / this.PER), i = (this.k + n) % L.length, a = L[i], lt = T - n * this.PER, k = sm(Math.min(1, lt / .7)) * Math.min(1, (this.PER - lt) / .5 + (L.length < 2 ? 9 : 0));
+      const im = a.foto ? FT.img(a.foto) : null, has = !!im, tx = W * .08, tw = has ? W * .44 : W * .8, cx = has ? tx : W / 2, al = has ? 'left' : 'center';
+      ctx.globalAlpha = Math.max(0, k);
+      let fs = u * 4.2, TL; for (let g = 0; g < 6; g++) { TL = wrapL(a.t, tw, `400 ${fs}px ${SERIF}`); if (TL.length <= 3) break; fs *= .86; }
+      const XL = a.x ? wrapL(a.x, tw, `500 ${u * 1.55}px sans-serif`).slice(0, 8) : [], blockH = TL.length * fs * 1.12 + (XL.length ? u * 2.4 + XL.length * u * 2.2 : 0);
+      let y = H * .56 - blockH / 2 + fs * .5;
+      T2('📌', cx, y - fs * 1.15, u * 2, '#fff', 400, al, 'sans-serif');
+      TL.forEach(l => { T2(l, cx, y, fs, '#fff3d6', 400, al, SERIF); y += fs * 1.12; });
+      if (XL.length) { y += u * 1.2; XL.forEach(l => { T2(l, cx, y, u * 1.55, 'rgba(255,243,214,.82)', 500, al, 'sans-serif'); y += u * 2.2; }); }
+      if (a.fim) { const [yy, mm, dd] = a.fim.split('-'); T2(`até ${dd}/${mm}`, cx, Math.min(H * .9, y + u * 1.6), u * 1.05, '#ffd36b', 700, al, 'sans-serif'); }
+      ctx.globalAlpha = 1;
+      if (has) fotoQuadro(im, W * .74, H * .56 + (1 - k) * u * 3, W * .3, H * .58, (i % 2 ? 3 : -3) * Math.PI / 180, Math.max(0, k), '');
+      if (L.length > 1) for (let j = 0; j < L.length; j++) { ctx.fillStyle = j === i ? '#ffd36b' : 'rgba(255,255,255,.25)'; ctx.beginPath(); ctx.arc(W / 2 + (j - (L.length - 1) / 2) * u * 1.8, H * .93, u * .45, 0, TAU); ctx.fill(); }
+    }
+  };
+
+  /* galeria de fotos da equipe */
+  const galLista = () => (CT.get().gal || []).filter(g => g && g.f && FT.src(g.f));
+  const galeria = {
+    id: 'galeria', name: 'galeria de fotos', el: $('[data-scene=galeria]'), k: 0, PER: 6,
+    setup() {},
+    skip() { return !galLista().length; },
+    enter() { this.t0 = null; this.L = galLista(); this.base = this.k; this.k = (this.k + 4) % Math.max(1, this.L.length); },
+    load() { this.L = galLista(); },
+    frame(t, dt) {
+      const T = T3(this, t), u = Math.min(W / 88, H / 50), L = this.L || []; if (!L.length) return;
+      const n = Math.floor(T / this.PER), lt = T - n * this.PER;
+      [[n - 1, lt < 1 ? 1 - lt : 0], [n, sm(Math.min(1, lt / .9))]].forEach(([m, a]) => {
+        if (a <= 0 || m < 0) return; const i = (this.base + m) % L.length, g = L[i], im = FT.img(g.f), dx = (m % 2 ? 1 : -1);
+        fotoQuadro(im, W / 2 + dx * u * 1.2, H * .57 + (m === n ? (1 - a) * u * 4 : 0), W * .62, H * .6, dx * 2.5 * Math.PI / 180, a, g.c || '');
+      });
+      if (L.length > 1 && L.length <= 20) for (let j = 0; j < L.length; j++) { const i = (this.base + n) % L.length; ctx.fillStyle = j === i ? '#ffd36b' : 'rgba(255,255,255,.25)'; ctx.beginPath(); ctx.arc(W / 2 + (j - (L.length - 1) / 2) * u * 1.5, H * .955, u * .38, 0, TAU); ctx.fill(); }
+    }
+  };
+
+  /* enquete personalizada (cadastrada no admin para uma data) */
+  const eqCustom = () => { const h = isoHoje(), e = (CT.get().enq || []).find(e => e && e.d === h && e.q && (e.o || []).filter(Boolean).length >= 2); return e ? [e.q, e.o.filter(Boolean).slice(0, 4)] : null; };
+  const eqQ = q => typeof q === 'string' ? (eqCustom() || EQ[0]) : EQ[q];
+
+  /* estatísticas de uso */
+  const stK = s => { const [y, m, d] = String(s).split('-').map(Number); return y * 10000 + m * 100 + d; };
+  window.__stat = (k, id) => { try { const D = LS.get('cgStats', null) || { d: {} }, h = hojeKey(), o = D.d[h] = D.d[h] || { t: 0, g: {} }; if (k === 't') o.t++; else if (k === 'g') o.g[id] = (o.g[id] || 0) + 1; const ks = Object.keys(D.d); if (ks.length > 45) ks.sort((a, b) => stK(a) - stK(b)).slice(0, ks.length - 45).forEach(x => delete D.d[x]); LS.set('cgStats', D); } catch (e) {} };
+
+  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, intruso, explode, penalti, peso, arvore, estrelas, amados, escava, milhao, obrigado, forca, recordes, enquete, hoje, aniver, convite, avisos, galeria];
+  const CANVAS = new Set(['avisos', 'galeria', 'logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'arvore', 'estrelas', 'amados', 'escava', 'milhao', 'obrigado', 'forca', 'recordes', 'enquete', 'hoje', 'aniver', 'convite']);
   ALL.forEach(s => { s.cam = s.el.querySelector('.cam'); s.canvas = CANVAS.has(s.id); });
 
   /* ---------- jogos: botão "Iniciar jogo" e espera de até 2 min sem toque ---------- */
@@ -7972,9 +8089,9 @@ function H_medalha() {
     const en = s.enter, tp = s.tap, fr = s.frame, dg = s.drag;
     if (dg) s.drag = function (type, x, y) { if (!this._gs.on || performance.now() - (this._gs.t || 0) < 300) return; this._gs.last = performance.now(); return dg.call(this, type, x, y); };
     s._gs = { on: false, last: 0 };
-    s.enter = function () { const auto = window.__autostart === this.id; window.__autostart = null; this._gs = { on: auto, last: performance.now() }; return en && en.apply(this, arguments); };
+    s.enter = function () { const auto = window.__autostart === this.id; window.__autostart = null; this._gs = { on: auto, last: performance.now() }; if (auto && window.__stat) window.__stat('g', this.id); return en && en.apply(this, arguments); };
     s.tap = function (x, y) {
-      if (!this._gs.on) { const b = gsBtn(); if (x > b.x - 20 && x < b.x + b.w + 20 && y > b.y - 20 && y < b.y + b.h + 20) { this._gs.on = true; this._gs.last = performance.now(); this._gs.t = performance.now(); } return; }
+      if (!this._gs.on) { const b = gsBtn(); if (x > b.x - 20 && x < b.x + b.w + 20 && y > b.y - 20 && y < b.y + b.h + 20) { this._gs.on = true; this._gs.last = performance.now(); this._gs.t = performance.now(); if (window.__stat) window.__stat('g', this.id); } return; }
       this._gs.last = performance.now(); return tp && tp.call(this, x, y);
     };
     s.frame = function (t, dt) {
@@ -7993,11 +8110,19 @@ function H_medalha() {
   });
   window.__gameHold = () => !!(cur && ((cur._gs && cur._gs.on && (performance.now() - cur._gs.last < GAME_IDLE || (window.__NE && window.__NE.on))) || (cur.holding && cur.holding())));
   window.__INTER_IDS = new Set(['muro', 'pixel', 'reacoes', 'enquete', 'arvore', 'estrelas', 'escava', 'milhao']);
+  window.__mergeOrd = (orig, saved) => { const set = new Set(orig), r = (saved || []).filter((id, i, a) => set.has(id) && a.indexOf(id) === i); orig.forEach((id, i) => { if (r.includes(id)) return; const prev = orig.slice(0, i).reverse().find(x => r.includes(x)); r.splice(prev ? r.indexOf(prev) + 1 : 0, 0, id); }); return r; };
+  window.__CENAS_ALL = CONFIG.cenas.slice(); window.__SCN = ALL.map(s => ({ id: s.id, name: s.name }));
+  (() => { try { const S = (JSON.parse(localStorage.getItem('cgConteudo') || 'null') || {}).sl; window.__slBoot = JSON.stringify(S || null); if (!S) return;
+    if (S.ord && S.ord.length) CONFIG.cenas = window.__mergeOrd(CONFIG.cenas, S.ord);
+    if (S.off && S.off.length) CONFIG.cenas = CONFIG.cenas.filter(id => id === 'convite' || !S.off.includes(id));
+    if (S.dur) Object.entries(S.dur).forEach(([id, s]) => { if (s >= 5 && s <= 300) CONFIG.duracaoEspecial[id] = s; });
+    if (S.padrao >= 5 && S.padrao <= 120) CONFIG.segundosPorCena = S.padrao;
+  } catch (e) {} })();
   const order = CONFIG.cenas.map(id => ALL.find(s => s.id === id)).filter(Boolean);
 
   /* ================= backup na nuvem (Firebase Firestore via REST) ================= */
   const SY = (() => {
-    const KEYS = ['cgMural', 'cgMuralDel', 'cgPixel', 'cgEmojis', 'cgRecordes', 'cgSlideRx', 'cgPresentes', 'cgEnquete', 'cgConteudo', 'cgMosaico', 'cgArvore', 'cgEstrelas', 'cgSlideRxW', 'cgEscava', 'cgMilhao'];
+    const KEYS = ['cgMural', 'cgMuralDel', 'cgPixel', 'cgEmojis', 'cgRecordes', 'cgSlideRx', 'cgPresentes', 'cgEnquete', 'cgConteudo', 'cgMosaico', 'cgArvore', 'cgEstrelas', 'cgSlideRxW', 'cgEscava', 'cgMilhao', 'cgFotos', 'cgStats'];
     const ASC = /^(memoria|memlogos|memequipe|puzzle|palavras|difs|labirinto|corrida|cofre|campo|detetive|naval|tempo.*|rf\d+)$/;
     const st = { on: false, last: 0, err: '', busy: false, dirty: new Set(), applying: false };
     window.__cloud = st;
@@ -8031,6 +8156,8 @@ function H_medalha() {
         if (k === 'cgEstrelas') { const s = byKey([...(L.s || []), ...(R.s || [])], x => x.t + '|' + x.x).sort((a, b) => a.t - b.t).slice(-700); return { n: Math.max(L.n || 0, R.n || 0, s.length), s }; }
         if (k === 'cgPixel') { if (L.wk !== R.wk) return L.wk === semanaKey() ? L : R; return (L.p || 0) >= (R.p || 0) ? L : R; }
         if (k === 'cgPresentes') { if (L.d !== R.d) return L.d === hojeKey() ? L : R; return { d: L.d, n: Math.max(L.n || 0, R.n || 0) }; }
+        if (k === 'cgFotos') { const f = Object.assign({}, R.f || {}); Object.entries(L.f || {}).forEach(([id, v]) => { if (!f[id] || (v.ts || 0) >= (f[id].ts || 0)) f[id] = v; }); return { f }; }
+        if (k === 'cgStats') { const d = JSON.parse(JSON.stringify(L.d || {})); Object.entries(R.d || {}).forEach(([day, o]) => { const m = d[day] = d[day] || { t: 0, g: {} }; m.t = Math.max(m.t || 0, o.t || 0); m.g = m.g || {}; Object.entries(o.g || {}).forEach(([id, n]) => m.g[id] = Math.max(m.g[id] || 0, n)); }); return { d }; }
         if (k === 'cgEnquete') { if (L.d !== R.d || L.q !== R.q) return L.d === hojeKey() ? L : R; return { d: L.d, q: L.q, v: L.v.map((n, i) => Math.max(n, R.v[i] || 0)) }; }
       } catch (e) {}
       return L;
@@ -8470,23 +8597,108 @@ function H_medalha() {
       // conteúdo
       const MS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
       const getC = () => { try { return JSON.parse(localStorage.getItem('cgConteudo') || 'null') || {}; } catch (e) { return {}; } };
-      const row = (a = {}) => { const r = document.createElement('div'); r.className = 'row';
-        r.innerHTML = '<input class="nm" maxlength="40" placeholder="Nome"><input class="dd" type="number" min="1" max="31" placeholder="dia"><select>' + MS.map((m, i) => '<option value="' + (i + 1) + '">' + m + '</option>').join('') + '</select><button class="x" type="button" title="remover">✕</button>';
-        r.querySelector('.nm').value = a.n || ''; r.querySelector('.dd').value = a.d || ''; r.querySelector('select').value = a.m || (new Date().getMonth() + 1); r.querySelector('.x').onclick = () => r.remove(); $('#an-l').appendChild(r); };
       const msg = t => { $('#adm-msg').textContent = t; clearTimeout(msg.t); msg.t = setTimeout(() => $('#adm-msg').textContent = '', 4000); };
       const cloudSt = () => { const c = window.__cloud; $('#cl-st').textContent = !c || !c.on ? 'Desligado: os dados ficam só neste aparelho.' : c.err ? 'Conectado ao projeto ' + c.proj + ', mas com erro: ' + c.err : 'Conectado ao projeto ' + c.proj + (c.last ? ' · última sincronização há ' + Math.round((Date.now() - c.last) / 1000) + ' s' : ''); };
+      /* ---- admin v2 ---- */
+      const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      let tabCur = 'geral';
+      const tab = tb => { tabCur = tb; A.querySelectorAll('#adm-tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tb)); A.querySelectorAll('.in > section').forEach(s => { s.hidden = s.dataset.tab !== tb; }); if (tb === 'num') statsR(); if (tb === 'mod') muroR(); A.scrollTop = 0; };
+      A.querySelectorAll('#adm-tabs button').forEach(b => b.onclick = () => tab(b.dataset.tab));
+      const twoTap = (b, label, fn) => { let ask = 0; b.onclick = () => { if (!ask) { ask = 1; b.textContent = 'toque de novo'; b.classList.add('dng'); setTimeout(() => { ask = 0; b.textContent = label; }, 3500); return; } ask = 0; fn(); }; };
+      // fotos: escolhe, reduz e guarda
+      const pickFotos = (multi, cb) => { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; if (multi) inp.multiple = true;
+        inp.onchange = () => { [...inp.files].slice(0, 12).forEach(f => { const rd = new FileReader(); rd.onload = () => { const im = new Image(); im.onload = () => {
+          const M = 720, k = Math.min(1, M / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+          let q = .74, d = c.toDataURL('image/jpeg', q); while (d.length > 85000 && q > .4) { q -= .08; d = c.toDataURL('image/jpeg', q); }
+          const id = 'f' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); if (!FT.put(id, d)) { msg('⚠️ Memória cheia: apague fotos antigas antes de adicionar novas.'); return; } cb(id); ftSz(); }; im.src = rd.result; }; rd.readAsDataURL(f); }); };
+        inp.click(); };
+      const ftSz = () => { const kb = Math.round(FT.size() / 1024); $('#ft-sz').textContent = `Espaço usado pelas fotos: ${kb} KB` + (kb > 800 ? ' · ⚠️ perto do limite da nuvem (1 MB); apague algumas fotos' : ''); };
+      const thumbs = (box, ids, max, onChange) => { box.innerHTML = ''; ids.forEach((id, j) => { const s = FT.src(id); if (!s) return; const w = document.createElement('span'); w.className = 'tb'; w.innerHTML = `<img src="${s}"><button type="button" class="x">✕</button>`; w.querySelector('.x').onclick = () => { ids.splice(j, 1); onChange(); }; box.appendChild(w); });
+        if (ids.length < max) { const b = document.createElement('button'); b.type = 'button'; b.textContent = ids.length ? '📷 +' : '📷 foto'; b.onclick = () => pickFotos(max - ids.length > 1, id => { if (ids.length < max) { ids.push(id); onChange(); } }); box.appendChild(b); } };
+      // aniversariantes (com fotos)
+      const row = (a = {}) => { const r = document.createElement('div'); r.className = 'row'; r._f = (a.f || []).slice();
+        r.innerHTML = '<input class="nm" maxlength="40" placeholder="Nome"><input class="dd" type="number" min="1" max="31" placeholder="dia"><select>' + MS.map((m, i) => '<option value="' + (i + 1) + '">' + m + '</option>').join('') + '</select><button class="x" type="button" title="remover">✕</button><div class="fts"></div>';
+        r.querySelector('.nm').value = a.n || ''; r.querySelector('.dd').value = a.d || ''; r.querySelector('select').value = a.m || (new Date().getMonth() + 1); r.querySelector('.x').onclick = () => r.remove();
+        const upd = () => thumbs(r.querySelector('.fts'), r._f, 2, upd); upd(); $('#an-l').appendChild(r); };
+      // slides
+      const ORIG = window.__CENAS_ALL || [], NM = {}; (window.__SCN || []).forEach(s => NM[s.id] = s.name);
+      const kind = id => window.__GAME_IDS && window.__GAME_IDS.has(id) ? 'jogo' : window.__INTER_IDS && window.__INTER_IDS.has(id) ? 'mural' : 'slide';
+      const nomeBonito = id => { const n = NM[id] || id; return n.replace(/^(jogo|mural) · /, '').replace(/^./, c => c.toUpperCase()); };
+      let slFilt = 'all';
+      const slBuild = (S) => { S = S || {}; const L = $('#sl-l'); L.innerHTML = ''; const ord = window.__mergeOrd(ORIG, S.ord || []).filter(id => id !== 'convite'), off = new Set(S.off || []), dur = S.dur || {}, TH = (typeof THUMBS !== 'undefined' && THUMBS) || window.__THUMBS || {};
+        ord.forEach(id => { const r = document.createElement('div'), kd = kind(id); r.className = 'slr' + (off.has(id) ? ' off' : ''); r.dataset.id = id; r.dataset.k = kd;
+          r.innerHTML = `<input type="checkbox" ${off.has(id) ? '' : 'checked'}>${TH[id] ? `<img src="${TH[id]}" loading="lazy">` : '<img>'}<div class="nm2">${esc(nomeBonito(id))}<small>${kd}</small></div>` + (kd === 'jogo' ? '<span class="sd"></span>' : `<input class="sd" type="number" min="5" max="300" placeholder="${(CONFIG.duracaoEspecial[id] || CONFIG.segundosPorCena)}" value="${dur[id] || ''}">`) + '<button type="button" class="up">↑</button><button type="button" class="dn">↓</button>';
+          r.querySelector('input[type=checkbox]').onchange = e => r.classList.toggle('off', !e.target.checked);
+          r.querySelector('.up').onclick = () => { const p = r.previousElementSibling; if (p) L.insertBefore(r, p); };
+          r.querySelector('.dn').onclick = () => { const nx = r.nextElementSibling; if (nx) L.insertBefore(nx, r); };
+          L.appendChild(r); });
+        slApply(); };
+      const slApply = () => { const q = ($('#sl-q').value || '').toLowerCase(); $('#sl-l').querySelectorAll('.slr').forEach(r => { const okF = slFilt === 'all' || (slFilt === 'off' ? r.classList.contains('off') : r.dataset.k === slFilt); r.hidden = !(okF && (!q || r.textContent.toLowerCase().includes(q))); }); };
+      $('#sl-q').oninput = slApply; $('#sl-f').querySelectorAll('button').forEach(b => b.onclick = () => { slFilt = b.dataset.f; $('#sl-f').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); slApply(); });
+      twoTap($('#sl-reset'), 'Restaurar ordem e tempos padrão', () => { slBuild({}); $('#sl-pad').value = ''; $('#sl-reset').textContent = 'Restaurar ordem e tempos padrão'; msg('Padrão restaurado. Toque em Salvar para aplicar.'); });
+      const slRead = () => { const rows = [...$('#sl-l').querySelectorAll('.slr')], ord = rows.map(r => r.dataset.id), off = rows.filter(r => !r.querySelector('input[type=checkbox]').checked).map(r => r.dataset.id), dur = {};
+        rows.forEach(r => { const v = +((r.querySelector('input.sd') || {}).value || 0); if (v >= 5 && v <= 300) dur[r.dataset.id] = v; });
+        const conv = ORIG.indexOf('convite'); if (conv >= 0) ord.splice(Math.min(conv, ord.length), 0, 'convite');
+        const pad = +$('#sl-pad').value, S = {}; if (JSON.stringify(ord.filter(i => i !== 'convite')) !== JSON.stringify(ORIG.filter(i => i !== 'convite'))) S.ord = ord; if (off.length) S.off = off; if (Object.keys(dur).length) S.dur = dur; if (pad >= 5 && pad <= 120) S.padrao = pad; return Object.keys(S).length ? S : null; };
+      // avisos em tela cheia
+      const avRow = (a = {}) => { const c = document.createElement('div'); c.className = 'avc'; c._f = a.foto ? [a.foto] : [];
+        c.innerHTML = '<div class="row"><input class="nm at" maxlength="80" placeholder="Título do aviso"><button class="x" type="button">✕</button></div><textarea class="ax" maxlength="320" placeholder="Texto (opcional)"></textarea><div class="dts"><div><label>de</label><input type="date" class="ai"></div><div><label>até</label><input type="date" class="af"></div></div><div class="fts"></div>';
+        c.querySelector('.at').value = a.t || ''; c.querySelector('.ax').value = a.x || ''; c.querySelector('.ai').value = a.ini || ''; c.querySelector('.af').value = a.fim || '';
+        c.querySelector('.x').onclick = () => c.remove(); const upd = () => thumbs(c.querySelector('.fts'), c._f, 1, upd); upd(); $('#avs-l').appendChild(c); };
+      $('#avs-add').onclick = () => avRow({ ini: isoHoje() });
+      // galeria
+      let GAL = [];
+      const galR = () => { const L = $('#gal-l'); L.innerHTML = ''; GAL.forEach((g, i) => { const s = FT.src(g.f); if (!s) return; const d = document.createElement('div'); d.className = 'gi'; d.innerHTML = `<img src="${s}"><button type="button" class="x">✕</button><input maxlength="50" placeholder="legenda">`; const inp = d.querySelector('input'); inp.value = g.c || ''; inp.oninput = () => g.c = inp.value; d.querySelector('.x').onclick = () => { GAL.splice(i, 1); galR(); }; L.appendChild(d); }); ftSz(); };
+      $('#gal-add').onclick = () => pickFotos(true, id => { GAL.push({ f: id, c: '' }); galR(); });
+      // enquete personalizada
+      const eqRow = (e = {}) => { const c = document.createElement('div'); c.className = 'avc'; const o = e.o || [];
+        c.innerHTML = '<div class="row"><input type="date" class="ed" style="flex:0 0 170px"><button class="x" type="button">✕</button></div><input class="eqq" maxlength="90" placeholder="Pergunta"><div class="eqo">' + [0, 1, 2, 3].map(i => `<input maxlength="40" placeholder="Resposta ${i + 1}${i > 1 ? ' (opcional)' : ''}">`).join('') + '</div>';
+        c.querySelector('.ed').value = e.d || isoHoje(); c.querySelector('.eqq').value = e.q || ''; c.querySelectorAll('.eqo input').forEach((inp, i) => inp.value = o[i] || ''); c.querySelector('.x').onclick = () => c.remove(); $('#eq-l').appendChild(c); };
+      $('#eq-add').onclick = () => eqRow();
+      // recados do muro
+      const muroR = () => { const L = LS.get('cgMural', []), box = $('#mr-l'); box.innerHTML = L.length ? '' : '<div class="ah">Nenhum recado no muro.</div>';
+        L.slice(0, 200).forEach(m => { const d = document.createElement('div'); d.className = 'mr'; const dt = new Date(m.t); d.innerHTML = `<p>${esc(m.m)}<small>${esc(m.n || 'anônimo')} · ${dt.getDate()}/${dt.getMonth() + 1} ${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}</small></p><button type="button">🗑</button>`;
+          twoTap(d.querySelector('button'), '🗑', () => { const del = LS.get('cgMuralDel', []); del.push(m.t); LS.set('cgMuralDel', del.slice(-800)); LS.set('cgMural', LS.get('cgMural', []).filter(x => x.t !== m.t)); try { if (cur && cur.id === 'muro' && cur.load) cur.load(); } catch (e) {} d.remove(); msg('Recado apagado.'); });
+          box.appendChild(d); }); };
+      // números
+      const statsR = () => { const D = LS.get('cgStats', null) || { d: {} }, WD = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'], days = [];
+        for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const k = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); days.push([d, D.d[k] || { t: 0, g: {} }]); }
+        const mx = Math.max(1, ...days.map(x => x[1].t)), sem = days.reduce((s, x) => s + x[1].t, 0), hj = days[6][1], jg = {}, jgSem = days.reduce((s, x) => s + Object.values(x[1].g || {}).reduce((a, b) => a + b, 0), 0);
+        Object.values(D.d).forEach(o => Object.entries(o.g || {}).forEach(([id, n]) => jg[id] = (jg[id] || 0) + n));
+        const topJ = Object.entries(jg).sort((a, b) => b[1] - a[1]).slice(0, 8), RW = LS.get('cgSlideRxW', { c: {} }), am = Object.entries(RW.c || {}).map(([id, m]) => [id, Object.values(m).reduce((a, b) => a + b, 0)]).sort((a, b) => b[1] - a[1]).slice(0, 6);
+        const kp = (v, l) => `<div><b>${v}</b>${l}</div>`, est = LS.get('cgEstrelas', { n: 0 }), arv = LS.get('cgArvore', { n: 0 });
+        $('#st-v').innerHTML = `<div class="kpi">${kp(hj.t, 'toques hoje')}${kp(sem, 'toques em 7 dias')}${kp(jgSem, 'partidas em 7 dias')}${kp(LS.get('cgMural', []).length, 'recados no muro')}${kp(est.n || 0, 'estrelas no céu')}${kp(arv.n || 0, 'toques na árvore (semana)')}</div>`
+          + `<label>Toques por dia</label><div class="stb">${days.map(([d, o]) => `<div><span>${o.t}</span><b style="height:${Math.round(o.t / mx * 100)}%"></b><i>${WD[d.getDay()]}</i></div>`).join('')}</div>`
+          + `<label>Jogos mais jogados (últimos 45 dias)</label><ul class="stl">${topJ.length ? topJ.map(([id, n]) => `<li><span>${esc(nomeBonito(id))}</span><b>${n}</b></li>`).join('') : '<li><span>Ainda sem partidas registradas.</span></li>'}</ul>`
+          + `<label>Slides mais amados da semana</label><ul class="stl">${am.length ? am.map(([id, n]) => `<li><span>${esc(nomeBonito(id))}</span><b>${n} ❤️</b></li>`).join('') : '<li><span>Ainda sem reações nesta semana.</span></li>'}</ul>`
+          + `<div class="ah">Toques contam no máximo um a cada 3 segundos. Os números começaram a ser contados nesta versão${window.__cloud && window.__cloud.on ? ' e juntam todos os aparelhos ligados à nuvem' : ' e são deste aparelho'}.</div>`; };
       function openAdm() { const C = getC(); $('#av-on').checked = !!(C.aviso && C.aviso.on); $('#av-t').value = (C.aviso && C.aviso.t) || ''; $('#av-x').value = (C.aviso && C.aviso.x) || ''; $('#rc-d').value = C.recesso || '';
         $('#an-l').innerHTML = ''; (C.aniv || []).forEach(row); if (!(C.aniv || []).length) row();
-        $('#pn-auto').checked = autoOn; cloudSt(); $('#cl-k').value = ''; menu.classList.remove('on'); A.hidden = false; A.scrollTop = 0; nextAt = Infinity; }
+        $('#pn-auto').checked = autoOn; cloudSt(); $('#cl-k').value = '';
+        slBuild(C.sl); $('#sl-pad').value = (C.sl && C.sl.padrao) || ''; $('#sl-pad').placeholder = CONFIG.segundosPorCena;
+        $('#avs-l').innerHTML = ''; (C.avisos || []).forEach(avRow); GAL = JSON.parse(JSON.stringify(C.gal || [])); galR();
+        $('#eq-l').innerHTML = ''; (C.enq || []).forEach(eqRow);
+        menu.classList.remove('on'); A.hidden = false; tab(tabCur); nextAt = Infinity; }
       const closeAdm = () => { A.hidden = true; schedule(); };
       $('#an-add').onclick = () => row();
       $('#adm-save').onclick = () => {
-        const aniv = [...$('#an-l').querySelectorAll('.row')].map(r => ({ n: r.querySelector('.nm').value.trim(), d: +r.querySelector('.dd').value, m: +r.querySelector('select').value })).filter(a => a.n && a.d >= 1 && a.d <= 31);
-        const C = { ts: Date.now(), aviso: { on: $('#av-on').checked ? 1 : 0, t: $('#av-t').value.trim(), x: $('#av-x').value.trim() }, recesso: $('#rc-d').value || '', aniv };
-        try { localStorage.setItem('cgConteudo', JSON.stringify(C)); } catch (e) {}
+        const aniv = [...$('#an-l').querySelectorAll('.row')].map(r => { const a = { n: r.querySelector('.nm').value.trim(), d: +r.querySelector('.dd').value, m: +r.querySelector('select').value }; if (r._f && r._f.length) a.f = r._f.slice(); return a; }).filter(a => a.n && a.d >= 1 && a.d <= 31);
+        const avs = [...$('#avs-l').querySelectorAll('.avc')].map(c => { const a = { t: c.querySelector('.at').value.trim(), x: c.querySelector('.ax').value.trim(), ini: c.querySelector('.ai').value || '', fim: c.querySelector('.af').value || '' }; if (c._f && c._f.length) a.foto = c._f[0]; return a; }).filter(a => a.t || a.x);
+        const enq = [...$('#eq-l').querySelectorAll('.avc')].map(c => ({ d: c.querySelector('.ed').value, q: c.querySelector('.eqq').value.trim(), o: [...c.querySelectorAll('.eqo input')].map(i => i.value.trim()).filter(Boolean) })).filter(e => e.d && e.q && e.o.length >= 2);
+        const gal = GAL.filter(g => FT.src(g.f)).map(g => ({ f: g.f, c: (g.c || '').trim() })), sl = slRead();
+        const C = Object.assign({}, getC(), { ts: Date.now(), aviso: { on: $('#av-on').checked ? 1 : 0, t: $('#av-t').value.trim(), x: $('#av-x').value.trim() }, recesso: $('#rc-d').value || '', aniv, avisos: avs, enq, gal });
+        if (sl) C.sl = sl; else delete C.sl;
+        try { localStorage.setItem('cgConteudo', JSON.stringify(C)); } catch (e) { msg('⚠️ Não foi possível salvar: memória cheia.'); return; }
+        const usados = new Set([...aniv.flatMap(a => a.f || []), ...avs.map(a => a.foto).filter(Boolean), ...gal.map(g => g.f)]); Object.entries(FT.get().f).forEach(([id, v]) => { if (!v.del && !usados.has(id)) FT.del(id); }); ftSz();
         if ($('#pn-auto').checked !== autoOn) setAuto($('#pn-auto').checked);
         if (cur && cur.load) try { cur.load(); } catch (e) {}
-        msg('✓ Salvo' + (window.__cloud && window.__cloud.on ? ' e enviado para a nuvem' : ' neste aparelho')); };
+        const nuvem = window.__cloud && window.__cloud.on;
+        if (JSON.stringify(sl || null) !== window.__slBoot) { msg('✓ Salvo. Aplicando a nova ordem dos slides…'); setTimeout(() => location.reload(), nuvem ? 4500 : 1200); return; }
+        msg('✓ Salvo' + (nuvem ? ' e enviado para a nuvem' : ' neste aparelho')); };
+      // toques contam para as estatísticas (no máximo 1 a cada 3 s)
+      let stLast = 0; Z.addEventListener('pointerdown', () => { const n = performance.now(); if (n - stLast > 3000) { stLast = n; window.__stat && window.__stat('t'); } });
+      // se a ordem dos slides mudar por outro aparelho (nuvem), recarrega quando ninguém estiver usando
+      setInterval(() => { try { const S = (JSON.parse(localStorage.getItem('cgConteudo') || 'null') || {}).sl; if (JSON.stringify(S || null) !== window.__slBoot && A.hidden && P.hidden && !menu.classList.contains('on') && !(cur && cur._gs && cur._gs.on) && !(cur && cur.holding && cur.holding())) location.reload(); } catch (e) {} }, 30000);
       $('#adm-close').onclick = () => { closeAdm(); };
       $('#pin-new').onclick = () => { A.hidden = true; openPin('new', openAdm); };
       $('#cl-on').onclick = () => { const v = $('#cl-k').value.trim(), [pp, kk] = v.split(':'); if (!pp || !kk) { msg('Use o formato projeto:chave'); return; } try { localStorage.setItem('cgCloud', JSON.stringify({ p: pp, k: kk })); } catch (e) {} msg('Conectando… o painel vai recarregar.'); setTimeout(() => location.reload(), 900); };
