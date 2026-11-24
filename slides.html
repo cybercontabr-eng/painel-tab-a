@@ -5518,38 +5518,12 @@ function H_medalha() {
   const DF_STREET = [{ k: 'lua', x: 51, y: 10, r: 9 }, { k: 'fumaca', x: 27, y: 15, r: 5 }, { k: 'janela', x: 11, y: 43, r: 4 }, { k: 'porta', x: 17, y: 52, r: 5 }, { k: 'luzes', x: 79, y: 31, r: 9 }, { k: 'guirlanda', x: 79.5, y: 49.5, r: 4 }, { k: 'poste', x: 46, y: 36, r: 6 }, { k: 'carro', x: 56, y: 61, r: 6 }, { k: 'cachecol', x: 36, y: 58, r: 4 }, { k: 'correio', x: 95.5, y: 51, r: 4 }, { k: 'placa', x: 6, y: 49, r: 5 }];
   const DF_SCENES = [{ nome: 'Casa nevada', draw: (g, w, h, f) => dfScene(g, w, h, f), dif: () => DF_ALL }, { nome: 'Escritório do núcleo', draw: dfOffice, dif: () => DF_OFFICE }, { nome: 'Sala de Natal', draw: dfLiving, dif: () => DF_LIVING }, { nome: 'Rua iluminada', draw: dfStreet, dif: () => DF_STREET }];
   window.__DF = DF_SCENES;
-  /* fotos reais (Pixabay): as 7 diferenças são geradas na hora, diferentes a cada partida */
-  const DF_FOTOS = ["df558985", "df7656027", "df550323", "df7664171", "df2999722", "df1088143", "df2975570", "df1051884", "df1909796", "df10558575", "df791110", "df5992277", "df2634633", "df856486", "df321034", "df5705046"].map(c => { const im = new Image(); im.src = 'ft/' + c + '.webp'; return im; });
-  const dfGerar = (src, w, h) => {
-    const base = document.createElement('canvas'); base.width = w; base.height = h; const bg = base.getContext('2d'); bg.drawImage(src, 0, 0, w, h);
-    const N = 40, M = 30, sm2 = document.createElement('canvas'); sm2.width = N; sm2.height = M; const sg = sm2.getContext('2d'); sg.drawImage(base, 0, 0, N, M); const px = sg.getImageData(0, 0, N, M).data, L = (x, y) => { const i = (y * N + x) * 4; return px[i] * .3 + px[i + 1] * .59 + px[i + 2] * .11; };
-    const cand = []; for (let y = 3; y < M - 3; y++) for (let x = 3; x < N - 3; x++) { let v = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) v += Math.abs(L(x + dx, y + dy) - L(x, y)); cand.push({ x, y, v: v + Math.random() * 60 }); }
-    cand.sort((a, b) => b.v - a.v); const pts = [], R = 5.2;
-    for (const c of cand) { const X = (c.x + .5) / N * 100, Y = (c.y + .5) / M * 75; if (pts.every(p => Math.hypot(p.x - X, p.y - Y) > R * 2.6)) pts.push({ x: X, y: Y, r: R }); if (pts.length === 7) break; }
-    const alt = document.createElement('canvas'); alt.width = w; alt.height = h; const ag = alt.getContext('2d'); ag.drawImage(base, 0, 0);
-    const tipos = ['cor', 'espelho', 'some', 'gira', 'clone', 'luz', 'cinza'].sort(() => Math.random() - .5);
-    pts.forEach((p, i) => {
-      const cx = p.x / 100 * w, cy = p.y / 75 * h, r = p.r / 100 * w, S = Math.ceil(r * 2), pc = document.createElement('canvas'); pc.width = pc.height = S; const g = pc.getContext('2d'), tp = tipos[i % tipos.length];
-      g.save();
-      if (tp === 'cor') { g.filter = 'hue-rotate(' + (120 + Math.random() * 120 | 0) + 'deg) saturate(1.6)'; g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
-      else if (tp === 'espelho') { g.translate(S, 0); g.scale(-1, 1); g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
-      else if (tp === 'gira') { g.translate(S / 2, S / 2); g.rotate(Math.PI); g.translate(-S / 2, -S / 2); g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
-      else if (tp === 'some') { g.filter = 'blur(' + Math.round(r * .45) + 'px)'; g.drawImage(base, cx - r * 2, cy - r * 2, S * 2, S * 2, -S / 2, -S / 2, S * 2, S * 2); }
-      else if (tp === 'clone') { let ox, oy, k = 0; do { ox = r + Math.random() * (w - 2 * r); oy = r + Math.random() * (h - 2 * r); k++; } while (Math.hypot(ox - cx, oy - cy) < r * 3 && k < 30); g.drawImage(base, ox - r, oy - r, S, S, 0, 0, S, S); }
-      else if (tp === 'luz') { g.filter = 'brightness(1.7) contrast(1.2)'; g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
-      else { g.filter = 'grayscale(1) contrast(1.1)'; g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
-      g.restore();
-      g.globalCompositeOperation = 'destination-in'; const rg = g.createRadialGradient(S / 2, S / 2, r * .55, S / 2, S / 2, r); rg.addColorStop(0, '#000'); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = rg; g.fillRect(0, 0, S, S);
-      ag.drawImage(pc, cx - r, cy - r);
-    });
-    return { imgs: [base, alt], d: pts };
-  };
+
   const difs = {
     id: 'difs', name: 'jogo · sete diferenças', el: $('[data-scene=difs]'),
     setup() { this.sp = []; this.newGame(); },
-    newGame() { const fotos = DF_FOTOS.filter(im => im.complete && im.naturalWidth); this.foto = null; if (fotos.length) { let f; do { f = fotos[Math.floor(rnd(0, fotos.length))]; } while (f === this.lastFoto && fotos.length > 1); this.foto = this.lastFoto = f; }
-      let k; do { k = Math.floor(rnd(0, DF_SCENES.length)); } while (k === this.sc && DF_SCENES.length > 1); this.sc = k; this.d = DF_SCENES[k].dif().slice().sort(() => Math.random() - .5).slice(0, 7).map(d => ({ ...d, f: 0 })); this.t0g = null; this.done = 0; this.miss = []; this.dimg = null; },
-    render() { const { w, h } = this.geo(); if (this.foto) { const G = dfGerar(this.foto, Math.round(w), Math.round(h)); this.dimg = G.imgs; this.d = G.d.map(d => ({ ...d, f: 0 })); this.cvW = w; return; } const mk = flags => { const c = document.createElement('canvas'); c.width = Math.round(w); c.height = Math.round(h); DF_SCENES[this.sc || 0].draw(c.getContext('2d'), c.width, c.height, flags); return c; };
+    newGame() { let k; do { k = Math.floor(rnd(0, DF_SCENES.length)); } while (k === this.sc && DF_SCENES.length > 1); this.sc = k; this.d = DF_SCENES[k].dif().slice().sort(() => Math.random() - .5).slice(0, 7).map(d => ({ ...d, f: 0 })); this.t0g = null; this.done = 0; this.miss = []; this.dimg = null; },
+    render() { const { w, h } = this.geo(), mk = flags => { const c = document.createElement('canvas'); c.width = Math.round(w); c.height = Math.round(h); DF_SCENES[this.sc || 0].draw(c.getContext('2d'), c.width, c.height, flags); return c; };
       const fl = {}; this.d.forEach(d => fl[d.k] = 1); this.dimg = [mk({}), mk(fl)]; this.cvW = w; },
     enter() { this.t0 = null; if (!NE.on) { this.newGame(); this.dimg = null; } },
     leave() { if (NE.on && NE.scene === 'difs') NE.finish(); },
@@ -5570,7 +5544,7 @@ function H_medalha() {
       if (this.t0g !== null && !this.done && T - this.t0g > 240) { this.newGame(); this.render(); }
       [0, 1].forEach(k => { const x = x0 + k * (w + gap); ctx.save(); rr2(x, y0, w, h, 12); ctx.clip(); ctx.drawImage(this.dimg[k], x, y0, w, h); ctx.restore(); ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 2; rr2(x, y0, w, h, 12); ctx.stroke();
         this.d.forEach(d => { if (!d.f) return; ctx.strokeStyle = '#3dffa8'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x + d.x / 100 * w, y0 + d.y / 75 * h, (d.r + 1) / 100 * w, 0, TAU); ctx.stroke(); }); });
-      T2((this.foto ? 'foto' : 'cena: ' + DF_SCENES[this.sc || 0].nome) + '  ·  original', x0, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); T2('alterada', x0 + w + gap, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
+      T2('cena: ' + DF_SCENES[this.sc || 0].nome + '  ·  original', x0, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); T2('alterada', x0 + w + gap, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
       this.miss = this.miss.filter(m => T - m.t < .6); this.miss.forEach(m => { ctx.globalAlpha = 1 - (T - m.t) / .6; T2('✗', m.x, m.y, u * 2, '#ff4d6d', 700, 'center'); }); ctx.globalAlpha = 1;
       stepBurst(this.sp, dt, 380);
       const el = this.t0g === null ? 0 : (this.done || T) - this.t0g;
