@@ -876,11 +876,16 @@
   #sx-grid .empty{grid-column:1/-1;color:rgba(241,232,214,.6);font:500 clamp(.9rem,2.2vmin,1.2rem)/1.4 system-ui,sans-serif;padding:4vh 0;text-align:center}
 
   /* reações nos slides */
-  #sx-rx{position:fixed;right:1.2vw;bottom:15vh;z-index:21;display:flex;flex-direction:column;align-items:center;gap:0;padding:.8vmin .4vmin;opacity:.6;background:rgba(5,8,16,.55);border:1px solid rgba(255,255,255,.14);border-radius:6vmin;transition:opacity .4s}
+  #sx-rx{position:fixed;left:50%;bottom:2.2vh;transform:translateX(-50%);z-index:21;display:flex;flex-direction:row;align-items:center;gap:.2vmin;padding:.5vmin 1.4vmin;opacity:.5;background:rgba(5,8,16,.6);border:1px solid rgba(255,255,255,.14);border-radius:6vmin;transition:opacity .5s,box-shadow .5s,border-color .5s,padding .5s}
+  #sx-rx .cta{font:700 clamp(.8rem,2.1vmin,1.15rem)/1 system-ui,sans-serif;color:#ffe3a0;white-space:nowrap;max-width:0;overflow:hidden;opacity:0;transition:max-width .6s,opacity .4s,margin .6s}
+  #sx-rx.hi{opacity:1;border-color:rgba(226,176,74,.8);box-shadow:0 0 0 .4vmin rgba(226,176,74,.18),0 1vmin 4vmin rgba(0,0,0,.5);padding:.7vmin 1.8vmin}
+  #sx-rx.hi .cta{max-width:40vw;opacity:1;margin-right:1.2vmin}
+  #sx-rx.hi button{animation:rxw .9s ease-in-out 2;animation-delay:calc(var(--i) * .12s)}
+  @keyframes rxw{0%,100%{transform:none}35%{transform:translateY(-1.2vmin) scale(1.3)}60%{transform:translateY(0) scale(.95)}}
   #sx-rx[hidden]{display:none}
   #sx-rx button{font-size:clamp(.95rem,2.7vmin,1.5rem);padding:.55vmin .7vmin!important;line-height:1;background:none;border:0;padding:.7vmin .9vmin;border-radius:3vmin;cursor:pointer;transition:transform .12s}
   #sx-rx button:active,#sx-rx button.pop{transform:scale(1.35)}
-  #sx-rxn{font:700 clamp(.65rem,1.5vmin,.85rem)/1 var(--mono);color:rgba(241,232,214,.75);padding:.3vmin 0 .1vmin;text-align:center}
+  #sx-rxn{font:700 clamp(.65rem,1.5vmin,.85rem)/1 var(--mono);color:rgba(241,232,214,.75);padding:0 0 0 .6vmin;text-align:center}
   #sx-fly{position:fixed;inset:0;pointer-events:none;z-index:19;overflow:hidden}
   #sx-fly i{position:absolute;bottom:-8vmin;font-style:normal;font-size:var(--s,5vmin);animation:sxfly var(--d,4s) cubic-bezier(.2,.6,.4,1) forwards;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
   @keyframes sxfly{0%{transform:translate(0,0) scale(.5);opacity:0}12%{opacity:1}60%{transform:translate(calc(var(--dx) * .6),-55vh) scale(1.1)}100%{transform:translate(var(--dx),-100vh) scale(1.25);opacity:0}}
@@ -979,8 +984,8 @@
   #sx-tabs{grid-column:1;grid-row:2}
   #sx-q{grid-column:2/5;grid-row:2;min-width:0!important}
   /* respiro à direita para a coluna de reações */
-  .split{padding-right:12vw!important}
-  .nx-split{padding-right:12vw!important}
+
+
   [data-scene=medi] .nx-p,[data-scene=inst] .nx-p,[data-scene=consulta3] .gp3 h5{display:none!important}
   .c3-head{top:14vmin!important;left:9vw!important}
   /* ajustes da versão com letras maiores */
@@ -1898,7 +1903,7 @@ html,body,#stage{background:#18050c}
 </div></div>
 <div id="sx-zones" hidden><div id="sx-l"></div><div id="sx-c"></div><div id="sx-r"></div></div>
 <div id="sx-bar"><button id="sx-prev" type="button">◀</button><button id="sx-open" type="button">☰ MENU</button><button id="sx-next" type="button">▶</button><button id="sx-fs" type="button">⛶</button></div>
-<div id="sx-fly"></div><div id="sx-rx" hidden><button type="button" data-e="❤️">❤️</button><button type="button" data-e="👏">👏</button><button type="button" data-e="😂">😂</button><button type="button" data-e="😮">😮</button><button type="button" data-e="🎄">🎄</button><button type="button" data-e="🔥">🔥</button><span id="sx-rxn"></span></div>
+<div id="sx-fly"></div><div id="sx-rx" hidden><span class="cta">Gostou? Toque para reagir 👉</span><button type="button" data-e="❤️">❤️</button><button type="button" data-e="👏">👏</button><button type="button" data-e="😂">😂</button><button type="button" data-e="😮">😮</button><button type="button" data-e="🎄">🎄</button><button type="button" data-e="🔥">🔥</button><span id="sx-rxn"></span></div>
 <div id="sx-menu"><div class="ph"><h3>O que você quer fazer?</h3><div id="sx-tabs"><button type="button" data-t="jogos" class="on">🎮 JOGOS</button><button type="button" data-t="inter">✍️ MURAIS</button><button type="button" data-t="slides">🖼️ SLIDES</button><button type="button" data-t="all">TODOS</button></div><input id="sx-q" type="search" placeholder="🔎 pesquisar slide ou jogo…" autocomplete="off"><button id="sx-close" type="button">✕ FECHAR</button><button class="admlink" id="sx-adml" type="button">⚙</button></div><div id="sx-count"></div><div id="sx-cloud"></div><div id="sx-grid"></div></div>
 
 <script>
@@ -8748,9 +8753,11 @@ function H_medalha() {
         if (D && D.d !== today()) load();
         if (cur === seen) return; seen = cur; timers.forEach(clearTimeout); timers = [];
         if (!D) load(); const good = ok(cur) && !menu.classList.contains('on'); bar.hidden = !good; if (!good) return; label(cur);
+        bar.classList.remove('hi'); void bar.offsetWidth; bar.classList.add('hi'); timers.push(setTimeout(() => bar.classList.remove('hi'), 5500));
         const c = D.c[cur.id] || {}, list = []; Object.entries(c).forEach(([e, n]) => { for (let i = 0; i < Math.min(n, 25); i++) list.push(e); });
         list.sort(() => Math.random() - .5).slice(0, 40).forEach(e => { const s0 = cur; timers.push(setTimeout(() => { if (cur === s0) up(e, innerWidth * (.15 + Math.random() * .7)); }, 600 + Math.random() * 11000)); });
       }, 300);
+      bar.querySelectorAll('button').forEach((b, i) => b.style.setProperty('--i', i));
       bar.addEventListener('pointerdown', e => e.stopPropagation());
       bar.querySelectorAll('button').forEach(b => b.addEventListener('pointerdown', ev => { ev.stopPropagation(); ev.preventDefault(); if (!cur || !ok(cur)) return; if (!D) load();
         const em = b.dataset.e, c = D.c[cur.id] || (D.c[cur.id] = {}); c[em] = (c[em] || 0) + 1; save(); label(cur); if (window.__amwAdd) window.__amwAdd(cur.id, em);
