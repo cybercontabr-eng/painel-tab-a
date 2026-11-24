@@ -7694,13 +7694,15 @@ function H_medalha() {
   Object.assign(PH_MAP, {"Aparecida de Goiânia": "gede47637", "Águas Lindas de Goiás": "g84bd0827", "Luziânia": "g9964af16", "Valparaíso de Goiás": "gbfceb919", "Senador Canedo": "g931b5269", "Trindade": "g45ed99ab", "Formosa": "g541c8158", "Itumbiara": "gbc8be09d", "Catalão": "g96acdb98", "Goianésia": "gb020eb06", "Inhumas": "g8150ae23", "Morrinhos": "gd7d01a3f", "Jaraguá": "gaaafcb99", "Quirinópolis": "g358b446a", "Porangatu": "ge4a2b937", "Cidade de Goiás": "gf72caaf4", "Alto Paraíso de Goiás": "g75b0973c", "Cavalcante": "g91b18a02", "Uruaçu": "g8d4cc7ec", "Iporá": "g36481e88", "Itaberaí": "gd771af9a", "Planaltina": "gc7a032df"});
   [['Anápolis', 'Anápolis (GO)'], ['Rio Verde', 'Rio Verde (GO)'], ['Caldas Novas', 'Caldas Novas (GO)'], ['Pirenópolis', 'Pirenópolis (GO)']].forEach(([a, b]) => PH_MAP[a] = PH_MAP[b]);
   const PH_IMG = {};
-  const phImg = n => { const c = PH_MAP[n]; if (!c) return null; if (!PH_IMG[c]) { const im = new Image(); im.src = 'ft/' + c + '.webp'; PH_IMG[c] = im; } const im = PH_IMG[c]; return im.complete && im.naturalWidth ? im : null; };
+  const phImg = n => { const c = PH_MAP[n]; if (!c) return null; let im = PH_IMG[c];
+    if (!im || (im._err && performance.now() - im._err > 1500)) { im = new Image(); im.decoding = 'async'; im.onerror = () => { im._err = performance.now(); }; im.onload = () => { im._ok = 1; }; im.src = 'ft/' + c + '.webp' + (PH_IMG[c] ? '?r=' + Date.now() : ''); PH_IMG[c] = im; }
+    return im._ok || (im.complete && im.naturalWidth) ? im : null; };
   const EM_IMG = {};
   const emImg = e => { const c = emCode(e); if (!EM_OK.has(c)) return null; if (!EM_IMG[c]) { const im = new Image(); im.src = 'em/' + c + '.webp'; EM_IMG[c] = im; } const im = EM_IMG[c]; return im.complete && im.naturalWidth ? im : null; };
   const peso = {
     id: 'peso', name: 'jogo · qual é o mais…?', el: $('[data-scene=peso]'), mode: 'mix',
     setup() { this.sp = []; this.chips = []; this.reset(); },
-    reset() { this.streak = 0; this.over = 0; this.ans = null; this.newPair(); },
+    reset() { this.streak = 0; this.over = 0; this.ans = null; this.prox = null; this.newPair(); },
     enter() { this.t0 = null; if (!NE.on) this.reset(); },
     leave() { if (NE.on && NE.scene === 'peso') NE.finish(); },
     band(cat) { const s = this.streak;
@@ -7708,23 +7710,29 @@ function H_medalha() {
       if (cat.menor) return s < 2 ? [80, 1e9] : s < 5 ? [20, 200] : s < 9 ? [6, 40] : [1, 12];
       const b = s < 2 ? [3, 1e12] : s < 5 ? [1.7, 5] : s < 9 ? [1.3, 2.3] : s < 14 ? [1.13, 1.6] : [1.04, 1.3]; return cat.minR ? [Math.max(b[0], cat.minR), Math.max(b[1], cat.minR * 1.3)] : b; },
     newPair() {
+      if (this.prox && this.prox.s === this.streak) { Object.assign(this, this.prox.v); this.prox = null; this.pt = this.T || 0; this.wait0 = performance.now(); this.pre(); return; }
+      this.sortear(); this.pt = this.T || 0; this.wait0 = performance.now(); this.pre(); },
+    pre() { const sv = { ck: this.ck, cat: this.cat, P: this.P }, s = this.streak; this.streak++; this.sortear(); this.prox = { s: s + 1, v: { ck: this.ck, cat: this.cat, P: this.P, ans: null } }; this.streak = s; Object.assign(this, sv); },
+    sortear() {
       const keys = ['peso', ...Object.keys(QM)]; let ck = keys[Math.floor(Math.random() * keys.length)]; if (ck === this.ck && Math.random() < .75) ck = keys[Math.floor(Math.random() * keys.length)];
       const cat = qmCat(ck), L = cat.it, N = L.length, [lo, hi] = this.band(cat); let seen = LS.get(PS_SEEN, []) || []; if (seen.length > 900) seen = seen.slice(-600); let best = null;
       for (let tries = 0; tries < 500; tries++) { const a = Math.floor(Math.random() * N), b = Math.floor(Math.random() * N); if (a === b) continue; const A = L[a][2], B = L[b][2]; if (A === B) continue;
         const r = cat.nivel || cat.menor ? Math.abs(A - B) : Math.max(A, B) / Math.min(A, B); if (r < lo || r > hi) continue;
         const key = ck + ':' + Math.min(a, b) + '-' + Math.max(a, b); if (seen.includes(key) && tries < 380) continue; best = { a, b, key }; break; }
       if (!best) { let a, b; do { a = Math.floor(Math.random() * N); b = Math.floor(Math.random() * N); } while (a === b || L[a][2] === L[b][2]); best = { a, b, key: ck + ':' + a + '-' + b }; }
-      seen.push(best.key); LS.set(PS_SEEN, seen); this.ck = ck; this.cat = cat; this.P = [L[best.a], L[best.b]]; this.ans = null; this.pt = this.T || 0;
+      seen.push(best.key); LS.set(PS_SEEN, seen); this.ck = ck; this.cat = cat; this.P = [L[best.a], L[best.b]]; this.ans = null;
       [best.a, best.b].forEach(i => { phImg(L[i][1]); emImg(L[i][0]); }); },
     cards() { const w = W * .27, h = H * .42, y = H * .33; return [{ x: W * .5 - W * .02 - w, y, w, h }, { x: W * .5 + W * .02, y, w, h }]; },
-    tap(x, y) { if (NE.tap(x, y)) return; const T = this.T || 0;
+    tap(x, y) { if (NE.tap(x, y)) return; const T = this.T || 0; if (T - (this.pt || 0) < .3) return;
       if (this.over) { if (T - this.over > 1.2) this.reset(); return; }
       if (this.ans) return; const C = this.cards(); const i = C.findIndex(c => x > c.x && x < c.x + c.w && y > c.y && y < c.y + c.h); if (i < 0) return;
       const v0 = this.P[0][2], v1 = this.P[1][2], win = this.cat.menor ? (v0 < v1 ? 0 : 1) : (v0 > v1 ? 0 : 1), ok = i === win; this.ans = { t: T, i, ok, heavy: win };
       if (ok) { this.streak++; burst(this.sp, C[i].x + C[i].w / 2, C[i].y + C[i].h * .4, 30, ['#9fd8a8', '#f2c46d', '#fff'], 260); setTimeout(() => { if (!this.over) this.newPair(); }, 1900); }
       else { this.over = T + 2; if (REC.qualifies('peso', this.streak)) setTimeout(() => NE.start('peso', 'peso', this.streak, false, this.streak + (this.streak === 1 ? ' acerto seguido' : ' acertos seguidos')), 2000); } },
     frame(t, dt) {
-      const T = this.T = T3(this, t), u = UU(), C = this.cards(), A = this.ans, k0 = sm(Math.min(1, (T - (this.pt || 0)) / .4)), cat = this.cat;
+      const T = this.T = T3(this, t), u = UU(), C = this.cards(), A = this.ans, cat = this.cat;
+      const pronto = this.P.every(it => !PH_MAP[it[1]] || phImg(it[1])) || performance.now() - (this.wait0 || 0) > 3000; if (!pronto) { this.pt = T; T2('carregando…', W / 2, H * .5, u * 1.2, 'rgba(255,255,255,.5)', 600, 'center', 'sans-serif'); NE.frame('peso'); return; }
+      const k0 = sm(Math.min(1, (T - (this.pt || 0)) / .4));
       ctx.globalAlpha = k0; T2(cat.q, W / 2, H * .25, u * 1.7, '#f2c46d', 700, 'center', 'sans-serif'); T2(cat.nota, W / 2, H * .25 + u * 2, u * .85, 'rgba(255,255,255,.5)', 600, 'center', 'sans-serif'); T2('fotos: Pixabay e Wikimedia Commons', W / 2, H * .985, u * .6, 'rgba(255,255,255,.3)', 500, 'center', 'sans-serif'); ctx.globalAlpha = 1;
       C.forEach((c, i) => { const it = this.P[i], hi = A && i === A.heavy, sel = A && i === A.i, yy = c.y + (1 - k0) * u * 3;
         ctx.globalAlpha = k0; ctx.fillStyle = A ? (hi ? 'rgba(159,216,168,.2)' : 'rgba(255,244,227,.05)') : 'rgba(255,244,227,.08)'; rr2(c.x, yy, c.w, c.h, 18); ctx.fill(); ctx.strokeStyle = sel ? (A.ok ? '#9fd8a8' : '#ff5f7a') : 'rgba(242,196,109,.3)'; ctx.lineWidth = sel ? 3 : 1.2; ctx.stroke();
