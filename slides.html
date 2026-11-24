@@ -6928,7 +6928,7 @@ function H_medalha() {
     id: 'corte', name: 'jogo · corte perfeito', el: $('[data-scene=corte]'), R: 5,
     setup() { this.sp = []; this.mask = document.createElement('canvas'); this.mask.width = this.mask.height = 160; this.reset(); },
     reset() { this.k = 0; this.res = []; this.st = 0; this.cut = null; this.newObj(); },
-    enter() { this.t0 = null; if (!NE.on) this.reset(); },
+    enter() { this.t0 = null; this.T = 0; if (!NE.on) this.reset(); else if (this.obj) this.obj.born = 0; },
     leave() { if (NE.on && NE.scene === 'corte') NE.finish(); },
     newObj() { const kinds = CT_K.filter(k => !this.obj || k !== this.obj.k); this.obj = { k: kinds[Math.floor(Math.random() * kinds.length)], rot: rnd(-.6, .6), born: this.T || 0, x: W / 2, y: H * .6, s: Math.min(W, H) * .36 }; },
     tap(x, y) { if (NE.tap(x, y)) return; if (this.st === 2 && (this.T || 0) - this.end > 1.2) this.reset(); },
@@ -6951,7 +6951,7 @@ function H_medalha() {
       this.res.push(prec); if (prec >= 97) burst(this.sp, o.x, o.y, 60, CP_COLS, 360);
     },
     drawObj(o, T) {
-      const k = Math.min(1, (T - o.born) / .3), s = o.s * (k < 1 ? sm(k) : 1);
+      const k = Math.max(0, Math.min(1, (T - o.born) / .3)), s = o.s * (k < 1 ? sm(k) : 1);
       ctx.save(); ctx.translate(o.x, o.y); ctx.rotate(o.rot); ctPath(ctx, o.k, s); ctx.fillStyle = CT_COL[o.k]; ctx.fill();
       ctx.save(); ctx.clip();
       if (o.k === 'presente') { ctx.fillStyle = '#ffd23f'; ctx.fillRect(-s * .07, -s * .5, s * .14, s); ctx.fillRect(-s * .6, -s * .07, s * 1.2, s * .14); }
@@ -6975,6 +6975,8 @@ function H_medalha() {
           else this.newObj();
         }
       } else if (this.st !== 2) {
+        if (o.born > T + .05) o.born = T;
+        o.x = W / 2; o.y = H * .6; o.s = Math.min(W, H) * .36;
         this.drawObj(o, T);
         if (this.sw) { ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 3; ctx.setLineDash([10, 8]); ctx.beginPath(); ctx.moveTo(this.sw.x0, this.sw.y0); ctx.lineTo(this.sw.x, this.sw.y); ctx.stroke(); ctx.setLineDash([]); }
         else if (!this.k) { const a = (T * .6) % 1; ctx.strokeStyle = `rgba(255,255,255,${.5 * (1 - a)})`; ctx.lineWidth = 3; ctx.setLineDash([10, 8]); ctx.beginPath(); ctx.moveTo(o.x - o.s * .8, o.y - o.s * .75); ctx.lineTo(o.x - o.s * .8 + o.s * 1.6 * a, o.y - o.s * .75 + o.s * 1.5 * a); ctx.stroke(); ctx.setLineDash([]); hand(o.x - o.s * .8 + o.s * 1.6 * a, o.y - o.s * .75 + o.s * 1.5 * a + u * 1.6, T, u * 2); }
@@ -9012,7 +9014,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795535250';
+window.__VER = '1795550371';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
