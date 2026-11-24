@@ -1658,7 +1658,7 @@ html,body,#stage{background:#18050c}
       <div class="tap-hint">👆 toque para mover o trenó</div>
     </div></section>
     <section class="scene" data-scene="memoria"><div class="cam">
-      <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Memória</span><em>natalina</em></h1></div>
+      <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Jogo da</span><em>memória</em></h1></div>
       <div class="tap-hint">👆 toque nas cartas para virar</div>
     </div></section>
     <section class="scene" data-scene="rena"><div class="cam">
@@ -1750,7 +1750,7 @@ html,body,#stage{background:#18050c}
       <div class="game-top copy"><div class="label">● Desafio de reflexo</div><h1 class="title"><span>Pare no</span><em>tempo exato</em></h1></div>
     </div></section>
     <section class="scene" data-scene="forca"><div class="cam">
-      <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Forca</span><em>natalina</em></h1></div>
+      <div class="game-top copy"><div class="label">● Jogo de Natal</div><h1 class="title"><span>Jogo da</span><em>forca</em></h1></div>
     </div></section>
     <section class="scene" data-scene="recordes"><div class="cam">
       <div class="game-top copy"><div class="label">● Hall da fama</div><h1 class="title"><span>Nossos</span><em>recordistas</em></h1></div>
@@ -1914,7 +1914,7 @@ const CONFIG = {
     particulas: 24, lareira2: 20, soc: 22, virada: 24, floco: 20, estrela: 20, desejos: 22, warp: 18, consulta2: 24, teclado: 22, aurora: 20, fabricio: 16, terminal2: 24, consulta3: 24, presentes: 15, globoneve: 15, fogos: 15, treno: 20, bolas: 15, boneco: 15, pisca: 15, raspa: 15, caca: 15, pegue: 15, memoria: 15, rena: 15, velha: 15, quiz: 15, sinos: 15, palavras: 15, puzzle: 15, difs: 15, labirinto: 15, corrida: 15, carlos: 16, memlogos: 15, memequipe: 15, empilha: 15, cofre: 15, cifra: 15, quizpp: 15, campo: 15, detetive: 15, lig4: 15, muro: 22, pixel: 18, reacoes: 18, naval: 15, tempo: 15, forca: 15, recordes: 22, enquete: 18, hoje: 16, aniver: 16, convite: 12
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'memlogos', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'escava', 'rena', 'logocodigo', 'enquete', 'recordes', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'espiral', 'estrela', 'virada', 'convite'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'escava', 'rena', 'logocodigo', 'enquete', 'recordes', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'espiral', 'estrela', 'virada', 'convite'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   vitrine: true,                 // jogos saem da rotação automática (ficam na central e nos convites)
   convidarACada: 4,              // a cada N slides da vitrine entra um convite para jogar
@@ -4943,37 +4943,54 @@ function H_medalha() {
     }
   };
 
-  /* ---------- jogo da memória ---------- */
-  const MEM_IC = ['🎅', '⛄', '🎁', '🔔', '⭐', '🦌'];
+  /* ---------- jogo da memória (temas: Natal com fotos reais · logos do núcleo) ---------- */
+  const MEM_NATAL = ['Papai Noel (estimado)', 'rena', 'árvore de Natal de 2 m', 'presente médio', 'boneco de neve', 'sino de Natal pequeno', 'estrela da árvore', 'biscoito', 'vela', 'peru de Natal', 'caixa de fogos', 'urso de pelúcia', 'garrafa de espumante'];
+  const MEM_TEMAS = [['natal', '🎄 Natal', 'memoria', 6], ['nucleo', '🛡️ Núcleo', 'memoria', 6]];
+  let MEM_LOGOS = null;
   const memoria = {
-    id: 'memoria', name: 'jogo · memória natalina', el: $('[data-scene=memoria]'),
-    setup() { this.sp = []; this.deal(); },
-    deal() { const a = MEM_IC.concat(MEM_IC).sort(() => Math.random() - .5); this.c = a.map(ic => ({ ic, open: 0, f: 0, done: 0 })); this.sel = []; this.moves = 0; this.seen = {}; this.win = 0; },
-    enter() { this.t0 = null; this.lastTap = -99; this.next = 1; if (!NE.on) this.deal(); },
-    geo(i) { const cols = 6, rows = 2, s = Math.min(W * .7 / cols, H * .22), gap = s * .14, tw = cols * s + (cols - 1) * gap, x = (W - tw) / 2 + (i % cols) * (s + gap), y = H * .36 + Math.floor(i / cols) * (s * 1.2 + gap); return { x, y, s, h: s * 1.2 }; },
-    flip(i) { const c = this.c[i]; if (!c || c.open || c.done || this.sel.length >= 2 || this.wait) return; c.open = 1; this.seen[i] = c.ic; this.sel.push(i);
-      if (this.sel.length === 2) { this.moves++; const [a, b] = this.sel; this.wait = this.T + .9; this.pair = this.c[a].ic === this.c[b].ic; } },
+    id: 'memoria', name: 'jogo · memória', el: $('[data-scene=memoria]'), tema: 'natal',
+    setup() { this.sp = []; this.btns = []; this.deal(); },
+    imgsOf() { if (this.tema === 'nucleo') { if (!MEM_LOGOS) MEM_LOGOS = loadImgs(MEMIMG.logos); return MEM_LOGOS.slice().sort(() => Math.random() - .5).slice(0, 6); }
+      const pool = MEM_NATAL.filter(n => PH_MAP[n]).sort(() => Math.random() - .5).slice(0, 6); return pool.map(n => { phImg(n); const c = PH_MAP[n]; return PH_IMG[c]; }); },
+    deal() { this.im = this.imgsOf(); const idx = this.im.map((_, i) => i), a = idx.concat(idx).sort(() => Math.random() - .5); this.c = a.map(k => ({ k, open: 0, f: 0, done: 0 })); this.sel = []; this.moves = 0; this.win = 0; this.wait = 0; },
+    cfg() { return MEM_TEMAS.find(m => m[0] === this.tema); },
+    enter() { this.t0 = null; if (!NE.on) this.deal(); },
     leave() { if (NE.on && NE.scene === 'memoria') NE.finish(); },
-    tap(x, y) { if (NE.tap(x, y)) return; this.lastTap = this.T || 0; this.c.forEach((c, i) => { const g = this.geo(i); if (x > g.x && x < g.x + g.s && y > g.y && y < g.y + g.h) this.flip(i); }); },
-    ai() { if (this.sel.length === 1) { const a = this.sel[0], m = Object.keys(this.seen).find(k => +k !== a && this.seen[k] === this.c[a].ic && !this.c[k].done); if (m !== undefined && Math.random() < .8) return this.flip(+m); }
-      const known = {}; for (const k in this.seen) { if (this.c[k].done || this.c[k].open) continue; const ic = this.seen[k]; if (known[ic] !== undefined && this.sel.length === 0) { return this.flip(+known[ic]); } known[ic] = k; }
-      const hidden = this.c.map((c, i) => i).filter(i => !this.c[i].open && !this.c[i].done && this.seen[i] === undefined); const pool = hidden.length ? hidden : this.c.map((c, i) => i).filter(i => !this.c[i].open && !this.c[i].done); if (pool.length) this.flip(pool[Math.floor(rnd(0, pool.length))]); },
+    geo(i) { const cols = 6, n = this.c.length, rows = Math.ceil(n / cols), s = Math.min(W * .62 / cols, H * .52 / rows / 1.05), gap = s * .1, tw = cols * s + (cols - 1) * gap, x = W * .52 - tw / 2 + (i % cols) * (s + gap), y = H * .34 + Math.floor(i / cols) * (s * 1.05 + gap); return { x, y, s, h: s * 1.05 }; },
+    flip(i) { const c = this.c[i]; if (!c || c.open || c.done || this.sel.length >= 2 || this.wait) return; c.open = 1; this.sel.push(i);
+      if (this.sel.length === 2) { this.moves++; const [a, b] = this.sel; this.wait = this.T + .9; this.pair = this.c[a].k === this.c[b].k; } },
+    tap(x, y) { if (NE.tap(x, y)) return;
+      const b = this.btns.find(b => x > b.x && x < b.x + b.w && y > b.y && y < b.y + b.h); if (b) { if (b.k !== this.tema) { this.tema = b.k; this.deal(); } return; }
+      this.c.forEach((c, i) => { const g = this.geo(i); if (x > g.x && x < g.x + g.s && y > g.y && y < g.y + g.h) this.flip(i); }); },
     frame(t, dt) {
-      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50);
+      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50), [, , rk, np] = this.cfg(), foto = this.tema === 'natal';
       if (this.wait && T > this.wait) { const [a, b] = this.sel; if (this.pair) { this.c[a].done = this.c[b].done = 1; const g = this.geo(b); burst(this.sp, g.x + g.s / 2, g.y + g.h / 2, 24, ['#ffd36b', '#fff', '#7fe3ff'], 240); } else { this.c[a].open = this.c[b].open = 0; } this.sel = []; this.wait = 0;
-        if (this.c.every(c => c.done)) { this.win = T; if (REC.qualifies('memoria', this.moves, true)) NE.start('memoria', 'memoria', this.moves, true, this.moves + ' jogadas'); burst(this.sp, W / 2, H * .55, 120, ['#ffd36b', '#ff8fb1', '#7fe3ff', '#fff', '#c58bff'], 420); } }
-      if (this.win && T - this.win > 3.5 && !NE.on) this.deal();
+        if (this.c.every(c => c.done)) { this.win = T; burst(this.sp, W / 2, H * .55, 120, ['#ffd36b', '#ff8fb1', '#7fe3ff', '#fff', '#c58bff'], 420); if (REC.qualifies(rk, this.moves, true)) NE.start('memoria', rk, this.moves, true, this.moves + ' jogadas'); } }
+      if (this.win && T - this.win > 4 && !NE.on) this.deal();
       this.c.forEach((c, i) => {
         const g = this.geo(i); c.f += ((c.open || c.done ? 1 : 0) - c.f) * Math.min(1, dt * 10);
         const sc = Math.abs(Math.cos(c.f * Math.PI)), front = c.f > .5, cx = g.x + g.s / 2;
         ctx.save(); ctx.translate(cx, 0); ctx.scale(Math.max(.02, sc), 1); ctx.translate(-cx, 0);
-        if (front) { ctx.fillStyle = c.done ? '#fff7e0' : '#fdf6ea'; rr2(g.x, g.y, g.s, g.h, g.s * .1); ctx.fill(); if (c.done) { ctx.strokeStyle = '#ffd36b'; ctx.lineWidth = 3; ctx.stroke(); } T2(c.ic, cx, g.y + g.h / 2, g.s * .5, '#000', 400, 'center', 'sans-serif'); }
-        else { const bg = ctx.createLinearGradient(g.x, g.y, g.x + g.s, g.y + g.h); bg.addColorStop(0, '#b0186a'); bg.addColorStop(1, '#5b1a8a'); ctx.fillStyle = bg; rr2(g.x, g.y, g.s, g.h, g.s * .1); ctx.fill(); ctx.strokeStyle = 'rgba(255,211,107,.6)'; ctx.lineWidth = 2; rr2(g.x + g.s * .08, g.y + g.s * .08, g.s * .84, g.h - g.s * .16, g.s * .07); ctx.stroke(); T2('✦', cx, g.y + g.h / 2, g.s * .3, '#ffd36b', 400, 'center'); }
+        if (front) {
+          ctx.fillStyle = '#fdf8ee'; rr2(g.x, g.y, g.s, g.h, g.s * .1); ctx.fill();
+          const ix = g.x + g.s * .05, iy = g.y + g.s * .05, iw = g.s * .9, ih = g.h - g.s * .1; ctx.save(); rr2(ix, iy, iw, ih, g.s * .07); ctx.clip();
+          const im = this.im[c.k]; if (im && im.complete && im.naturalWidth) { const k2 = (foto ? Math.max : Math.min)(iw / im.naturalWidth, ih / im.naturalHeight), w = im.naturalWidth * k2, h = im.naturalHeight * k2; ctx.drawImage(im, cx - w / 2, iy + ih / 2 - h / 2, w, h); }
+          ctx.restore(); if (c.done) { ctx.strokeStyle = '#ffd36b'; ctx.lineWidth = 3; rr2(g.x, g.y, g.s, g.h, g.s * .1); ctx.stroke(); }
+        } else {
+          const bg = ctx.createLinearGradient(g.x, g.y, g.x + g.s, g.y + g.h); bg.addColorStop(0, foto ? '#b0186a' : '#8a1c22'); bg.addColorStop(1, foto ? '#5b1a8a' : '#3a0d12'); ctx.fillStyle = bg; rr2(g.x, g.y, g.s, g.h, g.s * .1); ctx.fill();
+          ctx.strokeStyle = 'rgba(255,211,107,.65)'; ctx.lineWidth = 2; rr2(g.x + g.s * .07, g.y + g.s * .07, g.s * .86, g.h - g.s * .14, g.s * .06); ctx.stroke();
+          T2(foto ? '🎄' : 'MPGO', cx, g.y + g.h / 2, g.s * (foto ? .3 : .16), '#ffd36b', 700, 'center', foto ? 'sans-serif' : undefined);
+        }
         ctx.restore();
       });
       stepBurst(this.sp, dt, 380);
-      scoreBox(this.win ? `concluído em ${this.moves} jogadas! ✓` : `jogadas ${this.moves} · pares ${this.c.filter(c => c.done).length / 2} de 6`, W / 2, H * .31, u);
-      T2(REC.line('memoria').replace('🏆', '🏆 menos jogadas:'), W / 2, H * .865, u * .9, '#ffe3a0', 600, 'center', 'sans-serif');
+      scoreBox(this.win ? `concluído em ${this.moves} jogadas! ✓` : `jogadas ${this.moves} · pares ${this.c.filter(c => c.done).length / 2} de ${np}`, W / 2, H * .25, u);
+      T2(REC.line(rk).replace('🏆', '🏆 menos jogadas:'), W / 2, H * .292, u * .78, '#ffe3a0', 600, 'center', 'sans-serif');
+      // escolha do tema (cada tema tem o seu recorde)
+      this.btns = []; const bw = u * 8.5, bh = u * 2.6; MEM_TEMAS.forEach(([k, lab], j) => { const b = { k, x: W * .04, y: H * .42 + j * (bh + u * .8), w: bw, h: bh }, on = this.tema === k;
+        ctx.fillStyle = on ? '#ffd36b' : 'rgba(255,255,255,.1)'; rr2(b.x, b.y, b.w, b.h, bh / 2); ctx.fill(); if (!on) { ctx.strokeStyle = 'rgba(255,211,107,.4)'; ctx.lineWidth = 1.2; ctx.stroke(); }
+        T2(lab, b.x + b.w / 2, b.y + b.h / 2 + 1, u * 1, on ? '#1a1206' : '#fff', 700, 'center', 'sans-serif'); this.btns.push(b); });
+      T2('tema', W * .04 + bw / 2, H * .42 - u * 1.4, u * .8, 'rgba(255,255,255,.55)', 700, 'center', 'sans-serif');
       NE.frame('memoria');
     }
   };
@@ -4984,15 +5001,15 @@ function H_medalha() {
     setup() { this.best = this.best || 0; this.sn = Array.from({ length: 60 }, () => ({ x: rnd(0, W), y: rnd(0, H), v: rnd(20, 50), s: rnd(1, 2.4) })); this.reset(); },
     reset() { this.y = H * .45; this.vy = 0; this.obs = []; this.dist = 0; this.score = 0; this.dead = 0; this.started = 0; },
     enter() { this.t0 = null; this.lastTap = -99; this.reset(); },
-    jump() { if (this.dead) { if ((this.T || 0) - this.dead > .8) this.reset(); return; } this.started = 1; this.vy = -H * .72; },
+    jump() { if (this.dead) { if ((this.T || 0) - this.dead > .8) this.reset(); return; } this.started = 1; this.vy = -H * .66; },
     tap() { this.lastTap = this.T || 0; this.jump(); },
     frame(t, dt) {
-      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50), rx = W * .26, gapH = H * .3, ow = Math.min(W * .08, H * .12), sp = W * .32;
+      const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50), rx = W * .26, lvl = Math.min(1, this.score / 30), gapH = H * (.36 - .08 * lvl), ow = Math.min(W * .08, H * .12), sp = W * (.2 + .17 * lvl);
       const auto = T - this.lastTap > 4;
       if (auto && !this.dead) { this.started = 1; const o = this.obs.find(o => o.x + ow > rx - 20); const target = o ? o.gy + gapH * .62 : H * .5; if (this.y > target && this.vy > -H * .1) this.jump(); }
       if (this.started && !this.dead) {
-        this.vy += H * 1.9 * dt; this.y += this.vy * dt; this.dist += sp * dt;
-        if (!this.obs.length || this.obs[this.obs.length - 1].x < W - W * .42) this.obs.push({ x: W + ow, gy: rnd(H * .2, H * .78 - gapH), pass: 0 });
+        this.vy += H * 1.7 * dt; this.y += this.vy * dt; this.dist += sp * dt;
+        if (!this.obs.length || this.obs[this.obs.length - 1].x < W - W * (.5 - .1 * lvl)) this.obs.push({ x: W + ow, gy: rnd(H * .2, H * .78 - gapH), pass: 0 });
         this.obs.forEach(o => { o.x -= sp * dt; if (!o.pass && o.x + ow < rx) { o.pass = 1; this.score++; this.best = Math.max(this.best, this.score); } });
         this.obs = this.obs.filter(o => o.x > -ow * 2);
         const hit = this.obs.some(o => rx + 26 * Math.min(W, H) / 560 > o.x && rx - 22 * Math.min(W, H) / 560 < o.x + ow && (this.y - 12 < o.gy || this.y + 12 > o.gy + gapH));
@@ -5190,15 +5207,15 @@ function H_medalha() {
   rena.reset = function () { this.y = H * .5; this.vy = 0; this.obs = []; this.score = 0; this.dead = 0; this.started = 0; this.scroll = this.scroll || 0; };
   rena.tap = function (x, y) { if (NE.tap(x, y)) return; this.lastTap = this.T || 0; this.jump(); };
   rena.leave = function () { if (NE.on && NE.scene === 'rena') NE.finish(); };
-  rena.jump = function () { if (this.dead) { if ((this.T || 0) - this.dead > .8) this.reset(); return; } this.started = 1; this.vy = -H * .62; };
+  rena.jump = function () { if (this.dead) { if ((this.T || 0) - this.dead > .8) this.reset(); return; } this.started = 1; this.vy = -H * .58; };
   rena.frame = function (t, dt) {
     const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50), s = Math.min(W, H) / 430;
-    const top = H * .2, ground = H * .88, gapH = H * .3, ow = Math.min(W * .085, H * .13), sp = W * .3, rx = W * .27;
+    const lvl = Math.min(1, this.score / 30), top = H * .2, ground = H * .88, gapH = H * (.36 - .08 * lvl), ow = Math.min(W * .085, H * .13), sp = W * (.19 + .16 * lvl), rx = W * .27;
     const auto = T - this.lastTap > 4, moving = this.started && !this.dead;
     if (false) { this.started = 1; const o = this.obs.find(o => o.x + ow > rx - 30 * s); const target = o ? o.gy + gapH * .6 : (top + ground) / 2; if (this.y > target && this.vy > -H * .1) this.jump(); }
     if (moving) {
-      this.vy += H * 1.7 * dt; this.y += this.vy * dt; this.scroll += sp * dt;
-      if (!this.obs.length || this.obs[this.obs.length - 1].x < W - W * .4) this.obs.push({ x: W + ow, gy: rnd(top + H * .06, ground - gapH - H * .06), pass: 0 });
+      this.vy += H * 1.55 * dt; this.y += this.vy * dt; this.scroll += sp * dt;
+      if (!this.obs.length || this.obs[this.obs.length - 1].x < W - W * (.5 - .1 * lvl)) this.obs.push({ x: W + ow, gy: rnd(top + H * .06, ground - gapH - H * .06), pass: 0 });
       this.obs.forEach(o => { o.x -= sp * dt; if (!o.pass && o.x + ow < rx) { o.pass = 1; this.score++; this.best = Math.max(this.best, this.score); } });
       this.obs = this.obs.filter(o => o.x > -ow * 2);
       const hw = 24 * s, hh = 12 * s;
@@ -5501,11 +5518,38 @@ function H_medalha() {
   const DF_STREET = [{ k: 'lua', x: 51, y: 10, r: 9 }, { k: 'fumaca', x: 27, y: 15, r: 5 }, { k: 'janela', x: 11, y: 43, r: 4 }, { k: 'porta', x: 17, y: 52, r: 5 }, { k: 'luzes', x: 79, y: 31, r: 9 }, { k: 'guirlanda', x: 79.5, y: 49.5, r: 4 }, { k: 'poste', x: 46, y: 36, r: 6 }, { k: 'carro', x: 56, y: 61, r: 6 }, { k: 'cachecol', x: 36, y: 58, r: 4 }, { k: 'correio', x: 95.5, y: 51, r: 4 }, { k: 'placa', x: 6, y: 49, r: 5 }];
   const DF_SCENES = [{ nome: 'Casa nevada', draw: (g, w, h, f) => dfScene(g, w, h, f), dif: () => DF_ALL }, { nome: 'Escritório do núcleo', draw: dfOffice, dif: () => DF_OFFICE }, { nome: 'Sala de Natal', draw: dfLiving, dif: () => DF_LIVING }, { nome: 'Rua iluminada', draw: dfStreet, dif: () => DF_STREET }];
   window.__DF = DF_SCENES;
+  /* fotos reais (Pixabay): as 7 diferenças são geradas na hora, diferentes a cada partida */
+  const DF_FOTOS = ["df558985", "df7656027", "df550323", "df7664171", "df2999722", "df1088143", "df2975570", "df1051884", "df1909796", "df10558575", "df791110", "df5992277", "df2634633", "df856486", "df321034", "df5705046"].map(c => { const im = new Image(); im.src = 'ft/' + c + '.webp'; return im; });
+  const dfGerar = (src, w, h) => {
+    const base = document.createElement('canvas'); base.width = w; base.height = h; const bg = base.getContext('2d'); bg.drawImage(src, 0, 0, w, h);
+    const N = 40, M = 30, sm2 = document.createElement('canvas'); sm2.width = N; sm2.height = M; const sg = sm2.getContext('2d'); sg.drawImage(base, 0, 0, N, M); const px = sg.getImageData(0, 0, N, M).data, L = (x, y) => { const i = (y * N + x) * 4; return px[i] * .3 + px[i + 1] * .59 + px[i + 2] * .11; };
+    const cand = []; for (let y = 3; y < M - 3; y++) for (let x = 3; x < N - 3; x++) { let v = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) v += Math.abs(L(x + dx, y + dy) - L(x, y)); cand.push({ x, y, v: v + Math.random() * 60 }); }
+    cand.sort((a, b) => b.v - a.v); const pts = [], R = 5.2;
+    for (const c of cand) { const X = (c.x + .5) / N * 100, Y = (c.y + .5) / M * 75; if (pts.every(p => Math.hypot(p.x - X, p.y - Y) > R * 2.6)) pts.push({ x: X, y: Y, r: R }); if (pts.length === 7) break; }
+    const alt = document.createElement('canvas'); alt.width = w; alt.height = h; const ag = alt.getContext('2d'); ag.drawImage(base, 0, 0);
+    const tipos = ['cor', 'espelho', 'some', 'gira', 'clone', 'luz', 'cinza'].sort(() => Math.random() - .5);
+    pts.forEach((p, i) => {
+      const cx = p.x / 100 * w, cy = p.y / 75 * h, r = p.r / 100 * w, S = Math.ceil(r * 2), pc = document.createElement('canvas'); pc.width = pc.height = S; const g = pc.getContext('2d'), tp = tipos[i % tipos.length];
+      g.save();
+      if (tp === 'cor') { g.filter = 'hue-rotate(' + (120 + Math.random() * 120 | 0) + 'deg) saturate(1.6)'; g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
+      else if (tp === 'espelho') { g.translate(S, 0); g.scale(-1, 1); g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
+      else if (tp === 'gira') { g.translate(S / 2, S / 2); g.rotate(Math.PI); g.translate(-S / 2, -S / 2); g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
+      else if (tp === 'some') { g.filter = 'blur(' + Math.round(r * .45) + 'px)'; g.drawImage(base, cx - r * 2, cy - r * 2, S * 2, S * 2, -S / 2, -S / 2, S * 2, S * 2); }
+      else if (tp === 'clone') { let ox, oy, k = 0; do { ox = r + Math.random() * (w - 2 * r); oy = r + Math.random() * (h - 2 * r); k++; } while (Math.hypot(ox - cx, oy - cy) < r * 3 && k < 30); g.drawImage(base, ox - r, oy - r, S, S, 0, 0, S, S); }
+      else if (tp === 'luz') { g.filter = 'brightness(1.7) contrast(1.2)'; g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
+      else { g.filter = 'grayscale(1) contrast(1.1)'; g.drawImage(base, cx - r, cy - r, S, S, 0, 0, S, S); }
+      g.restore();
+      g.globalCompositeOperation = 'destination-in'; const rg = g.createRadialGradient(S / 2, S / 2, r * .55, S / 2, S / 2, r); rg.addColorStop(0, '#000'); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = rg; g.fillRect(0, 0, S, S);
+      ag.drawImage(pc, cx - r, cy - r);
+    });
+    return { imgs: [base, alt], d: pts };
+  };
   const difs = {
     id: 'difs', name: 'jogo · sete diferenças', el: $('[data-scene=difs]'),
     setup() { this.sp = []; this.newGame(); },
-    newGame() { let k; do { k = Math.floor(rnd(0, DF_SCENES.length)); } while (k === this.sc && DF_SCENES.length > 1); this.sc = k; this.d = DF_SCENES[k].dif().slice().sort(() => Math.random() - .5).slice(0, 7).map(d => ({ ...d, f: 0 })); this.t0g = null; this.done = 0; this.miss = []; this.dimg = null; },
-    render() { const { w, h } = this.geo(), mk = flags => { const c = document.createElement('canvas'); c.width = Math.round(w); c.height = Math.round(h); DF_SCENES[this.sc || 0].draw(c.getContext('2d'), c.width, c.height, flags); return c; };
+    newGame() { const fotos = DF_FOTOS.filter(im => im.complete && im.naturalWidth); this.foto = null; if (fotos.length) { let f; do { f = fotos[Math.floor(rnd(0, fotos.length))]; } while (f === this.lastFoto && fotos.length > 1); this.foto = this.lastFoto = f; }
+      let k; do { k = Math.floor(rnd(0, DF_SCENES.length)); } while (k === this.sc && DF_SCENES.length > 1); this.sc = k; this.d = DF_SCENES[k].dif().slice().sort(() => Math.random() - .5).slice(0, 7).map(d => ({ ...d, f: 0 })); this.t0g = null; this.done = 0; this.miss = []; this.dimg = null; },
+    render() { const { w, h } = this.geo(); if (this.foto) { const G = dfGerar(this.foto, Math.round(w), Math.round(h)); this.dimg = G.imgs; this.d = G.d.map(d => ({ ...d, f: 0 })); this.cvW = w; return; } const mk = flags => { const c = document.createElement('canvas'); c.width = Math.round(w); c.height = Math.round(h); DF_SCENES[this.sc || 0].draw(c.getContext('2d'), c.width, c.height, flags); return c; };
       const fl = {}; this.d.forEach(d => fl[d.k] = 1); this.dimg = [mk({}), mk(fl)]; this.cvW = w; },
     enter() { this.t0 = null; if (!NE.on) { this.newGame(); this.dimg = null; } },
     leave() { if (NE.on && NE.scene === 'difs') NE.finish(); },
@@ -5526,7 +5570,7 @@ function H_medalha() {
       if (this.t0g !== null && !this.done && T - this.t0g > 240) { this.newGame(); this.render(); }
       [0, 1].forEach(k => { const x = x0 + k * (w + gap); ctx.save(); rr2(x, y0, w, h, 12); ctx.clip(); ctx.drawImage(this.dimg[k], x, y0, w, h); ctx.restore(); ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 2; rr2(x, y0, w, h, 12); ctx.stroke();
         this.d.forEach(d => { if (!d.f) return; ctx.strokeStyle = '#3dffa8'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x + d.x / 100 * w, y0 + d.y / 75 * h, (d.r + 1) / 100 * w, 0, TAU); ctx.stroke(); }); });
-      T2('cena: ' + DF_SCENES[this.sc || 0].nome + '  ·  original', x0, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); T2('alterada', x0 + w + gap, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
+      T2((this.foto ? 'foto' : 'cena: ' + DF_SCENES[this.sc || 0].nome) + '  ·  original', x0, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); T2('alterada', x0 + w + gap, y0 + h + u * 1.4, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
       this.miss = this.miss.filter(m => T - m.t < .6); this.miss.forEach(m => { ctx.globalAlpha = 1 - (T - m.t) / .6; T2('✗', m.x, m.y, u * 2, '#ff4d6d', 700, 'center'); }); ctx.globalAlpha = 1;
       stepBurst(this.sp, dt, 380);
       const el = this.t0g === null ? 0 : (this.done || T) - this.t0g;
@@ -7749,24 +7793,39 @@ function H_medalha() {
   
 /* ---------- forca natalina (boneco de neve derrete a cada erro) ---------- */
   const FO_W = [
-    ['PRESENTE', 'o que se troca no Natal'], ['RENA', 'puxa o trenó'], ['PANETONE', 'tem frutas cristalizadas'], ['RABANADA', 'pão frito com açúcar e canela'], ['GUIRLANDA', 'enfeite redondo da porta'],
-    ['ESTRELA', 'vai no topo da árvore'], ['TRENÓ', 'o veículo do Noel'], ['PRESÉPIO', 'cena do nascimento'], ['CEIA', 'jantar da noite de Natal'], ['CHAMINÉ', 'por onde o Noel entra'],
-    ['AMIGO SECRETO', 'brincadeira de troca de presentes'], ['PAPAI NOEL', 'o bom velhinho'], ['BOLA DE NATAL', 'enfeite pendurado na árvore'], ['PISCA-PISCA', 'luzes que acendem e apagam'], ['BONECO DE NEVE', 'tem nariz de cenoura'],
-    ['CASTANHA', 'fruto seco da ceia'], ['NOZES', 'precisa de quebra-nozes'], ['CHOCOTONE', 'o primo com chocolate'], ['RÉVEILLON', 'a festa da virada'], ['FOGOS', 'iluminam o céu à meia-noite'],
-    ['DUENDE', 'ajudante na fábrica de brinquedos'], ['EMBRULHO', 'papel em volta do presente'], ['GORRO', 'vermelho com pompom'], ['ESPUMANTE', 'brinde da virada'], ['FAROFA', 'acompanha o peru'],
-    ['MEIA', 'pendurada na lareira'], ['SINO', 'faz blém blém'], ['ANJO', 'enfeite com asas'], ['CARTÃO', 'mensagem de boas festas'], ['LAÇO', 'fecha o presente'],
-    ['ÁRVORE DE NATAL', 'pinheiro enfeitado'], ['BOAS FESTAS', 'votos de fim de ano'], ['ANO NOVO', 'começa em 1º de janeiro'], ['LENTILHA', 'dizem que traz sorte na virada'], ['UVA PASSA', 'divide opiniões na ceia'],
-    ['PERU', 'prato principal tradicional'], ['VELA', 'chama acesa na mesa'], ['NEVE', 'flocos brancos e gelados'], ['BISCOITO', 'de gengibre, em formato de boneco'], ['MANJEDOURA', 'berço do presépio']
+    ['PRESENTE', 'o que se troca no Natal', 'Natal'], ['RENA', 'puxa o trenó', 'Natal'], ['PANETONE', 'tem frutas cristalizadas', 'Natal'], ['RABANADA', 'pão frito com açúcar e canela', 'Natal'], ['GUIRLANDA', 'enfeite redondo da porta', 'Natal'],
+    ['ESTRELA', 'vai no topo da árvore', 'Natal'], ['TRENÓ', 'o veículo do Noel', 'Natal'], ['PRESÉPIO', 'cena do nascimento', 'Natal'], ['CEIA', 'jantar da noite de Natal', 'Natal'], ['CHAMINÉ', 'por onde o Noel entra', 'Natal'],
+    ['AMIGO SECRETO', 'brincadeira de troca de presentes', 'Natal'], ['PAPAI NOEL', 'o bom velhinho', 'Natal'], ['BOLA DE NATAL', 'enfeite pendurado na árvore', 'Natal'], ['PISCA-PISCA', 'luzes que acendem e apagam', 'Natal'], ['BONECO DE NEVE', 'tem nariz de cenoura', 'Natal'],
+    ['CASTANHA', 'fruto seco da ceia', 'Natal'], ['NOZES', 'precisa de quebra-nozes', 'Natal'], ['CHOCOTONE', 'o primo com chocolate', 'Natal'], ['RÉVEILLON', 'a festa da virada', 'Natal'], ['FOGOS', 'iluminam o céu à meia-noite', 'Natal'],
+    ['DUENDE', 'ajudante na fábrica de brinquedos', 'Natal'], ['EMBRULHO', 'papel em volta do presente', 'Natal'], ['GORRO', 'vermelho com pompom', 'Natal'], ['ESPUMANTE', 'brinde da virada', 'Natal'], ['FAROFA', 'acompanha o peru', 'Natal'],
+    ['MEIA', 'pendurada na lareira', 'Natal'], ['SINO', 'faz blém blém', 'Natal'], ['ANJO', 'enfeite com asas', 'Natal'], ['CARTÃO', 'mensagem de boas festas', 'Natal'], ['LAÇO', 'fecha o presente', 'Natal'],
+    ['ÁRVORE DE NATAL', 'pinheiro enfeitado', 'Natal'], ['BOAS FESTAS', 'votos de fim de ano', 'Natal'], ['ANO NOVO', 'começa em 1º de janeiro', 'Natal'], ['LENTILHA', 'dizem que traz sorte na virada', 'Natal'], ['UVA PASSA', 'divide opiniões na ceia', 'Natal'],
+    ['PERU', 'prato principal tradicional', 'Natal'], ['VELA', 'chama acesa na mesa', 'Natal'], ['NEVE', 'flocos brancos e gelados', 'Natal'], ['BISCOITO', 'de gengibre, em formato de boneco', 'Natal'], ['MANJEDOURA', 'berço do presépio', 'Natal'],
+    ['SENHA', 'protege a sua conta', 'Segurança digital'], ['PHISHING', 'e-mail falso que "pesca" seus dados', 'Segurança digital'], ['ANTIVÍRUS', 'programa que caça pragas', 'Segurança digital'], ['FIREWALL', 'muro de proteção da rede', 'Segurança digital'],
+    ['BACKUP', 'cópia de segurança dos arquivos', 'Segurança digital'], ['CRIPTOGRAFIA', 'embaralha os dados para ninguém ler', 'Segurança digital'], ['RANSOMWARE', 'sequestra arquivos e pede resgate', 'Segurança digital'], ['VAZAMENTO', 'quando dados ficam expostos', 'Segurança digital'],
+    ['DUAS ETAPAS', 'verificação extra no login', 'Segurança digital'], ['PERFIL FALSO', 'golpista se passando por outra pessoa', 'Segurança digital'], ['BOLETO FALSO', 'golpe que troca o código de barras', 'Segurança digital'], ['CLONAGEM', 'golpe comum no WhatsApp', 'Segurança digital'],
+    ['BIOMETRIA', 'digital ou rosto para entrar', 'Segurança digital'], ['LINK SUSPEITO', 'melhor não clicar', 'Segurança digital'], ['ENGENHARIA SOCIAL', 'manipula pessoas, não máquinas', 'Segurança digital'], ['DEEPFAKE', 'vídeo falso feito com IA', 'Segurança digital'], ['MALWARE', 'nome geral de programa malicioso', 'Segurança digital'],
+    ['PROMOTOR', 'membro do Ministério Público', 'Direito'], ['DENÚNCIA', 'peça que dá início à ação penal', 'Direito'], ['INQUÉRITO', 'investigação policial', 'Direito'], ['MANDADO', 'ordem escrita do juiz', 'Direito'], ['BUSCA E APREENSÃO', 'medida para recolher provas', 'Direito'],
+    ['DELAÇÃO PREMIADA', 'colaboração em troca de benefício', 'Direito'], ['HABEAS CORPUS', 'protege a liberdade de locomoção', 'Direito'], ['PRISÃO PREVENTIVA', 'prisão antes da condenação', 'Direito'], ['AUDIÊNCIA', 'sessão diante do juiz', 'Direito'], ['SENTENÇA', 'decisão que julga o processo', 'Direito'],
+    ['FLAGRANTE', 'pego no ato', 'Direito'], ['TESTEMUNHA', 'conta o que viu', 'Direito'], ['PERÍCIA', 'exame técnico de um especialista', 'Direito'], ['CADEIA DE CUSTÓDIA', 'registro do caminho da prova', 'Direito'], ['LAVAGEM DE DINHEIRO', 'esconder a origem ilícita do dinheiro', 'Direito'],
+    ['ORGANIZAÇÃO CRIMINOSA', 'alvo frequente do GAECO', 'Direito'], ['TRIBUNAL DO JÚRI', 'julga crimes dolosos contra a vida', 'Direito'], ['RECURSO', 'pedido para rever a decisão', 'Direito'], ['PROVA DIGITAL', 'vem de celulares e computadores', 'Direito'],
+    ['PEQUI', 'cuidado com os espinhos', 'Goiás'], ['PAMONHA', 'feita de milho verde', 'Goiás'], ['EMPADÃO GOIANO', 'torta típica com guariroba', 'Goiás'], ['PIRENÓPOLIS', 'cidade das Cavalhadas', 'Goiás'], ['CHAPADA DOS VEADEIROS', 'cachoeiras e cristais no norte goiano', 'Goiás'],
+    ['CALDAS NOVAS', 'águas termais', 'Goiás'], ['CERRADO', 'o bioma de Goiás', 'Goiás'], ['IPÊ', 'árvore que floresce na seca', 'Goiás'], ['RIO ARAGUAIA', 'praias de areia branca na temporada', 'Goiás'], ['CORA CORALINA', 'poetisa da Cidade de Goiás', 'Goiás'],
+    ['GALINHADA', 'arroz com frango e açafrão', 'Goiás'], ['GUARIROBA', 'palmito amargo da culinária goiana', 'Goiás'], ['CAVALHADAS', 'encenação de mouros e cristãos', 'Goiás'], ['PRAÇA CÍVICA', 'coração de Goiânia', 'Goiás'], ['ROMARIA', 'peregrinação de Trindade', 'Goiás'],
+    ['SMARTPHONE', 'celular inteligente', 'Tecnologia'], ['NUVEM', 'onde ficam seus arquivos on-line', 'Tecnologia'], ['INTELIGÊNCIA ARTIFICIAL', 'computador que aprende', 'Tecnologia'], ['ALGORITMO', 'passo a passo que o computador segue', 'Tecnologia'],
+    ['NAVEGADOR', 'programa para abrir sites', 'Tecnologia'], ['ROTEADOR', 'espalha o Wi-Fi', 'Tecnologia'], ['BLUETOOTH', 'conexão sem fio de perto', 'Tecnologia'], ['PEN DRIVE', 'memória que vai no bolso', 'Tecnologia'], ['APLICATIVO', 'programa do celular', 'Tecnologia'],
+    ['ATUALIZAÇÃO', 'aquela que você sempre adia', 'Tecnologia'], ['SERVIDOR', 'computador que atende outros', 'Tecnologia'], ['PLANILHA', 'linhas, colunas e fórmulas', 'Tecnologia'], ['WEBCAM', 'câmera da videochamada', 'Tecnologia'], ['TECLADO', 'QWERTY', 'Tecnologia']
   ];
   const FO_N = c => c.normalize('NFD').replace(/[̀-ͯ]/g, '');
   const FO_ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
   const forca = {
-    id: 'forca', name: 'jogo · forca natalina', el: $('[data-scene=forca]'),
+    id: 'forca', name: 'jogo · forca', el: $('[data-scene=forca]'),
     MAX: 6,
     setup() { this.sp = []; this.keys = []; this.recent = []; this.ok = 0; this.newGame(); },
     newGame() {
-      let k; do { k = Math.floor(rnd(0, FO_W.length)); } while (this.recent.includes(k)); this.recent.push(k); if (this.recent.length > 15) this.recent.shift();
-      [this.w, this.dica] = FO_W[k]; this.base = FO_N(this.w); this.got = new Set(); this.bad = new Set(); this.done = 0; this.lost = 0; this.hot = null;
+      const lv = this.ok < 2 ? 0 : this.ok < 5 ? 1 : 2, len = w => FO_N(w[0]).replace(/[^A-Z]/g, '').length, ok = w => lv === 0 ? len(w) <= 9 : lv === 1 ? len(w) >= 6 : len(w) >= 9;
+      let k, tries = 0; do { k = Math.floor(rnd(0, FO_W.length)); tries++; } while ((this.recent.includes(k) || FO_W[k][2] === this.tema || !ok(FO_W[k])) && tries < 300); this.recent.push(k); if (this.recent.length > 40) this.recent.shift();
+      [this.w, this.dica, this.tema] = FO_W[k]; this.MAX = lv === 2 ? 5 : 6; this.base = FO_N(this.w); this.got = new Set(); this.bad = new Set(); this.done = 0; this.lost = 0; this.hot = null;
     },
     enter() { this.t0 = null; this.newGame(); },
     letters() { return new Set([...this.base].filter(c => /[A-Z]/.test(c))); },
@@ -7810,6 +7869,7 @@ function H_medalha() {
       chars.forEach((c, i) => { const x = x0 + i * cs, b = FO_N(c), show = !/[A-Z]/.test(b) || this.got.has(b) || this.lost;
         if (c === ' ') return; if (/[A-Z]/.test(b)) { ctx.fillStyle = this.done ? '#3dffa8' : 'rgba(255,255,255,.5)'; ctx.fillRect(x + cs * .1, wy + cs * .42, cs * .8, 3); }
         if (show) T2(c, x + cs / 2, wy, cs * .72, this.lost && !this.got.has(b) && /[A-Z]/.test(b) ? '#ff8fb1' : this.done ? '#ffe3a0' : '#fff', 700, 'center'); });
+      T2('tema: ' + this.tema, W * .62, wy - cs * 1.35, u * 1.2, '#7fe3ff', 700, 'center', 'sans-serif');
       T2('dica: ' + this.dica, W * .62, wy + cs * 1.25, u * 1.1, '#ffe3a0', 600, 'center', 'sans-serif');
       if (this.bad.size) T2('erradas: ' + [...this.bad].join(' '), W * .62, wy + cs * 1.25 + u * 1.9, u * .95, '#ff8fb1', 700, 'center');
       // teclado
@@ -7819,7 +7879,7 @@ function H_medalha() {
           ctx.fillStyle = hot ? '#ffd36b' : g ? 'rgba(61,255,168,.3)' : b ? 'rgba(255,77,109,.18)' : 'rgba(255,255,255,.12)'; rr2(x, y, ks, ks, ks * .18); ctx.fill();
           T2(k, x + ks / 2, y + ks / 2 + 1, ks * .46, hot ? '#0a1020' : b ? 'rgba(255,255,255,.3)' : '#fff', 700, 'center'); this.keys.push({ k, x, y, w: ks, h: ks }); x += ks + gap; }); });
       stepBurst(this.sp, dt, 380);
-      scoreBox(this.done ? `acertou! ${this.ok > 1 ? this.ok + ' palavras seguidas · ' : ''}toque para a próxima` : this.lost ? `o boneco derreteu! era "${this.w}" · toque para outra` : 'descubra a palavra natalina antes que o boneco de neve derreta', W / 2, H * .25, u, this.lost ? '#ff8fb1' : '#ffd36b');
+      scoreBox(this.done ? `acertou! ${this.ok > 1 ? this.ok + ' palavras seguidas · ' : ''}toque para a próxima` : this.lost ? `o boneco derreteu! era "${this.w}" · toque para outra` : 'descubra a palavra antes que o boneco de neve derreta', W / 2, H * .25, u, this.lost ? '#ff8fb1' : '#ffd36b');
       if (this.ok > 1 && !this.done && !this.lost) T2(`🔥 ${this.ok} seguidas`, W - u * 2, H * .3, u * .95, '#ffe3a0', 700, 'right', 'sans-serif');
     }
   };
@@ -7827,7 +7887,7 @@ function H_medalha() {
 
 
   /* ---------- hall da fama: recordistas dos jogos ---------- */
-  const HF_G = [['memoria', 'Memória natalina', 'j'], ['memlogos', 'Memória do núcleo', 'j'], ['puzzle', 'Quebra-cabeça da logo', 'j'], ['palavras', 'Caça-palavras', 't'], ['difs', 'Sete diferenças', 't'], ['labirinto', 'Labirinto do Noel', 't'],
+  const HF_G = [['memoria', 'Jogo da memória', 'j'], ['puzzle', 'Quebra-cabeça da logo', 'j'], ['palavras', 'Caça-palavras', 't'], ['difs', 'Sete diferenças', 't'], ['labirinto', 'Labirinto do Noel', 't'],
     ['corrida', 'Corrida das renas', 't'], ['caca', 'Caça aos vírus', 'v'], ['rena', 'Rena saltadora', 'p'], ['empilha', 'Empilhe os presentes', 'pr'], ['cofre', 'Quebre o cofre', 'tt'], ['campo', 'Campo de vírus', 't'],
     ['naval', 'Batalha naval', 'ti'], ['quiz', 'Quiz de segurança', 'a'], ['quizpp', 'Quiz de processo penal', 'a'], ['tempo5', 'Pare em 5 s', 'ms'], ['tempo10', 'Pare em 10 s', 'ms'], ['tempo5d', 'Pare em 5 s (visor apaga)', 'ms'], ['tempo10d', 'Pare em 10 s (visor apaga)', 'ms'], ['d2048', '2048', 'pt'], ['basquete', 'Basquete de dedo', 'bp'], ['tubos', 'Organize as cores', 'lv'], ['corte', 'Corte perfeito', 'pct'], ['intruso', 'O intruso', 'it'], ['explode', 'Aperte para não explodir', 'pt'], ['penalti', 'Pênaltis', 'gol'], ['peso', 'Qual é o mais…?', 'ps']];
   const hfFmt = (k, s) => k === 'ms2' ? s + ' ms' : k === 'pt' ? s + ' pts' : k === 'bp' ? s + ' pts' : k === 'cs' ? s + ' cestas' : k === 'lv' ? 'nível ' + s : k === 'ps' ? s + ' seguidos' : k === 'it' ? s + ' achados' : k === 'pct' ? (s / 10).toFixed(1).replace('.', ',') + '%' : k === 'gol' ? s + ' gols' : hfFmt0(k, s);
@@ -8121,7 +8181,7 @@ function H_medalha() {
   const CV_L = [['reflexo', 'Teste de reflexo', 'Quanto tempo você leva para tocar o alvo?'], ['d2048', '2048', 'Junte os números até chegar a 2048.'], ['basquete', 'Basquete de dedo', 'Arremesse e acerte a cesta.'], ['tubos', 'Organize as cores', 'Separe as cores com poucos movimentos.'], ['corte', 'Corte perfeito', 'Corte bem no meio.'], ['intruso', 'O intruso', 'Ache o único símbolo diferente.'], ['explode', 'Aperte para não explodir', 'Pare antes de estourar!'], ['peso', 'Qual é o mais…?', 'Mais pesado, mais longe, mais caro… acerte em sequência.'], ['penalti', 'Pênaltis', 'Bata pênaltis até o goleiro pegar.'], ['tempo', 'Pare no tempo exato', 'Você consegue parar o cronômetro em 5,00 s?'], ['empilha', 'Empilhe os presentes', 'Até onde a sua torre aguenta?'], ['cofre', 'Quebre o cofre', 'A senha tem 4 números diferentes. Você descobre?'],
     ['forca', 'Forca natalina', 'Salve o boneco de neve antes que ele derreta.'], ['quizpp', 'Quiz de processo penal', 'Oito perguntas atualizadas. Quantas você acerta?'],
     ['quiz', 'Quiz de segurança', 'Você cairia nesses golpes?'], ['campo', 'Campo de vírus', 'Limpe o campo sem abrir nenhum vírus.'], ['naval', 'Batalha naval', 'Afunde a frota inimiga com menos tiros.'],
-    ['difs', 'Sete diferenças', 'Olho de perito: ache as 7 diferenças.'], ['memlogos', 'Memória do núcleo', 'Encontre os pares das logos do MPGO.'],
+    ['difs', 'Sete diferenças', 'Olho de perito: ache as 7 diferenças.'], 
     ['palavras', 'Caça-palavras', 'Ache as palavras escondidas.'], ['puzzle', 'Quebra-cabeça', 'Monte a logo no menor número de jogadas.'], ['labirinto', 'Labirinto do Noel', 'Leve o Noel até a chaminé.']];
   const convite = {
     id: 'convite', name: 'convite para jogar', el: $('[data-scene=convite]'),
