@@ -2006,7 +2006,8 @@ const CONFIG = {
   cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'escava', 'rena', 'logocodigo', 'enquete', 'recordes', 'desafio', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'espiral', 'estrela', 'virada', 'convite'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   vitrine: true,                 // jogos saem da rotação automática (ficam na central e nos convites)
-  convidarACada: 4,              // a cada N slides da vitrine entra um convite para jogar
+  convidarACada: 0,              // convite para jogar (desligado: são muitos jogos)
+  desafioACada: 9,               // a cada N slides entra o "quem tira ele(a) daí?" (um recorde diferente por vez)
   neveGeral: false,              // neve caindo por cima de todos os slides (desligada para ficar mais leve)
   abertura: false,               // abertura completa em 3D no início de cada volta
   fps3d: 30,
@@ -10260,14 +10261,16 @@ function H_medalha() {
   }
   // verificação do tempo independente da animação: não "trava" a troca
   const isGameS = s => !!(s && window.__GAME_IDS && window.__GAME_IDS.has(s.id));
-  const inVitrine = s => s && !isGameS(s) && s.id !== 'convite' && !(s.skip && s.skip());
-  let vitIdx = 0, sinceInv = 0;
+  const inVitrine = s => s && !isGameS(s) && s.id !== 'convite' && s.id !== 'desafio' && !(s.skip && s.skip());
+  let vitIdx = 0, sinceInv = 0, sinceDes = 0;
   function vitNext(dir) { let i = vitIdx; for (let k = 0; k < order.length; k++) { i = (i + dir + order.length) % order.length; if (inVitrine(order[i])) return i; } return (idx + dir + order.length) % order.length; }
   function step(dir) {
     if (!CONFIG.vitrine) return go(idx + dir);
     const conv = order.findIndex(s => s.id === 'convite');
     if (dir > 0 && conv >= 0 && CONFIG.convidarACada && sinceInv >= CONFIG.convidarACada && inVitrine(cur)) { sinceInv = 0; return go(conv); }
-    sinceInv++; go(vitNext(dir));
+    const des = order.findIndex(s => s.id === 'desafio');
+    if (dir > 0 && des >= 0 && CONFIG.desafioACada && sinceDes >= CONFIG.desafioACada && inVitrine(cur) && !(order[des].skip && order[des].skip())) { sinceDes = 0; return go(des); }
+    sinceInv++; sinceDes++; go(vitNext(dir));
   }
   window.__step = step;
   window.__home = () => { if (busy) return; sinceInv = 0; go(vitNext(1)); };
@@ -10707,7 +10710,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795580752';
+window.__VER = '1795580885';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
