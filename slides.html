@@ -10652,7 +10652,7 @@ function H_medalha() {
   }, [], k === 'cubo' || k === 'neon' ? '#000000' : '#0b0b14');
   const labir = AR('bomba', 'labirinto explosivo', {
     lay() { const aw = Math.min(W * .54, H * .74 * BB_C / BB_R), c = aw / BB_C; return { c, ax: Math.max(W / 2 - aw / 2, UU() * 24), ay: H * .19, aw, ah: c * BB_R }; },
-    reset() { const cf = LS.get('cgBombaCfg', null) || {}; this.cfg = { m: cf.m || 0, d: 1, h: cf.h || 0 }; this.menu = 1; this.score = 0; this.dead = 0; this.started = 0; this.lv = 0; this.ptr = {}; this.pops = []; this.begin(); },
+    reset() { const cf = LS.get('cgBombaCfg', null) || {}; this.cfg = { m: cf.m || 0, d: 1, h: cf.h || 0 }; this.menu = 1; this.score = 0; this.dead = 0; this.started = 0; this.lv = 0; this.ptr = {}; this.anc = {}; this.pops = []; this.begin(); },
     begin() { const D = BB_DIF[this.cfg.d]; this.lives = D.lives; this.lv = 0; this.score = 0; this.pw = { n: 1, r: 2, sp: 3.2 }; this.level(); },
     level() { this.lv++; const M = BB_MAPS[this.cfg.m], D = BB_DIF[this.cfg.d], g = Array.from({ length: BB_R }, (_, y) => Array.from({ length: BB_C }, (_, x) => M.lay(x, y) && !(x < 2 && y < 2) ? 2 : 0)), r = Math.random;
       for (let y = 0; y < BB_R; y++) for (let x = 0; x < BB_C; x++) if (!g[y][x] && !(x < 3 && y < 3) && r() < D.den + Math.min(.12, this.lv * .02)) g[y][x] = 1;
@@ -10671,19 +10671,25 @@ function H_medalha() {
         if (t === 1) { this.g[y][x] = 0; this.score += 10; const h = this.hid[x + ',' + y]; if (h) this.items.push({ x, y, k: h, t: this.T + .5 }); break; } const ob = this.bombs.find(q => q.x === x && q.y === y); if (ob) { ob.t = this.T - 10; } } });
       cells.forEach(([x, y]) => this.fl.push({ x, y, t: this.T })); this.shake = .25; },
     hurt() { const p = this.p; if (p.inv > 0 || p.dead) return; this.lives--; p.dead = this.T; boom(this, 0, 0, [], 0); if (this.lives <= 0) setTimeout(() => { if (!this.dead) this.over(); }, 1200); },
-    drag(type, x, y, id) { if (this.dead || NE.on || this.menu) return; this.started = 1; const nw = MT.upd(this, type, x, y, id); if (nw && x > W * .7 && y > H * .35) this.drop(); },
+    drag(type, x, y, id) { if (this.dead || NE.on || this.menu) return; this.started = 1; const nw = MT.upd(this, type, x, y, id), A = this.anc || (this.anc = {}); if (type === 'up') { delete A[id == null ? 0 : id]; return; } if (nw && x > W * .7 && y > H * .35) this.drop(); if (nw && x < W * .3 && y > H * .35) A[id == null ? 0 : id] = { x: Math.max(W * .06, Math.min(W * .24, x)), y: Math.max(H * .45, Math.min(H * .85, y)) }; },
+    // jogador: anda reto; se bater no canto, escorrega para o corredor mais próximo (a até meio bloco)
+    pstep(p, d, dist) { const [dx, dy] = TK_DIR[d], k = dx ? 'y' : 'x', m = dx ? 'x' : 'y', c0 = Math.floor(p[k]) + .5;
+      if (this.free(p.x + dx * dist, p.y + dy * dist, p)) { p.x += dx * dist; p.y += dy * dist; p.d = d; p.tr += dist; const off = c0 - p[k]; if (Math.abs(off) > .01) { const nv = p[k] + Math.sign(off) * Math.min(Math.abs(off), dist * .6), q = { x: p.x, y: p.y }; q[k] = nv; if (this.free(q.x, q.y, p)) p[k] = nv; } if (p.on && (Math.floor(p.x) !== p.on.x || Math.floor(p.y) !== p.on.y)) p.on = null; return true; }
+      const ahead = Math.floor(p[m]) + (dx || dy), lanes = [c0, c0 + (p[k] >= c0 ? 1 : -1)].filter(c => Math.abs(c - p[k]) < .62);
+      for (const c of lanes) { const cx = k === 'x' ? Math.floor(c) : ahead, cy = k === 'y' ? Math.floor(c) : ahead; if (this.blocked(cx + .5, cy + .5, p)) continue; const nv = p[k] + Math.sign(c - p[k]) * Math.min(Math.abs(c - p[k]), dist * 1.4), q = { x: p.x, y: p.y }; q[k] = nv; if (Math.abs(c - p[k]) < .005 || !this.free(q.x, q.y, p)) continue; p[k] = nv; p.d = d; return true; }
+      p.d = d; return false; },
     mLay() { const u = UU(), rows = [[BB_MAPS, 'm', H * .34], [BB_HER, 'h', H * .58]], out = []; rows.forEach(([L, key, y]) => { const w = Math.min(W * .17, u * 15), gp = u * 1.2, tot = L.length * w + (L.length - 1) * gp; L.forEach((o, i) => out.push({ key, i, o, x: W / 2 - tot / 2 + i * (w + gp), y, w, h: key === 'm' ? u * 6.2 : u * 4 })); }); return { chips: out, go: { x: W / 2 - u * 9, y: H * .74, w: u * 18, h: u * 4.2 } }; },
     tap(x, y) { if (NE.tap(x, y)) return; if (this.dead) return this.again();
       if (this.menu) { const M = this.mLay(), hit = r => x > r.x && x < r.x + r.w && y > r.y && y < r.y + r.h; const c = M.chips.find(hit); if (c) { this.cfg[c.key] = c.i; LS.set('cgBombaCfg', this.cfg); this.begin(); return; } if (hit(M.go)) { this.menu = 0; this.started = 1; this.begin(); } return; }
       this.started = 1; },
     frame(t, dt) {
       const T = this.T = T3(this, t), u = UU(), L = this.lay(), c = L.c, { ax, ay, aw, ah } = L, run = this.started && !this.dead, p = this.p; dt = Math.min(dt, .05);
-      const sx = W * .1, sy = H * .66, sr = W * .065, fx0 = W * .9, fy0 = H * .66, fr0 = W * .055; let sv = null, fb = 0;
-      Object.values(this.ptr || {}).forEach(q => { if (q.x < W * .3 && q.y > H * .35) { let vx = (q.x - sx) / sr, vy = (q.y - sy) / sr; const m = Math.hypot(vx, vy); if (m > 1) { vx /= m; vy /= m; } sv = { x: vx, y: vy }; } if (q.x > W * .7 && q.y > H * .35) fb = 1; });
+      const sx = W * .1, sy = H * .66, sr = W * .065, fx0 = W * .9, fy0 = H * .66, fr0 = W * .055; let sv = null, fb = 0, jx = sx, jy = sy;
+      Object.entries(this.ptr || {}).forEach(([id, q]) => { const an = (this.anc || {})[id]; if (an || (q.x < W * .3 && q.y > H * .35)) { if (an) { jx = an.x; jy = an.y; } let vx = (q.x - jx) / (sr * .7), vy = (q.y - jy) / (sr * .7); const m = Math.hypot(vx, vy); if (m > 1) { vx /= m; vy /= m; } sv = { x: vx, y: vy }; } if (q.x > W * .7 && q.y > H * .35) fb = 1; });
       if (run) {
         this.msgT -= dt; p.inv = Math.max(0, p.inv - dt);
         if (p.dead) { if (T - p.dead > 1.3 && this.lives > 0) { p.dead = 0; p.x = .5; p.y = .5; p.inv = 2.5; p.on = null; } }
-        else if (sv && Math.hypot(sv.x, sv.y) > .3) this.move(p, Math.abs(sv.x) > Math.abs(sv.y) ? (sv.x > 0 ? 1 : 3) : (sv.y > 0 ? 2 : 0), this.pw.sp * dt);
+        else if (sv && Math.hypot(sv.x, sv.y) > .28) { const hz = sv.x > 0 ? 1 : 3, vt = sv.y > 0 ? 2 : 0, ax2 = Math.abs(sv.x), ay2 = Math.abs(sv.y), pri = ax2 > ay2 ? hz : vt, sec = ax2 > ay2 ? vt : hz, dd = this.pw.sp * dt; if (!this.pstep(p, pri, dd) && Math.min(ax2, ay2) > .18) this.pstep(p, sec, dd); }
         this.bombs.slice().forEach(b => { if (T - b.t > 2.3) this.blast(b); });
         this.fl = this.fl.filter(f => T - f.t < .55);
         const inFire = (x, y) => this.fl.some(f => f.x === Math.floor(x) && f.y === Math.floor(y));
@@ -10722,9 +10728,9 @@ function H_medalha() {
       ctx.strokeStyle = '#c9a54a'; ctx.lineWidth = 4; rr2(ax - 3, ay - 3, aw + 6, ah + 6, 6); ctx.stroke();
       { const px = ax + aw + u * 1.6; T2(`FASE ${this.lv}`, px, ay + u * 1.2, u * 1.1, '#ffd36b', 800, 'left', 'sans-serif'); T2(`💣 ${this.pw.n}   🔥 ${this.pw.r}`, px, ay + u * 3.2, u * 1, '#fff', 700, 'left', 'sans-serif'); T2(`👾 ${this.en.length}`, px, ay + u * 5, u * 1, this.en.length ? '#ff8f9a' : '#3dff8a', 700, 'left', 'sans-serif'); hearts(this.lives, px + u * 1, ay + u * 8, u, Math.max(3, this.lives)); arPill(`${this.score} pts`, px + u * 3, ay - u * 1.5, u * .9); }
       // controles
-      ctx.save(); ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.arc(sx, sy, sr * 1.15, 0, TAU); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 2; ctx.stroke();
-      ['▲', '▶', '▼', '◀'].forEach((a, i) => { const [dx, dy] = TK_DIR[i]; T2(a, sx + dx * sr * .72, sy + dy * sr * .72, sr * .25, 'rgba(255,255,255,.45)', 800, 'center', 'sans-serif'); });
-      const kx = sx + (sv ? sv.x : 0) * sr * .6, ky = sy + (sv ? sv.y : 0) * sr * .6, kg = ctx.createRadialGradient(kx - sr * .1, ky - sr * .1, 2, kx, ky, sr * .42); kg.addColorStop(0, sv ? '#eaffff' : '#ffffff'); kg.addColorStop(1, sv ? '#3ee8ff' : '#8a93a8'); ctx.fillStyle = kg; ctx.beginPath(); ctx.arc(kx, ky, sr * .42, 0, TAU); ctx.fill(); ctx.restore();
+      ctx.save(); ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.arc(jx, jy, sr * 1.15, 0, TAU); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.3)'; ctx.lineWidth = 2; ctx.stroke();
+      ['▲', '▶', '▼', '◀'].forEach((a, i) => { const [dx, dy] = TK_DIR[i]; T2(a, jx + dx * sr * .72, jy + dy * sr * .72, sr * .25, 'rgba(255,255,255,.45)', 800, 'center', 'sans-serif'); });
+      const kx = jx + (sv ? sv.x : 0) * sr * .6, ky = jy + (sv ? sv.y : 0) * sr * .6, kg = ctx.createRadialGradient(kx - sr * .1, ky - sr * .1, 2, kx, ky, sr * .42); kg.addColorStop(0, sv ? '#eaffff' : '#ffffff'); kg.addColorStop(1, sv ? '#3ee8ff' : '#8a93a8'); ctx.fillStyle = kg; ctx.beginPath(); ctx.arc(kx, ky, sr * .42, 0, TAU); ctx.fill(); ctx.restore();
       NESB.btn({ x: fx0, y: fy0, r: fr0 }, fb, 'BOMBA', 'A');
       popDraw(this, dt, u * 1.2); stepBurst(this.sp, dt, 200);
       if (run && this.msgT > 0) arPill(`FASE ${this.lv}: elimine os bugs e ache a saída com a logo`, W / 2, H * .45, u * 1.3, '#ffd36b');
@@ -12630,7 +12636,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795729759';
+window.__VER = '1795730294';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
