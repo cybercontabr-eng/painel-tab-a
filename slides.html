@@ -642,6 +642,7 @@
   .aur-copy .title > em{color:#ffc4ec}
   /* ---- transições modernas ---- */
   .tx-fx{position:fixed;pointer-events:none;z-index:5}
+.tx-canal{top:-10vh;left:0;height:120vh;width:42vw;background:linear-gradient(90deg,transparent 0,rgba(255,211,107,.95) 2.5%,#1a1030 5%,#120a24 50%,#1a1030 95%,rgba(255,211,107,.95) 97.5%,transparent 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 0 8vmin rgba(0,0,0,.7)}.tx-canal img{height:20vh;transform:skewX(12deg);filter:drop-shadow(0 0 2vmin rgba(255,211,107,.55))}
   .tx-ring{border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 3vmin 1vmin rgba(160,200,255,.55),inset 0 0 3vmin rgba(255,170,230,.45)}
   .tx-edge{top:-10vh;height:120vh;width:16vw;background:linear-gradient(90deg,transparent,rgba(120,200,255,.0) 20%,rgba(200,170,255,.55) 48%,rgba(255,255,255,.95) 52%,rgba(255,160,220,.4) 60%,transparent);mix-blend-mode:screen}
   .tx-line{left:50%;top:0;height:100%;width:3px;background:#fff;box-shadow:0 0 2vmin 1vmin rgba(170,200,255,.7)}
@@ -1769,6 +1770,10 @@ html,body,#stage{background:#18050c}
     <section class="scene" data-scene="recordes"><div class="cam">
       <div class="game-top copy"><div class="label">● Hall da fama</div><h1 class="title"><span>Nossos</span><em>recordistas</em></h1></div>
     </div></section>
+    <section class="scene" data-scene="clima"><div class="cam">
+      <div class="game-top copy"><div class="label">● Agora</div><h1 class="title"><span>Clima em</span><em>Goiânia</em></h1></div>
+    </div></section>
+    <section class="scene" data-scene="novorec"><div class="cam"></div></section>
     <section class="scene" data-scene="desafio"><div class="cam">
       <div class="game-top copy"><div class="label">● Desafio</div><h1 class="title"><span>Quem tira</span><em>ele(a) daí?</em></h1></div>
     </div></section>
@@ -2039,6 +2044,7 @@ html,body,#stage{background:#18050c}
 const CONFIG = {
   segundosPorCena: 18,            // tempo padrão de cada cena
   duracaoEspecial: {              // cenas que precisam de mais tempo (segundos)
+      clima: 15, novorec: 9,
     avisos: 18, galeria: 14, arvore: 22, pixel: 18, estrelas: 22, amados: 11, obrigado: 16, escava: 22, milhao: 18, terminal: 36, decripta: 18,
     chuva: 10, hash: 12, circuito: 22, atena: 22, sged: 24, tor: 20, consulta: 24, inst: 12, medi: 12, ops: 22, coordenadora: 11, contagem: 24,
     retro: 42, phishing: 16, senha: 16, golpe: 16, particulas: 10, lareira2: 20, soc: 22, virada: 24, floco: 10, estrela: 10, desejos: 22, warp: 10,
@@ -2049,7 +2055,7 @@ const CONFIG = {
     convite: 12, logoluzes: 10, logoholo: 10, logocodigo: 10, espiral: 10, guirlanda: 10, binaria: 10, desafio: 12
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'rena', 'logocodigo', 'enquete', 'recordes', 'desafio', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'espiral', 'estrela', 'virada', 'convite'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'clima', 'novorec', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'rena', 'logocodigo', 'enquete', 'recordes', 'desafio', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'espiral', 'estrela', 'virada', 'convite'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   vitrine: true,                 // jogos saem da rotação automática (ficam na central e nos convites)
   convidarACada: 0,              // convite para jogar (desligado: são muitos jogos)
@@ -2057,7 +2063,7 @@ const CONFIG = {
   neveGeral: false,              // neve caindo por cima de todos os slides (desligada para ficar mais leve)
   abertura: false,               // abertura completa em 3D no início de cada volta
   fps3d: 30,
-  transicoes: ['fade'],            // leve: só esmaecer (as outras continuam disponíveis: 'cartao', 'diagonal', 'iris', 'deslize', 'abrir', 'subir')
+  transicoes: ['canal'],            // leve: só esmaecer (as outras continuam disponíveis: 'cartao', 'diagonal', 'iris', 'deslize', 'abrir', 'subir')
   frasesTerminal: [
     'compilando boas festas...',
     '0 ameaças detectadas na ceia',
@@ -4894,7 +4900,7 @@ function H_medalha() {
   const NE = {
     on: false, keys: [],
     start(scene, game, score, asc, label) { Object.assign(this, { on: true, scene, game, score, asc, label, name: '', last: performance.now(), flash: 0 }); },
-    finish() { if (!this.on) return; this.on = false; const n = this.name.trim().slice(0, 12); if (!n) { this.saved = null; return; } this.rank = REC.add(this.game, n, this.score, this.asc); this.saved = { n, rank: this.rank, at: performance.now(), game: this.game }; },
+    finish() { if (!this.on) return; this.on = false; const n = this.name.trim().slice(0, 12); if (!n) { this.saved = null; return; } const prev = (REC.list(this.game) || []).filter(e => !/^visitante$/i.test(e.n || ''))[0]; this.rank = REC.add(this.game, n, this.score, this.asc); try { if (this.rank === 1 && !/^visitante$/i.test(n) && !(prev && String(prev.n).trim().toUpperCase() === n.toUpperCase() && prev.s === this.score)) localStorage.setItem('cgNovoRec', JSON.stringify({ g: this.game, n, s: this.score, p: prev && String(prev.n).trim().toUpperCase() !== n.toUpperCase() ? { n: prev.n, s: prev.s } : null, t: Date.now(), shown: 0 })); } catch (e) {} this.saved = { n, rank: this.rank, at: performance.now(), game: this.game }; },
     discard() { this.on = false; this.saved = null; },
     press(k) { this.last = performance.now(); this.flash = k; this.flashT = performance.now();
       if (k === '⌫') this.name = this.name.slice(0, -1); else if (k === 'DESCARTAR') this.discard(); else if (k === 'OK') this.finish(); else if (k === 'ESPAÇO') { if (this.name && !this.name.endsWith(' ')) this.name += ' '; } else if (this.name.length < 12) this.name += k; },
@@ -11428,8 +11434,92 @@ function H_medalha() {
   const stK = s => { const [y, m, d] = String(s).split('-').map(Number); return y * 10000 + m * 100 + d; };
   window.__stat = (k, id) => { try { const D = LS.get('cgStats', null) || { d: {} }, h = hojeKey(), o = D.d[h] = D.d[h] || { t: 0, g: {} }; if (k === 't') o.t++; else if (k === 'g') o.g[id] = (o.g[id] || 0) + 1; const ks = Object.keys(D.d); if (ks.length > 45) ks.sort((a, b) => stK(a) - stK(b)).slice(0, ks.length - 45).forEach(x => delete D.d[x]); LS.set('cgStats', D); } catch (e) {} };
 
-  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, intruso, explode, penalti, peso, zoom, revela, realia, linha, onde, detalhe, preco, pacote, corre, lado, heli, pula, pinball, tetris, cobra, carro, tanque, tijolos, invasores, asteroides, comecome, atravessa, estilingue, boliche, arco, tower, airhockey, plataforma, moto, patos, duelo, estrada, missil, cores, disputa, labir, mina, andaime, arvore, estrelas, amados, escava, milhao, obrigado, forca, recordes, desafio, enquete, hoje, aniver, convite, avisos, galeria];
-  const CANVAS = new Set(['avisos', 'galeria', 'logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'arvore', 'estrelas', 'amados', 'escava', 'milhao', 'obrigado', 'forca', 'recordes', 'desafio', 'enquete', 'hoje', 'aniver', 'convite']);
+  /* ---------- clima em Goiânia (Open-Meteo, grátis e sem chave) ---------- */
+  const CL_URL = 'https://api.open-meteo.com/v1/forecast?latitude=-16.6869&longitude=-49.2648&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,is_day&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=America%2FSao_Paulo&forecast_days=6';
+  const CL_DESC = c => c === 0 ? 'Céu limpo' : c === 1 ? 'Predomínio de sol' : c === 2 ? 'Parcialmente nublado' : c === 3 ? 'Nublado' : c === 45 || c === 48 ? 'Neblina' : c >= 51 && c <= 57 ? 'Garoa' : c === 61 ? 'Chuva fraca' : c === 63 ? 'Chuva moderada' : c === 65 ? 'Chuva forte' : c >= 66 && c <= 67 ? 'Chuva congelante' : c >= 71 && c <= 77 ? 'Neve' : c === 80 ? 'Pancadas fracas' : c === 81 ? 'Pancadas de chuva' : c === 82 ? 'Pancadas fortes' : c >= 95 ? 'Trovoadas' : '—';
+  const CL_KIND = c => c <= 1 ? 'sol' : c === 2 ? 'parcial' : c <= 48 ? 'nuvem' : c >= 95 ? 'raio' : c >= 71 && c <= 77 ? 'neve' : 'chuva';
+  const CL = {
+    key: 'cgClima', data: null, last: 0,
+    load() { try { const o = JSON.parse(localStorage.getItem(this.key) || 'null'); if (o && o.d) { this.data = o.d; this.last = o.t; } } catch (e) {} },
+    fetch() { if (Date.now() - this.last < 25 * 60 * 1000 && this.data) return; if (this.busy) return; this.busy = 1;
+      fetch(CL_URL, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(d => { if (d && d.current && d.daily) { this.data = d; this.last = Date.now(); try { localStorage.setItem(this.key, JSON.stringify({ t: this.last, d })); } catch (e) {} } }).catch(() => {}).finally(() => { this.busy = 0; }); },
+    ok() { return this.data && Date.now() - this.last < 30 * 3600 * 1000; }
+  };
+  window.__CL = CL; CL.load(); setTimeout(() => CL.fetch(), 4000); setInterval(() => CL.fetch(), 30 * 60 * 1000);
+  // ícones desenhados (sol, nuvem, chuva, raio)
+  const clIcon = (kind, x, y, s, T, night) => {
+    const sun = (sx, sy, r) => { if (night) { ctx.fillStyle = '#f4f0d8'; ctx.beginPath(); ctx.arc(sx, sy, r * .8, 0, TAU); ctx.fill(); ctx.fillStyle = '#1a2a4a'; ctx.beginPath(); ctx.arc(sx + r * .35, sy - r * .25, r * .7, 0, TAU); ctx.fill(); return; }
+      ctx.save(); ctx.translate(sx, sy); ctx.rotate(T * .3); ctx.strokeStyle = '#ffcf3a'; ctx.lineWidth = r * .14; ctx.lineCap = 'round'; for (let i = 0; i < 10; i++) { ctx.rotate(TAU / 10); ctx.beginPath(); ctx.moveTo(r * 1.2, 0); ctx.lineTo(r * 1.55, 0); ctx.stroke(); } ctx.restore();
+      const g = ctx.createRadialGradient(sx - r * .3, sy - r * .3, r * .1, sx, sy, r); g.addColorStop(0, '#fff6b0'); g.addColorStop(1, '#ffb020'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(sx, sy, r, 0, TAU); ctx.fill(); };
+    const cloud = (cx, cy, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx - r * .9, cy + r * .2, r * .62, 0, TAU); ctx.arc(cx - r * .1, cy - r * .25, r * .85, 0, TAU); ctx.arc(cx + r * .85, cy + r * .1, r * .7, 0, TAU); ctx.fill(); ctx.fillRect(cx - r * .9, cy + r * .1, r * 1.75, r * .72); };
+    const dx = Math.sin(T * .6) * s * .05;
+    if (kind === 'sol') sun(x, y, s * .55);
+    else if (kind === 'parcial') { sun(x - s * .28, y - s * .22, s * .4); cloud(x + s * .12 + dx, y + s * .15, s * .38, '#eef2fb'); }
+    else { const dark = kind === 'raio' || kind === 'chuva'; cloud(x + dx * .5, y - s * .1, s * .45, dark ? '#9aa4ba' : '#e4e8f2'); if (kind === 'nuvem') cloud(x - s * .3 - dx, y + s * .12, s * .28, '#cfd6e6');
+      if (kind === 'chuva' || kind === 'raio') { ctx.strokeStyle = '#5ab0ff'; ctx.lineWidth = s * .05; ctx.lineCap = 'round'; for (let i = 0; i < 5; i++) { const k = ((T * 1.6 + i * .37) % 1), rx = x - s * .4 + i * s * .2; ctx.globalAlpha = 1 - k; ctx.beginPath(); ctx.moveTo(rx - k * s * .08, y + s * .35 + k * s * .5); ctx.lineTo(rx - k * s * .08 - s * .05, y + s * .35 + k * s * .5 + s * .13); ctx.stroke(); } ctx.globalAlpha = 1; }
+      if (kind === 'raio' && (T % 2.2) < .15) { ctx.fillStyle = '#ffe040'; ctx.beginPath(); ctx.moveTo(x, y + s * .25); ctx.lineTo(x - s * .12, y + s * .55); ctx.lineTo(x + s * .02, y + s * .55); ctx.lineTo(x - s * .08, y + s * .85); ctx.lineTo(x + s * .16, y + s * .45); ctx.lineTo(x + s * .02, y + s * .45); ctx.closePath(); ctx.fill(); }
+      if (kind === 'neve') { ctx.fillStyle = '#fff'; for (let i = 0; i < 5; i++) { const k = ((T * .6 + i * .33) % 1); ctx.globalAlpha = 1 - k; ctx.beginPath(); ctx.arc(x - s * .4 + i * s * .2, y + s * .4 + k * s * .5, s * .04, 0, TAU); ctx.fill(); } ctx.globalAlpha = 1; } } };
+  const clima = {
+    id: 'clima', name: 'clima em Goiânia', el: $('[data-scene=clima]'),
+    setup() {}, enter() { this.t0 = null; CL.fetch(); },
+    skip() { return !CL.ok(); },
+    frame(t, dt) {
+      const T = T3(this, t), u = UU(), D = CL.data; if (!D) { T2('Buscando a previsão do tempo…', W / 2, H * .5, u * 1.6, '#fff', 600, 'center', 'sans-serif'); return; }
+      const c = D.current, code = c.weather_code, night = !c.is_day, kind = CL_KIND(code);
+      const bg = ctx.createLinearGradient(0, 0, 0, H); const pal = night ? ['#0a1030', '#1a2a5a'] : kind === 'sol' ? ['#2a7ae0', '#8ac8ff'] : kind === 'parcial' ? ['#3a7ac8', '#9ac0e8'] : kind === 'nuvem' ? ['#5a6a88', '#a8b4c8'] : ['#2a3450', '#5a6a8a']; bg.addColorStop(0, pal[0]); bg.addColorStop(1, pal[1]); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      const k0 = Math.min(1, T / .6); ctx.globalAlpha = k0;
+      // agora
+      clIcon(kind, W * .2, H * .44, H * .3, T, night);
+      T2(Math.round(c.temperature_2m) + '°', W * .36, H * .43, H * .2, '#ffffff', 300, 'left', 'sans-serif');
+      T2(CL_DESC(code), W * .37, H * .56, u * 2, '#fff', 700, 'left', 'sans-serif');
+      const l1 = `sensação ${Math.round(c.apparent_temperature)}° · umidade ${Math.round(c.relative_humidity_2m)}%`, l2 = `vento ${Math.round(c.wind_speed_10m)} km/h`; T2(l1, W * .37, H * .615, njFit(l1, W * .25, u * 1.05), 'rgba(255,255,255,.85)', 600, 'left', 'sans-serif'); T2(l2, W * .37, H * .655, u * 1.05, 'rgba(255,255,255,.85)', 600, 'left', 'sans-serif');
+      const d = D.daily, mx = Math.round(d.temperature_2m_max[0]), mn = Math.round(d.temperature_2m_min[0]), pr = d.precipitation_probability_max[0] || 0;
+      const l3 = `hoje: máx ${mx}° · mín ${mn}° · chuva ${pr}%`; T2(l3, W * .37, H * .7, njFit(l3, W * .25, u * 1.05), '#ffe9a8', 700, 'left', 'sans-serif');
+      const dica = pr >= 60 ? '☂️ Leve o guarda-chuva hoje' : mx >= 33 ? '💧 Dia quente: beba bastante água' : c.relative_humidity_2m < 30 ? '🌵 Ar seco: hidrate-se e use colírio' : mn <= 14 ? '🧥 Manhã fria: leve um casaco' : '😎 Bom dia para trabalhar com energia';
+      const dsz = njFit(dica, W * .25, u * 1.1); ctx.fillStyle = 'rgba(0,0,0,.22)'; rr2(W * .37 - u, H * .735, u * 2 + (ctx.font = `700 ${dsz}px sans-serif`, ctx.measureText(dica).width), u * 2.4, u * 1.2); ctx.fill(); T2(dica, W * .37, H * .735 + u * 1.2, dsz, '#fff', 700, 'left', 'sans-serif');
+      // próximas horas (curva)
+      { const hr = D.hourly, now = new Date(), i0 = Math.max(0, hr.time.findIndex(s => new Date(s) >= now) - 1), N = 12, x0 = W * .64, w = W * .32, y0 = H * .24, h = H * .16, tt = hr.temperature_2m.slice(i0, i0 + N), pp = hr.precipitation_probability.slice(i0, i0 + N), lo = Math.min(...tt) - 1, hi = Math.max(...tt) + 1;
+        ctx.fillStyle = 'rgba(0,0,0,.18)'; rr2(x0 - u, y0 - u * 2.2, w + u * 2, h + u * 5, u); ctx.fill(); T2('próximas horas', x0, y0 - u * 1, u * .95, 'rgba(255,255,255,.8)', 700, 'left', 'sans-serif');
+        pp.forEach((p, i) => { const bx = x0 + i * w / N; ctx.fillStyle = 'rgba(90,176,255,.55)'; ctx.fillRect(bx + 2, y0 + h - h * (p || 0) / 100, w / N - 4, h * (p || 0) / 100); });
+        ctx.strokeStyle = '#ffe08a'; ctx.lineWidth = 3; ctx.beginPath(); tt.forEach((v, i) => { const px = x0 + (i + .5) * w / N, py = y0 + h - (v - lo) / (hi - lo) * h; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.stroke();
+        tt.forEach((v, i) => { if (i % 3) return; const px = x0 + (i + .5) * w / N, py = y0 + h - (v - lo) / (hi - lo) * h; T2(Math.round(v) + '°', px, py - u * .9, u * .85, '#fff', 700, 'center', 'sans-serif'); T2(String(new Date(hr.time[i0 + i]).getHours()).padStart(2, '0') + 'h', px, y0 + h + u * 1.1, u * .8, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif'); }); }
+      // próximos dias
+      { const n = 5, cw = W * .32 / n, x0 = W * .64, y0 = H * .52, ch = H * .3, DN = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+        for (let i = 1; i <= n; i++) { const x = x0 + (i - 1) * cw, dt0 = new Date(d.time[i] + 'T12:00:00'), lb = i === 1 ? 'amanhã' : DN[dt0.getDay()]; ctx.fillStyle = 'rgba(0,0,0,.18)'; rr2(x + 3, y0, cw - 6, ch, u * .8); ctx.fill();
+          T2(lb, x + cw / 2, y0 + u * 1.4, u * .95, '#fff', 800, 'center', 'sans-serif'); clIcon(CL_KIND(d.weather_code[i]), x + cw / 2, y0 + ch * .38, cw * .55, T + i, 0);
+          T2(Math.round(d.temperature_2m_max[i]) + '°', x + cw / 2, y0 + ch * .68, u * 1.35, '#fff', 800, 'center', 'sans-serif'); T2(Math.round(d.temperature_2m_min[i]) + '°', x + cw / 2, y0 + ch * .8, u * 1, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif'); T2('☂ ' + (d.precipitation_probability_max[i] || 0) + '%', x + cw / 2, y0 + ch * .92, u * .85, '#9ad0ff', 700, 'center', 'sans-serif'); } }
+      const up = new Date(CL.last); T2(`Goiânia · atualizado às ${String(up.getHours()).padStart(2, '0')}:${String(up.getMinutes()).padStart(2, '0')} · Open-Meteo`, W * .64, H * .88, u * .8, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
+      ctx.globalAlpha = 1;
+    }
+  };
+
+  /* ---------- aviso de recorde batido ---------- */
+  const novorec = {
+    id: 'novorec', name: 'novo recorde!', el: $('[data-scene=novorec]'),
+    setup() { this.conf = []; },
+    rec() { try { const r = JSON.parse(localStorage.getItem('cgNovoRec') || 'null'); return r && Date.now() - r.t < 6 * 3600 * 1000 ? r : null; } catch (e) { return null; } },
+    skip() { return !this.r && !this.rec(); },
+    enter() { this.t0 = null; this.r = this.rec(); if (this.r) { this.r.shown = 1; try { localStorage.setItem('cgNovoRec', JSON.stringify(this.r)); } catch (e) {} } this.conf = Array.from({ length: 90 }, () => ({ x: Math.random() * W, y: -Math.random() * H, v: rnd(80, 200), r: rnd(0, TAU), vr: rnd(-6, 6), w: rnd(5, 11), c: ['#ffd36b', '#ff4d8b', '#7fe3ff', '#3dff8a', '#fff'][Math.floor(Math.random() * 5)] })); },
+    frame(t, dt) {
+      const T = T3(this, t), u = UU(), r = this.r; const bg = ctx.createRadialGradient(W / 2, H * .5, 10, W / 2, H * .5, W * .7); bg.addColorStop(0, '#3a1a5a'); bg.addColorStop(1, '#0a0614'); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      ctx.save(); ctx.translate(W / 2, H * .5); ctx.rotate(T * .2); ctx.fillStyle = 'rgba(255,211,107,.07)'; for (let i = 0; i < 16; i++) { ctx.rotate(TAU / 16); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(W, -W * .06); ctx.lineTo(W, W * .06); ctx.fill(); } ctx.restore();
+      this.conf.forEach(c => { c.y += c.v * dt; c.r += c.vr * dt; if (c.y > H + 20) { c.y = -20; c.x = Math.random() * W; } ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.r); ctx.fillStyle = c.c; ctx.fillRect(-c.w / 2, -c.w * .3, c.w, c.w * .6); ctx.restore(); });
+      if (!r) return;
+      const hf = (typeof HF_G !== 'undefined' && HF_G.find(g => g[0] === r.g)) || [r.g, r.g, 'pt'], ic = (typeof HF_IC !== 'undefined' && HF_IC[r.g]) || '🎮', k = Math.min(1, T / .5), pop = k < 1 ? 1 + 2.7 * Math.pow(k - 1, 3) + 1.7 * Math.pow(k - 1, 2) : 1;
+      ctx.save(); ctx.translate(W / 2, H * .5); ctx.scale(pop, pop); ctx.translate(-W / 2, -H * .5);
+      T2('🏆', W / 2, H * .3 + Math.sin(T * 3) * u * .4, H * .13, '#fff', 400, 'center', 'sans-serif');
+      T2('NOVO RECORDE!', W / 2, H * .44, H * .085, '#ffd36b', 900, 'center', 'sans-serif');
+      ctx.font = `400 ${H * .1}px ${SERIF}`; const nw = ctx.measureText(r.n).width; T2(r.n, W / 2, H * .57, Math.min(H * .1, H * .1 * W * .7 / nw), '#ffffff', 400, 'center', SERIF);
+      T2(`${ic}  ${hf[1]}  ·  ${typeof hfFmt === 'function' ? hfFmt(hf[2], r.s) : r.s}`, W / 2, H * .67, u * 1.8, '#ffe3a0', 800, 'center', 'sans-serif');
+      if (r.p) T2(`passou ${r.p.n} (${typeof hfFmt === 'function' ? hfFmt(hf[2], r.p.s) : r.p.s})`, W / 2, H * .74, u * 1.25, 'rgba(255,255,255,.75)', 700, 'center', 'sans-serif');
+      T2('Quem tira ele(a) daí? Toque e jogue!', W / 2, H * .82, u * 1.15, '#7fe3ff', 700, 'center', 'sans-serif');
+      ctx.restore();
+    },
+    tap() { if (this.r && window.__playGame) window.__playGame((typeof scnOfG === 'function' ? scnOfG(this.r.g) : this.r.g)); }
+  };
+
+  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, intruso, explode, penalti, peso, zoom, revela, realia, linha, onde, detalhe, preco, pacote, corre, lado, heli, pula, pinball, tetris, cobra, carro, tanque, tijolos, invasores, asteroides, comecome, atravessa, estilingue, boliche, arco, tower, airhockey, plataforma, moto, patos, duelo, estrada, missil, cores, disputa, labir, mina, andaime, arvore, estrelas, amados, escava, milhao, obrigado, forca, recordes, desafio, enquete, hoje, aniver, convite, avisos, galeria, clima, novorec];
+  const CANVAS = new Set(['clima', 'novorec', 'avisos', 'galeria', 'logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'arvore', 'estrelas', 'amados', 'escava', 'milhao', 'obrigado', 'forca', 'recordes', 'desafio', 'enquete', 'hoje', 'aniver', 'convite']);
   ALL.forEach(s => { s.cam = s.el.querySelector('.cam'); s.canvas = CANVAS.has(s.id); });
 
   /* ---------- jogos: botão "Iniciar jogo" e espera de até 2 min sem toque ---------- */
@@ -11706,6 +11796,10 @@ function H_medalha() {
       in: [{ clipPath: 'inset(0% 50% 0% 50%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }],
       fx: o => { [-1, 1].forEach(d => { const l = txEl('tx-line'); l.animate([{ transform: 'translateX(0)', opacity: 1 }, { transform: `translateX(${d * 50}vw)`, opacity: .6 }], o).onfinish = () => l.remove(); }); } }),
     fade: () => ({ opts: { duration: 450, easing: 'ease-out' }, out: [{ opacity: 1 }, { opacity: 0 }], in: [{ opacity: 0 }, { opacity: 1 }] }),
+    canal: () => ({ opts: { duration: 1100, easing: 'cubic-bezier(.65,0,.35,1)' },
+      out: [{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.97)', offset: .5 }, { opacity: 0, transform: 'scale(.97)' }],
+      in: [{ opacity: 0, transform: 'scale(1.03)' }, { opacity: 0, transform: 'scale(1.03)', offset: .45 }, { opacity: 1, transform: 'scale(1)' }],
+      fx: o => { const b = txEl('tx-canal'); const im = document.createElement('img'); im.src = typeof LOGO_SRC !== 'undefined' ? LOGO_SRC : 'as/dee894623e16.png'; b.appendChild(im); b.animate([{ transform: 'translateX(-60vw) skewX(-12deg)' }, { transform: 'translateX(130vw) skewX(-12deg)' }], o).onfinish = () => b.remove(); } }),
     subir: () => ({ opts: { duration: 1200, easing: 'cubic-bezier(.7,0,.2,1)' },
       out: [{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(-8%)', opacity: .25 }],
       in: [{ clipPath: 'inset(100% 0% 0% 0% round 6vmin 6vmin 0 0)', transform: 'translateY(6%)' }, { clipPath: 'inset(0% 0% 0% 0% round 0vmin 0vmin 0 0)', transform: 'translateY(0)' }] })
@@ -11759,11 +11853,12 @@ function H_medalha() {
   }
   // verificação do tempo independente da animação: não "trava" a troca
   const isGameS = s => !!(s && window.__GAME_IDS && window.__GAME_IDS.has(s.id));
-  const inVitrine = s => s && !isGameS(s) && s.id !== 'convite' && s.id !== 'desafio' && !(s.skip && s.skip());
+  const inVitrine = s => s && !isGameS(s) && s.id !== 'convite' && s.id !== 'desafio' && s.id !== 'novorec' && !(s.skip && s.skip());
   let vitIdx = 0, sinceInv = 0, sinceDes = 0;
   function vitNext(dir) { let i = vitIdx; for (let k = 0; k < order.length; k++) { i = (i + dir + order.length) % order.length; if (inVitrine(order[i])) return i; } return (idx + dir + order.length) % order.length; }
   function step(dir) {
     if (!CONFIG.vitrine) return go(idx + dir);
+    { const nr = order.findIndex(s => s.id === 'novorec'); let pend = null; try { pend = JSON.parse(localStorage.getItem('cgNovoRec') || 'null'); } catch (e) {} if (dir > 0 && nr >= 0 && pend && !pend.shown && Date.now() - pend.t < 6 * 3600 * 1000 && cur && cur.id !== 'novorec') return go(nr); }
     const conv = order.findIndex(s => s.id === 'convite');
     if (dir > 0 && conv >= 0 && CONFIG.convidarACada && sinceInv >= CONFIG.convidarACada && inVitrine(cur)) { sinceInv = 0; return go(conv); }
     const des = order.findIndex(s => s.id === 'desafio');
@@ -12222,7 +12317,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795725222';
+window.__VER = '1795725658';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
