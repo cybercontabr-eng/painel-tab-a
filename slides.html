@@ -1997,7 +1997,7 @@ html,body,#stage{background:#18050c}
 <div id="sx-zones" hidden><div id="sx-l"></div><div id="sx-c"></div><div id="sx-r"></div></div>
 <div id="sx-bar"><button id="sx-prev" type="button">◀</button><button id="sx-open" type="button">☰ MENU</button><button id="sx-next" type="button">▶</button><button id="sx-fs" type="button">⛶</button></div>
 <div id="sx-fly"></div><div id="sx-rx" hidden><span class="cta">Gostou? Toque para reagir 👉</span><button type="button" data-e="❤️">❤️</button><button type="button" data-e="👏">👏</button><button type="button" data-e="😂">😂</button><button type="button" data-e="😮">😮</button><button type="button" data-e="🎄">🎄</button><button type="button" data-e="🔥">🔥</button><span id="sx-rxn"></span></div>
-<div id="sx-menu"><div class="ph"><h3>O que você quer fazer?</h3><div id="sx-tabs"><button type="button" data-t="jogos" class="on">🎮 JOGOS</button><button type="button" data-t="inter">✍️ MURAIS</button><button type="button" data-t="slides">🖼️ SLIDES</button><button type="button" data-t="all">TODOS</button></div><input id="sx-q" type="search" placeholder="🔎 pesquisar slide ou jogo…" autocomplete="off"><button id="sx-close" type="button">✕ FECHAR</button><button class="admlink" id="sx-adml" type="button">⚙</button></div><div id="sx-count"></div><div id="sx-cats"></div><div id="sx-cloud"></div><div id="sx-grid"></div></div>
+<div id="sx-menu"><div class="ph"><h3>O que você quer fazer?</h3><div id="sx-tabs"><button type="button" data-t="jogos" class="on">🎮 JOGOS</button><button type="button" data-t="inter">✍️ MURAIS</button><button type="button" data-t="slides">🖼️ SLIDES</button><button type="button" data-t="all">TODOS</button></div><input id="sx-q" type="search" placeholder="🔎 pesquisar slide ou jogo…" autocomplete="off"><button id="sx-close" type="button">✕ FECHAR</button></div><div id="sx-count"></div><div id="sx-cats"></div><div id="sx-cloud"></div><div id="sx-grid"></div></div>
 
 <script>
 /* =====================================================================
@@ -10711,7 +10711,6 @@ function H_medalha() {
         try { const L = RB.list(); L.push({ d: 'antes de zerar', t: Date.now(), o: JSON.parse(localStorage.getItem('cgRecordes') || '{}') }); while (L.length > 11) L.shift(); localStorage.setItem(RB.key, JSON.stringify(L)); localStorage.setItem('cgRecordes', JSON.stringify({ __seed1: 1, z: Date.now() })); } catch (e) {} zeroAsk = 0; rcR(); $('#rc-zero').textContent = 'Zerar todos os recordes'; msg('Recordes zerados.'); };
       setInterval(() => { if (!A.hidden) { cloudSt(); if (!window.__adminOk()) closeAdm(); } }, 2000);
       // entradas: link no menu e toque longo no canto superior esquerdo
-      $('#sx-adml').addEventListener('click', e => { e.stopPropagation(); window.__adminOk() ? openAdm() : openPin(); });
       Z.addEventListener('pointerdown', e => { if (e.clientX < innerWidth * .22 && e.clientY < innerHeight * .14) { clearTimeout(holdT); holdT = setTimeout(() => { window.__adminOk() ? openAdm() : openPin(); }, 2500); } }, true);
       ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => Z.addEventListener(ev, () => clearTimeout(holdT)));
       window.__openAdmin = () => window.__adminOk() ? openAdm() : openPin();
@@ -10760,7 +10759,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795659963';
+window.__VER = '1795707364';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
