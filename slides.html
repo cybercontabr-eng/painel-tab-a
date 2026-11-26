@@ -10630,7 +10630,7 @@ function H_medalha() {
   }, [], k === 'cubo' || k === 'neon' ? '#000000' : '#0b0b14');
   const labir = AR('bomba', 'labirinto explosivo', {
     lay() { const aw = Math.min(W * .54, H * .74 * BB_C / BB_R), c = aw / BB_C; return { c, ax: Math.max(W / 2 - aw / 2, UU() * 24), ay: H * .19, aw, ah: c * BB_R }; },
-    reset() { const cf = LS.get('cgBombaCfg', null) || {}; this.cfg = { m: cf.m || 0, d: cf.d == null ? 1 : cf.d, h: cf.h || 0 }; this.menu = 1; this.score = 0; this.dead = 0; this.started = 0; this.lv = 0; this.ptr = {}; this.pops = []; this.begin(); },
+    reset() { const cf = LS.get('cgBombaCfg', null) || {}; this.cfg = { m: cf.m || 0, d: 1, h: cf.h || 0 }; this.menu = 1; this.score = 0; this.dead = 0; this.started = 0; this.lv = 0; this.ptr = {}; this.pops = []; this.begin(); },
     begin() { const D = BB_DIF[this.cfg.d]; this.lives = D.lives; this.lv = 0; this.score = 0; this.pw = { n: 1, r: 2, sp: 3.2 }; this.level(); },
     level() { this.lv++; const M = BB_MAPS[this.cfg.m], D = BB_DIF[this.cfg.d], g = Array.from({ length: BB_R }, (_, y) => Array.from({ length: BB_C }, (_, x) => M.lay(x, y) && !(x < 2 && y < 2) ? 2 : 0)), r = Math.random;
       for (let y = 0; y < BB_R; y++) for (let x = 0; x < BB_C; x++) if (!g[y][x] && !(x < 3 && y < 3) && r() < D.den + Math.min(.12, this.lv * .02)) g[y][x] = 1;
@@ -10650,7 +10650,7 @@ function H_medalha() {
       cells.forEach(([x, y]) => this.fl.push({ x, y, t: this.T })); this.shake = .25; },
     hurt() { const p = this.p; if (p.inv > 0 || p.dead) return; this.lives--; p.dead = this.T; boom(this, 0, 0, [], 0); if (this.lives <= 0) setTimeout(() => { if (!this.dead) this.over(); }, 1200); },
     drag(type, x, y, id) { if (this.dead || NE.on || this.menu) return; this.started = 1; const nw = MT.upd(this, type, x, y, id); if (nw && x > W * .7 && y > H * .35) this.drop(); },
-    mLay() { const u = UU(), rows = [[BB_MAPS, 'm', H * .3], [BB_DIF, 'd', H * .5], [BB_HER, 'h', H * .66]], out = []; rows.forEach(([L, key, y]) => { const w = Math.min(W * .17, u * 15), gp = u * 1.2, tot = L.length * w + (L.length - 1) * gp; L.forEach((o, i) => out.push({ key, i, o, x: W / 2 - tot / 2 + i * (w + gp), y, w, h: key === 'm' ? u * 6.2 : u * 4 })); }); return { chips: out, go: { x: W / 2 - u * 9, y: H * .78, w: u * 18, h: u * 4.2 } }; },
+    mLay() { const u = UU(), rows = [[BB_MAPS, 'm', H * .34], [BB_HER, 'h', H * .58]], out = []; rows.forEach(([L, key, y]) => { const w = Math.min(W * .17, u * 15), gp = u * 1.2, tot = L.length * w + (L.length - 1) * gp; L.forEach((o, i) => out.push({ key, i, o, x: W / 2 - tot / 2 + i * (w + gp), y, w, h: key === 'm' ? u * 6.2 : u * 4 })); }); return { chips: out, go: { x: W / 2 - u * 9, y: H * .74, w: u * 18, h: u * 4.2 } }; },
     tap(x, y) { if (NE.tap(x, y)) return; if (this.dead) return this.again();
       if (this.menu) { const M = this.mLay(), hit = r => x > r.x && x < r.x + r.w && y > r.y && y < r.y + r.h; const c = M.chips.find(hit); if (c) { this.cfg[c.key] = c.i; LS.set('cgBombaCfg', this.cfg); this.begin(); return; } if (hit(M.go)) { this.menu = 0; this.started = 1; this.begin(); } return; }
       this.started = 1; },
@@ -10707,16 +10707,16 @@ function H_medalha() {
       popDraw(this, dt, u * 1.2); stepBurst(this.sp, dt, 200);
       if (run && this.msgT > 0) arPill(`FASE ${this.lv}: elimine os bugs e ache a saída com a logo`, W / 2, H * .45, u * 1.3, '#ffd36b');
       if (this.menu && !this.dead) { ctx.fillStyle = 'rgba(8,8,20,.86)'; ctx.fillRect(0, H * .17, W, H * .76); const Mn = this.mLay();
-        [['🗺️ Mapa', H * .3], ['🎚️ Dificuldade', H * .5], ['🧍 Personagem', H * .66]].forEach(([t2, y]) => T2(t2, W / 2, y - u * 1.3, u * 1.15, '#ffd36b', 800, 'center', 'sans-serif'));
+        [['🗺️ Mapa', H * .34], ['🧍 Personagem', H * .58]].forEach(([t2, y]) => T2(t2, W / 2, y - u * 1.3, u * 1.15, '#ffd36b', 800, 'center', 'sans-serif'));
         Mn.chips.forEach(ch => { const on = this.cfg[ch.key] === ch.i; ctx.fillStyle = on ? 'rgba(255,211,107,.22)' : 'rgba(255,255,255,.06)'; rr2(ch.x, ch.y, ch.w, ch.h, u); ctx.fill(); ctx.strokeStyle = on ? '#ffd36b' : 'rgba(255,255,255,.25)'; ctx.lineWidth = on ? 3 : 1.5; ctx.stroke();
           if (ch.key === 'm') { const M = ch.o, cs = ch.h * .36, ox = ch.x + u * .8, oy = ch.y + u * .6; ctx.imageSmoothingEnabled = false; for (let yy = 0; yy < 3; yy++) for (let xx = 0; xx < 4; xx++) { ctx.fillStyle = (xx + yy) % 2 ? M.fa : M.fb; ctx.fillRect(ox + xx * cs * .6, oy + yy * cs * .6, cs * .6 + .5, cs * .6 + .5); const t3 = (xx === 1 && yy === 1) ? M.pil : (xx + yy * 2) % 3 === 0 ? M.blk : null; if (t3) PX.draw(bbTile(t3), ox + xx * cs * .6, oy + yy * cs * .6, cs * .6 / 18, 0, 0, 0, 0); } ctx.imageSmoothingEnabled = true;
             T2(M.nm, ox + cs * 2.5 + u * .6, ch.y + ch.h * .4, njFit(M.nm, ch.w - cs * 2.5 - u * 2, u * 1), '#fff', 800, 'left', 'sans-serif'); T2(M.ic, ox + cs * 2.5 + u * .6, ch.y + ch.h * .72, u * 1.2, '#fff', 400, 'left', 'sans-serif'); }
           else { if (ch.key === 'h') { ctx.imageSmoothingEnabled = false; PX.draw(agSpr('idle', ch.o.id || null), ch.x + u * 2, ch.y + ch.h * .9, ch.h / 34, 0, 0, .5, 1); ctx.imageSmoothingEnabled = true; } else T2(ch.o.ic, ch.x + u * 2, ch.y + ch.h / 2 + 1, u * 1.6, '#fff', 400, 'center', 'sans-serif');
             T2(ch.o.nm, ch.x + u * 4, ch.y + ch.h / 2, njFit(ch.o.nm, ch.w - u * 5, u * 1.05), '#fff', 800, 'left', 'sans-serif'); } });
         const g0 = Mn.go, k0 = .5 + .5 * Math.sin(T * 4); ctx.fillStyle = '#ffd36b'; rr2(g0.x, g0.y, g0.w, g0.h, g0.h / 2); ctx.fill(); ctx.strokeStyle = `rgba(255,255,255,${.4 + .5 * k0})`; ctx.lineWidth = 3; ctx.stroke(); T2('▶  JOGAR', W / 2, g0.y + g0.h / 2 + 1, g0.h * .42, '#1a1206', 900, 'center', 'sans-serif');
-        const D0 = BB_DIF[this.cfg.d]; T2(`${D0.lives} vidas · ${D0.nm.toLowerCase()} · joystick para andar, A solta a bomba`, W / 2, H * .9, u * .95, 'rgba(255,255,255,.6)', 600, 'center', 'sans-serif'); }
+        T2('3 vidas · joystick para andar, A solta a bomba · vale recorde em qualquer mapa', W / 2, H * .88, u * .95, 'rgba(255,255,255,.6)', 600, 'center', 'sans-serif'); }
       else if (!this.started) { arPill('joystick para andar · A solta a bomba · fuja da explosão!', W / 2, H * .45, u * 1.25); hand(sx, sy, T, u * 2.2); }
-      this.hud(this.dead ? this.endTxt() : this.menu ? '👆 escolha o mapa, a dificuldade e o personagem' : !this.started ? '👆 toque para começar' : this.en.length ? 'a saída abre quando não sobrar nenhum inimigo' : '✅ todos eliminados: ache a saída com a logo!');
+      this.hud(this.dead ? this.endTxt() : this.menu ? '👆 escolha o mapa e o personagem' : !this.started ? '👆 toque para começar' : this.en.length ? 'a saída abre quando não sobrar nenhum inimigo' : '✅ todos eliminados: ache a saída com a logo!');
       NE.frame('bomba');
     }
   });
@@ -12071,7 +12071,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795724618';
+window.__VER = '1795724677';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
