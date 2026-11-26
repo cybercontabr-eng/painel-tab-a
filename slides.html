@@ -8068,10 +8068,18 @@ function H_medalha() {
         const ims = this.C.map(fzImg); if (ims.some(i => !i) && performance.now() - this.w0 < 4000) { this.pt = T; njLoading(); NE.frame('realia'); return; }
         T2('Uma destas fotos foi criada por inteligência artificial.', W / 2, H * .22, u * 1.25, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif');
         T2('Toque na foto feita por IA', W / 2, H * .26, u * 1.6, '#f2c46d', 700, 'center', 'sans-serif');
-        C.forEach((c, k) => { const im = ims[k], isAI = k === this.side; ctx.fillStyle = 'rgba(0,0,0,.35)'; rr2(c.x - 4, c.y - 4, c.w + 8, c.h + 8, 18); ctx.fill(); if (im) njDraw(im, c.x, c.y, c.w, c.h, 14);
-          ctx.strokeStyle = A ? (isAI ? '#ff9f43' : '#3dffa8') : 'rgba(242,196,109,.45)'; ctx.lineWidth = A ? 4 : 1.5; rr2(c.x, c.y, c.w, c.h, 14); ctx.stroke();
-          if (A) { const lb = isAI ? '🤖 IA' : '📷 REAL', bw = u * 7, bh = u * 2.4; ctx.fillStyle = isAI ? 'rgba(255,159,67,.92)' : 'rgba(61,255,168,.9)'; rr2(c.x + c.w / 2 - bw / 2, c.y + c.h - bh - u, bw, bh, bh / 2); ctx.fill(); T2(lb, c.x + c.w / 2, c.y + c.h - bh / 2 - u + 1, u * 1.2, '#1a0a10', 800, 'center', 'sans-serif');
-            if (k === A.k) T2(A.ok ? 'acertou! ✓' : 'errou ✗', c.x + c.w / 2, c.y - u * 1.3, u * 1.4, A.ok ? '#3dffa8' : '#ff8fb1', 700, 'center', 'sans-serif'); } });
+        C.forEach((c, k) => { const im = ims[k], isAI = k === this.side, mine = A && k === A.k, pulse = .5 + .5 * Math.sin(T * 6);
+          ctx.fillStyle = 'rgba(0,0,0,.35)'; rr2(c.x - 4, c.y - 4, c.w + 8, c.h + 8, 18); ctx.fill(); if (im) njDraw(im, c.x, c.y, c.w, c.h, 14);
+          if (A && !mine) { ctx.fillStyle = 'rgba(10,4,12,.35)'; rr2(c.x, c.y, c.w, c.h, 14); ctx.fill(); }
+          // borda: verde/vermelha só na foto que a pessoa tocou; a da IA ganha contorno pulsando se a pessoa errou
+          ctx.strokeStyle = !A ? 'rgba(242,196,109,.45)' : mine ? (A.ok ? '#3dffa8' : '#ff4d6d') : isAI ? `rgba(199,139,255,${.5 + .5 * pulse})` : 'rgba(255,255,255,.25)'; ctx.lineWidth = !A ? 1.5 : mine ? 7 : isAI ? 5 : 2; rr2(c.x, c.y, c.w, c.h, 14); ctx.stroke();
+          if (A) { // etiqueta neutra dizendo o que a foto é (sem verde/vermelho para não confundir com acerto/erro)
+            const lb = isAI ? '🤖 FEITA POR IA' : '📷 FOTO REAL', bw = u * 11, bh = u * 2.4, bx = c.x + c.w / 2 - bw / 2, by = c.y + c.h - bh - u;
+            ctx.fillStyle = isAI ? 'rgba(120,60,200,.92)' : 'rgba(20,20,30,.82)'; rr2(bx, by, bw, bh, bh / 2); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.6)'; ctx.lineWidth = 1.5; ctx.stroke(); T2(lb, c.x + c.w / 2, by + bh / 2 + 1, u * 1.1, '#ffffff', 800, 'center', 'sans-serif');
+            if (mine) { const r = u * 2.6, cx = c.x + c.w - r * .6, cy = c.y + r * .6; ctx.fillStyle = A.ok ? '#1faa6a' : '#d62a4a'; ctx.beginPath(); ctx.arc(cx, cy, r, 0, TAU); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.stroke(); T2(A.ok ? '✓' : '✗', cx, cy + 2, r * 1.3, '#fff', 900, 'center', 'sans-serif'); T2('você tocou aqui', c.x + c.w / 2, c.y - u * 1.2, u * 1, 'rgba(255,255,255,.75)', 700, 'center', 'sans-serif'); }
+            else if (isAI && !A.ok) T2('👆 esta era a da IA', c.x + c.w / 2, c.y - u * 1.2, u * 1.1, `rgba(199,139,255,${.6 + .4 * pulse})`, 800, 'center', 'sans-serif'); } });
+        if (A) { const k = Math.min(1, (T - A.t) / .25), msg = A.ok ? '✅  ACERTOU!  Você achou a foto feita por IA' : '❌  ERROU!  A foto da IA era a outra', bw = W * .62, bh = u * 3.6, bx = W / 2 - bw / 2, by = C[0].y + C[0].h / 2 - bh / 2;
+          ctx.save(); ctx.globalAlpha = k; ctx.translate(W / 2, by + bh / 2); ctx.scale(.8 + .2 * k, .8 + .2 * k); ctx.translate(-W / 2, -(by + bh / 2)); ctx.fillStyle = A.ok ? 'rgba(20,120,70,.95)' : 'rgba(170,25,55,.95)'; rr2(bx, by, bw, bh, bh / 2); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.stroke(); T2(msg, W / 2, by + bh / 2 + 1, njFit(msg, bw - u * 3, u * 1.6), '#fff', 800, 'center', 'sans-serif'); ctx.restore(); }
         T2('tema: ' + this.nm, W / 2, C[0].y + C[0].h + u * 1.8, u * 1, 'rgba(255,255,255,.5)', 600, 'center', 'sans-serif');
         if (A && !A.ok) T2('Dica: repare em mãos, textos, reflexos e detalhes "perfeitos demais".', W / 2, C[0].y + C[0].h + u * 3.6, u * 1, '#ffd36b', 600, 'center', 'sans-serif');
         njBox(this.streak, 'seguidos', W * .845, H * .12, W * .11, H * .14);
@@ -11881,7 +11889,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795723283';
+window.__VER = '1795723404';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
