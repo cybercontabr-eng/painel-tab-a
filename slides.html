@@ -1771,7 +1771,7 @@ html,body,#stage{background:#18050c}
       <div class="game-top copy"><div class="label">● Hall da fama</div><h1 class="title"><span>Nossos</span><em>recordistas</em></h1></div>
     </div></section>
     <section class="scene" data-scene="clima"><div class="cam">
-      <div class="game-top copy"><div class="label">● Agora</div><h1 class="title"><span>Clima em</span><em>Goiânia</em></h1></div>
+      <div class="game-top copy"><div class="label">● Agora</div><h1 class="title"><span>Goiânia</span><em>hoje</em></h1></div>
     </div></section>
     <section class="scene" data-scene="novorec"><div class="cam"></div></section>
     <section class="scene" data-scene="desafio"><div class="cam">
@@ -11460,36 +11460,66 @@ function H_medalha() {
       if (kind === 'chuva' || kind === 'raio') { ctx.strokeStyle = '#5ab0ff'; ctx.lineWidth = s * .05; ctx.lineCap = 'round'; for (let i = 0; i < 5; i++) { const k = ((T * 1.6 + i * .37) % 1), rx = x - s * .4 + i * s * .2; ctx.globalAlpha = 1 - k; ctx.beginPath(); ctx.moveTo(rx - k * s * .08, y + s * .35 + k * s * .5); ctx.lineTo(rx - k * s * .08 - s * .05, y + s * .35 + k * s * .5 + s * .13); ctx.stroke(); } ctx.globalAlpha = 1; }
       if (kind === 'raio' && (T % 2.2) < .15) { ctx.fillStyle = '#ffe040'; ctx.beginPath(); ctx.moveTo(x, y + s * .25); ctx.lineTo(x - s * .12, y + s * .55); ctx.lineTo(x + s * .02, y + s * .55); ctx.lineTo(x - s * .08, y + s * .85); ctx.lineTo(x + s * .16, y + s * .45); ctx.lineTo(x + s * .02, y + s * .45); ctx.closePath(); ctx.fill(); }
       if (kind === 'neve') { ctx.fillStyle = '#fff'; for (let i = 0; i < 5; i++) { const k = ((T * .6 + i * .33) % 1); ctx.globalAlpha = 1 - k; ctx.beginPath(); ctx.arc(x - s * .4 + i * s * .2, y + s * .4 + k * s * .5, s * .04, 0, TAU); ctx.fill(); } ctx.globalAlpha = 1; } } };
+  // notícias (arquivo noticias.json no próprio site; título, resumo curto e link da fonte)
+  const NT = { data: null, last: 0,
+    load() { try { const o = JSON.parse(localStorage.getItem('cgNoticias') || 'null'); if (o && o.itens) this.data = o; } catch (e) {} },
+    fetch() { if (Date.now() - this.last < 20 * 60 * 1000) return; this.last = Date.now(); fetch('noticias.json?v=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(d => { if (d && d.itens && d.itens.length) { this.data = d; try { localStorage.setItem('cgNoticias', JSON.stringify(d)); } catch (e) {} } }).catch(() => {}); },
+    img: {}, im(src) { if (!src) return null; if (!this.img[src]) { const i = new Image(); i.src = src; this.img[src] = i; } const i = this.img[src]; return i.complete && i.naturalWidth ? i : null; } };
+  NT.load(); setTimeout(() => NT.fetch(), 3000); setInterval(() => NT.fetch(), 30 * 60 * 1000); window.__NT = NT;
   const clima = {
-    id: 'clima', name: 'clima em Goiânia', el: $('[data-scene=clima]'),
-    setup() {}, enter() { this.t0 = null; CL.fetch(); },
-    skip() { return !CL.ok(); },
+    id: 'clima', name: 'clima e notícia da semana', el: $('[data-scene=clima]'),
+    setup() {}, enter() { this.t0 = null; CL.fetch(); NT.fetch(); this.ni = (this.ni == null ? 0 : this.ni); },
+    skip() { return !CL.ok() && !(NT.data && NT.data.itens && NT.data.itens.length); },
     frame(t, dt) {
-      const T = T3(this, t), u = UU(), D = CL.data; if (!D) { T2('Buscando a previsão do tempo…', W / 2, H * .5, u * 1.6, '#fff', 600, 'center', 'sans-serif'); return; }
-      const c = D.current, code = c.weather_code, night = !c.is_day, kind = CL_KIND(code);
-      const bg = ctx.createLinearGradient(0, 0, 0, H); const pal = night ? ['#0a1030', '#1a2a5a'] : kind === 'sol' ? ['#2a7ae0', '#8ac8ff'] : kind === 'parcial' ? ['#3a7ac8', '#9ac0e8'] : kind === 'nuvem' ? ['#5a6a88', '#a8b4c8'] : ['#2a3450', '#5a6a8a']; bg.addColorStop(0, pal[0]); bg.addColorStop(1, pal[1]); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      const T = T3(this, t), u = UU(), D = CL.ok() ? CL.data : null, N = NT.data && NT.data.itens && NT.data.itens.length ? NT.data.itens : null;
+      const code = D ? D.current.weather_code : 2, night = D ? !D.current.is_day : 0, kind = CL_KIND(code);
+      const bg = ctx.createLinearGradient(0, 0, W, H); const pal = night ? ['#0a1030', '#24204a'] : kind === 'sol' ? ['#1f63c8', '#6ab0f0'] : kind === 'parcial' ? ['#2a5aa8', '#86b4e0'] : kind === 'nuvem' ? ['#3a4a68', '#8a9ab4'] : ['#1a2238', '#46567a']; bg.addColorStop(0, pal[0]); bg.addColorStop(1, pal[1]); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      for (let i = 0; i < 6; i++) { const x = ((i * 271 + T * 12) % (W + 300)) - 150, y = H * (.12 + (i % 3) * .28); ctx.fillStyle = 'rgba(255,255,255,.05)'; ctx.beginPath(); ctx.ellipse(x, y, W * .12, H * .04, 0, 0, TAU); ctx.fill(); }
       const k0 = Math.min(1, T / .6); ctx.globalAlpha = k0;
-      // agora
-      clIcon(kind, W * .2, H * .44, H * .3, T, night);
-      T2(Math.round(c.temperature_2m) + '°', W * .36, H * .43, H * .2, '#ffffff', 300, 'left', 'sans-serif');
-      T2(CL_DESC(code), W * .37, H * .56, u * 2, '#fff', 700, 'left', 'sans-serif');
-      const l1 = `sensação ${Math.round(c.apparent_temperature)}° · umidade ${Math.round(c.relative_humidity_2m)}%`, l2 = `vento ${Math.round(c.wind_speed_10m)} km/h`; T2(l1, W * .37, H * .615, njFit(l1, W * .25, u * 1.05), 'rgba(255,255,255,.85)', 600, 'left', 'sans-serif'); T2(l2, W * .37, H * .655, u * 1.05, 'rgba(255,255,255,.85)', 600, 'left', 'sans-serif');
-      const d = D.daily, mx = Math.round(d.temperature_2m_max[0]), mn = Math.round(d.temperature_2m_min[0]), pr = d.precipitation_probability_max[0] || 0;
-      const l3 = `hoje: máx ${mx}° · mín ${mn}° · chuva ${pr}%`; T2(l3, W * .37, H * .7, njFit(l3, W * .25, u * 1.05), '#ffe9a8', 700, 'left', 'sans-serif');
-      const dica = pr >= 60 ? '☂️ Leve o guarda-chuva hoje' : mx >= 33 ? '💧 Dia quente: beba bastante água' : c.relative_humidity_2m < 30 ? '🌵 Ar seco: hidrate-se e use colírio' : mn <= 14 ? '🧥 Manhã fria: leve um casaco' : '😎 Bom dia para trabalhar com energia';
-      const dsz = njFit(dica, W * .25, u * 1.1); ctx.fillStyle = 'rgba(0,0,0,.22)'; rr2(W * .37 - u, H * .735, u * 2 + (ctx.font = `700 ${dsz}px sans-serif`, ctx.measureText(dica).width), u * 2.4, u * 1.2); ctx.fill(); T2(dica, W * .37, H * .735 + u * 1.2, dsz, '#fff', 700, 'left', 'sans-serif');
-      // próximas horas (curva)
-      { const hr = D.hourly, now = new Date(), i0 = Math.max(0, hr.time.findIndex(s => new Date(s) >= now) - 1), N = 12, x0 = W * .64, w = W * .32, y0 = H * .24, h = H * .16, tt = hr.temperature_2m.slice(i0, i0 + N), pp = hr.precipitation_probability.slice(i0, i0 + N), lo = Math.min(...tt) - 1, hi = Math.max(...tt) + 1;
-        ctx.fillStyle = 'rgba(0,0,0,.18)'; rr2(x0 - u, y0 - u * 2.2, w + u * 2, h + u * 5, u); ctx.fill(); T2('próximas horas', x0, y0 - u * 1, u * .95, 'rgba(255,255,255,.8)', 700, 'left', 'sans-serif');
-        pp.forEach((p, i) => { const bx = x0 + i * w / N; ctx.fillStyle = 'rgba(90,176,255,.55)'; ctx.fillRect(bx + 2, y0 + h - h * (p || 0) / 100, w / N - 4, h * (p || 0) / 100); });
-        ctx.strokeStyle = '#ffe08a'; ctx.lineWidth = 3; ctx.beginPath(); tt.forEach((v, i) => { const px = x0 + (i + .5) * w / N, py = y0 + h - (v - lo) / (hi - lo) * h; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.stroke();
-        tt.forEach((v, i) => { if (i % 3) return; const px = x0 + (i + .5) * w / N, py = y0 + h - (v - lo) / (hi - lo) * h; T2(Math.round(v) + '°', px, py - u * .9, u * .85, '#fff', 700, 'center', 'sans-serif'); T2(String(new Date(hr.time[i0 + i]).getHours()).padStart(2, '0') + 'h', px, y0 + h + u * 1.1, u * .8, 'rgba(255,255,255,.75)', 600, 'center', 'sans-serif'); }); }
-      // próximos dias
-      { const n = 5, cw = W * .32 / n, x0 = W * .64, y0 = H * .52, ch = H * .3, DN = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
-        for (let i = 1; i <= n; i++) { const x = x0 + (i - 1) * cw, dt0 = new Date(d.time[i] + 'T12:00:00'), lb = i === 1 ? 'amanhã' : DN[dt0.getDay()]; ctx.fillStyle = 'rgba(0,0,0,.18)'; rr2(x + 3, y0, cw - 6, ch, u * .8); ctx.fill();
-          T2(lb, x + cw / 2, y0 + u * 1.4, u * .95, '#fff', 800, 'center', 'sans-serif'); clIcon(CL_KIND(d.weather_code[i]), x + cw / 2, y0 + ch * .38, cw * .55, T + i, 0);
-          T2(Math.round(d.temperature_2m_max[i]) + '°', x + cw / 2, y0 + ch * .68, u * 1.35, '#fff', 800, 'center', 'sans-serif'); T2(Math.round(d.temperature_2m_min[i]) + '°', x + cw / 2, y0 + ch * .8, u * 1, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif'); T2('☂ ' + (d.precipitation_probability_max[i] || 0) + '%', x + cw / 2, y0 + ch * .92, u * .85, '#9ad0ff', 700, 'center', 'sans-serif'); } }
-      const up = new Date(CL.last); T2(`Goiânia · atualizado às ${String(up.getHours()).padStart(2, '0')}:${String(up.getMinutes()).padStart(2, '0')} · Open-Meteo`, W * .64, H * .88, u * .8, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif');
+      const glass = (x, y, w, h) => { ctx.fillStyle = 'rgba(255,255,255,.13)'; rr2(x, y, w, h, u * 1.4); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.28)'; ctx.lineWidth = 1.5; ctx.stroke(); };
+      const L0 = N ? W * .035 : W * .12, LW = N ? W * .44 : W * .76, top = H * .2, bot = H * .87;
+      // ---- clima ----
+      glass(L0, top, LW, bot - top);
+      if (!D) T2('Previsão do tempo indisponível no momento', L0 + LW / 2, top + (bot - top) / 2, u * 1.2, '#fff', 600, 'center', 'sans-serif');
+      else { const c = D.current, d = D.daily, x0 = L0 + u * 1.6;
+        T2('☀️ CLIMA EM GOIÂNIA', x0, top + u * 1.7, u * .95, '#ffe9a8', 800, 'left', 'sans-serif');
+        clIcon(kind, x0 + LW * .14, top + (bot - top) * .27, Math.min(H * .085, LW * .1), T, night);
+        const tx = x0 + LW * .3; T2(Math.round(c.temperature_2m) + '°', tx, top + (bot - top) * .25, Math.min(H * .15, LW * .2), '#fff', 300, 'left', 'sans-serif');
+        T2(CL_DESC(code), tx, top + (bot - top) * .38, njFit(CL_DESC(code), LW * .62, u * 1.6), '#fff', 800, 'left', 'sans-serif');
+        const mx = Math.round(d.temperature_2m_max[0]), mn = Math.round(d.temperature_2m_min[0]), pr = d.precipitation_probability_max[0] || 0, l1 = `↑ ${mx}°  ↓ ${mn}°  ·  ☂ ${pr}%  ·  sensação ${Math.round(c.apparent_temperature)}°`, l2 = `umidade ${Math.round(c.relative_humidity_2m)}%  ·  vento ${Math.round(c.wind_speed_10m)} km/h`;
+        T2(l1, tx, top + (bot - top) * .45, njFit(l1, LW * .64, u * 1), 'rgba(255,255,255,.92)', 700, 'left', 'sans-serif'); T2(l2, tx, top + (bot - top) * .5, njFit(l2, LW * .64, u * .95), 'rgba(255,255,255,.75)', 600, 'left', 'sans-serif');
+        const dica = pr >= 60 ? '☂️ Leve o guarda-chuva hoje' : mx >= 33 ? '💧 Dia quente: beba bastante água' : c.relative_humidity_2m < 30 ? '🌵 Ar seco: hidrate-se' : mn <= 14 ? '🧥 Manhã fria: leve um casaco' : '😎 Ótimo dia para trabalhar', dsz = njFit(dica, LW * .8, u * 1); ctx.font = `700 ${dsz}px sans-serif`; const dw = ctx.measureText(dica).width + u * 2;
+        ctx.fillStyle = 'rgba(0,0,0,.22)'; rr2(x0, top + (bot - top) * .55, dw, u * 2.2, u * 1.1); ctx.fill(); T2(dica, x0 + u, top + (bot - top) * .55 + u * 1.1, dsz, '#fff', 700, 'left', 'sans-serif');
+        // próximas horas
+        { const hr = D.hourly, now = new Date(), i0 = Math.max(0, hr.time.findIndex(s2 => new Date(s2) >= now) - 1), Nh = 12, gx = x0, gw = LW - u * 3.2, gy = top + (bot - top) * .64, gh = (bot - top) * .1, tt = hr.temperature_2m.slice(i0, i0 + Nh), pp = hr.precipitation_probability.slice(i0, i0 + Nh), lo = Math.min(...tt) - 1, hi = Math.max(...tt) + 1;
+          pp.forEach((p, i) => { ctx.fillStyle = 'rgba(120,190,255,.45)'; ctx.fillRect(gx + i * gw / Nh + 2, gy + gh - gh * (p || 0) / 100, gw / Nh - 4, gh * (p || 0) / 100); });
+          ctx.strokeStyle = '#ffe08a'; ctx.lineWidth = 2.5; ctx.beginPath(); tt.forEach((v, i) => { const px = gx + (i + .5) * gw / Nh, py = gy + gh - (v - lo) / (hi - lo) * gh; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.stroke();
+          tt.forEach((v, i) => { if (i % 3) return; const px = gx + (i + .5) * gw / Nh, py = gy + gh - (v - lo) / (hi - lo) * gh; T2(Math.round(v) + '°', px, py - u * .8, u * .8, '#fff', 700, 'center', 'sans-serif'); T2(String(new Date(hr.time[i0 + i]).getHours()).padStart(2, '0') + 'h', px, gy + gh + u * .9, u * .72, 'rgba(255,255,255,.7)', 600, 'center', 'sans-serif'); }); }
+        // próximos dias
+        { const n = 5, cw = (LW - u * 3.2) / n, y0 = top + (bot - top) * .8, ch = (bot - top) * .18, DN = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+          for (let i = 1; i <= n; i++) { const x = x0 + (i - 1) * cw, dt0 = new Date(d.time[i] + 'T12:00:00'); ctx.fillStyle = 'rgba(0,0,0,.16)'; rr2(x + 3, y0, cw - 6, ch - u * .4, u * .7); ctx.fill();
+            T2(i === 1 ? 'amanhã' : DN[dt0.getDay()], x + cw / 2, y0 + u * 1, u * .78, '#fff', 800, 'center', 'sans-serif'); clIcon(CL_KIND(d.weather_code[i]), x + cw / 2, y0 + ch * .45, Math.min(cw * .2, ch * .19), T + i, 0);
+            T2(`${Math.round(d.temperature_2m_max[i])}° · ${Math.round(d.temperature_2m_min[i])}°`, x + cw / 2, y0 + ch * .74, njFit('00° · 00°', cw * .9, u * .9), '#fff', 700, 'center', 'sans-serif'); } }
+        const up = new Date(CL.last); T2(`atualizado às ${String(up.getHours()).padStart(2, '0')}:${String(up.getMinutes()).padStart(2, '0')} · Open-Meteo`, L0 + LW - u * 1.2, top + u * 1.7, u * .7, 'rgba(255,255,255,.55)', 600, 'right', 'sans-serif'); }
+      // ---- notícia da semana ----
+      if (N) { const it = N[0], R0 = W * .5, RW = W * .465, x0 = R0 + u * 1.6, cw = RW - u * 3.2, tagc = it.tag === 'CYBERGAECO' ? '#7fe3ff' : it.tag === 'GAECO' ? '#ffd36b' : '#c8a0ff';
+        glass(R0, top, RW, bot - top);
+        T2('📰 NOTÍCIA DA SEMANA', x0, top + u * 1.7, u * .95, '#ffe9a8', 800, 'left', 'sans-serif');
+        ctx.font = `900 ${u * .85}px sans-serif`; const tw0 = ctx.measureText(it.tag).width + u * 1.6; ctx.fillStyle = tagc; rr2(R0 + RW - u * 1.6 - tw0, top + u * .75, tw0, u * 1.9, u * .95); ctx.fill(); T2(it.tag, R0 + RW - u * 1.6 - tw0 / 2, top + u * 1.7, u * .85, '#14102a', 900, 'center', 'sans-serif');
+        // faixa da operação (foto, se houver; senão arte com a logo)
+        const by = top + u * 3.4, bh = (bot - top) * .34, im = NT.im(it.img); ctx.save(); rr2(x0, by, cw, bh, u); ctx.clip();
+        if (im) { const ar = im.naturalWidth / im.naturalHeight, sw = ar > cw / bh ? im.naturalHeight * cw / bh : im.naturalWidth, sh = sw * bh / cw; ctx.drawImage(im, (im.naturalWidth - sw) / 2, (im.naturalHeight - sh) / 2, sw, sh, x0, by, cw, bh); }
+        else { const g = ctx.createLinearGradient(x0, by, x0 + cw, by + bh); g.addColorStop(0, '#1a1030'); g.addColorStop(1, it.tag === 'CYBERGAECO' ? '#0a3a5a' : '#4a2a0a'); ctx.fillStyle = g; ctx.fillRect(x0, by, cw, bh);
+          ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = 1; for (let i = -10; i < 30; i++) { ctx.beginPath(); ctx.moveTo(x0 + i * u * 2.4 + (T * 8) % (u * 2.4), by); ctx.lineTo(x0 + i * u * 2.4 - bh + (T * 8) % (u * 2.4), by + bh); ctx.stroke(); }
+          cgLogo(x0 + bh * .55, by + bh / 2, bh * .72); const op = (it.t.match(/Opera[çc][ãa]o\s+([^:,–\-]+?)(?=\s*(?::|,|–|-|\s+(?:mira|investiga|combate|denuncia|cumpre|contra))|$)/i) || [])[1];
+          T2(op ? 'OPERAÇÃO' : it.tag, x0 + bh * 1.1, by + bh * .38, u * 1.1, tagc, 900, 'left', 'sans-serif'); const opn = (op || 'MPGO').toUpperCase(); T2(opn, x0 + bh * 1.1, by + bh * .6, njFit(opn, cw - bh * 1.2, bh * .22), '#ffffff', 900, 'left', 'sans-serif'); }
+        ctx.restore();
+        const dd = it.d ? new Date(it.d + 'T12:00:00') : null, dtx = dd ? dd.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' }) : '';
+        const tl = wrapTxt(it.t, cw * .92, u * 1.55, 500, SERIF).slice(0, 3), ty = by + bh + u * 2.2; tl.forEach((l, i) => T2(l, x0, ty + i * u * 1.95, u * 1.55, '#ffffff', 400, 'left', SERIF));
+        const sl = wrapTxt(it.sum || '', cw * .86, u * .95, 700, 'sans-serif').slice(0, 3), sy0 = ty + tl.length * u * 1.95 + u * .4; sl.forEach((l, i) => T2(l, x0, sy0 + i * u * 1.3, u * .95, 'rgba(255,255,255,.82)', 600, 'left', 'sans-serif'));
+        T2(`${dtx}${it.src ? ' · fonte: ' + it.src : ''}`, x0, sy0 + sl.length * u * 1.3 + u * .5, u * .8, tagc, 700, 'left', 'sans-serif');
+        const others = N.slice(1, 3); if (others.length) { const oy = bot - u * (others.length * 1.5 + 1.6); ctx.fillStyle = 'rgba(0,0,0,.18)'; rr2(x0 - u * .4, oy - u * .3, cw + u * .8, u * (others.length * 1.5 + 1.2), u * .6); ctx.fill(); T2('também recentes:', x0, oy + u * .5, u * .72, 'rgba(255,255,255,.6)', 700, 'left', 'sans-serif');
+          others.forEach((o, i) => { const od = o.d ? new Date(o.d + 'T12:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) : '', tx2 = `• ${o.t}`; T2(tx2, x0, oy + u * (1.8 + i * 1.5), njFit(tx2, cw - u * 5, u * .82), '#fff', 600, 'left', 'sans-serif'); T2(od, x0 + cw, oy + u * (1.8 + i * 1.5), u * .78, 'rgba(255,255,255,.6)', 700, 'right', 'sans-serif'); }); } }
       ctx.globalAlpha = 1;
     }
   };
@@ -12318,7 +12348,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795725749';
+window.__VER = '1795725993';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
