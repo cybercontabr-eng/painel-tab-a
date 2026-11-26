@@ -2040,7 +2040,7 @@ const CONFIG = {
     convite: 12, logoluzes: 10, logoholo: 10, logocodigo: 10, espiral: 10, guirlanda: 10, binaria: 10, desafio: 12
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'escava', 'rena', 'logocodigo', 'enquete', 'recordes', 'desafio', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'pixel', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'espiral', 'estrela', 'virada', 'convite'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'escava', 'rena', 'logocodigo', 'enquete', 'recordes', 'desafio', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'espiral', 'estrela', 'virada', 'convite'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   vitrine: true,                 // jogos saem da rotação automática (ficam na central e nos convites)
   convidarACada: 0,              // convite para jogar (desligado: são muitos jogos)
@@ -11166,7 +11166,7 @@ function H_medalha() {
     };
   });
   window.__gameHold = () => !!(cur && ((cur._gs && cur._gs.on && (performance.now() - cur._gs.last < GAME_IDLE || (window.__NE && window.__NE.on))) || (cur.holding && cur.holding())));
-  window.__INTER_IDS = new Set(['muro', 'pixel', 'reacoes', 'enquete', 'arvore', 'estrelas', 'escava', 'milhao']);
+  window.__INTER_IDS = new Set(['muro', 'reacoes', 'enquete', 'arvore', 'estrelas', 'escava', 'milhao']);
   window.__mergeOrd = (orig, saved) => { const set = new Set(orig), r = (saved || []).filter((id, i, a) => set.has(id) && a.indexOf(id) === i); orig.forEach((id, i) => { if (r.includes(id)) return; const prev = orig.slice(0, i).reverse().find(x => r.includes(x)); r.splice(prev ? r.indexOf(prev) + 1 : 0, 0, id); }); return r; };
   window.__CENAS_ALL = CONFIG.cenas.slice(); window.__SCN = ALL.map(s => ({ id: s.id, name: s.name }));
   (() => { try { const S = (JSON.parse(localStorage.getItem('cgConteudo') || 'null') || {}).sl; window.__slBoot = JSON.stringify(S || null); if (!S) return;
@@ -11881,7 +11881,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795723122';
+window.__VER = '1795723283';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
