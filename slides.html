@@ -4801,21 +4801,24 @@ function H_medalha() {
       return o;
     },
     save(o) { this.mem = o; try { localStorage.setItem(this.key, JSON.stringify(o)); } catch (e) {} },
-    list(g) { return this.all()[g] || []; },
+    ASC: /^(memoria.*|memlogos|memequipe|puzzle|palavras|difs|labirinto|corrida|cofre|campo|detetive|naval|cifra|tempo.*|rf\d+|reflexo.*)$/,
+    // uma linha por pessoa (a melhor marca dela), na ordem certa, no máximo 5
+    norm(g, L, asc) { if (asc == null) asc = this.ASC.test(g); const m = new Map(); (L || []).forEach(e => { if (!e || typeof e.s !== 'number') return; const k = String(e.n || '').trim().toUpperCase(), o = m.get(k); if (!o || (asc ? e.s < o.s : e.s > o.s) || (e.s === o.s && (e.d || 0) < (o.d || 0))) m.set(k, e); }); return [...m.values()].sort((a, b) => asc ? a.s - b.s : b.s - a.s).slice(0, 5); },
+    list(g) { return this.norm(g, this.all()[g] || []); },
     LIM: { pacote: [3, 0], corre: [30, 0], lado: [5, 0], heli: [50, 0], pula: [10, 0], pinball: [500, 0], tetris: [100, 0], cobra: [3, 0], carro: [5, 0], tanque: [3, 0], tijolos: [50, 0], invasores: [200, 0], asteroides: [300, 0], comecome: [300, 0], atravessa: [10, 0], estilingue: [1000, 0], boliche: [30, 0], arco: [30, 0], tower: [2, 0], airhockey: [1, 0], plataforma: [100, 0], moto: [100, 0], patos: [500, 0], duelo: [100, 0], estrada: [1000, 0], missil: [500, 0], cores: [4, 0], disputa: [200, 0], zoom: [150, 0], revela: [150, 0], realia: [3, 0], linha: [2, 0], onde: [3, 0], detalhe: [150, 0], preco: [150, 0], intruso: [3, 0], explode: [80, 0], peso: [3, 0], d2048: [300, 0], basquete: [3, 0], tubos: [2, 0], corte: [800, 0], penalti: [3, 0], empilha: [5, 0], caca: [8, 0], rena: [5, 0], quiz: [5, 0], quizpp: [5, 0], memoria: [40, 1], memlogos: [40, 1], puzzle: [250, 1], palavras: [240, 1], difs: [180, 1], labirinto: [150, 1], corrida: [60, 1], cofre: [9, 1], campo: [300, 1], detetive: [360, 1], naval: [70, 1], tempo5: [301, 1], tempo10: [301, 1], tempo5d: [501, 1], tempo10d: [801, 1] },
     qualifies(g, s, asc) { if (g !== 'tubos') try { window.__lastEnd = { g, s, asc: !!asc, at: performance.now(), L: (this.list(g) || []).slice() }; } catch (e) {} if (!(s > 0)) return false; const lim = this.LIM[g]; if (lim && (lim[1] ? s > lim[0] : s < lim[0])) return false; const L = this.list(g); if (L.length < 5) return true; const l = L[L.length - 1].s; return asc ? s < l : s > l; },
-    add(g, n, s, asc) { const o = this.all(), L = (o[g] || []).slice(); L.push({ n, s, d: Date.now() }); L.sort((a, b) => asc ? a.s - b.s : b.s - a.s); o[g] = L.slice(0, 5); this.save(o); return o[g].findIndex(e => e.n === n && e.s === s) + 1; },
+    add(g, n, s, asc) { const o = this.all(), L = (o[g] || []).slice(); L.push({ n, s, d: Date.now() }); o[g] = this.norm(g, L, asc || this.ASC.test(g)); this.save(o); const K = String(n).trim().toUpperCase(); return o[g].findIndex(e => String(e.n || '').trim().toUpperCase() === K) + 1; },
     line(g) { return ''; }
   };
   /* cópias automáticas dos recordes (uma por dia, últimos 10 dias) e restauração */
   const RB = {
-    key: 'cgRecBak', ASC: /^(memoria|memlogos|memequipe|puzzle|palavras|difs|labirinto|corrida|cofre|campo|detetive|naval|tempo.*|rf\d+)$/,
+    key: 'cgRecBak', ASC: /^(memoria.*|memlogos|memequipe|puzzle|palavras|difs|labirinto|corrida|cofre|campo|detetive|naval|cifra|tempo.*|rf\d+|reflexo.*)$/,
     list() { try { return JSON.parse(localStorage.getItem(this.key) || '[]') || []; } catch (e) { return []; } },
     count(o) { return Object.keys(o || {}).filter(g => !g.startsWith('__') && g !== 'z' && Array.isArray(o[g]) && o[g].length).length; },
     dk() { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); },
     snap() { try { const o = JSON.parse(localStorage.getItem(REC.key) || 'null'); if (!o || !this.count(o)) return; const L = this.list(), d = this.dk(), it = { d, t: Date.now(), o };
       const i = L.findIndex(x => x.d === d); if (i >= 0) { const old = L[i]; if (this.count(o) < this.count(old.o) && !((o.z || 0) > old.t)) return; L[i] = it; } else L.push(it); L.sort((a, b) => a.t - b.t); while (L.length > 10) L.shift(); localStorage.setItem(this.key, JSON.stringify(L)); } catch (e) {} },
-    merge(A, B) { const o = { __seed1: 1 }; new Set([...Object.keys(A || {}), ...Object.keys(B || {})]).forEach(g => { if (g.startsWith('__') || g === 'z') return; const m = new Map(); [...((A || {})[g] || []), ...((B || {})[g] || [])].forEach(e => { if (e && e.n && typeof e.s === 'number') m.set(e.n + '|' + e.s, e); }); const asc = this.ASC.test(g); o[g] = [...m.values()].sort((a, b) => asc ? a.s - b.s : b.s - a.s).slice(0, 5); }); return o; },
+    merge(A, B) { const o = { __seed1: 1 }; new Set([...Object.keys(A || {}), ...Object.keys(B || {})]).forEach(g => { if (g.startsWith('__') || g === 'z') return; const m = new Map(); [...((A || {})[g] || []), ...((B || {})[g] || [])].forEach(e => { if (e && e.n && typeof e.s === 'number') m.set(e.n + '|' + e.s, e); }); o[g] = REC.norm(g, [...m.values()]); }); return o; },
     restore(B) { const cur = REC.all(), o = this.merge(cur, B); REC.save(o); return this.count(o); },
     boot() { try { const raw = localStorage.getItem(REC.key); let o = null; try { o = JSON.parse(raw || 'null'); } catch (e) {} const L = this.list().filter(x => x.d !== 'antes de zerar'), last = L[L.length - 1];
       if (last && this.count(last.o) > this.count(o) && !(((o && o.z) || 0) >= last.t)) { const m = this.merge(o || {}, last.o); if (o && o.z) m.z = o.z; localStorage.setItem(REC.key, JSON.stringify(m)); REC.mem = m; }
@@ -10524,7 +10527,7 @@ function H_medalha() {
       ctx.font = `400 ${u * 4.4}px ${SERIF}`; const nw = ctx.measureText(top.n).width, fs = Math.min(u * 4.4, u * 4.4 * (W * .42) / nw);
       T2(top.n, rx + u * 3.4, H * .415, fs, '#fff', 400, 'left', SERIF);
       T2(hfFmt(k, top.s), rx, H * .51, u * 2.6, '#ffe3a0', 700, 'left', 'sans-serif');
-      if (top.d) { const dd = Math.floor((Date.now() - top.d) / 864e5); T2(dd < 1 ? '🔥 recorde novinho, feito hoje' : `🛡️ invicto há ${dd} ${dd === 1 ? 'dia' : 'dias'}`, rx, H * .575, u * 1.25, 'rgba(255,255,255,.8)', 600, 'left', 'sans-serif'); }
+      if (top.d > 1.6e12) { const dd = Math.floor((Date.now() - top.d) / 864e5); T2(dd < 1 ? '🔥 recorde novinho, feito hoje' : `🛡️ invicto há ${dd} ${dd === 1 ? 'dia' : 'dias'}`, rx, H * .575, u * 1.25, 'rgba(255,255,255,.8)', 600, 'left', 'sans-serif'); }
       L.slice(1, 3).forEach((e, i) => T2(['🥈', '🥉'][i] + '  ' + e.n + '  ·  ' + hfFmt(k, e.s), rx, H * (.65 + i * .055), u * 1.1, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'));
       ctx.globalAlpha = 1;
       // convite
@@ -10644,7 +10647,7 @@ function H_medalha() {
     id: 'recordes', name: 'hall da fama · recordistas', el: $('[data-scene=recordes]'),
     setup() { this.load(); this.conf = Array.from({ length: 26 }, () => ({ x: Math.random(), y: Math.random(), v: rnd(.03, .07), r: rnd(0, TAU), c: ['#ffd36b', '#fff3d6', '#e8b04a'][Math.floor(Math.random() * 3)] })); },
     load() { const o = REC.all(), vis = n => /^visitante$/i.test((n || '').trim());
-      this.G = [...HF_G, [rfKey(), 'Reflexo (hoje)', 'ms2']].map(([id, nome, k]) => ({ id, nome, k, L: (o[id] || []).filter(e => !vis(e.n)).slice(0, 3) })).filter(g => g.L.length);
+      this.G = [...HF_G, [rfKey(), 'Reflexo (hoje)', 'ms2']].map(([id, nome, k]) => ({ id, nome, k, L: REC.list(id).filter(e => !vis(e.n)).slice(0, 3) })).filter(g => g.L.length);
       const cnt = {}; this.G.forEach(g => g.L.forEach((e, i) => { const c = cnt[e.n] || (cnt[e.n] = { n: e.n, ouro: 0, pod: 0 }); c.pod++; if (!i) c.ouro++; }));
       this.top = Object.values(cnt).sort((a, b) => b.ouro - a.ouro || b.pod - a.pod).slice(0, 3); },
     enter() { this.t0 = null; this.load(); this.page = 0; this.pageT = 0; },
@@ -11037,7 +11040,7 @@ function H_medalha() {
   /* ---------- jogos: botão "Iniciar jogo" e espera de até 2 min sem toque ---------- */
   const GAME_IDS = new Set(['memoria', 'rena', 'velha', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'empilha', 'cofre', 'cifra', 'caca', 'memlogos', 'memequipe', 'quiz', 'quizpp', 'campo', 'detetive', 'lig4', 'naval', 'tempo', 'forca', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa']);
   const scnOfG = g => /^tempo/.test(g) ? 'tempo' : /^memoria/.test(g) ? 'memoria' : /^reflexo/.test(g) ? 'reflexo' : g;
-  window.__recTop = id => { try { const o = REC.all(); let best = null; HF_G.forEach(([rid, , k]) => { if (best || scnOfG(rid) !== id) return; const L = (o[rid] || []).filter(e => recVis(e.n)); if (L.length) best = { n: L[0].n, v: hfFmt(k, L[0].s) }; }); return best; } catch (e) { return null; } };
+  window.__recTop = id => { try { const o = REC.all(); let best = null; HF_G.forEach(([rid, , k]) => { if (best || scnOfG(rid) !== id) return; const L = REC.list(rid).filter(e => recVis(e.n)); if (L.length) best = { n: L[0].n, v: hfFmt(k, L[0].s) }; }); return best; } catch (e) { return null; } };
   window.__GCAT = { acao: 'missil disputa estrada patos duelo plataforma moto rena corrida empilha pacote corre lado heli pula pinball tetris cobra carro tanque tijolos invasores asteroides comecome atravessa estilingue boliche arco tower airhockey basquete penalti corte explode reflexo tempo caca', mente: 'cores memoria memlogos memequipe velha palavras puzzle difs labirinto cofre campo lig4 naval forca d2048 tubos intruso', fotos: 'zoom revela realia linha onde detalhe preco peso memequipe', cyber: 'cifra quiz quizpp detetive caca campo cofre atravessa tower' };
   window.__GNOVO = { missil: '2026-11-26', cores: '2026-11-26', disputa: '2026-11-26', estrada: '2026-11-26', patos: '2026-11-26', duelo: '2026-11-26', plataforma: '2026-11-26', moto: '2026-11-26', invasores: '2026-11-25', asteroides: '2026-11-25', comecome: '2026-11-25', atravessa: '2026-11-25', estilingue: '2026-11-25', boliche: '2026-11-25', arco: '2026-11-25', tower: '2026-11-25', airhockey: '2026-11-25', pacote: '2026-11-24', corre: '2026-11-24', lado: '2026-11-24', heli: '2026-11-24', pula: '2026-11-24', pinball: '2026-11-24', tetris: '2026-11-24', cobra: '2026-11-24', carro: '2026-11-24', tanque: '2026-11-24', tijolos: '2026-11-24' };
   const GAME_IDLE = 120000, GS_THUMB = /[?&]thumb/.test(location.search); window.__GAME_IDS = GAME_IDS;
@@ -11060,18 +11063,21 @@ function H_medalha() {
     return { t: `Faltou ${falta} para o recorde de ${top.n}` + (L.length >= 5 ? ` · ${difFmt(k, Math.abs(L[4].s - s))} para o top 5` : ''), c: '#ffb38a' }; };
   const recCorner = (s, live) => {
     if (NE.on) return; const id = s.recId ? s.recId() : s.id, hf = HF_G.find(g => g[0] === id), k = hf ? hf[2] : RC_X[id]; if (!k) return;
-    if (live && GH[s.id]) { let v; try { v = GH[s.id](s); } catch (e) {} if (typeof v === 'number' && isFinite(v)) { const asc = GH_ASC.has(s.id), top = REC.list(id).filter(e => !/^visitante$/i.test(e.n || ''))[0], u = Math.min(W / 88, H / 50), x = u * 2, y = H * .14, w = u * 20, h = u * 7.2;
-      ctx.fillStyle = 'rgba(52,12,24,.7)'; rr2(x, y, w, h, u * .9); ctx.fill(); ctx.strokeStyle = 'rgba(255,211,107,.35)'; ctx.lineWidth = 1; ctx.stroke();
-      if (!top) { T2('🏆 SEM RECORDE AINDA', x + u, y + u * 1.4, u * .95, '#ffd36b', 700, 'left', 'sans-serif'); T2('você: ' + hfFmt(k, v), x + u, y + u * 3.3, u * 1.3, '#fff', 700, 'left', 'sans-serif'); T2('termine e seja o primeiro!', x + u, y + u * 5.2, u * .85, 'rgba(255,255,255,.7)', 600, 'left', 'sans-serif'); return; }
-      T2('🏆 RECORDE · ' + top.n, x + u, y + u * 1.4, njFit('🏆 RECORDE · ' + top.n, w - u * 2, u * .8), '#ffd36b', 700, 'left', 'sans-serif'); T2(hfFmt(k, top.s), x + w - u, y + u * 1.4, u * 1, '#ffe3a0', 700, 'right', 'sans-serif');
-      const won = asc ? false : v > top.s, over = asc && v > top.s, f = asc ? Math.min(1, v / top.s) : Math.min(1, v / top.s);
-      ctx.fillStyle = 'rgba(255,255,255,.14)'; rr2(x + u, y + u * 2.8, w - u * 2, u * 1, u * .45); ctx.fill();
-      ctx.fillStyle = won ? '#3dffa8' : over ? '#ff5f7a' : asc ? (f > .8 ? '#ffb347' : '#3dffa8') : (f > .8 ? '#ffd36b' : '#7fb8ff'); rr2(x + u, y + u * 2.8, Math.max(u, (w - u * 2) * f), u, u * .45); ctx.fill();
-      const pulse = .6 + .4 * Math.sin(performance.now() / 160);
-      if (won) T2('🔥 NOVO RECORDE! ' + hfFmt(k, v), x + u, y + u * 5.3, njFit('🔥 NOVO RECORDE! ' + hfFmt(k, v), w - u * 2, u * 1.3), `rgba(61,255,168,${pulse})`, 800, 'left', 'sans-serif');
-      else if (asc) T2(over ? '😬 já passou do recorde' : `você: ${hfFmt(k, v)} · sobram ${difFmt(k, top.s - v)}`, x + u, y + u * 5.3, njFit(over ? '😬 já passou do recorde' : `você: ${hfFmt(k, v)} · sobram ${difFmt(k, top.s - v)}`, w - u * 2, u * 1.15), over ? '#ff8fb1' : '#fff', 700, 'left', 'sans-serif');
-      else if (v === top.s) T2('⚡ empatou! mais um!', x + u, y + u * 5.3, u * 1.1, `rgba(255,211,107,${pulse})`, 800, 'left', 'sans-serif');
-      else T2(`você: ${hfFmt(k, v)} · ${top.s - v === 1 ? 'falta' : 'faltam'} ${difFmt(k, top.s - v)}`, x + u, y + u * 5.3, njFit(`você: ${hfFmt(k, v)} · ${top.s - v === 1 ? 'falta' : 'faltam'} ${difFmt(k, top.s - v)}`, w - u * 2, u * 1.15), top.s - v <= Math.max(1, top.s * .1) ? '#ffd36b' : '#fff', 700, 'left', 'sans-serif');
+    if (live && GH[s.id]) { let v; try { v = GH[s.id](s); } catch (e) {} if (typeof v === 'number' && isFinite(v)) { const asc = GH_ASC.has(s.id) || REC.ASC.test(id), L = REC.list(id).filter(e => !/^visitante$/i.test(e.n || '')).slice(0, 3), u = Math.min(W / 88, H / 50), x = u * 2, y = H * .14, w = u * 20;
+      if (!L.length) { const h = u * 7.2; ctx.fillStyle = 'rgba(52,12,24,.7)'; rr2(x, y, w, h, u * .9); ctx.fill(); ctx.strokeStyle = 'rgba(255,211,107,.35)'; ctx.lineWidth = 1; ctx.stroke(); T2('🏆 SEM RECORDE AINDA', x + u, y + u * 1.4, u * .95, '#ffd36b', 700, 'left', 'sans-serif'); T2('você: ' + hfFmt(k, v), x + u, y + u * 3.3, u * 1.3, '#fff', 700, 'left', 'sans-serif'); T2('termine e seja o primeiro!', x + u, y + u * 5.2, u * .85, 'rgba(255,255,255,.7)', 600, 'left', 'sans-serif'); return; }
+      // posição ao vivo: quantos do top 3 ainda estão à sua frente (empate não passa)
+      const pos = v > 0 ? L.filter(e => asc ? e.s <= v : e.s >= v).length : L.length, R0 = s._rk || (s._rk = { p: L.length, last: L.length, fl: 0, who: '' }), now = performance.now();
+      if (v <= 0 || R0.g !== id) { R0.p = L.length; R0.last = L.length; R0.g = id; }
+      if (pos < R0.last) { R0.fl = now; R0.who = L[pos] ? L[pos].n : ''; R0.np = pos; } R0.last = pos; R0.p += (pos - R0.p) * Math.min(1, .12 * 60 / 60 * 2);
+      const lh = u * 1.75, rows = L.length + 1, hh = u * 2.3, h = hh + rows * lh + u * .5, P = R0.p, fl = now - R0.fl < 1800;
+      ctx.fillStyle = 'rgba(52,12,24,.72)'; rr2(x, y, w, h, u * .9); ctx.fill(); ctx.strokeStyle = fl ? `rgba(61,255,168,${.5 + .4 * Math.sin(now / 90)})` : 'rgba(255,211,107,.35)'; ctx.lineWidth = fl ? 2 : 1; ctx.stroke();
+      const head = fl ? `⬆ passou ${R0.who}! agora ${R0.np + 1}º` : pos === 0 ? '🔥 NOVO RECORDE!' : `faltam ${difFmt(k, Math.abs(L[pos - 1].s - v))} p/ o ${pos}º`;
+      T2('🏆 TOP 3', x + u, y + u * 1.3, u * .9, '#ffd36b', 800, 'left', 'sans-serif'); T2(head, x + w - u, y + u * 1.3, njFit(head, w - u * 7, u * .9), fl || pos === 0 ? '#3dffa8' : 'rgba(255,255,255,.8)', 700, 'right', 'sans-serif');
+      const rowY = i => y + hh + i * lh + lh / 2, med = i => ['🥇', '🥈', '🥉', '4º'][Math.max(0, Math.min(3, Math.round(i)))];
+      L.forEach((e, j) => { const di = P <= j ? j + 1 : P >= j + 1 ? j : j + (j + 1 - P), ry = rowY(di), dim = Math.round(di) >= 3; ctx.globalAlpha = dim ? .55 : 1;
+        T2(med(di), x + u * 1.6, ry, u * .95, '#fff', 400, 'center', 'sans-serif'); T2(e.n, x + u * 3, ry, njFit(e.n, w * .5, u * .95), '#fff4e3', 600, 'left', 'sans-serif'); T2(hfFmt(k, e.s), x + w - u, ry, u * .95, '#ffe3a0', 700, 'right', 'sans-serif'); ctx.globalAlpha = 1; });
+      { const ry = rowY(P), pulse = .55 + .45 * Math.sin(now / 160); ctx.fillStyle = pos === 0 ? `rgba(61,255,168,${.22 + .12 * pulse})` : 'rgba(127,227,255,.2)'; rr2(x + u * .4, ry - lh * .46, w - u * .8, lh * .92, u * .5); ctx.fill(); ctx.strokeStyle = pos === 0 ? '#3dffa8' : 'rgba(127,227,255,.7)'; ctx.lineWidth = 1.5; ctx.stroke();
+        T2(pos < 3 ? med(pos) : '▶', x + u * 1.6, ry, u * .95, '#fff', 400, 'center', 'sans-serif'); T2('VOCÊ', x + u * 3, ry, u * .95, pos === 0 ? '#3dffa8' : '#7fe3ff', 900, 'left', 'sans-serif'); T2(hfFmt(k, v), x + w - u, ry, u * 1, '#ffffff', 800, 'right', 'sans-serif'); }
       return; } }
     const L = REC.list(id).slice(0, 3), u = Math.min(W / 88, H / 50), x = u * 2, y = H * .14, lh = u * 1.9, w = u * 17, h = u * 2.6 + Math.max(1, L.length) * lh;
     ctx.save(); ctx.globalAlpha = 1; ctx.fillStyle = 'rgba(52,12,24,.62)'; rr2(x, y, w, h, u * .9); ctx.fill(); ctx.strokeStyle = 'rgba(255,211,107,.28)'; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
@@ -11120,7 +11126,7 @@ function H_medalha() {
   /* ================= backup na nuvem (Firebase Firestore via REST) ================= */
   const SY = (() => {
     const KEYS = ['cgMural', 'cgMuralDel', 'cgPixel', 'cgEmojis', 'cgRecordes', 'cgSlideRx', 'cgPresentes', 'cgEnquete', 'cgConteudo', 'cgMosaico', 'cgArvore', 'cgEstrelas', 'cgSlideRxW', 'cgEscava', 'cgMilhao', 'cgFotos', 'cgStats'];
-    const ASC = /^(memoria|memlogos|memequipe|puzzle|palavras|difs|labirinto|corrida|cofre|campo|detetive|naval|tempo.*|rf\d+)$/;
+    const ASC = /^(memoria.*|memlogos|memequipe|puzzle|palavras|difs|labirinto|corrida|cofre|campo|detetive|naval|cifra|tempo.*|rf\d+|reflexo.*)$/;
     const st = { on: false, last: 0, err: '', busy: false, dirty: new Set(), applying: false };
     window.__cloud = st;
     // configuração: ?cloud=PROJETO:CHAVE (fica salva só no aparelho) ou ?cloud=off para desligar
@@ -11141,7 +11147,7 @@ function H_medalha() {
         if (k === 'cgConteudo') return (L.ts || 0) >= (R.ts || 0) ? L : R;
         if (k === 'cgMuralDel') return [...new Set([...(L || []), ...(R || [])])].slice(-800);
         if (k === 'cgMural') { const del = new Set([...(rawGet('cgMuralDel') || []), ...(st.remoteDel || [])]); return byKey([...L, ...R], x => x.t + '|' + x.m).filter(x => !del.has(x.t)).sort((a, b) => b.t - a.t).slice(0, 600); }
-        if (k === 'cgRecordes') { const o = { __seed1: 1 }; new Set([...Object.keys(L), ...Object.keys(R)]).forEach(g => { if (g.startsWith('__') || g === 'z') return; const asc = ASC.test(g); o[g] = byKey([...(L[g] || []), ...(R[g] || [])], e => e.n + '|' + e.s).sort((a, b) => asc ? a.s - b.s : b.s - a.s).slice(0, 5); }); return o; }
+        if (k === 'cgRecordes') { const o = { __seed1: 1 }; new Set([...Object.keys(L), ...Object.keys(R)]).forEach(g => { if (g.startsWith('__') || g === 'z') return; o[g] = REC.norm(g, byKey([...(L[g] || []), ...(R[g] || [])], e => e.n + '|' + e.s)); }); return o; }
         const newer = (a, b, f) => (f(a) || '') >= (f(b) || '') ? a : b;
         if (k === 'cgEmojis') { if (L.d !== R.d) return newer(L, R, x => x.d === hojeKey() ? '~' : x.d); return { d: L.d, e: byKey([...L.e, ...R.e], x => x.t + '|' + x.k + '|' + x.x).sort((a, b) => a.t - b.t).slice(-900) }; }
         if (k === 'cgSlideRx') { if (L.d !== R.d) return L.d === hojeKey() ? L : R; const c = JSON.parse(JSON.stringify(L.c)); Object.entries(R.c || {}).forEach(([s, m]) => { c[s] = c[s] || {}; Object.entries(m).forEach(([e, n]) => c[s][e] = Math.max(c[s][e] || 0, n)); }); return { d: L.d, c }; }
@@ -11821,7 +11827,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795719523';
+window.__VER = '1795721837';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
