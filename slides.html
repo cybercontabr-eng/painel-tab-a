@@ -4517,10 +4517,7 @@ function H_medalha() {
 
   /* ---------- presentes (interativo): um de cada vez, cada um com uma surpresa ---------- */
   const PR_PRE = [
-
-    ,
     ['👏', 'Elogio do coordenador', 'na frente de todo mundo', 1],
-    ,
     ['📚', 'Trabalho extra', 'um relatório de 300 páginas', -1], ['🎆', 'Plantão no Réveillon', 'alguém tinha que ficar', -1], ['⏰', 'Prazo para ontem', 'urgente, urgentíssimo', -1],
     ['🔄', 'Atualização obrigatória', 'do sistema, às 17h55 de sexta', -1], ['💾', 'HD de 4 TB para periciar', 'até segunda-feira', -1], ['🔑', 'Troca de senha', 'de novo, com 16 caracteres', -1],
     ['🕕', 'Operação às 6h', 'despertador às 4h30', -1], ['📞', 'Reunião que podia ser e-mail', 'duração: 2 horas', -1], ['🖨️', 'Impressora sem toner', 'justo no dia do prazo', -1],
@@ -4549,8 +4546,6 @@ function H_medalha() {
     ['📻', 'Rádio de pilha', 'só pega AM', 0], ['🧸', 'Ursinho de pelúcia', 'saiu da máquina de garra depois de 40 tentativas', 0], ['🔖', 'Marcador de página', 'para o processo de 9 volumes', 0],
     ['🧯', 'Um extintor', 'para apagar os incêndios das urgências', 0], ['🎲', 'Um dado', 'para decidir qual processo fazer primeiro', 0], ['🌵', 'Um cacto', 'tão espinhoso quanto o processo', 0],
     ['🍋', 'Um limão', 'agora é com você: faça uma limonada', 0], ['🧴', 'Álcool em gel', 'o frasco de 2020, ainda cheio', 0], ['🪥', 'Escova de dente de hotel', 'ainda na embalagem', 0],
-    ,
-    ,
     ['🎉', 'Confraternização liberada', 'com open bar', 1, 'de água com gás'], ['📈', 'Promoção garantida', 'com cargo novo', 1, 'cargo: responsável pela cafeteira'], ['🎮', 'Videogame liberado no expediente', 'pode jogar à vontade', 1, 'é este painel do corredor mesmo'],
     ['🛌', 'Pode chegar mais tarde amanhã', 'sem desconto', 1, 'às 7h59 em vez de 7h58'], ['🧹', 'Escala de limpeza da copa', 'você é o primeiro da lista', -1], ['🐞', 'Erro no sistema', 'descoberto na sexta às 18h', -1],
     ['📧', '312 e-mails não lidos', 'todos marcados como urgente', -1], ['🔐', 'Senha expirada', 'e o suporte só volta segunda', -1], ['🧾', 'Planilha de 40 abas', 'para conferir linha por linha', -1],
@@ -4568,8 +4563,8 @@ function H_medalha() {
     id: 'presentes', name: 'abra um presente', el: $('[data-scene=presentes]'), N: 4,
     setup() { this.conf = []; this.pool = []; this.count = this.loadN(); this.set = this.mkSet(); this.pick = -1; },
     loadN() { const d = LS.get('cgPresentes', null); return d && d.d === hojeKey() ? d.n : 0; },
-    mk() { if (!this.pool.length) this.pool = PR_PRE.map((x, i) => i).sort(() => Math.random() - .5); const pr = PR_PRE[this.pool.pop()];
-      return { pr, c: PR_PAL[Math.floor(rnd(0, PR_PAL.length))], pat: Math.floor(rnd(0, 4)), asp: rnd(.82, 1.15), bow: Math.floor(rnd(0, 2)), rot: rnd(-.05, .05) }; },
+    mk() { if (!this.pool.length) this.pool = PR_PRE.map((x, i) => i).sort(() => Math.random() - .5); let pr = PR_PRE[this.pool.pop()]; while (!pr) pr = PR_PRE[Math.floor(Math.random() * PR_PRE.length)];
+      return { pr, c: PR_PAL[Math.floor(rnd(0, PR_PAL.length))], pat: Math.floor(rnd(0, 5)), asp: rnd(.82, 1.15), bow: Math.random() < .6 ? 1 : 0, tag: Math.random() < .4, rot: rnd(-.04, .04) }; },
     mkSet() { const cs = PR_PAL.slice().sort(() => Math.random() - .5); return Array.from({ length: this.N }, (_, i) => Object.assign(this.mk(), { c: cs[i % cs.length] })); },
     enter() { this.t0 = null; this.st = 0; this.conf.length = 0; this.count = this.loadN(); this.pick = -1; },
     holding() { return this.st > 0 && this.st < 4; },
@@ -4579,25 +4574,53 @@ function H_medalha() {
     advance() { this.st = 3; this.at = this.T; },
     open() { this.st = 2; this.at = this.T; this.count++; LS.set('cgPresentes', { d: hojeKey(), n: this.count });
       const { x, y, s } = this.geo(this.pick), g = this.set[this.pick], cols = g.pr[3] > 0 ? [g.c[0], g.c[1], '#ffd36b', '#fff', '#7fe3ff'] : g.pr[3] < 0 ? ['#9aa3b5', '#5a6278', '#fff'] : [g.c[0], g.c[1], '#fff'];
-      for (let k = 0; k < (g.pr[3] > 0 ? 110 : 40); k++) this.conf.push({ x, y: y - s * .9, vx: rnd(-320, 320), vy: rnd(-620, -180), r: rnd(0, TAU), vr: rnd(-8, 8), w: rnd(4, 10), c: cols[k % cols.length], l: 1 }); },
+      for (let k = 0; k < (g.pr[3] > 0 ? 110 : 40); k++) this.conf.push({ x, y: y - s * .9, vx: rnd(-320, 320), vy: rnd(-620, -180), r: rnd(0, TAU), vr: rnd(-8, 8), w: rnd(4, 10), c: cols[k % cols.length], l: 1, st: k % 5 === 0 }); },
     geo(i) { const s = Math.min(W * .15, H * .24); return { x: W / 2 + (i - (this.N - 1) / 2) * s * 1.55, y: H * .9, s }; },
-    box(g, x, y, s, lid, alpha, shake) {
-      const w = s * g.asp, h = s * .82 / g.asp * .95 + s * .1;
+    // embalagem pré-desenhada (corpo e tampa) e guardada no próprio presente: leve para o tablet
+    spr(g, s) { if (g._s === s && g._b) return; g._s = s; const w = s * g.asp, h = s * .82 / g.asp * .95 + s * .12, d = w * .2, c0 = g.c[0], c1 = g.c[1], P = Math.ceil(s * .02);
+      const mk = (cw, ch, fn) => { const c = document.createElement('canvas'); c.width = Math.ceil(cw); c.height = Math.ceil(ch); const x = c.getContext('2d'); fn(x); return c; };
+      const pat = (x, x0, y0, ww, hh) => { x.save(); x.beginPath(); x.rect(x0, y0, ww, hh); x.clip(); x.fillStyle = 'rgba(255,255,255,.17)'; x.strokeStyle = 'rgba(255,255,255,.2)'; x.lineWidth = s * .025;
+        if (g.pat === 1) for (let i = -8; i < 14; i++) { x.beginPath(); x.moveTo(x0 + i * s * .14, y0); x.lineTo(x0 + i * s * .14 + s * .07, y0); x.lineTo(x0 + i * s * .14 + s * .07 + hh * .6, y0 + hh); x.lineTo(x0 + i * s * .14 + hh * .6, y0 + hh); x.fill(); }
+        else if (g.pat === 2) for (let yy = y0 + s * .08; yy < y0 + hh; yy += s * .15) for (let xx = x0 + s * .06; xx < x0 + ww; xx += s * .15) { x.beginPath(); x.arc(xx + (Math.round((yy - y0) / (s * .15)) % 2 ? s * .07 : 0), yy, s * .026, 0, TAU); x.fill(); }
+        else if (g.pat === 3) { x.font = `${s * .09}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; for (let yy = y0 + s * .1; yy < y0 + hh; yy += s * .2) for (let xx = x0 + s * .1; xx < x0 + ww; xx += s * .2) { x.fillStyle = 'rgba(255,255,255,.32)'; x.fillText('✦', xx + (Math.round((yy - y0) / (s * .2)) % 2 ? s * .1 : 0), yy); } }
+        else { for (let yy = y0 + s * .12; yy < y0 + hh; yy += s * .2) { x.beginPath(); for (let xx = x0; xx <= x0 + ww + s * .1; xx += s * .1) x.lineTo(xx, yy + ((Math.round((xx - x0) / (s * .1))) % 2 ? s * .05 : -s * .05)); x.stroke(); } }
+        x.restore(); };
+      // corpo: frente + lateral em perspectiva, fita, brilho e etiqueta
+      g._bw = w + d + P * 2; g._bh = h + d * .5 + P * 2;
+      g._b = mk(g._bw, g._bh, x => { x.translate(P + w / 2, P + d * .5 + h);
+        const fg = x.createLinearGradient(-w / 2, 0, w / 2, 0); fg.addColorStop(0, shade(c0, .18)); fg.addColorStop(.6, c0); fg.addColorStop(1, shade(c0, -.18)); x.fillStyle = fg; x.fillRect(-w / 2, -h, w, h); pat(x, -w / 2, -h, w, h);
+        x.fillStyle = shade(c0, -.42); x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2 + d, -d * .5); x.lineTo(w / 2 + d, -h - d * .5); x.lineTo(w / 2, -h); x.fill();
+        const rb = s * .13; x.fillStyle = shade(c1, -.1); x.fillRect(-rb / 2, -h, rb, h); x.fillStyle = 'rgba(255,255,255,.35)'; x.fillRect(-rb / 2 + rb * .15, -h, rb * .12, h); x.fillStyle = 'rgba(0,0,0,.15)'; x.fillRect(rb / 2 - rb * .15, -h, rb * .15, h);
+        x.fillStyle = shade(c1, -.4); x.beginPath(); x.moveTo(w / 2 + d * .4, -d * .2); x.lineTo(w / 2 + d * .6, -d * .3); x.lineTo(w / 2 + d * .6, -h - d * .3); x.lineTo(w / 2 + d * .4, -h - d * .2); x.fill();
+        const gl = x.createLinearGradient(-w / 2, -h, -w / 2 + w * .5, 0); gl.addColorStop(0, 'rgba(255,255,255,.28)'); gl.addColorStop(.35, 'rgba(255,255,255,0)'); x.fillStyle = gl; x.fillRect(-w / 2, -h, w, h);
+        x.fillStyle = 'rgba(0,0,0,.18)'; x.fillRect(-w / 2, -s * .02, w, s * .02);
+        if (g.tag) { const tx = -w * .28, ty = -h * .62; x.strokeStyle = 'rgba(255,255,255,.7)'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(-rb / 2, -h * .78); x.lineTo(tx + s * .06, ty - s * .05); x.stroke(); x.save(); x.translate(tx, ty); x.rotate(-.18); x.fillStyle = '#fff8ea'; x.beginPath(); x.moveTo(-s * .1, -s * .05); x.lineTo(s * .06, -s * .05); x.lineTo(s * .1, 0); x.lineTo(s * .06, s * .05); x.lineTo(-s * .1, s * .05); x.closePath(); x.fill(); x.fillStyle = shade(c0, -.2); x.font = `700 ${s * .045}px sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('p/ você', -s * .015, s * .003); x.restore(); } });
+      // tampa: frente, topo, laço com alças e pontas
+      const lw = w * 1.08, lh = s * .17; g._lw = lw + d + P * 2 + s * .5; g._lh = lh + d * .5 + s * .5 + P * 2; g._lox = P + s * .25 + lw / 2; g._loy = P + s * .42 + d * .5 + lh;
+      g._l = mk(g._lw, g._lh, x => { x.translate(g._lox, g._loy);
+        x.fillStyle = shade(c0, .12); x.fillRect(-lw / 2, -lh, lw, lh); x.fillStyle = 'rgba(0,0,0,.18)'; x.fillRect(-lw / 2, -s * .025, lw, s * .025);
+        x.fillStyle = shade(c0, -.35); x.beginPath(); x.moveTo(lw / 2, 0); x.lineTo(lw / 2 + d, -d * .5); x.lineTo(lw / 2 + d, -lh - d * .5); x.lineTo(lw / 2, -lh); x.fill();
+        x.fillStyle = shade(c0, .32); x.beginPath(); x.moveTo(-lw / 2, -lh); x.lineTo(lw / 2, -lh); x.lineTo(lw / 2 + d, -lh - d * .5); x.lineTo(-lw / 2 + d, -lh - d * .5); x.fill();
+        const rb = s * .13; x.fillStyle = shade(c1, -.1); x.fillRect(-rb / 2, -lh, rb, lh); x.fillStyle = c1; x.beginPath(); x.moveTo(-rb / 2, -lh); x.lineTo(rb / 2, -lh); x.lineTo(rb / 2 + d, -lh - d * .5); x.lineTo(-rb / 2 + d, -lh - d * .5); x.fill();
+        x.beginPath(); x.moveTo(-lw / 2 + d * .5, -lh - d * .25 - rb * .2); x.lineTo(lw / 2 + d * .5, -lh - d * .25 - rb * .2); x.lineTo(lw / 2 + d * .5, -lh - d * .25 + rb * .2); x.lineTo(-lw / 2 + d * .5, -lh - d * .25 + rb * .2); x.fill();
+        const bx = d * .5, by = -lh - d * .25;
+        if (g.bow) { [[-1, -.45], [1, .45]].forEach(([sd, a]) => { x.save(); x.translate(bx + sd * s * .13, by - s * .1); x.rotate(a); x.fillStyle = c1; x.beginPath(); x.ellipse(0, 0, s * .16, s * .095, 0, 0, TAU); x.fill(); x.fillStyle = shade(c1, -.35); x.beginPath(); x.ellipse(sd * -s * .02, s * .01, s * .08, s * .04, 0, 0, TAU); x.fill(); x.fillStyle = 'rgba(255,255,255,.35)'; x.beginPath(); x.ellipse(-s * .03, -s * .045, s * .07, s * .02, 0, 0, TAU); x.fill(); x.restore(); });
+          x.fillStyle = shade(c1, -.15); [[-1], [1]].forEach(([sd]) => { x.beginPath(); x.moveTo(bx, by - s * .06); x.lineTo(bx + sd * s * .14, by + s * .16); x.lineTo(bx + sd * s * .08, by + s * .14); x.lineTo(bx + sd * s * .05, by + s * .19); x.closePath(); x.fill(); }); }
+        else { for (let i = 0; i < 7; i++) { x.save(); x.translate(bx, by - s * .06); x.rotate(-Math.PI / 2 + (i - 3) * .42); x.fillStyle = i % 2 ? c1 : shade(c1, -.18); x.beginPath(); x.ellipse(0, -s * .12, s * .045, s * .12, 0, 0, TAU); x.fill(); x.restore(); } }
+        x.fillStyle = shade(c1, -.25); x.beginPath(); x.arc(bx, by - s * .08, s * .045, 0, TAU); x.fill(); x.fillStyle = 'rgba(255,255,255,.4)'; x.beginPath(); x.arc(bx - s * .015, by - s * .095, s * .015, 0, TAU); x.fill(); }); },
+    box(g, x, y, s, lid, alpha, shake, sq = 1, glow = 0) {
+      this.spr(g, s); const w = s * g.asp, h = s * .82 / g.asp * .95 + s * .12, d = w * .2, P = Math.ceil(s * .02);
       ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x + shake, y); ctx.rotate(g.rot);
-      ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(0, 4, w * .58, s * .07, 0, 0, TAU); ctx.fill();
-      const bg = ctx.createLinearGradient(-w / 2, 0, w / 2, 0); bg.addColorStop(0, shade(g.c[0], .12)); bg.addColorStop(1, shade(g.c[0], -.3)); ctx.fillStyle = bg; rr2(-w / 2, -h, w, h, s * .04); ctx.fill();
-      ctx.save(); rr2(-w / 2, -h, w, h, s * .04); ctx.clip(); ctx.fillStyle = 'rgba(255,255,255,.16)';
-      if (g.pat === 1) for (let i = -6; i < 12; i++) { ctx.beginPath(); ctx.moveTo(-w / 2 + i * s * .14, -h); ctx.lineTo(-w / 2 + i * s * .14 + s * .07, -h); ctx.lineTo(-w / 2 + i * s * .14 + s * .07 + h * .6, 0); ctx.lineTo(-w / 2 + i * s * .14 + h * .6, 0); ctx.fill(); }
-      else if (g.pat === 2) for (let yy = -h + s * .08; yy < 0; yy += s * .15) for (let xx = -w / 2 + s * .08; xx < w / 2; xx += s * .15) { ctx.beginPath(); ctx.arc(xx + ((yy / (s * .15)) % 2 ? s * .07 : 0), yy, s * .025, 0, TAU); ctx.fill(); }
-      else if (g.pat === 3) for (let yy = -h + s * .1; yy < 0; yy += s * .2) for (let xx = -w / 2 + s * .1; xx < w / 2; xx += s * .2) T2('✦', xx, yy, s * .08, 'rgba(255,255,255,.3)', 400, 'center', 'sans-serif');
+      ctx.fillStyle = 'rgba(0,0,0,.32)'; ctx.beginPath(); ctx.ellipse(d * .3, 2, (w + d) * .56, s * .07, 0, 0, TAU); ctx.fill();
+      ctx.scale(1 / Math.sqrt(sq), sq);
+      if (glow) { ctx.save(); ctx.globalAlpha = alpha * glow; ga(g.c[1], s * 1.1, 0, -h * .6, .5); ctx.restore(); }
+      ctx.drawImage(g._b, -P - w / 2, -P - d * .5 - h);
+      // tampa: sobe girando e some
+      ctx.save(); const ly = -h - lid * s * 1.6 + lid * lid * s * .5, lr = lid * (g.rot > 0 ? 1.3 : -1.3); ctx.translate(lid * (g.rot > 0 ? s * .4 : -s * .4), ly); ctx.rotate(lr); ctx.globalAlpha = alpha * (1 - lid * .85);
+      ctx.drawImage(g._l, -g._lox, -g._loy); ctx.restore();
+      // luz saindo da caixa aberta
+      if (lid > 0) { const k = Math.min(1, lid * 2) * alpha; ctx.save(); ctx.globalCompositeOperation = 'lighter'; const lg = ctx.createLinearGradient(0, -h, 0, -h - s * 1.6); lg.addColorStop(0, `rgba(255,240,180,${.55 * k})`); lg.addColorStop(1, 'rgba(255,240,180,0)'); ctx.fillStyle = lg; ctx.beginPath(); ctx.moveTo(-w * .42, -h); ctx.lineTo(w * .42 + d * .5, -h); ctx.lineTo(w * .9, -h - s * 1.6); ctx.lineTo(-w * .9, -h - s * 1.6); ctx.fill(); ctx.restore(); }
       ctx.restore();
-      ctx.fillStyle = g.c[1]; ctx.fillRect(-s * .06, -h, s * .12, h);
-      // tampa
-      ctx.save(); ctx.translate(0, -h - lid * s * 1.4); ctx.rotate(lid * (g.rot > 0 ? .9 : -.9)); ctx.globalAlpha = alpha * (1 - lid * .8);
-      ctx.fillStyle = shade(g.c[0], .2); rr2(-w * .55, -s * .16, w * 1.1, s * .18, s * .04); ctx.fill(); ctx.fillStyle = g.c[1]; ctx.fillRect(-s * .06, -s * .16, s * .12, s * .18);
-      if (g.bow) { ctx.beginPath(); ctx.ellipse(-s * .15, -s * .24, s * .16, s * .09, -.5, 0, TAU); ctx.ellipse(s * .15, -s * .24, s * .16, s * .09, .5, 0, TAU); ctx.fill(); ctx.beginPath(); ctx.arc(0, -s * .2, s * .05, 0, TAU); ctx.fill(); }
-      else { for (let i = 0; i < 6; i++) { ctx.save(); ctx.rotate(-Math.PI / 2 + (i - 2.5) * .45); ctx.beginPath(); ctx.ellipse(0, -s * .2 - s * .1, s * .05, s * .12, 0, 0, TAU); ctx.restore(); ctx.fill(); } }
-      ctx.restore(); ctx.restore();
     },
     frame(t, dt) {
       const T = this.T = T3(this, t), u = Math.min(W / 88, H / 50);
@@ -4609,10 +4632,13 @@ function H_medalha() {
       // os presentes para escolher
       for (let i = 0; i < this.N; i++) { const g = this.set[i], G = this.geo(i), me = i === this.pick && this.st >= 1 && this.st <= 3;
         const lid = me && this.st >= 2 ? Math.min(1, (T - (this.st === 2 ? this.at : this.at - 1)) / .45) : 0, alpha = (this.pick >= 0 && !me && this.st >= 1 && this.st <= 3 ? .28 : 1) * (1 - slide), dy = (slide + inn) * H * .4;
-        const shake = me && this.st === 1 ? Math.sin(T * 55) * (2 + (T - this.at) * 22) : 0, bob = this.st === 0 ? Math.sin(T * 2.2 + i * 1.4) * 4 : 0;
-        if (this.st === 0 && i === hi) ga(g.c[1], G.s * 1.1, G.x, G.y - G.s * .5, .14 + .06 * Math.sin(T * 3));
-        this.box(g, G.x, G.y + dy + bob, G.s, lid, alpha, shake); }
-      if (this.st === 0) { const G = this.geo(hi); T2('👆', G.x, H * .9 + u * 2.2 + Math.sin(T * 4) * u * .4, u * 2, '#fff', 400, 'center', 'sans-serif'); T2('Escolha um dos presentes 👇', W / 2, H * .5, u * 1.9, '#fff3d6', 400, 'center', SERIF); T2('cada um tem uma surpresa (ou uma brincadeira)', W / 2, H * .5 + u * 2.4, u * 1, 'rgba(255,255,255,.6)', 600, 'center', 'sans-serif'); }
+        let shake = 0, sq = 1 + .025 * Math.sin(T * 2.4 + i * 1.4), hop = 0, glow = 0;
+        if (this.st === 0 && i === hi) { const p = (T % 1.1) / 1.1; hop = p > .15 && p < .55 ? Math.sin((p - .15) / .4 * Math.PI) * G.s * .14 : 0; sq = p < .15 ? 1 - .1 * Math.sin(p / .15 * Math.PI) : p > .55 && p < .68 ? 1 - .09 * Math.sin((p - .55) / .13 * Math.PI) : 1.02; glow = .5; }
+        if (me && this.st === 1) { const k = (T - this.at) / .5; shake = Math.sin(T * 60) * (1 + k * 10); sq = 1 - .16 * Math.sin(Math.min(1, k) * Math.PI * .5); glow = k; }
+        if (me && this.st >= 2) sq = 1 + .12 * Math.max(0, 1 - (T - this.at) / .25);
+        this.box(g, G.x, G.y + dy - hop, G.s, lid, alpha, shake, sq, glow);
+        if (this.st === 0 && i === hi) for (let k = 0; k < 3; k++) { const a = T * 1.7 + k * 2.1, r = G.s * (.7 + .1 * Math.sin(T * 3 + k)), tw = Math.max(0, Math.sin(T * 5 + k * 2)), px = G.x + Math.cos(a) * r * .8, py = G.y - G.s * .55 + Math.sin(a) * r * .55 - hop; ctx.fillStyle = `rgba(255,245,200,${tw})`; ctx.beginPath(); ctx.moveTo(px, py - 7 * tw); ctx.lineTo(px + 2, py - 2); ctx.lineTo(px + 7 * tw, py); ctx.lineTo(px + 2, py + 2); ctx.lineTo(px, py + 7 * tw); ctx.lineTo(px - 2, py + 2); ctx.lineTo(px - 7 * tw, py); ctx.lineTo(px - 2, py - 2); ctx.fill(); } }
+      if (this.st === 0) { const G = this.geo(hi); T2('👆', G.x, H * .9 + u * 2.2 + Math.sin(T * 4) * u * .4, u * 2, '#fff', 400, 'center', 'sans-serif'); T2('Escolha um dos presentes 👇', W / 2, H * .4, u * 1.9, '#fff3d6', 400, 'center', SERIF); T2('cada um tem uma surpresa (ou uma brincadeira)', W / 2, H * .4 + u * 2.4, u * 1, 'rgba(255,255,255,.6)', 600, 'center', 'sans-serif'); }
       // cartão da surpresa
       if (this.st === 2 && T - this.at < 1.6) { const g = this.set[this.pick], a = T - this.at, gb = this.geo(this.pick), rk = Math.min(1, a / .3) * Math.max(0, 1 - (a - .8) / .8), R = Math.min(W, H) * .42;
         if (g.pr[3] >= 0) { ctx.save(); ctx.translate(W / 2, H * .47); ctx.rotate(a * .6); ctx.globalAlpha = rk * (g.pr[3] > 0 ? .3 : .16); ctx.fillStyle = g.pr[3] > 0 ? '#ffe9a8' : '#e2d6ff'; for (let r = 0; r < 12; r++) { ctx.rotate(TAU / 12); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, -R * .09); ctx.lineTo(R, R * .09); ctx.fill(); } ctx.restore(); ctx.globalAlpha = 1; }
@@ -4629,7 +4655,7 @@ function H_medalha() {
         ctx.restore(); ctx.globalAlpha = 1;
         if (this.st === 2 && T - this.at > 1.6) T2('toque para o próximo presente ›', W / 2, H * .655, u * .95, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif'); }
       this.conf = this.conf.filter(c => (c.l -= dt * .45) > 0);
-      this.conf.forEach(c => { c.vy += 700 * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.r += c.vr * dt; ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.r); ctx.globalAlpha = Math.min(1, c.l * 2); ctx.fillStyle = c.c; ctx.fillRect(-c.w / 2, -c.w * .3, c.w, c.w * .6); ctx.restore(); });
+      this.conf.forEach(c => { c.vy += 700 * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.r += c.vr * dt; ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.r); ctx.globalAlpha = Math.min(1, c.l * 2); if (c.st) { ctx.strokeStyle = c.c; ctx.lineWidth = 2.5; ctx.beginPath(); for (let q = 0; q < 5; q++) ctx.lineTo(Math.sin(q * 1.6 + c.r) * 5, q * 5 - 10); ctx.stroke(); } else { ctx.fillStyle = c.c; ctx.fillRect(-c.w / 2, -c.w * .3, c.w, c.w * .6); } ctx.restore(); });
       ctx.globalAlpha = 1;
       if (this.count) T2(`🎁 ${this.count} ${this.count === 1 ? 'presente aberto' : 'presentes abertos'} hoje`, W - u * 2, H * .25, u * .95, '#ffe3a0', 700, 'right', 'sans-serif');
     }
@@ -10951,7 +10977,7 @@ function H_medalha() {
         ctx.globalAlpha = 1;
       });
       if (!n) T2('Nenhum aniversariante cadastrado.', W / 2, H * .55, u * 1.6, 'rgba(255,255,255,.6)', 400, 'center', SERIF);
-      this.conf = this.conf.filter(c => (c.l -= dt * .4) > 0); this.conf.forEach(c => { c.vy += 650 * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.r += 6 * dt; ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.r); ctx.globalAlpha = Math.min(1, c.l * 2); ctx.fillStyle = c.c; ctx.fillRect(-c.w / 2, -c.w * .3, c.w, c.w * .6); ctx.restore(); }); ctx.globalAlpha = 1;
+      this.conf = this.conf.filter(c => (c.l -= dt * .4) > 0); this.conf.forEach(c => { c.vy += 650 * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.r += 6 * dt; ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.r); ctx.globalAlpha = Math.min(1, c.l * 2); if (c.st) { ctx.strokeStyle = c.c; ctx.lineWidth = 2.5; ctx.beginPath(); for (let q = 0; q < 5; q++) ctx.lineTo(Math.sin(q * 1.6 + c.r) * 5, q * 5 - 10); ctx.stroke(); } else { ctx.fillStyle = c.c; ctx.fillRect(-c.w / 2, -c.w * .3, c.w, c.w * .6); } ctx.restore(); }); ctx.globalAlpha = 1;
     }
   };
 
@@ -11855,7 +11881,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795722750';
+window.__VER = '1795723122';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
