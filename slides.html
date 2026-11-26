@@ -4517,10 +4517,10 @@ function H_medalha() {
 
   /* ---------- presentes (interativo): um de cada vez, cada um com uma surpresa ---------- */
   const PR_PRE = [
-    ['💰', 'Bônus de fim de ano', 'caiu na conta antes do Natal', 1], ['🏖️', 'Férias aprovadas', 'sem nenhuma pendência para trás', 1], ['☕', 'Café passado na hora', 'e a garrafa cheia o dia inteiro', 1],
-    ['🍕', 'Vale-pizza', 'para a equipe toda', 1], ['🏠', 'Um dia de home office', 'pijama liberado', 1], ['📶', 'Wi-Fi que não cai', 'nem na reunião importante', 1],
-    ['❄️', 'Ar-condicionado no ponto', 'nem frio, nem calor', 1], ['⏳', 'Prazo prorrogado', 'mais 15 dias, sem justificar', 1], ['👏', 'Elogio do coordenador', 'na frente de todo mundo', 1],
-    ['🗓️', 'Folga na sexta', 'emendando com o fim de semana', 1], ['🔋', 'Tomada livre', 'e um carregador sobrando', 1], ['🍫', 'Caixa de bombom', 'escondida na gaveta só pra você', 1],
+
+    ,
+    ['👏', 'Elogio do coordenador', 'na frente de todo mundo', 1],
+    ,
     ['📚', 'Trabalho extra', 'um relatório de 300 páginas', -1], ['🎆', 'Plantão no Réveillon', 'alguém tinha que ficar', -1], ['⏰', 'Prazo para ontem', 'urgente, urgentíssimo', -1],
     ['🔄', 'Atualização obrigatória', 'do sistema, às 17h55 de sexta', -1], ['💾', 'HD de 4 TB para periciar', 'até segunda-feira', -1], ['🔑', 'Troca de senha', 'de novo, com 16 caracteres', -1],
     ['🕕', 'Operação às 6h', 'despertador às 4h30', -1], ['📞', 'Reunião que podia ser e-mail', 'duração: 2 horas', -1], ['🖨️', 'Impressora sem toner', 'justo no dia do prazo', -1],
@@ -4549,11 +4549,16 @@ function H_medalha() {
     ['📻', 'Rádio de pilha', 'só pega AM', 0], ['🧸', 'Ursinho de pelúcia', 'saiu da máquina de garra depois de 40 tentativas', 0], ['🔖', 'Marcador de página', 'para o processo de 9 volumes', 0],
     ['🧯', 'Um extintor', 'para apagar os incêndios das urgências', 0], ['🎲', 'Um dado', 'para decidir qual processo fazer primeiro', 0], ['🌵', 'Um cacto', 'tão espinhoso quanto o processo', 0],
     ['🍋', 'Um limão', 'agora é com você: faça uma limonada', 0], ['🧴', 'Álcool em gel', 'o frasco de 2020, ainda cheio', 0], ['🪥', 'Escova de dente de hotel', 'ainda na embalagem', 0],
-    ['🍰', 'Bolo de aniversário na copa', 'e ainda sobrou pedaço', 1], ['🎧', 'Fone com cancelamento de ruído', 'paz no meio da conversa do lado', 1], ['🧁', 'Cupcake surpresa', 'deixado na sua mesa', 1],
-    ['🥐', 'Café da manhã da equipe', 'com pão de queijo quentinho', 1], ['🖥️', 'Um segundo monitor', 'produtividade em dobro', 1], ['🛋️', 'Sofá na sala de descanso', 'com 20 minutos garantidos', 1],
+    ,
+    ,
     ['🎉', 'Confraternização liberada', 'com open bar', 1, 'de água com gás'], ['📈', 'Promoção garantida', 'com cargo novo', 1, 'cargo: responsável pela cafeteira'], ['🎮', 'Videogame liberado no expediente', 'pode jogar à vontade', 1, 'é este painel do corredor mesmo'],
     ['🛌', 'Pode chegar mais tarde amanhã', 'sem desconto', 1, 'às 7h59 em vez de 7h58'], ['🧹', 'Escala de limpeza da copa', 'você é o primeiro da lista', -1], ['🐞', 'Erro no sistema', 'descoberto na sexta às 18h', -1],
-    ['📧', '312 e-mails não lidos', 'todos marcados como urgente', -1], ['🔐', 'Senha expirada', 'e o suporte só volta segunda', -1], ['🧾', 'Planilha de 40 abas', 'para conferir linha por linha', -1]
+    ['📧', '312 e-mails não lidos', 'todos marcados como urgente', -1], ['🔐', 'Senha expirada', 'e o suporte só volta segunda', -1], ['🧾', 'Planilha de 40 abas', 'para conferir linha por linha', -1],
+    ['🤗', 'Um abraço do Dr. Fabrício', 'daqueles de coordenador orgulhoso', 1], ['🤗', 'Um abraço do Dr. Carlos', 'apertado e sem prazo para acabar', 1], ['🤗', 'Um abraço da Dra. Gabriella', 'com direito a sorriso', 1],
+    ['🤗', 'Um abraço do Dr. Pedro', 'vale pelo dia inteiro', 1], ['🤗', 'Um abraço do Dr. Márcio', 'carregado de boas energias', 1], ['🤗', 'Um abraço do Dr. Paulo', 'para levar para casa', 1],
+    ['🤗', 'Um abraço do Dr. Diego', 'daqueles que recarregam a bateria', 1], ['🫂', 'Um abraço coletivo', 'da equipe CyberGaeco inteira', 1], ['👏', 'Um "parabéns!" do Dr. Fabrício', 'pelo trabalho deste ano', 1],
+    ['☕', 'Um café com o Dr. Carlos', 'e uma boa conversa', 1], ['🙌', 'Um "toca aqui" do Dr. Diego', 'mais um caso resolvido', 1], ['😊', 'Um sorriso da Dra. Gabriella', 'para começar bem o dia', 1],
+    ['💬', 'Um "obrigado!" de toda a equipe', 'por fazer parte do time', 1], ['🤝', 'Um aperto de mão do Dr. Márcio', 'firme e de confiança', 1], ['💛', 'Um "você faz falta quando não está"', 'de toda a equipe', 1]
   ];
   const PR_PAL = [['#c8202f', '#ffd36b'], ['#1f6fd1', '#f4ecdc'], ['#7b3fd1', '#7fe3ff'], ['#1f8a5a', '#ff8fb1'], ['#d1661f', '#fff3d6'], ['#b0186a', '#ffd36b'], ['#0f6f7a', '#ffe08a'], ['#2a2f45', '#ff6b7a'], ['#e8e2d4', '#c8202f']];
   const presentes = {
@@ -11847,7 +11852,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795722347';
+window.__VER = '1795722493';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
