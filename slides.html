@@ -12192,6 +12192,14 @@ function H_medalha() {
   const gxEase = k => 1 - Math.pow(1 - k, 3);
   const gxNum = (v, k) => { const dc = (String(v).split('.')[1] || '').length, x = v * gxEase(k); return dc ? x.toFixed(dc).replace('.', ',') : Math.round(x).toLocaleString('pt-BR'); };
 
+  // ícones do infográfico (desenhados uma vez e reaproveitados)
+  const GXI_C = {}; const gxIco = (k, col, sz) => { const key = k + col + Math.round(sz); if (GXI_C[key]) return GXI_C[key]; return GXI_C[key] = arSpr(sz, sz, g => { const c = sz / 2, r = sz * .46;
+    if (k === 'esc') { g.beginPath(); g.moveTo(c, c - r); g.lineTo(c + r * .86, c - r * .62); g.lineTo(c + r * .78, c + r * .2); g.quadraticCurveTo(c + r * .55, c + r * .78, c, c + r); g.quadraticCurveTo(c - r * .55, c + r * .78, c - r * .78, c + r * .2); g.lineTo(c - r * .86, c - r * .62); g.closePath();
+      const gr = g.createLinearGradient(0, c - r, 0, c + r); gr.addColorStop(0, '#ffffff'); gr.addColorStop(.18, col); gr.addColorStop(1, col); g.fillStyle = gr; g.fill(); g.strokeStyle = 'rgba(0,0,0,.35)'; g.lineWidth = Math.max(1, sz * .05); g.stroke();
+      g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .17 : r * .38; g.lineTo(c + Math.cos(a) * rr, c - r * .05 + Math.sin(a) * rr); } g.closePath(); g.fill(); }
+    else { g.beginPath(); g.arc(c, c, r * .9, 0, TAU); const gr = g.createLinearGradient(0, c - r, 0, c + r); gr.addColorStop(0, '#ffffff'); gr.addColorStop(.2, col); gr.addColorStop(1, col); g.fillStyle = gr; g.fill(); g.strokeStyle = 'rgba(0,0,0,.35)'; g.lineWidth = Math.max(1, sz * .05); g.stroke();
+      g.strokeStyle = 'rgba(0,20,40,.6)'; g.lineWidth = Math.max(1.2, sz * .1); g.lineCap = 'round'; g.beginPath(); g.moveTo(c - r * .4, c); g.lineTo(c - r * .08, c + r * .32); g.lineTo(c + r * .45, c - r * .3); g.stroke(); } }); };
+  const gxPop = k => k <= 0 ? 0 : k >= 1 ? 1 : k < .6 ? (k / .6) * 1.25 : 1.25 - (k - .6) / .4 * .25;
   // A · GAECO em números (2023–2026)
   const GN_ANO = [[2023, 8, 10], [2024, 11, 11], [2025, 13, 14], [2026, 16, 13]];
   const gaeconum = {
@@ -12204,17 +12212,18 @@ function H_medalha() {
         ctx.save(); ctx.globalAlpha = a; ctx.translate(0, (1 - a) * u * 3); glass(x, y, cw, ch, u * 1.4, .5);
         const txt = (j === 3 ? 'R$ ' : '') + gxNum(v, k) + suf; T2(txt, x + u * 1.6, y + ch * .36, njFit(txt + '0', cw - u * 3.2, ch * .3), col, 900, 'left', 'sans-serif');
         T2(lb, x + u * 1.6, y + ch * .64, njFit(lb, cw - u * 3.2, u * 1.35), '#fff', 800, 'left', 'sans-serif'); T2(sub, x + u * 1.6, y + ch * .82, njFit(sub, cw - u * 3.2, u * .85), 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); ctx.restore(); });
-      // gráfico por ano: próprias (dourado) + apoios (azul), empilhadas
-      const gx = W * .5, gw = W * .46, gy = H * .26, gh = H * .5, base = gy + gh, maxv = 34, bw = gw / 4 * .5;
+      // infográfico: cada operação é um ícone (escudo dourado = do GAECO · círculo azul = apoio)
+      const gx = W * .5, gw = W * .46, gy = H * .26, gh = H * .5, base = gy + gh;
       glass(gx - u, gy - u * 3.2, gw + u * 2, gh + u * 8.4, u * 1.4, .4);
-      T2('OPERAÇÕES POR ANO', gx + u, gy - u * 1.6, u * .9, '#ffd36b', 800, 'left', 'sans-serif');
-      [['próprias', '#ffd36b'], ['apoios', '#7fe3ff']].forEach(([n, c], i) => { const lx = gx + gw - u * (i ? 7 : 15); ctx.fillStyle = c; rr2(lx, gy - u * 2.1, u, u, u * .3); ctx.fill(); T2(n, lx + u * 1.5, gy - u * 1.6, u * .8, 'rgba(255,255,255,.8)', 700, 'left', 'sans-serif'); });
-      GN_ANO.forEach(([ano, p, ap], i) => { const k = gxEase(gxIn(T, 1 + i * .45, 1.1)), cx = gx + gw / 4 * (i + .5), h1 = gh * p / maxv * k, h2 = gh * ap / maxv * k, x = cx - bw / 2;
-        const g1 = ctx.createLinearGradient(0, base - h1, 0, base); g1.addColorStop(0, '#ffe08a'); g1.addColorStop(1, '#c8901a'); ctx.fillStyle = g1; rr2(x, base - h1, bw, h1, u * .4); ctx.fill();
-        const g2 = ctx.createLinearGradient(0, base - h1 - h2, 0, base - h1); g2.addColorStop(0, '#a8f0ff'); g2.addColorStop(1, '#2a8ad8'); ctx.fillStyle = g2; rr2(x, base - h1 - h2 - 3, bw, h2, u * .4); ctx.fill();
-        if (k > .05) { T2(String(Math.round((p + ap) * k)), cx, base - h1 - h2 - u * 1.6, u * 1.7, '#fff', 900, 'center', 'sans-serif'); T2(String(p), cx, base - h1 / 2, u * .9, '#3a2a00', 800, 'center', 'sans-serif'); T2(String(ap), cx, base - h1 - h2 / 2, u * .9, '#06233a', 800, 'center', 'sans-serif'); }
-        T2(String(ano), cx, base + u * 1.5, u * 1.1, 'rgba(255,255,255,.85)', 800, 'center', 'sans-serif'); });
-      const a = gxIn(T, 3.4); if (a) { ctx.globalAlpha = a; T2('▲ 61% em quatro anos', gx + gw / 2, base + u * 4, u * 1.25, '#8dffc4', 900, 'center', 'sans-serif'); T2('de 18 operações em 2023 para 29 em 2026 (até 18/11)', gx + gw / 2, base + u * 5.7, u * .8, 'rgba(255,255,255,.6)', 600, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
+      T2('CADA ÍCONE É UMA OPERAÇÃO', gx + u, gy - u * 1.6, u * .9, '#ffd36b', 800, 'left', 'sans-serif');
+      { const lx = gx + gw - u * 14; ctx.drawImage(gxIco('esc', '#ffc83a', Math.round(u * 1.5)), lx, gy - u * 2.35); T2('do GAECO', lx + u * 1.8, gy - u * 1.6, u * .8, 'rgba(255,255,255,.8)', 700, 'left', 'sans-serif'); ctx.drawImage(gxIco('apo', '#4ec8ff', Math.round(u * 1.5)), lx + u * 7.6, gy - u * 2.35); T2('apoios', lx + u * 9.4, gy - u * 1.6, u * .8, 'rgba(255,255,255,.8)', 700, 'left', 'sans-serif'); }
+      const rowH = gh / 4, lab = u * 4.6, perRow = 15, isz = Math.min((gw - lab - u * 5) / perRow / 1.08, rowH / 2.4), gap = isz * 1.08;
+      GN_ANO.forEach(([ano, p, ap], r) => { const y = gy + r * rowH + u * .6, t0 = 1 + r * 1.1, tot = p + ap;
+        T2(String(ano), gx + u * .6, y + gap, u * 1.2, 'rgba(255,255,255,.9)', 800, 'left', 'sans-serif');
+        for (let i = 0; i < tot; i++) { const k = gxIn(T, t0 + i * .035, .35), own = i < p, col = i % perRow, rw = Math.floor(i / perRow), x = gx + lab + col * gap, yy = y + rw * gap; if (k <= 0) continue; const sz = isz * gxPop(k);
+          ctx.drawImage(gxIco(own ? 'esc' : 'apo', own ? '#ffc83a' : '#4ec8ff', Math.round(isz)), x + (isz - sz) / 2, yy + (isz - sz) / 2, sz, sz); }
+        const k = gxIn(T, t0 + tot * .035, .4); if (k) { ctx.globalAlpha = k; T2(String(tot), gx + gw - u * .4, y + gap, u * 2, '#fff', 900, 'right', 'sans-serif'); T2(`${p} + ${ap}`, gx + gw - u * .4, y + gap + u * 1.8, u * .75, 'rgba(255,255,255,.55)', 700, 'right', 'sans-serif'); ctx.globalAlpha = 1; } });
+      const a = gxIn(T, 5.6); if (a) { ctx.globalAlpha = a; T2('▲ 61% em quatro anos', gx + gw / 2, base + u * 4, u * 1.25, '#8dffc4', 900, 'center', 'sans-serif'); T2('de 18 operações em 2023 para 29 em 2026 (até 18/11)', gx + gw / 2, base + u * 5.7, u * .8, 'rgba(255,255,255,.6)', 600, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
       const b = gxIn(T, 4.5); if (b) { ctx.globalAlpha = b; T2('Buscas e prisões somam operações próprias e apoios · bloqueios em 12 operações · 2026 até 18/11', W * .04, H * .9, u * .75, 'rgba(255,255,255,.45)', 600, 'left', 'sans-serif'); ctx.globalAlpha = 1; }
     }
   };
@@ -12232,13 +12241,14 @@ function H_medalha() {
     frame(t) { const T = T3(this, t), u = UU(); ctx.drawImage(GX_BG('g15-bg', '#08101e', '#14102a'), 0, 0, W, H);
       const gx = W * .05, gw = W * .9, gy = H * .26, gh = H * .36, base = gy + gh, n = G15.length, cw = gw / n, bw = cw * .62, step = .28;
       const cur = Math.min(n - 1, Math.max(0, Math.floor((T - .6) / step)));
-      ctx.strokeStyle = 'rgba(255,255,255,.12)'; ctx.lineWidth = 1; [4, 8, 12, 16].forEach(v => { const y = base - gh * v / 17; ctx.beginPath(); ctx.moveTo(gx, y); ctx.lineTo(gx + gw, y); ctx.stroke(); T2(String(v), gx - u * .6, y, u * .7, 'rgba(255,255,255,.35)', 700, 'right', 'sans-serif'); });
-      G15.forEach(([ano, ops], i) => { const k = gxEase(gxIn(T, .6 + i * step, .7)), v = ops.length, h = gh * v / 17 * k, x = gx + i * cw + (cw - bw) / 2, last = i === n - 1, q4 = ano >= 2023;
-        const g = ctx.createLinearGradient(0, base - h, 0, base); g.addColorStop(0, last ? '#fff0a8' : q4 ? '#ffd36b' : '#7fa8e8'); g.addColorStop(1, last ? '#e0a020' : q4 ? '#b07a10' : '#2a4a8a'); ctx.fillStyle = g; rr2(x, base - h, bw, h, u * .35); ctx.fill();
-        if (last && k > .9) pbGlowAt('rgba(255,211,107,1)', bw * 1.4, x + bw / 2, base - h, .5 + .3 * Math.sin(T * 4));
-        if (k > .3) T2(String(Math.round(v * k)), x + bw / 2, base - h - u * 1.1, u * (last ? 1.5 : 1.05), last ? '#ffe08a' : '#fff', 900, 'center', 'sans-serif');
-        T2(String(ano).slice(2), x + bw / 2, base + u * 1.1, u * .85, i === cur ? '#ffd36b' : 'rgba(255,255,255,.6)', 800, 'center', 'sans-serif'); });
-      if (T > .6 + n * step) { const a = gxIn(T, .6 + n * step); ctx.globalAlpha = a; const lx = gx + gw - cw * .5; T2('RECORDE', lx, gy - u * 1.2, u * .9, '#ffd36b', 900, 'right', 'sans-serif'); ctx.globalAlpha = 1; }
+      // colunas de escudos: um escudo por operação
+      const isz = Math.min(cw * .44, gh / 9), gap = isz * 1.06;
+      G15.forEach(([ano, ops], i) => { const v = ops.length, x = gx + i * cw + cw / 2 - gap, last = i === n - 1, q4 = ano >= 2023, col = last ? '#ffd84a' : q4 ? '#f0b432' : '#6f9be8', t0 = .6 + i * step;
+        for (let j = 0; j < v; j++) { const k = gxIn(T, t0 + j * .03, .3); if (k <= 0) continue; const sz = isz * gxPop(k), y = base - (Math.floor(j / 2) + 1) * gap, xx = x + (j % 2) * gap; ctx.drawImage(gxIco('esc', col, Math.round(isz)), xx + (isz - sz) / 2, y + (isz - sz) / 2, sz, sz); }
+        const top2 = base - Math.ceil(v / 2) * gap; if (last && gxIn(T, t0 + v * .03) >= 1) pbGlowAt('rgba(255,211,107,1)', isz * 3, x + gap, top2, .35 + .25 * Math.sin(T * 4));
+        const k = gxIn(T, t0 + v * .03, .3); if (k) { ctx.globalAlpha = k; T2(String(v), x + gap, top2 - u * 1.1, u * (last ? 1.5 : 1.05), last ? '#ffe08a' : '#fff', 900, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
+        T2(String(ano).slice(2), x + gap, base + u * 1.1, u * .85, i === cur ? '#ffd36b' : 'rgba(255,255,255,.6)', 800, 'center', 'sans-serif'); });
+      if (T > .6 + n * step) { const a = gxIn(T, .6 + n * step); ctx.globalAlpha = a; const lx = gx + gw - cw * .5, isz2 = Math.min(cw * .44, gh / 9) * 1.06; T2('★ RECORDE', lx, base - 8 * isz2 - u * 3.2, u * .9, '#ffd36b', 900, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
       // nomes das operações do ano que está "acendendo"
       { const [ano, ops] = G15[cur], y0 = base + u * 3; glass(gx, y0, gw, H * .21, u * 1.2, .45); T2(String(ano), gx + u * 1.5, y0 + u * 2, u * 1.6, '#ffd36b', 900, 'left', 'sans-serif'); T2(ops.length + (ops.length === 1 ? ' operação' : ' operações'), gx + u * 7.4, y0 + u * 2, u * .95, 'rgba(255,255,255,.7)', 700, 'left', 'sans-serif');
         let x = gx + u * 1.5, y = y0 + u * 4.6; ops.forEach((o, j) => { const a = gxIn(T, .6 + cur * step + j * .05, .3); ctx.font = `700 ${u * .82}px ${SANS}`; const w = ctx.measureText(o).width + u * 1.4; if (x + w > gx + gw - u) { x = gx + u * 1.5; y += u * 2; } ctx.globalAlpha = Math.max(.15, a); ctx.fillStyle = 'rgba(255,255,255,.08)'; rr2(x, y - u * .85, w, u * 1.7, u * .85); ctx.fill(); T2(o, x + u * .7, y, u * .82, '#fff', 700, 'left', 'sans-serif'); ctx.globalAlpha = 1; x += w + u * .6; }); }
@@ -13167,7 +13177,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795746853';
+window.__VER = '1795747053';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
