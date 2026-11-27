@@ -10338,6 +10338,35 @@ function H_medalha() {
     R('#f5c79a', 44, 26, 16, 16); R('#d39364', 44, 38, 16, 4); R('#f5c79a', 40, 22, 10, 6); R('#d39364', 41, 27, 8, 1); R('#e8b080', 58, 26, 3, 14);
     R('#2a5ab8', 54, 34, 18, 18); R('#1a3a8a', 54, 34, 3, 18); R('#e8e0d0', 52, 32, 20, 4); R('#c8c0b0', 52, 35, 20, 1);
   }, []);
+  // revólver de ação simples, visto de lado (cano para a esquerda); origem no cabo; L = comprimento
+  const duRev = L => bgSpr('du-rev|' + Math.round(L), L * 1.45, L * 1.0, g => { const o = { x: L * 1.12, y: L * .3 }, P = (x, y) => [o.x + x * L, o.y + y * L];
+    const steel = (y0, y1) => { const gr = g.createLinearGradient(0, o.y + y0 * L, 0, o.y + y1 * L); gr.addColorStop(0, '#f4f7fb'); gr.addColorStop(.35, '#aab3c2'); gr.addColorStop(.6, '#5a6272'); gr.addColorStop(1, '#2a2f3a'); return gr; };
+    const poly = (pts, fill, st) => { g.beginPath(); pts.forEach(([x, y], i) => { const [X, Y] = P(x, y); i ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.closePath(); g.fillStyle = fill; g.fill(); if (st) { g.strokeStyle = st; g.lineWidth = Math.max(1, L * .006); g.stroke(); } };
+    // cabo de madeira com xadrez e medalhão dourado
+    const wg = g.createLinearGradient(...P(-.05, .05), ...P(.3, .6)); wg.addColorStop(0, '#9a5a28'); wg.addColorStop(.5, '#6a3414'); wg.addColorStop(1, '#3a1a08');
+    poly([[-.02, .07], [.17, .06], [.22, .2], [.3, .48], [.27, .58], [.12, .6], [.06, .45], [.0, .22]], wg, '#1a0a04');
+    g.save(); g.beginPath(); [[-.0, .1], [.16, .1], [.27, .5], [.13, .56], [.03, .25]].forEach(([x, y], i) => { const [X, Y] = P(x, y); i ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.closePath(); g.clip(); g.strokeStyle = 'rgba(30,10,0,.45)'; g.lineWidth = Math.max(1, L * .004); for (let i = -20; i < 20; i++) { g.beginPath(); g.moveTo(...P(i * .025, 0)); g.lineTo(...P(i * .025 + .6, .6)); g.stroke(); g.beginPath(); g.moveTo(...P(i * .025 + .6, 0)); g.lineTo(...P(i * .025, .6)); g.stroke(); } g.restore();
+    g.fillStyle = '#e0b040'; g.beginPath(); g.arc(...P(.15, .32), L * .028, 0, TAU); g.fill(); g.fillStyle = '#8a6010'; g.beginPath(); g.arc(...P(.15, .32), L * .014, 0, TAU); g.fill();
+    poly([[.12, .6], [.27, .58], [.28, .62], [.12, .64]], steel(.58, .64));
+    // guarda-mato e gatilho
+    g.strokeStyle = '#3a404c'; g.lineWidth = L * .018; g.beginPath(); g.moveTo(...P(-.12, .08)); g.bezierCurveTo(...P(-.14, .24), ...P(.04, .26), ...P(.02, .1)); g.stroke();
+    g.strokeStyle = '#7a8292'; g.lineWidth = L * .014; g.beginPath(); g.moveTo(...P(-.04, .09)); g.quadraticCurveTo(...P(-.07, .15), ...P(-.04, .2)); g.stroke();
+    // armação
+    poly([[-.36, -.1], [-.02, -.1], [.06, -.06], [.08, .06], [-.12, .1], [-.36, .07]], steel(-.1, .1), '#1a1e26');
+    // cão (hammer)
+    poly([[.02, -.09], [.09, -.2], [.15, -.21], [.1, -.13], [.07, -.05]], steel(-.21, -.05), '#1a1e26');
+    // tambor com estrias
+    const cg = g.createLinearGradient(0, o.y - .12 * L, 0, o.y + .11 * L); cg.addColorStop(0, '#dfe5ee'); cg.addColorStop(.3, '#8a93a3'); cg.addColorStop(.75, '#3a404c'); cg.addColorStop(1, '#1e222a'); g.fillStyle = cg; const [cx0, cy0] = P(-.31, -.115); g.beginPath(); g.roundRect ? g.roundRect(cx0, cy0, .27 * L, .225 * L, .04 * L) : g.rect(cx0, cy0, .27 * L, .225 * L); g.fill(); g.strokeStyle = '#14161c'; g.lineWidth = Math.max(1, L * .005); g.stroke();
+    g.strokeStyle = 'rgba(10,12,16,.55)'; g.lineWidth = L * .012; [-.25, -.175, -.1].forEach(x => { g.beginPath(); g.moveTo(...P(x, -.09)); g.lineTo(...P(x, .09)); g.stroke(); });
+    g.fillStyle = 'rgba(255,255,255,.35)'; const [hx, hy] = P(-.29, -.095); g.fillRect(hx, hy, .23 * L, .018 * L);
+    // cano octogonal + vareta do extrator + massa de mira
+    poly([[-1.0, -.075], [-.33, -.075], [-.33, .025], [-1.0, .025]], steel(-.075, .025), '#14161c');
+    g.fillStyle = 'rgba(255,255,255,.55)'; const [bx, by] = P(-.98, -.065); g.fillRect(bx, by, .62 * L, .012 * L);
+    poly([[-.86, .028], [-.34, .028], [-.34, .07], [-.86, .07]], steel(.028, .07), '#14161c'); g.fillStyle = '#2a2f3a'; g.beginPath(); g.arc(...P(-.87, .049), .022 * L, 0, TAU); g.fill();
+    poly([[-.97, -.075], [-.95, -.11], [-.93, -.11], [-.93, -.075]], '#2a2f3a');
+    g.fillStyle = '#05060a'; g.beginPath(); g.ellipse(...P(-1.0, -.025), .012 * L, .04 * L, 0, 0, TAU); g.fill();
+    // brilho de metal
+    g.globalCompositeOperation = 'lighter'; const sg = g.createLinearGradient(...P(-.9, -.08), ...P(-.5, .03)); sg.addColorStop(0, 'rgba(255,255,255,0)'); sg.addColorStop(.5, 'rgba(255,255,255,.18)'); sg.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = sg; g.fillRect(...P(-1, -.08), .7 * L, .11 * L); g.globalCompositeOperation = 'source-over'; });
   const DU_BAY = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
   const duelo = AR('duelo', 'duelo de faroeste', {
     reset() { this.lv = 0; this.lives = 3; this.score = 0; this.dead = 0; this.started = 0; this.pops = []; this.ph = 'pre'; this.pt = 0; this.best = 0; this.last = 0; this.tw = { x: -100, on: 0 }; this.dust = []; this.zoom = 1; },
@@ -10413,13 +10442,20 @@ function H_medalha() {
       PX.draw(duMan(O, pose, blink), W / 2 + sway, fy, ps, 0, fall * -1.35, .5, 1);
       if (hit && this.hatV) { const hv = this.hatV; hv.vy += 900 * dt; hv.x += hv.vx * dt; hv.y += hv.vy * dt; hv.r += 6 * dt; PX.draw(duHat(O), W / 2 + hv.x, fy - 82 * ps + Math.min(hv.y, 80 * ps), ps, 0, hv.r, .5, .5); }
       if (won) for (let i = 0; i < 4; i++) { const k = ((T * .7 + i / 4) % 1); ctx.fillStyle = `rgba(235,235,235,${.65 * (1 - k)})`; const sz = Math.round((2 + k * 3)) * ps; ctx.fillRect(Math.round((W / 2 + 13 * ps + Math.sin(k * 6) * ps * 3) / ps) * ps, Math.round((fy - 98 * ps - k * 22 * ps) / ps) * ps, sz, sz); }
-      if (ph === 'lose' && this.shotMe && T - this.shotMe < .12) { ctx.fillStyle = '#fff6a0'; ctx.beginPath(); ctx.arc(W / 2 - ps, fy - 56 * ps, ps * 9, 0, TAU); ctx.fill(); }
+      if (ph === 'lose' && this.shotMe && T - this.shotMe < .12) { const f = 1 - (T - this.shotMe) / .12; pbGlowAt('rgba(255,200,90,1)', ps * 22, W / 2 - ps, fy - 56 * ps, f); ctx.fillStyle = `rgba(255,246,190,${f})`; ctx.beginPath(); ctx.arc(W / 2 - ps, fy - 56 * ps, ps * 6 * f + ps * 2, 0, TAU); ctx.fill(); }
       ctx.restore();
       // faixas de cinema e close nos olhos
       if (tense) { const k = Math.min(1, (T - this.pt) / .6) * H * .09; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, k); ctx.fillRect(0, H - k, W, k); }
       if (run && ph === 'wait' && T - this.pt > .35 && T - this.pt < 1.15) { const sy = H * .38, sh2 = H * .2, sc = Math.round(sh2 / 12); ctx.fillStyle = '#000'; ctx.fillRect(0, sy - ps, W, sh2 + ps * 2); ctx.save(); ctx.beginPath(); ctx.rect(0, sy, W, sh2); ctx.clip(); PX.draw(duMan(O, 'draw', 0), W / 2, sy + sh2 / 2 - 19 * sc + 96 * sc, sc, 0, 0, .5, 1); ctx.restore(); }
-      // sua arma
-      { const up = this.shot && T - this.shot < .25, gx = W * .8, gy = H * 1.03 - (up ? H * .06 : 0), gs = ps + 1; PX.draw(duGun(), gx, gy, gs, 0, up ? -.25 : 0, .5, 1); if (up && T - this.shot < .09) { const mx = gx - 34 * gs, my = gy - 40 * gs; ctx.fillStyle = '#fff6a0'; for (let i = 0; i < 8; i++) { const a = i / 8 * TAU, l = (i % 2 ? 4 : 9) * gs; ctx.fillRect(Math.round((mx + Math.cos(a) * l) / gs) * gs - gs, Math.round((my + Math.sin(a) * l) / gs) * gs - gs, gs * 2, gs * 2); } ctx.fillStyle = '#ffffff'; ctx.fillRect(mx - gs * 2, my - gs * 2, gs * 4, gs * 4); } }
+      // sua arma: revólver com coice (mola), clarão e fumaça
+      { const L = Math.min(W * .34, H * .5), r = this.shot ? T - this.shot : 9, kick = r < .05 ? r / .05 : r < 1 ? Math.exp(-(r - .05) * 9) * Math.cos((r - .05) * 22) : 0, idle = Math.sin(T * 1.7) * .012;
+        const gx = W * .86 + kick * L * .06, gy = H * .95 + kick * L * .05, ang = .36 + idle + kick * .3, sp = duRev(L), ox = L * 1.12, oy = L * .3;
+        ctx.save(); ctx.translate(gx, gy); ctx.rotate(ang); ctx.drawImage(sp, -ox, -oy, sp.w || L * 1.45, sp.h || L); ctx.restore();
+        const M = { x: gx + Math.cos(ang) * -L * 1.02 - Math.sin(ang) * -L * .025, y: gy + Math.sin(ang) * -L * 1.02 + Math.cos(ang) * -L * .025 };
+        if (r < .02) { this.smk = (this.smk || []).concat(Array.from({ length: 9 }, () => ({ x: M.x, y: M.y, vx: -rnd(30, 120), vy: -rnd(40, 130), r: rnd(.035, .06) * L, l: 1 }))); }
+        if (r < .09) { const f = 1 - r / .09; ctx.save(); ctx.globalCompositeOperation = 'lighter'; pbGlowAt('rgba(255,200,90,1)', L * .32 * (.6 + f * .6), M.x, M.y, f); ctx.translate(M.x, M.y); ctx.rotate(ang); ctx.fillStyle = `rgba(255,246,190,${f})`; ctx.beginPath(); ctx.moveTo(0, -L * .03); ctx.lineTo(-L * .32 * f, 0); ctx.lineTo(0, L * .03); ctx.fill(); for (let i = 0; i < 6; i++) { const a2 = Math.PI + (i - 2.5) * .45; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a2) * L * .16 * f, Math.sin(a2) * L * .16 * f); ctx.lineTo(Math.cos(a2 + .12) * L * .05, Math.sin(a2 + .12) * L * .05); ctx.fill(); } ctx.restore(); }
+        if (r < .07) { ctx.fillStyle = `rgba(255,240,200,${.28 * (1 - r / .07)})`; ctx.fillRect(0, 0, W, H); }
+        this.smk = (this.smk || []).filter(q => (q.l -= dt * .55) > 0); this.smk.forEach(q => { q.x += q.vx * dt; q.y += q.vy * dt; q.vx *= .97; q.vy = q.vy * .97 - 8 * dt; q.r += dt * L * .05; const gr = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, q.r); gr.addColorStop(0, `rgba(235,232,225,${.6 * q.l})`); gr.addColorStop(1, 'rgba(225,225,225,0)'); ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, TAU); ctx.fill(); }); }
       if (T - (this.hurt || -9) < .3) { ctx.fillStyle = `rgba(255,30,40,${.45 * (1 - (T - this.hurt) / .3)})`; ctx.fillRect(0, 0, W, H); }
       // textos
       const big = (txt, col) => { ctx.save(); ctx.font = `900 ${H * .14}px ${MONO}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineWidth = ps * 2; ctx.strokeStyle = '#2a0a00'; ctx.strokeText(txt, W / 2, H * .3); ctx.fillStyle = col; ctx.fillText(txt, W / 2, H * .3); ctx.restore(); };
@@ -12858,7 +12894,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795742444';
+window.__VER = '1795742705';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
