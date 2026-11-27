@@ -12815,7 +12815,7 @@ function H_medalha() {
     if (segP !== null && crewOK) { const n = +segP, L = order.length, pi = (n - 1 + L) % L, p = order[pi]; kindI = Math.max(0, n - 1); idx = pi; cur = p; show(p); label(); nextAt = Infinity; window.__warm = durOf(p); window.__L = L; window.__go = () => { go3d(n); }; return; }
     if (crewOK && CONFIG.abertura) { cur = null; return go3d(idx); }
     cur = order[idx]; show(cur); label(); schedule();
-    if (window.parent !== window) { window.__panel.pause(); try { window.parent.postMessage({ ev: 'ready', names: order.map(o => o.name), idx: idx }, '*'); } catch (e) {} }
+    if (window.parent !== window && !window.__demo) { window.__panel.pause(); try { window.parent.postMessage({ ev: 'ready', names: order.map(o => o.name), idx: idx }, '*'); } catch (e) {} }
   };
   let paused = false;
   window.__panel = {
@@ -13179,7 +13179,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !/[?&]mostrar=/.test(location.search)) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795747252';
+window.__VER = '1795747436';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>

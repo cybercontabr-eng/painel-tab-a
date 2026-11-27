@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CyberGAECO · slides novos</title>
+<style>
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+iframe{position:fixed;left:0;top:0;border:0;width:100vw;height:100vh;transform-origin:0 0}
+iframe.rot{width:100vh;height:100vw;transform:translateX(100vw) rotate(90deg)}
+#fs{position:fixed;z-index:9;right:12px;bottom:12px;padding:8px 14px;border-radius:99px;border:1px solid rgba(255,255,255,.3);background:rgba(10,12,24,.7);color:#fff;font:600 13px system-ui,sans-serif;opacity:.75}
+</style></head><body>
+<iframe id="f" src="slides.html?mostrar=novos" allow="fullscreen; wake-lock"></iframe>
+<button id="fs">⛶ tela cheia</button>
+<script>
+// sempre na horizontal: com o celular em pé, o painel é girado 90°
+const f = document.getElementById('f'), fit = () => f.classList.toggle('rot', innerHeight > innerWidth);
+addEventListener('resize', fit); fit();
+document.getElementById('fs').onclick = () => { const d = document.documentElement; const r = (d.requestFullscreen || d.webkitRequestFullscreen || (() => {})).call(d); Promise.resolve(r).then(() => { try { screen.orientation.lock('landscape').catch(() => {}); } catch (e) {} setTimeout(fit, 300); }).catch(() => {}); };
+document.addEventListener('fullscreenchange', () => { document.getElementById('fs').style.display = document.fullscreenElement ? 'none' : ''; });
+</script></body></html>
