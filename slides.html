@@ -1177,7 +1177,7 @@ html,body,#stage{background:#18050c}
 .m-orgs{position:absolute;left:47%;right:6vmin;bottom:13.5vmin;opacity:0;z-index:3}
 [data-scene=medi] .nx-copy{margin-top:-7vmin}
 .scene.play .m-orgs{animation:rise 1s ease both;animation-delay:5s}
-.m-orgs small{display:block;text-align:center;font:700 clamp(.6rem,1.6vmin,.9rem)/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:rgba(191,244,255,.45);margin-bottom:1vmin}
+.m-orgs small{display:block;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:700 clamp(.55rem,1.45vmin,.85rem)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(191,244,255,.45);margin-bottom:1vmin}
 .m-tr{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .m-tr div{display:flex;gap:1.2vmin;width:max-content}
 .scene.on .m-tr div{animation:mTr 70s linear infinite}
@@ -1368,7 +1368,7 @@ html,body,#stage{background:#18050c}
           </div>
         </div>
       </div>
-      <div class="m-orgs"><small>37 órgãos em 22 estados · +110 instituições · R$ 7,47 mi de economia estimada</small><div class="m-tr"><div><i>MPSP</i><i>MPPI</i><i>MPES</i><i>MPMT</i><i>MPM</i><i>MPAM</i><i>MPRJ</i><i>MPRS</i><i>MPF</i><i>MPMS</i><i>MPPE</i><i>MPAP</i><i>MPMG</i><i>MPSC</i><i>MPPR</i><i>MPCE</i><i>MPDFT</i><i>MPRO</i><i>MPRR</i><i>MPPB</i><i>MPTO</i><i>SEJUSP/PC-MS</i><i>PCGO</i><i>PCRR</i><i>PCPB</i><i>PMMG</i><i>SSP/PC-RS</i><i>PMES</i><i>PCSC</i><i>PCPA</i><i>PCAP</i><i>PMSC</i><i>CGM-SP</i><i>TRE-BA</i><i>CGE-RJ</i><i>CBMBA</i><i>PROCON-SC</i><i>MPSP</i><i>MPPI</i><i>MPES</i><i>MPMT</i><i>MPM</i><i>MPAM</i><i>MPRJ</i><i>MPRS</i><i>MPF</i><i>MPMS</i><i>MPPE</i><i>MPAP</i><i>MPMG</i><i>MPSC</i><i>MPPR</i><i>MPCE</i><i>MPDFT</i><i>MPRO</i><i>MPRR</i><i>MPPB</i><i>MPTO</i><i>SEJUSP/PC-MS</i><i>PCGO</i><i>PCRR</i><i>PCPB</i><i>PMMG</i><i>SSP/PC-RS</i><i>PMES</i><i>PCSC</i><i>PCPA</i><i>PCAP</i><i>PMSC</i><i>CGM-SP</i><i>TRE-BA</i><i>CGE-RJ</i><i>CBMBA</i><i>PROCON-SC</i></div></div></div>
+      <div class="m-orgs"><small>37 órgãos · 22 estados · +110 instituições · R$ 7,47 mi de economia estimada</small><div class="m-tr"><div><i>MPSP</i><i>MPPI</i><i>MPES</i><i>MPMT</i><i>MPM</i><i>MPAM</i><i>MPRJ</i><i>MPRS</i><i>MPF</i><i>MPMS</i><i>MPPE</i><i>MPAP</i><i>MPMG</i><i>MPSC</i><i>MPPR</i><i>MPCE</i><i>MPDFT</i><i>MPRO</i><i>MPRR</i><i>MPPB</i><i>MPTO</i><i>SEJUSP/PC-MS</i><i>PCGO</i><i>PCRR</i><i>PCPB</i><i>PMMG</i><i>SSP/PC-RS</i><i>PMES</i><i>PCSC</i><i>PCPA</i><i>PCAP</i><i>PMSC</i><i>CGM-SP</i><i>TRE-BA</i><i>CGE-RJ</i><i>CBMBA</i><i>PROCON-SC</i><i>MPSP</i><i>MPPI</i><i>MPES</i><i>MPMT</i><i>MPM</i><i>MPAM</i><i>MPRJ</i><i>MPRS</i><i>MPF</i><i>MPMS</i><i>MPPE</i><i>MPAP</i><i>MPMG</i><i>MPSC</i><i>MPPR</i><i>MPCE</i><i>MPDFT</i><i>MPRO</i><i>MPRR</i><i>MPPB</i><i>MPTO</i><i>SEJUSP/PC-MS</i><i>PCGO</i><i>PCRR</i><i>PCPB</i><i>PMMG</i><i>SSP/PC-RS</i><i>PMES</i><i>PCSC</i><i>PCPA</i><i>PCAP</i><i>PMSC</i><i>CGM-SP</i><i>TRE-BA</i><i>CGE-RJ</i><i>CBMBA</i><i>PROCON-SC</i></div></div></div>
     </div></section>
 
 
@@ -11969,7 +11969,7 @@ function H_medalha() {
     enter() { this.t0 = null; this.L = galLista(); this.base = this.k; this.k = (this.k + 4) % Math.max(1, this.L.length); },
     load() { this.L = galLista(); },
     frame(t, dt) {
-      const T = T3(this, t), u = Math.min(W / 88, H / 50), L = this.L || []; if (!L.length) return;
+      const T = T3(this, t), u = Math.min(W / 88, H / 50), L = this.L || []; if (!L.length) { T2('🖼️', W / 2, H * .42, u * 5, '#fff', 400, 'center', 'sans-serif'); T2('Nenhuma foto na galeria ainda', W / 2, H * .58, u * 2.2, '#fff3d6', 400, 'center', SERIF); T2('adicione pelo admin › Galeria', W / 2, H * .66, u * 1.1, 'rgba(255,243,214,.6)', 600, 'center', 'sans-serif'); return; }
       const n = Math.floor(T / this.PER), lt = T - n * this.PER;
       [[n - 1, lt < 1 ? 1 - lt : 0], [n, sm(Math.min(1, lt / .9))]].forEach(([m, a]) => {
         if (a <= 0 || m < 0) return; const i = (this.base + m) % L.length, g = L[i], im = FT.img(g.f), dx = (m % 2 ? 1 : -1);
@@ -12032,7 +12032,8 @@ function H_medalha() {
       const L0 = N ? W * .035 : W * .12, LW = N ? W * .44 : W * .76, top = H * .2, bot = H * .87;
       // ---- clima ----
       glass(L0, top, LW, bot - top);
-      if (!D) T2('Previsão do tempo indisponível no momento', L0 + LW / 2, top + (bot - top) / 2, u * 1.2, '#fff', 600, 'center', 'sans-serif');
+      if (!D) { const d = new Date(), cy = top + (bot - top) / 2, DS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'], MS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+        T2(String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'), L0 + LW / 2, cy - u * 2.5, Math.min(u * 7, LW * .22), '#fff', 300, 'center', 'sans-serif'); T2(DS[d.getDay()] + ', ' + d.getDate() + ' de ' + MS[d.getMonth()], L0 + LW / 2, cy + u * 2.6, njFit(DS[d.getDay()] + ', ' + d.getDate() + ' de ' + MS[d.getMonth()], LW * .85, u * 1.8), '#fff', 400, 'center', SERIF); T2('previsão do tempo volta quando houver internet', L0 + LW / 2, cy + u * 5.2, u * .9, 'rgba(255,255,255,.65)', 600, 'center', 'sans-serif'); }
       else { const c = D.current, d = D.daily, x0 = L0 + u * 1.6;
         T2('☀️ CLIMA EM GOIÂNIA', x0, top + u * 1.7, u * .95, '#ffe9a8', 800, 'left', 'sans-serif');
         clIcon(kind, x0 + LW * .14, top + (bot - top) * .27, Math.min(H * .085, LW * .1), T, night);
@@ -12063,8 +12064,8 @@ function H_medalha() {
         if (im) { const ar = im.naturalWidth / im.naturalHeight, sw = ar > cw / bh ? im.naturalHeight * cw / bh : im.naturalWidth, sh = sw * bh / cw; ctx.drawImage(im, (im.naturalWidth - sw) / 2, (im.naturalHeight - sh) / 2, sw, sh, x0, by, cw, bh); }
         else { const g = ctx.createLinearGradient(x0, by, x0 + cw, by + bh); g.addColorStop(0, '#1a1030'); g.addColorStop(1, it.tag === 'CYBERGAECO' ? '#0a3a5a' : '#4a2a0a'); ctx.fillStyle = g; ctx.fillRect(x0, by, cw, bh);
           ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = 1; for (let i = -10; i < 30; i++) { ctx.beginPath(); ctx.moveTo(x0 + i * u * 2.4 + (T * 8) % (u * 2.4), by); ctx.lineTo(x0 + i * u * 2.4 - bh + (T * 8) % (u * 2.4), by + bh); ctx.stroke(); }
-          cgLogo(x0 + bh * .55, by + bh / 2, bh * .72); const op = (it.t.match(/Opera[çc][ãa]o\s+([^:,–\-]+?)(?=\s*(?::|,|–|-|\s+(?:mira|investiga|combate|denuncia|cumpre|contra))|$)/i) || [])[1];
-          T2(op ? 'OPERAÇÃO' : it.tag, x0 + bh * 1.1, by + bh * .38, u * 1.1, tagc, 900, 'left', 'sans-serif'); const opn = (op || 'MPGO').toUpperCase(); T2(opn, x0 + bh * 1.1, by + bh * .6, njFit(opn, cw - bh * 1.2, bh * .22), '#ffffff', 900, 'left', 'sans-serif'); }
+          cgLogo(x0 + bh * .55, by + bh / 2, bh * .72); let op = (it.t.match(/Opera[çc][ãa]o\s+([^:,–\-]+?)(?=\s*(?::|,|–|-|\s+(?:mira|investiga|combate|denuncia|cumpre|contra|deflagrada|apura|prende|cumpriu))|$)/i) || [])[1]; if (op && (!/^[A-ZÀ-Ú0-9]/.test(op) || /^(contra|que|de|do|da|em|no|na|para|com)\b/i.test(op) || op.split(/\s+/).length > 4)) op = null;
+          T2(op ? 'OPERAÇÃO' : it.tag, x0 + bh * 1.1, by + bh * .38, u * 1.1, tagc, 900, 'left', 'sans-serif'); const opn = op ? op.toUpperCase() : 'EM DESTAQUE'; T2(opn, x0 + bh * 1.1, by + bh * .6, njFit(opn, cw - bh * 1.2, bh * .22), '#ffffff', 900, 'left', 'sans-serif'); }
         ctx.restore();
         const dd = it.d ? new Date(it.d + 'T12:00:00') : null, dtx = dd ? dd.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' }) : '';
         const tl = wrapTxt(it.t, cw * .92, u * 1.55, 500, SERIF).slice(0, 3), ty = by + bh + u * 2.2; tl.forEach((l, i) => T2(l, x0, ty + i * u * 1.95, u * 1.55, '#ffffff', 400, 'left', SERIF));
@@ -12179,7 +12180,7 @@ function H_medalha() {
           ctx.strokeStyle = 'rgba(127,227,255,.7)'; ctx.lineWidth = 2; rr2(x, y, w, h, u * 1.2); ctx.stroke(); ctx.fillStyle = '#7fe3ff'; [[x, y], [x + w, y], [x, y + h], [x + w, y + h]].forEach(([px, py], j) => { const sx = j % 2 ? -1 : 1, sy = j < 2 ? 1 : -1; ctx.fillRect(px - (sx < 0 ? u * 1.6 : 0), py - (sy < 0 ? 3 : 0), u * 1.6, 3); ctx.fillRect(px - (sx < 0 ? 3 : 0), py - (sy < 0 ? u * 1.6 : 0), 3, u * 1.6); });
           ctx.restore(); } }
       // números (contam ao entrar, um cartão de vidro cada)
-      { const x0 = W * .655, cw = W * .155, ch = H * .18, gp = u * .9; NUMS.forEach(([v, suf, lb, sub], j) => { const c = j % 2, r = Math.floor(j / 2), x = x0 + c * (cw + gp), y = H * .2 + r * (ch + gp), d = .3 + j * .25, a = Math.max(0, Math.min(1, (T - d) / .5)), cnt = Math.min(1, Math.max(0, (T - d) / 1.6)), e = 1 - Math.pow(1 - cnt, 3);
+      { const x0 = W * .645, cw = W * .148, ch = H * .18, gp = u * .9; NUMS.forEach(([v, suf, lb, sub], j) => { const c = j % 2, r = Math.floor(j / 2), x = x0 + c * (cw + gp), y = H * .2 + r * (ch + gp), d = .3 + j * .25, a = Math.max(0, Math.min(1, (T - d) / .5)), cnt = Math.min(1, Math.max(0, (T - d) / 1.6)), e = 1 - Math.pow(1 - cnt, 3);
           if (a <= 0) return; ctx.save(); ctx.globalAlpha = a; ctx.translate(0, (1 - a) * u * 2); glass(x, y, cw, ch, u * 1.2, .5);
           const val = v * e, dc = (String(v).split('.')[1] || '').length, txt = dc ? val.toFixed(dc).replace('.', ',') : Math.round(val).toLocaleString('pt-BR'); T2(txt + suf, x + u * 1.2, y + ch * .38, njFit(txt + suf + '0', cw - u * 2.4, ch * .34), j % 3 === 0 ? '#ffd36b' : j % 3 === 1 ? '#7fe3ff' : '#8dffc4', 900, 'left', 'sans-serif');
           T2(lb, x + u * 1.2, y + ch * .66, njFit(lb, cw - u * 2.4, u * 1.05), '#fff', 800, 'left', 'sans-serif'); T2(sub, x + u * 1.2, y + ch * .84, njFit(sub, cw - u * 2.4, u * .8), 'rgba(255,255,255,.55)', 600, 'left', 'sans-serif'); ctx.restore(); }); }
@@ -12226,7 +12227,7 @@ function H_medalha() {
           ctx.drawImage(gxIco(own ? 'esc' : 'apo', own ? '#ffc83a' : '#4ec8ff', Math.round(isz)), x + (isz - sz) / 2, yy + (isz - sz) / 2, sz, sz); }
         const k = gxIn(T, t0 + tot * .035, .4); if (k) { ctx.globalAlpha = k; T2(String(tot), gx + gw - u * .4, y + gap, u * 2, '#fff', 900, 'right', 'sans-serif'); T2(`${p} + ${ap}`, gx + gw - u * .4, y + gap + u * 1.8, u * .75, 'rgba(255,255,255,.55)', 700, 'right', 'sans-serif'); ctx.globalAlpha = 1; } });
       const a = gxIn(T, 5.6); if (a) { ctx.globalAlpha = a; T2('▲ 61% em quatro anos', gx + gw / 2, base + u * 4, u * 1.25, '#8dffc4', 900, 'center', 'sans-serif'); T2('de 18 operações em 2023 para 29 em 2026 (até 18/11)', gx + gw / 2, base + u * 5.7, u * .8, 'rgba(255,255,255,.6)', 600, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
-      const b = gxIn(T, 4.5); if (b) { ctx.globalAlpha = b; T2('Buscas e prisões somam operações próprias e apoios · bloqueios em 12 operações · 2026 até 18/11', W * .04, H * .9, u * .75, 'rgba(255,255,255,.45)', 600, 'left', 'sans-serif'); ctx.globalAlpha = 1; }
+      const b = gxIn(T, 4.5); if (b) { ctx.globalAlpha = b; T2('Buscas e prisões somam operações próprias e apoios · bloqueios em 12 operações · 2026 até 18/11', W * .04, H * .875, u * .75, 'rgba(255,255,255,.45)', 600, 'left', 'sans-serif'); ctx.globalAlpha = 1; }
     }
   };
 
@@ -12304,7 +12305,7 @@ function H_medalha() {
         const oy = y0 + ch - u * 7.4; T2('OPERAÇÕES EM 2026', x + u * 1.6, oy, u * .72, col, 800, 'left', 'sans-serif');
         ops.forEach((o, j) => { const b = gxIn(T, 1.4 + i * .45 + j * .2, .4), yy = oy + u * 1.9 + j * u * 1.75; ctx.globalAlpha = a * b; ctx.font = `700 ${u * .85}px ${SANS}`; const w = Math.min(cw - u * 3.2, ctx.measureText(o).width + u * 1.6); ctx.fillStyle = 'rgba(255,255,255,.09)'; rr2(x + u * 1.6, yy - u * .8, w, u * 1.6, u * .8); ctx.fill(); T2(o, x + u * 2.4, yy, njFit(o, w - u * 1.6, u * .85), '#fff', 700, 'left', 'sans-serif'); });
         ctx.restore(); });
-      const a = gxIn(T, 3); if (a) { ctx.globalAlpha = a; T2('Frentes prioritárias, que não excluem a atuação do GAECO nas demais modalidades de criminalidade organizada.', W / 2, H * .9, u * .8, 'rgba(255,255,255,.45)', 600, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
+      const a = gxIn(T, 3); if (a) { ctx.globalAlpha = a; T2('Frentes prioritárias, que não excluem a atuação do GAECO nas demais modalidades de criminalidade organizada.', W / 2, H * .165, u * .8, 'rgba(255,255,255,.45)', 600, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
     }
   };
 
@@ -12329,7 +12330,7 @@ function H_medalha() {
         T2(onde, lx + u * 12, y + rh * .4, njFit(onde, lw * .36, u * 1.05), fut ? 'rgba(255,255,255,.55)' : '#fff', 800, 'left', 'sans-serif'); T2(tema, lx + lw - u * 1.6, y + rh * .4, njFit(tema, lw * .32, u * .85), fut ? 'rgba(127,227,255,.5)' : '#bff4ff', 600, 'right', 'sans-serif');
         ctx.fillStyle = 'rgba(255,255,255,.06)'; ctx.fillRect(lx + u * 1.6, y + rh - u * .5, lw - u * 3.2, 1); }
       ctx.restore();
-      T2('também em Moçambique, com o UNODC · eventos previstos em tom mais claro', lx + lw, H * .9, u * .72, 'rgba(255,255,255,.4)', 600, 'right', 'sans-serif');
+      T2('também em Moçambique, com o UNODC · eventos previstos em tom mais claro', lx + u * 1.5, ly + lh + u * 1.2, u * .72, 'rgba(255,255,255,.4)', 600, 'left', 'sans-serif');
     }
   };
 
@@ -12578,6 +12579,7 @@ function H_medalha() {
   }
   function release(s) { if (!s.cv) return; s.cv._owner = null; s.cv.remove(); s.cv = null; s.ctx = null; }
   window.__poolIds = () => pool.map(c => c._owner ? c._owner.id + (c._owner === cur ? '*' : c._owner === leaving ? '~' : '!') : '-');
+  window.__curS = () => cur;
 
   function show(s) {
     su(s); attach(s);
@@ -12589,7 +12591,10 @@ function H_medalha() {
 
   const durOf = s => (CONFIG.duracaoEspecial[s.id] || CONFIG.segundosPorCena) * 1000;
   const prog = $('#prog'); let progAnim = null;
+  let skT = 0;
   function schedule() {
+    // segurança: se um slide sem conteúdo (galeria sem fotos, avisos vencidos, ranking vazio…) entrou por qualquer caminho, passa adiante
+    clearTimeout(skT); { const s0 = cur; skT = setTimeout(() => { if (cur !== s0 || busy || paused || fixed || isGameS(cur) || !cur.skip) return; let sk = false; try { sk = cur.skip(); } catch (e) {} if (sk) step(1); }, 1800); }
     nextAt = fixed ? Infinity : performance.now() + durOf(cur);
     if (progAnim) progAnim.cancel();
     if (!fixed) progAnim = prog.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: durOf(cur), easing: 'linear', fill: 'forwards' });
@@ -12830,7 +12835,7 @@ function H_medalha() {
   let paused = false;
   window.__panel = {
     pause() { paused = true; cancelAnimationFrame(raf); nextAt = Infinity; if (progAnim) progAnim.pause(); },
-    resume(advance) { if (!paused) return; paused = false; last = performance.now(); raf = requestAnimationFrame(loop); if (advance) { if (leaving && leaving !== cur) { hide(leaving); leaving.el.style.zIndex = ''; cur.el.style.zIndex = ''; } leaving = null; busy = false; go(idx + 1); } else schedule(); },
+    resume(advance) { if (!paused) return; paused = false; last = performance.now(); raf = requestAnimationFrame(loop); if (advance) { if (leaving && leaving !== cur) { hide(leaving); leaving.el.style.zIndex = ''; cur.el.style.zIndex = ''; } leaving = null; busy = false; step(1); } else schedule(); },
     get id() { return cur && cur.id; }, get n() { return order.length; }
   };
   // troca seca (sem efeito de vídeo): quem liga o slide é a equipe no tablet
@@ -13198,7 +13203,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !/[?&]mostrar=/.test(location.search)) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795793558';
+window.__VER = '1795796484';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
