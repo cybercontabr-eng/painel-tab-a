@@ -1,9 +1,77 @@
 {
- "atualizado": "2026-11-26T20:45:00Z",
+ "atualizado": "2026-11-27T04:14:28Z",
  "itens": [
-  {"t": "Operação Darkholme II mira grupo suspeito de golpes pelo WhatsApp em Goiânia", "sum": "MPGO cumpriu cinco mandados de busca e apreensão contra grupo que usava contas de terceiros para receber transferências de vítimas. A ação dá sequência a uma investigação de 2024.", "url": "https://ohoje.com/2026/11/18/mpgo-faz-operacao-contra-grupo-suspeito-de-aplicar-golpes-pelo-whatsapp-em-goiania/", "src": "O Hoje", "d": "2026-11-18", "tag": "GAECO", "img": ""},
-  {"t": "Operação Sucata 0 km: Gaeco denuncia desvio de 54 carros zero de montadora em Anápolis", "sum": "Nova fase da investigação chegou ao grupo que retirava e recebia veículos desviados do estoque. Prejuízo estimado em R$ 8,7 milhões; denúncia foi apresentada à Justiça.", "url": "https://www.maisgoias.com.br/cidades/anapolis/esquema-desvia-54-carros-zero-km-de-montadora-em-anapolis-e-causa-prejuizo-de-r-87-milhoes/", "src": "Mais Goiás", "d": "2026-11-16", "tag": "GAECO", "img": ""},
-  {"t": "Operação Legado: Gaeco Sul combate fraudes em obras de escolas estaduais", "sum": "Investigação apura dispensas de licitação direcionadas para obras e reformas em escolas da rede estadual. Contratos somam mais de R$ 850 mil; sete mandados em Rio Verde (GO) e Barra do Garças (MT).", "url": "https://www.mpgo.mp.br/portal/noticia/mpgo-gaeco-deflagra-operacao-legado-contra-fraudes-em-licitacoes-de-obras-escolares-estaduais-em-goias", "src": "MPGO", "d": "2026-10-15", "tag": "GAECO", "img": ""},
-  {"t": "Operação Sem Recreio investiga fraudes na merenda de 110 escolas em Goiânia", "sum": "Gaeco apura manipulação de licitações e fornecimento de alimentos de baixa qualidade a escolas estaduais da capital.", "url": "https://ohoje.com/2026/10/08/mpgo-mira-suspeitos-de-fraudar-licitacoes-da-merenda-de-110-escolas-em-goiania/", "src": "O Hoje", "d": "2026-10-08", "tag": "GAECO", "img": ""}
+  {
+   "t": "Goiânia é alvo de operação contra esquema que usou ex-servidora com denúncias falsas de desembargador",
+   "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNclViQjVxSVBCSmkxcFRiYnJsLXZLZXJxOXh1cEZtbmxYUHRUSXBUX0J4a2E1eDhJUERROUFjZ0NZemtpZk8zN3l4Umt2bm9VLXV1TUNqbHBzZ3Ewa3NXbG5XMnpCN0pvZHVVazJtb0lTV0tZaE5XMjRORHB1TjJjMDV3VXBLb2RyVnZaZFhuR0tfUXZBdFpxV1JKUHFfYThzS0FpaVdteUJSTjlORklSZDJRTDNnbHQzbFM5RXNn?oc=5",
+   "sum": "",
+   "d": "2026-11-26",
+   "src": "G5News",
+   "tag": "MPGO",
+   "img": ""
+  },
+  {
+   "t": "MPGO deflagra operação e cumpre mandados de busca e apreensão em Itauçu",
+   "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxORGd1MnpTRWZCRzhMZko0aGVVajcya1RMeEEza3pnS2p6M2lENUlLUm0taFhtWkpoWWJTb1dKTTNrUXZmMTZzRFdZWGlfUk5lUGwtUFlWRHNuQVdjbHN6TlVycGdFclp3WWlwcmdQR1ROVm1kUE53anZMY1hTTjB0NzZtcmxxZkFJSnlvbk1OeDhhaTNnNmxFdUZydkI?oc=5",
+   "sum": "",
+   "d": "2026-11-25",
+   "src": "A Redação",
+   "tag": "MPGO",
+   "img": ""
+  },
+  {
+   "t": "Operação que investiga extorsão e lavagem de dinheiro cumpre mandados em Goiânia",
+   "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNN2Z0T3J1WXJOZ2QtWkRERmkwd0hrRFlfZkZRNWZnRVlSRjJnQ3lJUXZJRTNoLXA3bm5ZcjBLZmY0czhTSml6aVBGSXpKblluWmVRNmNLUUlvVzVYRzUyZ2FTMXdEcUloTi05X05INEM0WUMtN0tlRzd1d01McnBZX0ZvaURhQVBONENsZ09zbmNBU1FTNng2QzNyeTFyWkJwQm5SUzBOdXVjd05sV0JLYnp2QmxLVU5FS2F2VmVhVWN4QQ?oc=5",
+   "sum": "",
+   "d": "2026-11-25",
+   "src": "GYN Noticias",
+   "tag": "MPGO",
+   "img": ""
+  },
+  {
+   "t": "Operação da CyberGaeco em parceria com o MPGO desarticula grupo que praticava o \"golpe do número novo\"",
+   "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNYmc5R1F4MVVmeXhUdHBUOGhHdHZBUGUzeEVXRjdobWthN0NFaGJ5NE15Y0lLYVZ1QkZ0NGhJbTl5R01MOGNLQ2d3VXZ6ZHptaUpFMDA2ZDM2SDFFQjc1R0NIWDU4bDhsQ09pRW5aYm1JRURnMGtLeTViTS1UdkpMNXdQelRiR0ExWm1yZ2NwWFh3TXE5TmVRbUhld2FwTDltdmF5ZGszOTdxNXE2bTd1bTNneF9aczdJZUkybTlKbm1XWTliVHF3a0dyQ2E0eWpBNzQw?oc=5",
+   "sum": "",
+   "d": "2026-11-18",
+   "src": "Diário de Goiás",
+   "tag": "CYBERGAECO",
+   "img": ""
+  },
+  {
+   "t": "Operação mira grupo de 47 empresas suspeito de fraudar licitações e desviar recursos em Goiás",
+   "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPNkQ2cDRrejNaYUdzNHl5ZjZlcFVaYl9tdmZRMHU3WmhxMkRlRkM0ZFJZakdweG9BVk03Slh2MDVSb3VhTzFHWTBaNVVoT0pFZlQ4am92WVlFTnZWM29FY1ZYU2hTVTRvaDh2ZndOUDVnSnd0ZXhNTV9JMTlIMEN6VU95TGhMR01nWHVSVDF1bnRWQWczQ1hWOGlWb2dzODdPem1Ja1Aybnl0cExDb2dwZXRBcGxNNWxrUXlSNFhsc2xyaFdfS0RLZHE3Q0UwYXV1TDVN?oc=5",
+   "sum": "",
+   "d": "2026-11-19",
+   "src": "GYN Noticias",
+   "tag": "MPGO",
+   "img": ""
+  },
+  {
+   "t": "“Troquei de número”: operação mira golpe de falsos familiares em Goiânia",
+   "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQM2hjNkQ0TndHSDA3NGQwVXNsalBTeVgtdExXOTlCTDE0al9ub3pNLW95YVNEMEtEai1uY0JtVzVxLXgxN1F4R3lDNzRqcVZTV05vYmhFV0oxaGJDdEhTc0pKczVwb1JHMDNIMmRBQ3lsYV84T3VYWDlRMTRIQUptZWJPNUp0NVhPOEg3SUxub2lMWTIzQU16bHdzajlLZzhNYmxnYmVUNndRRzZhOGs0bjZjcWdCMktGdjZPLWpEV2xHZ0lybzg4YmRQS05najU2d1JBSmh6Sm1hQUk?oc=5",
+   "sum": "",
+   "d": "2026-11-19",
+   "src": "Enquanto isso em Goias",
+   "tag": "MPGO",
+   "img": ""
+  },
+  {
+   "t": "Operação mira 47 empresas suspeitas de fraudes e aponta R$ 132 milhões em dívidas tributárias em Goiás",
+   "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOX3ZpLWk3TEZRWHh2alE5aGs4Q1RmemFBS1ZxMnhKMnlIeEw2TlROUkFJY01TUEdlSlhlNXBaeW43QkpaNVZzaXh1bVBfaEtuMmRONUJsWWhqRWdoeS0tZkk5Yk51Sk50bHFVdDNnM2lrUkJVcXRMdkQ4bkdCSWc5MGRtZTFQby1STzR1RFo0eVZFUnBlbVpMcDg0eVlSTWlkNDNuV3NWOVJYZVNzb254TGxGM2dzSVlSSTVyemk3b2pPdE82NTQ0Vy1JVV9hN1p4cVlUZWx1eFctVXUwRmFHbnY4V0ZDTXViMmZYNEZB?oc=5",
+   "sum": "",
+   "d": "2026-11-19",
+   "src": "Jornal Opção",
+   "tag": "MPGO",
+   "img": ""
+  },
+  {
+   "t": "MPGO faz operação contra grupo suspeito de aplicar golpes pelo WhatsApp em Goiânia",
+   "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNZVoxVGdpRjNldlh4QkRlSFN4QWxBNnVEck1uLUlBTHRjUnRRNXZibW1KQ0N2c0tQRkNkT3piV2dDWmZKcDdhbTVqckNIdGlXSFdqSWhSTkV2b1RxUXlBd3RidVdzbnA5NndCRzk5MkRTMUt0T2JDQmpOb21rNDRYX09Fb3I4LV9nTEtkOExBeFN4ekQwMVozS1pUdHk4cDNSNW95Zjc1bUpfRGw1QjVFRnlB?oc=5",
+   "sum": "",
+   "d": "2026-11-18",
+   "src": "O Hoje",
+   "tag": "MPGO",
+   "img": ""
+  }
  ]
 }
