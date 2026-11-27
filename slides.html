@@ -956,6 +956,7 @@
   #sx-adm .fts .tb{position:relative;display:inline-block}#sx-adm .fts img{width:54px;height:70px;object-fit:cover;border-radius:6px;display:block}
   #sx-adm .fts .tb .x,#sx-adm .gal .x{position:absolute;top:-6px;right:-6px;background:#1a0f14;border:1px solid #ff8fb1;border-radius:50%;width:26px;height:26px;padding:0;font-size:13px;line-height:1}
   #sx-adm .fts button{margin:0;padding:8px 12px;font-size:13px}
+  #sx-adm .gal2{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}#sx-adm .gal2 button{font-size:14px}
   #sx-adm .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:6px}
   #sx-adm .gal .gi{position:relative}#sx-adm .gal img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block}#sx-adm .gal input{margin-top:4px;font-size:13px;padding:6px 8px}
   #sx-adm .mr{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(241,232,214,.08)}#sx-adm .mr p{flex:1;margin:0;word-break:break-word}#sx-adm .mr small{display:block;color:rgba(241,232,214,.5);font-size:12px;margin-top:2px}#sx-adm .mr button{margin:0;padding:8px 12px}
@@ -2124,7 +2125,7 @@ html,body,#stage{background:#18050c}
  <section data-tab="mod"><h5>📊 Enquete personalizada</h5><div id="eq-l"></div><button id="eq-add" type="button">+ nova enquete</button><div class="ah">Na data escolhida, a enquete do dia usa a sua pergunta no lugar da automática. De 2 a 4 respostas.</div></section>
  <section data-tab="num"><h5>📈 Uso do painel</h5><div id="st-v"></div></section>
  <section data-tab="sis"><h5>☁️ Backup na nuvem</h5><div id="cl-st" class="ah"></div><label>Projeto e chave do Firebase (projectId:apiKey)</label><input id="cl-k" placeholder="meu-projeto:AIza..." autocomplete="off"><button id="cl-on" type="button">Conectar</button><button id="cl-off" type="button">Desligar</button><label>Quem envia para a nuvem</label><button id="cl-of" type="button">📡 Este é o painel oficial</button><button id="cl-rd" type="button">👀 Só leitura</button><button id="cl-au" type="button">Automático (tablet)</button></section>
- <section data-tab="sis"><h5>🏆 Recordes</h5><div id="rc-st" class="ah"></div><button id="rc-dl" type="button">⬇️ Baixar cópia dos recordes</button> <button id="rc-up" type="button">⬆️ Restaurar de um arquivo</button><label>Cópias automáticas deste aparelho</label><div id="rc-bk"></div><div class="ah">O painel guarda sozinho uma cópia por dia (últimos 10 dias). Restaurar junta a cópia com os recordes atuais, sem apagar nenhum. Para não perder nada se o tablet for formatado, baixe uma cópia de vez em quando ou ligue o backup na nuvem acima.</div><button class="dng" id="rc-zero" type="button">Zerar todos os recordes</button><div class="ah">Pede confirmação com um segundo toque. Antes de zerar, o painel guarda uma cópia (dá para desfazer pela lista acima).</div></section>
+ <section data-tab="sis"><h5>🏆 Recordes</h5><div id="rc-st" class="ah"></div><button id="rc-dl" type="button">⬇️ Baixar cópia dos recordes</button> <button id="rc-up" type="button">⬆️ Restaurar de um arquivo</button><label>Cópias automáticas deste aparelho</label><div id="rc-bk"></div><div class="ah">O painel guarda sozinho uma cópia por dia (últimos 10 dias). Restaurar junta a cópia com os recordes atuais, sem apagar nenhum. Para não perder nada se o tablet for formatado, baixe uma cópia de vez em quando ou ligue o backup na nuvem acima.</div><label>Apagar um recorde errado</label><select id="rc-g"></select><div id="rc-ls" class="gal2"></div><button class="dng" id="rc-zero" type="button">Zerar todos os recordes</button><div class="ah">Pede confirmação com um segundo toque. Antes de zerar, o painel guarda uma cópia (dá para desfazer pela lista acima).</div></section>
   <section data-tab="sis"><h5>🧹 Zerar murais e telas coletivas</h5><div id="zr-l" class="zr"></div><button class="dng" id="zr-all" type="button">Zerar TUDO acima</button><div class="ah">Cada botão pede confirmação com um segundo toque. Com a nuvem ligada, o zerar também vale para a nuvem.</div></section>
  <section data-tab="sis"><h5>🔒 Segurança</h5><button id="pin-new" type="button">Trocar PIN</button><div class="ah">Recados do muro só podem ser apagados com o modo administrador aberto.</div></section>
 </div></div>
@@ -11912,11 +11913,12 @@ function H_medalha() {
   /* ================= admin v2: fotos, avisos em tela cheia, galeria, enquete personalizada, estatísticas ================= */
   const FT = {
     _c: {},
-    get() { return LS.get('cgFotos', null) || { f: {} }; },
+    _r: null, _o: null,
+    get() { let r = null; try { r = localStorage.getItem('cgFotos'); } catch (e) {} if (r && r === this._r) return this._o; let o = null; try { o = r ? JSON.parse(r) : null; } catch (e) {} this._r = r; this._o = o || { f: {} }; return this._o; },
     src(id) { const d = this.get().f[id]; return d && !d.del ? d.d : null; },
     img(id) { const s = this.src(id); if (!s) return null; const c = this._c[id]; if (c && c.s === s) return c.im; const im = new Image(); im.src = s; this._c[id] = { s, im }; return im; },
-    put(id, d) { const D = this.get(); D.f[id] = { d, ts: Date.now() }; LS.set('cgFotos', D); return !!this.src(id); },
-    del(id) { const D = this.get(); if (D.f[id]) { D.f[id] = { del: 1, ts: Date.now() }; LS.set('cgFotos', D); } },
+    put(id, d) { const D = this.get(); D.f[id] = { d, ts: Date.now() }; LS.set('cgFotos', D); this._r = null; return !!this.src(id); },
+    del(id) { const D = this.get(); if (D.f[id]) { D.f[id] = { del: 1, ts: Date.now() }; LS.set('cgFotos', D); this._r = null; } },
     size() { try { return (localStorage.getItem('cgFotos') || '').length; } catch (e) { return 0; } }
   };
   window.__FT = FT;
@@ -12513,13 +12515,18 @@ function H_medalha() {
       arr.forEach(x => { if (x.found) out[x.found.name.split('/').pop()] = dec(x.found); }); return out;
     }
     const put = (k, v) => fetch(`${BASE}/painel/${k}?key=${cfg.k}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(enc(v)) }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); });
+    // limpeza única (só no tablet): testes feitos no celular com o nome GABRIEL subiram para a nuvem antes da trava e viraram "recorde" do jogo dos segundos
+    const fixRec = (k, M) => { try { if (k !== 'cgRecordes' || !st.writer || !isObj(M) || localStorage.getItem('cgPurgeG1')) return M; let cut = 0; const o = JSON.parse(JSON.stringify(M));
+      Object.keys(o).forEach(g => { if (/^tempo/.test(g) && Array.isArray(o[g])) { const n0 = o[g].length; o[g] = o[g].filter(e => !/^GABRIEL(\s|$)/i.test(String((e && e.n) || '').trim())); cut += n0 - o[g].length; } });
+      _set.call(localStorage, 'cgPurgeG1', '1'); try { const r = JSON.parse(localStorage.getItem('cgNovoRec') || 'null'); if (r && /^tempo/.test(r.g) && /^GABRIEL(\s|$)/i.test(String(r.n || '').trim())) localStorage.removeItem('cgNovoRec'); } catch (e) {}
+      if (!cut) return M; o.z = Date.now(); return o; } catch (e) { return M; } };
     async function cycle(keys, forcePush) {
       if (st.busy) { keys.forEach(k => st.dirty.add(k)); return; } st.busy = true;
       try {
         const R = await fetchAll(keys); st.remoteDel = R.cgMuralDel || [];
         let changed = false;
         for (const k of ['cgMuralDel', ...keys.filter(k => k !== 'cgMuralDel')]) { if (!keys.includes(k)) continue;
-          const L = rawGet(k), M = merge(k, L, R[k]), ms = JSON.stringify(M);
+          const L = rawGet(k), M = fixRec(k, merge(k, L, R[k])), ms = JSON.stringify(M);
           if (M && ms !== JSON.stringify(L)) { rawSet(k, M); changed = true; }
           if (st.writer && M && (forcePush.has(k) || ms !== JSON.stringify(R[k]))) await put(k, M); }
         st.last = Date.now(); st.err = '';
@@ -12564,10 +12571,13 @@ function H_medalha() {
   const sizePool = () => pool.forEach(c => { c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); });
   function attach(s) {
     if (!s.canvas || s.cv) return;
-    const c = pool.find(c => !c._owner); if (!c) return;
+    let c = pool.find(c => !c._owner);
+    // segurança: se alguma cena saiu sem devolver a tela (troca interrompida), recupera; senão cria outra
+    if (!c) { c = pool.find(c => c._owner !== cur && c._owner !== leaving && c._owner !== s); if (c) release(c._owner); else { c = document.createElement('canvas'); c.width = Math.round(W * DPR); c.height = Math.round(H * DPR); pool.push(c); } c._owner = null; }
     c._owner = s; s.cv = c; s.ctx = c.getContext('2d'); s.cam.prepend(c);
   }
   function release(s) { if (!s.cv) return; s.cv._owner = null; s.cv.remove(); s.cv = null; s.ctx = null; }
+  window.__poolIds = () => pool.map(c => c._owner ? c._owner.id + (c._owner === cur ? '*' : c._owner === leaving ? '~' : '!') : '-');
 
   function show(s) {
     su(s); attach(s);
@@ -12820,13 +12830,13 @@ function H_medalha() {
   let paused = false;
   window.__panel = {
     pause() { paused = true; cancelAnimationFrame(raf); nextAt = Infinity; if (progAnim) progAnim.pause(); },
-    resume(advance) { if (!paused) return; paused = false; last = performance.now(); raf = requestAnimationFrame(loop); if (advance) { busy = false; go(idx + 1); } else schedule(); },
+    resume(advance) { if (!paused) return; paused = false; last = performance.now(); raf = requestAnimationFrame(loop); if (advance) { if (leaving && leaving !== cur) { hide(leaving); leaving.el.style.zIndex = ''; cur.el.style.zIndex = ''; } leaving = null; busy = false; go(idx + 1); } else schedule(); },
     get id() { return cur && cur.id; }, get n() { return order.length; }
   };
   // troca seca (sem efeito de vídeo): quem liga o slide é a equipe no tablet
-  window.__panel.cut = () => { busy = false; leaving = null; const n = (idx + 1) % order.length; if (cur) hide(cur); idx = n; cur = order[n]; show(cur); label(); nextAt = Infinity; if (progAnim) progAnim.cancel(); };
-  window.__panel.goto = i => { busy = false; leaving = null; const n = ((i % order.length) + order.length) % order.length; if (cur) hide(cur); idx = n; cur = order[n]; show(cur); label(); nextAt = Infinity; if (progAnim) progAnim.cancel(); };
-  window.__panel.prev = () => { busy = false; leaving = null; const n = (idx - 1 + order.length) % order.length; if (cur) hide(cur); idx = n; cur = order[n]; show(cur); label(); nextAt = Infinity; if (progAnim) progAnim.cancel(); };
+  window.__panel.cut = () => { busy = false; if (leaving && leaving !== cur) hide(leaving); leaving = null; const n = (idx + 1) % order.length; if (cur) hide(cur); idx = n; cur = order[n]; show(cur); label(); nextAt = Infinity; if (progAnim) progAnim.cancel(); };
+  window.__panel.goto = i => { busy = false; if (leaving && leaving !== cur) hide(leaving); leaving = null; const n = ((i % order.length) + order.length) % order.length; if (cur) hide(cur); idx = n; cur = order[n]; show(cur); label(); nextAt = Infinity; if (progAnim) progAnim.cancel(); };
+  window.__panel.prev = () => { busy = false; if (leaving && leaving !== cur) hide(leaving); leaving = null; const n = (idx - 1 + order.length) % order.length; if (cur) hide(cur); idx = n; cur = order[n]; show(cur); label(); nextAt = Infinity; if (progAnim) progAnim.cancel(); };
   window.__panel.play = ms => { if (paused) { paused = false; last = performance.now(); raf = requestAnimationFrame(loop); } nextAt = Infinity; if (progAnim) progAnim.cancel(); if (ms) progAnim = prog.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: ms, easing: 'linear', fill: 'forwards' }); };
   window.addEventListener('message', e => { const d = e.data || {}; const P = window.__panel;
     if (d.cmd === 'pause') P.pause(); else if (d.cmd === 'resume') P.resume(d.advance);
@@ -12964,7 +12974,7 @@ function H_medalha() {
       /* ---- admin v2 ---- */
       const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
       let tabCur = 'geral';
-      const tab = tb => { tabCur = tb; A.querySelectorAll('#adm-tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tb)); A.querySelectorAll('.in > section').forEach(s => { s.hidden = s.dataset.tab !== tb; }); if (tb === 'num') statsR(); if (tb === 'mod') muroR(); if (tb === 'sis' && typeof rcR === 'function') rcR(); A.scrollTop = 0; };
+      const tab = tb => { tabCur = tb; A.querySelectorAll('#adm-tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tb)); A.querySelectorAll('.in > section').forEach(s => { s.hidden = s.dataset.tab !== tb; }); if (tb === 'num') statsR(); if (tb === 'mod') muroR(); if (tb === 'sis' && typeof rcR === 'function') { rcR(); rcG(); } A.scrollTop = 0; };
       A.querySelectorAll('#adm-tabs button').forEach(b => b.onclick = () => tab(b.dataset.tab));
       const twoTap = (b, label, fn) => { let ask = 0; b.onclick = () => { if (!ask) { ask = 1; b.textContent = 'toque de novo'; b.classList.add('dng'); setTimeout(() => { ask = 0; b.textContent = label; }, 3500); return; } ask = 0; fn(); }; };
       // fotos: escolhe, reduz e guarda
@@ -13126,7 +13136,16 @@ function H_medalha() {
         L.slice().reverse().forEach(it => { const b = document.createElement('button'); b.type = 'button'; const k = RB.count(it.o); b.textContent = '↩️ ' + (it.d === 'antes de zerar' ? 'antes de zerar · ' : '') + fd(it.t) + ' · ' + k + (k === 1 ? ' jogo' : ' jogos'); twoTap(b, b.textContent, () => { const r = RB.restore(it.o); msg('Cópia restaurada: ' + r + ' jogos com recorde.'); rcR(); }); box.appendChild(b); }); };
       $('#rc-dl').onclick = () => { try { const o = REC.all(), blob = new Blob([JSON.stringify({ app: 'cybergaeco-recordes', v: 1, t: Date.now(), o }, null, 1)], { type: 'application/json' }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'recordes-cybergaeco-' + hojeKey() + '.json'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000); msg('Cópia baixada (veja em Downloads).'); } catch (e) { msg('Não consegui baixar: ' + e.message); } };
       $('#rc-up').onclick = () => { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json'; inp.onchange = () => { const f = inp.files[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { try { const j = JSON.parse(rd.result), o = j && j.o ? j.o : j; if (!o || typeof o !== 'object' || !RB.count(o)) throw new Error('arquivo sem recordes'); const r = RB.restore(o); msg('Recordes restaurados: ' + r + ' jogos com recorde.'); rcR(); } catch (e) { msg('Arquivo inválido: ' + e.message); } }; rd.readAsText(f); }; inp.click(); };
-      rcR();
+      const rcG = () => { const o = REC.all(), sel = $('#rc-g'), was = sel.value, nm = g => { const h = (typeof HF_G !== 'undefined') && HF_G.find(x => x[0] === g); return h ? h[1] + (/^tempo\d+d$/.test(g) ? ' (difícil)' : '') : g; };
+        const gs = Object.keys(o).filter(g => !g.startsWith('__') && g !== 'z' && Array.isArray(o[g]) && o[g].length).sort((a, b) => nm(a).localeCompare(nm(b)));
+        sel.innerHTML = '<option value="">— escolha o jogo —</option>' + gs.map(g => `<option value="${g}">${nm(g)}</option>`).join(''); if (gs.includes(was)) sel.value = was; rcL(); };
+      const rcL = () => { const g = $('#rc-g').value, box = $('#rc-ls'); box.innerHTML = ''; if (!g) return; const h = (typeof HF_G !== 'undefined') && HF_G.find(x => x[0] === g), fm = e => (h && typeof hfFmt === 'function') ? hfFmt(h[2], e.s) : e.s;
+        REC.list(g).forEach((e, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = `✕  ${i + 1}º ${e.n} · ${fm(e)}`; twoTap(b, b.textContent, () => {
+          try { const o = JSON.parse(localStorage.getItem('cgRecordes') || '{}'), K = String(e.n || '').trim().toUpperCase(); o[g] = (o[g] || []).filter(x => !(String(x.n || '').trim().toUpperCase() === K && x.s === e.s)); o.z = Date.now(); localStorage.setItem('cgRecordes', JSON.stringify(o));
+            const r = JSON.parse(localStorage.getItem('cgNovoRec') || 'null'); if (r && r.g === g && String(r.n || '').trim().toUpperCase() === K) localStorage.removeItem('cgNovoRec'); } catch (er) {}
+          const c = window.__cloud; msg(c && c.on && !c.writer ? `Apagado só neste aparelho. Para valer no painel, apague no tablet.` : `Recorde de ${e.n} apagado.`); rcR(); rcG(); }); box.appendChild(b); }); };
+      $('#rc-g').onchange = rcL;
+      rcR(); rcG();
       let zeroAsk = 0; $('#rc-zero').onclick = () => { if (!zeroAsk) { zeroAsk = 1; $('#rc-zero').textContent = 'Toque de novo para confirmar'; setTimeout(() => { zeroAsk = 0; $('#rc-zero').textContent = 'Zerar todos os recordes'; }, 4000); return; }
         try { const L = RB.list(); L.push({ d: 'antes de zerar', t: Date.now(), o: JSON.parse(localStorage.getItem('cgRecordes') || '{}') }); while (L.length > 11) L.shift(); localStorage.setItem(RB.key, JSON.stringify(L)); localStorage.setItem('cgRecordes', JSON.stringify({ __seed1: 1, z: Date.now() })); } catch (e) {} zeroAsk = 0; rcR(); $('#rc-zero').textContent = 'Zerar todos os recordes'; msg('Recordes zerados.'); };
       setInterval(() => { if (!A.hidden) { cloudSt(); if (!window.__adminOk()) closeAdm(); } }, 2000);
@@ -13179,7 +13198,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !/[?&]mostrar=/.test(location.search)) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795747436';
+window.__VER = '1795793558';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
