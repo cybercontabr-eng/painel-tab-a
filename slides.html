@@ -8738,7 +8738,7 @@ function H_medalha() {
   const PB_LOGO = (() => { const i = new Image(); i.src = typeof LOGO_SRC !== 'undefined' ? LOGO_SRC : 'as/dee894623e16.png'; return i; })();
   const pinball = AR('pinball', 'pinball', {
     geo() { const th = H * .72, tw = Math.min(W * .5, th * 1.15), tx = W / 2 - tw / 2, ty = H * .2; return { tw, th, tx, ty }; },
-    reset() { this.score = 0; this.balls = 3; this.dead = 0; this.started = 0; this.L = 0; this.R = 0; this.la = 0; this.ra = 0; this.law = 0; this.raw = 0; this.bl = []; this.wait = 0; this.fx = []; this.pop = []; this.msg = null; this.shake = 0; this.mult = 1; this.saveT = 0; this.multi = 0; this.drops = 0; this.build(); },
+    reset() { this.score = 0; this.balls = 3; this.dead = 0; this.sp = {}; this.cap = null; this.started = 0; this.L = 0; this.R = 0; this.la = 0; this.ra = 0; this.law = 0; this.raw = 0; this.bl = []; this.wait = 0; this.fx = []; this.pop = []; this.msg = null; this.shake = 0; this.mult = 1; this.saveT = 0; this.multi = 0; this.drops = 0; this.build(); },
     build() {
       const { tw, th, tx, ty } = this.geo(), X = f => tx + f * tw, Y = f => ty + f * th; this.r = Math.min(tw, th) * .017; this.key = W + 'x' + H;
       const seg = [], add = (a, b, c, d, k) => seg.push({ x1: X(a), y1: Y(b), x2: X(c), y2: Y(d), k: k || 0 });
@@ -8923,7 +8923,7 @@ function H_medalha() {
     for (let i = 0; i < 4; i++) add(6, 60 + i * 6, 6, 64.5 + i * 6, { hash: i, m: 'hash', e: .3 });
     // corredores de cima
     [27, 37, 47, 57, 67].forEach(x => add(x, 148, x, 158, { m: 'post', h: 4 }));
-    const C = [[35, 130], [56, 130], [45.5, 116]].map(([x, y], i) => ({ x, y, r: 4.6, i }));
+    const C = [[35, 130, 4.6], [56, 130, 4.6], [45.5, 116, 4.6], [21, 138, 3.2, 1], [71, 143, 3.2, 1]].map(([x, y, r, f], i) => ({ x, y, r, f: f || 0, i }));
     const FL = [{ x: 31, y: 24, L: 13, r0: 2.2, r1: 1.15, a0: -.52, a1: .5, k: 'L' }, { x: 62.5, y: 24, L: 13, r0: 2.2, r1: 1.15, a0: Math.PI + .52, a1: Math.PI - .5, k: 'R' }, { x: 5.6, y: 118, L: 9, r0: 1.7, r1: 1, a0: -.55, a1: .22, k: 'L' }];
     const RAMP = [[19, 96, 0], [17.5, 110, 3], [16.5, 130, 7], [20, 151, 10], [30, 167, 12], [46, 174, 13], [62, 169, 12], [72, 156, 11], [79, 136, 10], [82, 112, 8], [81.5, 88, 6], [79.5, 70, 3.5], [77.5, 58, 1.2], [77.5, 52, 0]];
     const LANES = [32, 42, 52, 62];
@@ -8931,19 +8931,27 @@ function H_medalha() {
   })();
   const P3_FX = [
     { n: 'REDE', at: 0, bg: ['#2b1a6e', '#160d3d', '#07041a'], la: '90,220,255', lb: '255,90,200', hx: '255,61,139', neon: '#4fe3ff', bump: '#ff3d8b', ramp: '#46b4ff', rampE: '#0b3a8a', pk: '#ff3d8b', pc: '#4fe3ff', sky: '#9d8cff' },
-    { n: 'OPERAÇÃO', at: 30000, bg: ['#0e2a5e', '#08173a', '#030814'], la: '80,150,255', lb: '255,70,70', hx: '255,60,60', neon: '#ff4d4d', bump: '#2f7bff', ramp: '#ff5a5a', rampE: '#6a0b0b', pk: '#ff3030', pc: '#3d8bff', sky: '#8fb0ff', nova: 'um drone-viatura patrulha o meio da mesa' },
-    { n: 'MATRIX', at: 80000, bg: ['#0b4a2a', '#062a18', '#020c06'], la: '61,255,140', lb: '180,255,90', hx: '61,255,140', neon: '#3dff8c', bump: '#19c96b', ramp: '#3dff8c', rampE: '#0b5a2a', pk: '#3dff8c', pc: '#b4ff5a', sky: '#9dffc0', nova: 'o ímã do jackpot segura e arremessa a bola' },
+    { n: 'OPERAÇÃO', at: 30000, bg: ['#0e2a5e', '#08173a', '#030814'], la: '80,150,255', lb: '255,70,70', hx: '255,60,60', neon: '#ff4d4d', bump: '#2f7bff', ramp: '#ff5a5a', rampE: '#6a0b0b', pk: '#ff3030', pc: '#3d8bff', sky: '#8fb0ff', nova: 'drone-viatura no meio da mesa e 2 mini-bumpers' },
+    { n: 'MATRIX', at: 80000, bg: ['#0b4a2a', '#062a18', '#020c06'], la: '61,255,140', lb: '180,255,90', hx: '61,255,140', neon: '#3dff8c', bump: '#19c96b', ramp: '#3dff8c', rampE: '#0b5a2a', pk: '#3dff8c', pc: '#b4ff5a', sky: '#9dffc0', nova: 'ímã no jackpot e portal laranja → azul' },
     { n: 'DARK WEB', at: 160000, bg: ['#4a0b18', '#22040c', '#080104'], la: '255,157,31', lb: '255,40,90', hx: '255,120,20', neon: '#ff9d1f', bump: '#ff2b55', ramp: '#ff9d1f', rampE: '#6a2a00', pk: '#ff6a1f', pc: '#ff2b55', sky: '#ffb08a', nova: 'dois drones, raios e bumpers valendo o dobro' }];
+  const P3_SP = { big: ['PALETA GIGANTE', 20, '🦾'], post: ['PINO SALVADOR', 20, '🛡️'], save: ['BOLA SALVA', 15, '💾'], multi: ['+1 BOLA EM JOGO', 0, '⚪'], slow: ['CÂMERA LENTA', 10, '🐢'], x2: ['PONTOS 2x', 20, '✖️'], super: ['SUPER BUMPERS', 20, '💥'], jack: ['JACKPOT ACESO', 20, '💰'], extra: ['BOLA EXTRA', 0, '⭐'] };
+  const P3_CAPS = [[46, 76], [26, 70], [67, 66], [46, 141], [69, 100], [28, 118]];
   const P3_MIS = [['RAMPA 3X', 'acerte a rampa 3 vezes', 'ramp', 3], ['ALVOS GAECO', 'derrube os 5 alvos', 'drops', 1], ['SPINNER 20', 'gire o spinner 20 vezes', 'spin', 20], ['H-A-S-H', 'acerte os 4 alvos HASH', 'hash', 1], ['BUMPERS 25', 'acerte os bumpers 25 vezes', 'bump', 25], ['ÓRBITA 2X', 'dê a volta pela órbita 2 vezes', 'orbit', 2], ['COFRE', 'entre no cofre', 'vault', 1]];
   const pin3d = AR('pin3d', 'pinball 3D', {
     reset() {
       this.score = 0; this.balls = 3; this.dead = 0; this.started = 0; this.bl = []; this.pop = []; this.msg = null; this.L = 0; this.R = 0; this.tch = {}; this.fa = [0, 0, 0]; this.fw = [0, 0, 0];
-      this.drops = [1, 1, 1, 1, 1]; this.hash = [0, 0, 0, 0]; this.lanes = [0, 0, 0, 0]; this.spinA = 0; this.spinW = 0; this.bumpT = [-9, -9, -9]; this.slT = [-9, -9]; this.hashT = [-9, -9, -9, -9];
+      this.drops = [1, 1, 1, 1, 1]; this.hash = [0, 0, 0, 0]; this.lanes = [0, 0, 0, 0]; this.spinA = 0; this.spinW = 0; this.bumpT = P3.C.map(() => -9); this.sp = {}; this.cap = null; this.capNext = (this.T || 0) + 14; this.flS = 1; this.postK = 0; this.portT = -9; this.slT = [-9, -9]; this.hashT = [-9, -9, -9, -9];
       this.vault = 0; this.mult = 1; this.bonus = 0; this.bonusX = 1; this.mis = 0; this.misN = 0; this.misLv = 1; this.extra = 0; this.extraGot = 0; this.saveT = 0; this.jack = 10000; this.combo = 0; this.comboT = 0; this.skill = -1; this.launchT = -9; this.plP = 0; this.plWait = 0; this.resetDropsT = 0; this.shake = 0; this.over2 = 0; this.fase = 0; this.flashT = -9; this.magT = -9; this.novaAt = 0; if (this.r3) this.theme(0);
     },
     say(t, d) { this.msg = { t, until: (this.T || 0) + (d || 1.6) }; },
-    pts(p, x, y, col) { p = Math.round(p * this.mult); this.score += p; this.bonus += Math.round(p * .1); if (x != null) this.pop.push({ t: '+' + p.toLocaleString('pt-BR'), x, y, l: 1, c: col || '#ffd36b' }); },
-    misHit(k, n) { const m = P3_MIS[this.mis]; if (m[2] !== k) return; this.misN += n || 1; if (this.misN >= m[3]) { const v = 5000 * this.misLv; this.pts(v); this.say('MISSÃO CUMPRIDA +' + v.toLocaleString('pt-BR'), 2.2); this.shake = .3;
+    spOn(k) { return (this.sp[k] || 0) > (this.T || 0); },
+    award(k) { const T = this.T, d = P3_SP[k]; if (d[1]) this.sp[k] = Math.max(this.sp[k] || 0, T) + d[1];
+      if (k === 'save') this.saveT = Math.max(this.saveT, T + 15); if (k === 'extra') this.extra++;
+      if (k === 'multi') { this.bl.push({ x: 92.75, y: 6, vx: 0, vy: 0, md: 'pl' }); this.autoL = T + .6; }
+      this.say(d[2] + ' ' + d[0] + '!', 2.2); this.shake = .25; this.flashT = T - .25; },
+    pickSp() { const ks = Object.keys(P3_SP).filter(k => k !== 'extra' || this.extra < 2), w = ks.map(k => k === 'extra' ? .35 : 1), t = w.reduce((a, b) => a + b, 0); let r = Math.random() * t; for (let i = 0; i < ks.length; i++) { r -= w[i]; if (r <= 0) return ks[i]; } return ks[0]; },
+    pts(p, x, y, col) { p = Math.round(p * this.mult * (this.spOn('x2') ? 2 : 1)); this.score += p; this.bonus += Math.round(p * .1); if (x != null) this.pop.push({ t: '+' + p.toLocaleString('pt-BR'), x, y, l: 1, c: col || '#ffd36b' }); },
+    misHit(k, n) { const m = P3_MIS[this.mis]; if (m[2] !== k) return; this.misN += n || 1; if (this.misN >= m[3]) { const v = 5000 * this.misLv; this.pts(v); this.say('MISSÃO CUMPRIDA +' + v.toLocaleString('pt-BR'), 2.2); this.shake = .3; { const k = this.pickSp(); setTimeout(() => { if (!this.dead) this.award(k); }, 2300); }
       this.mis++; this.misN = 0; if (this.mis >= P3_MIS.length) { this.mis = 0; this.misLv++; } if (this.mis === 2 && !this.extraGot) { this.extraGot = 1; this.extra++; setTimeout(() => this.say('BOLA EXTRA!', 2), 2300); } } },
     serve(auto) { this.bl.push({ x: 92.75, y: 6, vx: 0, vy: 0, md: 'pl' }); this.plP = 0; this.plWait = this.T || 0; this.skill = Math.floor(Math.random() * 4); this.autoL = auto ? (this.T || 0) + .7 : 0; },
     launch(b, p) { b.md = 'pf'; b.vy = 230 + 600 * p; b.vx = 0; this.launchT = this.T; if (!this.noSave && (!this.saveT || this.T > this.saveT)) this.saveT = this.T + 12; this.noSave = 0; this.plP = 0; },
@@ -8977,13 +8985,16 @@ function H_medalha() {
           if (s.drop != null && -c.vn > 15) { this.drops[s.drop] = 0; this.pts(250, (s.x1 + s.x2) / 2, 92, '#ffd36b'); if (this.drops.every(q => !q)) { this.vault = 1; this.pts(2500, 46, 96); this.say('COFRE ABERTO! ENTRE NO COFRE', 2.4); this.misHit('drops'); } }
           if (s.hash != null && T - this.hashT[s.hash] > .25 && -c.vn > 15) { this.hashT[s.hash] = T; if (!this.hash[s.hash]) { this.hash[s.hash] = 1; this.pts(200, 9, s.y1 + 2, '#3dffa8'); } else this.pts(30);
             if (this.hash.every(q => q)) { this.hash = [0, 0, 0, 0]; if (this.mult < 5) this.mult++; this.say(`HASH! PONTOS ${this.mult}x`, 2); this.misHit('hash'); } } }
-        P3.C.forEach((m, i) => { const dx = b.x - m.x, dy = b.y - m.y, d = Math.hypot(dx, dy), R = m.r + P3.R; if (d < R && d > 1e-6) { const nx = dx / d, ny = dy / d; b.x = m.x + nx * R; b.y = m.y + ny * R; const sp = Math.max(Math.hypot(b.vx, b.vy) * .8, 300); b.vx = nx * sp; b.vy = ny * sp;
-          if (T - this.bumpT[i] > .06) { this.bumpT[i] = T; this.pts((this.bl.length > 1 ? 200 : 100) * (this.fase >= 3 ? 2 : 1), m.x, m.y + 6, '#ff7ab8'); this.misHit('bump'); } } });
+        P3.C.forEach((m, i) => { if (m.f > this.fase) return; const dx = b.x - m.x, dy = b.y - m.y, d = Math.hypot(dx, dy), R = m.r + P3.R; if (d < R && d > 1e-6) { const nx = dx / d, ny = dy / d; b.x = m.x + nx * R; b.y = m.y + ny * R; const sp = Math.max(Math.hypot(b.vx, b.vy) * .8, this.spOn('super') ? 400 : 300); b.vx = nx * sp; b.vy = ny * sp;
+          if (T - this.bumpT[i] > .06) { this.bumpT[i] = T; this.pts((this.bl.length > 1 ? 200 : 100) * (this.fase >= 3 ? 2 : 1) * (this.spOn('super') ? 5 : 1), m.x, m.y + 6, '#ff7ab8'); this.misHit('bump'); } } });
         for (let k = 0; k < (this.fase >= 3 ? 2 : this.fase >= 1 ? 1 : 0); k++) { const [dx0, dy0] = this.dronePos(k), dx = b.x - dx0, dy = b.y - dy0, d = Math.hypot(dx, dy), R = 3.5 + P3.R;
           if (d < R && d > 1e-6) { const nx = dx / d, ny = dy / d; b.x = dx0 + nx * R; b.y = dy0 + ny * R; const sp = Math.max(Math.hypot(b.vx, b.vy) * .8, 280); b.vx = nx * sp; b.vy = ny * sp; if (T - (this.droneT || -9) > .15) { this.droneT = T; this.pts(500, dx0, dy0 + 5, '#ff6b6b'); this.shake = .15; } } }
         if (this.fase >= 2 && T - this.magT > 2.5) { const dx = 46 - b.x, dy = 60 - b.y, d = Math.hypot(dx, dy); if (d < 2.2 && Math.hypot(b.vx, b.vy) < 520) { b.md = 'mag'; b.t = T + .9; b.vx = b.vy = 0; b.x = 46; b.y = 60; this.magT = T; this.pts(1500, 46, 66, '#3dff8c'); this.say('ÍMÃ! +' + Math.round(1500 * this.mult).toLocaleString('pt-BR'), 1.2); }
           else if (d < 8 && d > 1e-6) { const f = 900 * (1 - d / 8); b.vx += dx / d * f * h; b.vy += dy / d * f * h; } }
-        P3.FL.forEach((f, i) => { const a = this.fang(i), ex = f.x + Math.cos(a) * f.L, ey = f.y + Math.sin(a) * f.L, w = this.fw[i];
+        if (this.postK > .5) this.col(b, 46.75, 11, 46.75, 15, 1.1, .5);
+        if (this.fase >= 2 && T - this.portT > 1.2 && Math.hypot(b.x - 67, b.y - 82) < 3) { this.portT = T; b.x = 24; b.y = 152; b.vx = 140; b.vy = -240; this.pts(2000, 24, 158, '#7fe3ff'); this.say('PORTAL! +' + Math.round(2000 * this.mult).toLocaleString('pt-BR'), 1.2); }
+        if (this.cap && Math.hypot(b.x - this.cap.x, b.y - this.cap.y) < 4.6) { const k = this.cap.k; this.cap = null; this.capNext = T + 18 + Math.random() * 10; this.pts(1000, b.x, b.y + 5, '#ffd36b'); this.award(k); }
+        P3.FL.forEach((f, i) => { const L = f.L * (i < 2 ? this.flS : 1), a = this.fang(i), ex = f.x + Math.cos(a) * L, ey = f.y + Math.sin(a) * L, w = this.fw[i];
           this.col(b, f.x, f.y, ex, ey, k => f.r0 + (f.r1 - f.r0) * k, .22, (cx, cy) => [-w * (cy - f.y), w * (cx - f.x)]); });
         // outras bolas (multibola)
         for (const o of this.bl) { if (o === b || o.md !== 'pf') continue; const dx = b.x - o.x, dy = b.y - o.y, d = Math.hypot(dx, dy); if (d < P3.R * 2 && d > 1e-6) { const nx = dx / d, ny = dy / d, ov = P3.R * 2 - d; b.x += nx * ov / 2; b.y += ny * ov / 2; o.x -= nx * ov / 2; o.y -= ny * ov / 2; const vn = (b.vx - o.vx) * nx + (b.vy - o.vy) * ny; if (vn < 0) { b.vx -= vn * nx; b.vy -= vn * ny; o.vx += vn * nx; o.vy += vn * ny; } } }
@@ -9004,14 +9015,14 @@ function H_medalha() {
       if (this.bl.some(b => b.gone)) this.drain();
     },
     rampAt(s) { const P = this.rampP; let i = 1; while (i < P.length - 1 && P[i].s < s) i++; const a = P[i - 1], c = P[i], k = Math.min(1, Math.max(0, (s - a.s) / ((c.s - a.s) || 1))); return [a.x + (c.x - a.x) * k, a.y + (c.y - a.y) * k, a.z + (c.z - a.z) * k]; },
-    rampDone(b) { const T = this.T, multi = this.bl.filter(q => q.md !== 'gone').length > 1; this.combo = T - this.comboT < 4 ? this.combo + 1 : 1; this.comboT = T;
+    rampDone(b) { const T = this.T, multi = this.bl.filter(q => q.md !== 'gone').length > 1 || this.spOn('jack'); this.combo = T - this.comboT < 4 ? this.combo + 1 : 1; this.comboT = T;
       if (multi) { this.pts(this.jack, 46, 175, '#ff9d1f'); this.say('JACKPOT! ' + Math.round(this.jack * this.mult).toLocaleString('pt-BR'), 2.2); this.jack += 5000; this.shake = .4; }
       else { this.pts(1000 * this.combo, 46, 175, '#7fe3ff'); if (this.combo > 1) this.say(`COMBO ${this.combo}x`, 1.4); }
       this.misHit('ramp'); },
     vaultIn(b) { const T = this.T; b.md = 'lock'; b.t = T + 1.2; b.vx = b.vy = 0; b.x = P3.VAULT.x; b.y = P3.VAULT.y; this.misHit('vault');
       if (this.vault) { this.vault = 0; this.pts(5000, 46, 104, '#ff9d1f'); this.say('MULTIBOLA! RAMPA = JACKPOT', 2.6); this.shake = .5; this.saveT = T + 14;
         [-1, 1].forEach((sd, k) => setTimeout(() => { if (this.dead) return; this.bl.push({ x: 46 + sd * 3, y: 96.6, vx: sd * 120, vy: -200, md: 'pf' }); }, 1300 + k * 500)); }
-      else this.pts(1500, 46, 104, '#ffd36b');
+      else { this.pts(1500, 46, 104, '#ffd36b'); const k = this.pickSp(); setTimeout(() => { if (!this.dead) this.award(k); }, 700); }
       this.resetDropsT = T + 3; },
     drain() { const T = this.T; this.bl = this.bl.filter(b => !b.gone);
       if (this.bl.length) return;
@@ -9072,7 +9083,7 @@ function H_medalha() {
         const mesh = new TH.Mesh(new TH.ExtrudeGeometry(sh, { depth: 4.2, bevelEnabled: false }), m); mesh.rotation.x = -Math.PI / 2; mesh.position.set(-50, 0, 0); mesh.scale.set(1, 1, 1); sc.add(mesh);
         const L = Math.hypot(6.5, 12.9), band = new TH.Mesh(new TH.BoxGeometry(L, 4.4, .8), white); band.position.copy(V((X(19) + X(25.5)) / 2, (50 + 37.1) / 2, 2.2)); band.rotation.y = Math.atan2(37.1 - 50, X(25.5) - X(19)); sc.add(band); return { m, band }; });
       // bumpers
-      r.bu = P3.C.map(c => { const g = new TH.Group(); g.position.copy(V(c.x, c.y, 0));
+      r.bu = P3.C.map(c => { const g = new TH.Group(); g.position.copy(V(c.x, c.y, 0)); g.scale.set(c.r / 4.6, 1, c.r / 4.6);
         const base = new TH.Mesh(new TH.CylinderGeometry(5, 5.2, 1.2, 28), new TH.MeshStandardMaterial({ color: '#141022', roughness: .4 })); base.position.y = .6;
         const m = new TH.MeshStandardMaterial({ color: '#ff3d8b', emissive: '#ff2f86', emissiveIntensity: .5, roughness: .2, transparent: true, opacity: .9 });
         const body = new TH.Mesh(new TH.CylinderGeometry(3.6, 3.6, 3.4, 28), m); body.position.y = 2.6;
@@ -9083,7 +9094,7 @@ function H_medalha() {
       r.fl = P3.FL.map(f => { const sh = new TH.Shape(), n = 14; for (let i = 0; i <= n; i++) { const a = Math.PI / 2 + i / n * Math.PI; sh.lineTo(Math.cos(a) * f.r0, Math.sin(a) * f.r0); } for (let i = 0; i <= n; i++) { const a = -Math.PI / 2 + i / n * Math.PI; sh.lineTo(f.L + Math.cos(a) * f.r1, Math.sin(a) * f.r1); }
         const geo = new TH.ExtrudeGeometry(sh, { depth: 3.2, bevelEnabled: true, bevelThickness: .3, bevelSize: .25, bevelSegments: 2 });
         const mesh = new TH.Mesh(geo, [new TH.MeshStandardMaterial({ color: '#fbfbff', roughness: .3, envMap: env, envMapIntensity: .6 }), new TH.MeshStandardMaterial({ color: '#e0103a', roughness: .5 })]); mesh.rotation.x = -Math.PI / 2;
-        const g = new TH.Group(); g.add(mesh); g.position.copy(V(f.x, f.y, .3)); const pin = new TH.Mesh(new TH.CylinderGeometry(.7, .7, 4.4, 12), chrome); pin.position.y = 1.9; g.add(pin); sc.add(g); return g; });
+        const g = new TH.Group(); g.add(mesh); g.userData.m = mesh; g.position.copy(V(f.x, f.y, .3)); const pin = new TH.Mesh(new TH.CylinderGeometry(.7, .7, 4.4, 12), chrome); pin.position.y = 1.9; g.add(pin); sc.add(g); return g; });
       // alvos que caem (G-A-E-C-O) e alvos fixos (H-A-S-H)
       const letterT = (ch, bgc, fg) => can(128, 128, (g, w, h) => { g.fillStyle = bgc; g.fillRect(0, 0, w, h); g.fillStyle = fg; g.font = `900 92px ${SANS}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(ch, w / 2, h / 2 + 6); });
       r.dr = 'GAECO'.split('').map((ch, i) => { const mt = new TH.MeshStandardMaterial({ map: letterT(ch, '#ffcf4a', '#3a2300'), roughness: .35, emissive: '#3a2a00', emissiveIntensity: .4 }); const m = new TH.Mesh(new TH.BoxGeometry(5.6, 4.6, 1), mt); m.position.copy(V(34 + i * 6, 90, 2.3)); sc.add(m); return m; });
@@ -9111,6 +9122,13 @@ function H_medalha() {
         const ga = new TH.Sprite(new TH.SpriteMaterial({ color: '#ff3030', transparent: true, opacity: 0, blending: TH.AdditiveBlending, depthWrite: false })), gb = new TH.Sprite(new TH.SpriteMaterial({ color: '#3d8bff', transparent: true, opacity: 0, blending: TH.AdditiveBlending, depthWrite: false }));
         g.add(body, top, sa, sb, ga, gb); g.visible = false; sc.add(g); return { g, ga, gb }; });
       { const ring = new TH.Mesh(new TH.TorusGeometry(6.2, .45, 10, 48), new TH.MeshBasicMaterial({ color: '#3dff8c', transparent: true, opacity: .9 })); ring.rotation.x = Math.PI / 2; ring.position.copy(V(46, 60, .5)); ring.visible = false; sc.add(ring); r.mag = ring; }
+      // pino salvador, portais e cápsula de especial
+      r.post = new TH.Mesh(new TH.CylinderGeometry(1.1, 1.1, 4.5, 16), [new TH.MeshStandardMaterial({ color: '#ff3d5a', emissive: '#ff1f3a', emissiveIntensity: .8 }), new TH.MeshStandardMaterial({ color: '#ffffff', emissive: '#ffd0d8', emissiveIntensity: .5 }), chrome]); r.post.position.copy(V(46.75, 13, -3)); sc.add(r.post);
+      r.port = [['#ff9d1f', 67, 82], ['#4fc3ff', 24, 152]].map(([c, x, y]) => { const g = new TH.Group(); const t = new TH.Mesh(new TH.TorusGeometry(3.4, .5, 10, 40), new TH.MeshBasicMaterial({ color: c })); t.rotation.x = Math.PI / 2; const d = new TH.Mesh(new TH.CircleGeometry(3.2, 32), new TH.MeshBasicMaterial({ color: c, transparent: true, opacity: .35, blending: TH.AdditiveBlending, depthWrite: false })); d.rotation.x = -Math.PI / 2; d.position.y = .1;
+        const sp = new TH.Sprite(new TH.SpriteMaterial({ color: c, transparent: true, opacity: .7, blending: TH.AdditiveBlending, depthWrite: false })); sp.scale.set(14, 14, 1); sp.position.y = 1.5; g.add(t, d, sp); g.position.copy(V(x, y, .4)); g.visible = false; sc.add(g); return { g, t, sp }; });
+      { const capT = can(128, 128, (g, w) => { const gr = g.createLinearGradient(0, 0, w, w); gr.addColorStop(0, '#ffd36b'); gr.addColorStop(1, '#ff3d8b'); g.fillStyle = gr; g.fillRect(0, 0, w, w); g.strokeStyle = '#fff'; g.lineWidth = 10; g.strokeRect(6, 6, w - 12, w - 12); g.fillStyle = '#fff'; g.font = `900 86px ${SANS}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('?', w / 2, w / 2 + 6); });
+        r.cap = new TH.Mesh(new TH.BoxGeometry(3.6, 3.6, 3.6), new TH.MeshStandardMaterial({ map: capT, emissive: '#ffb84d', emissiveIntensity: .45, roughness: .3 })); r.cap.visible = false; sc.add(r.cap);
+        r.capG = new TH.Sprite(new TH.SpriteMaterial({ color: '#ffd36b', transparent: true, opacity: .8, blending: TH.AdditiveBlending, depthWrite: false })); r.capG.scale.set(13, 13, 1); r.capG.visible = false; sc.add(r.capG); }
       // lançador
       r.pl = new TH.Mesh(new TH.CylinderGeometry(1.1, 1.1, 10, 14), chrome); r.pl.rotation.x = Math.PI / 2; sc.add(r.pl);
       // avental
@@ -9129,7 +9147,7 @@ function H_medalha() {
       r.hemi = new TH.HemisphereLight('#9d8cff', '#120a22', .75); sc.add(r.hemi); const dl = new TH.DirectionalLight('#ffffff', .9); dl.position.set(-30, 140, 60); sc.add(dl);
       r.pk = new TH.PointLight('#ff3d8b', 1.2, 90, 1.6); r.pk.position.copy(V(45.5, 125, 18)); sc.add(r.pk);
       r.pc = new TH.PointLight('#4fe3ff', .9, 90, 1.6); r.pc.position.copy(V(46, 40, 22)); sc.add(r.pc);
-      Object.assign(r, { rd, sc, cam, cv, V, pr: Math.min(DPR, 1.35), ft: [], glowT }); r.dr2.forEach(d => { d.ga.material.map = glowT; d.gb.material.map = glowT; d.ga.material.needsUpdate = d.gb.material.needsUpdate = true; d.ga.scale.set(7, 7, 1); d.gb.scale.set(7, 7, 1); d.ga.position.set(-1.3, 5, 0); d.gb.position.set(1.3, 5, 0); }); this.r3 = r; this.theme(this.fase || 0);
+      Object.assign(r, { rd, sc, cam, cv, V, pr: Math.min(DPR, 1.35), ft: [], glowT }); r.port.forEach(o => { o.sp.material.map = glowT; o.sp.material.needsUpdate = true; }); r.capG.material.map = glowT; r.capG.material.needsUpdate = true; r.dr2.forEach(d => { d.ga.material.map = glowT; d.gb.material.map = glowT; d.ga.material.needsUpdate = d.gb.material.needsUpdate = true; d.ga.scale.set(7, 7, 1); d.gb.scale.set(7, 7, 1); d.ga.position.set(-1.3, 5, 0); d.gb.position.set(1.3, 5, 0); }); this.r3 = r; this.theme(this.fase || 0);
     },
     theme(i) { const r = this.r3; if (!r) return; const F = P3_FX[i]; this.fase = i; r.art(r.pfT.image.getContext('2d'), 1024, 2048); r.pfT.needsUpdate = true;
       r.neon.color.set(F.neon); r.bu.forEach(o => { o.m.color.set(F.bump); o.m.emissive.set(F.bump); }); r.rampM.color.set(F.ramp); r.rampM.emissive.set(F.rampE); r.pk.color.set(F.pk); r.pc.color.set(F.pc); r.hemi.color.set(F.sky); r.mag.visible = i >= 2; },
@@ -9143,7 +9161,9 @@ function H_medalha() {
       if (!this.r3) { T2(this.fail ? (this.fail === 1 ? 'este aparelho não conseguiu abrir o 3D' : 'não deu para carregar a mesa 3D agora') : 'montando a mesa 3D…', W / 2, H * .5, u * 1.6, '#fff', 700, 'center', 'sans-serif'); NE.frame('pin3d'); return; }
       const r = this.r3;
       // física
-      if (!this.dead && this.started) { const vmax = Math.max(150, ...this.bl.map(b => Math.hypot(b.vx || 0, b.vy || 0))), d = Math.min(dt, .04), n = Math.min(26, Math.max(5, Math.ceil(vmax * d / 1.1))); for (let k = 0; k < n; k++) this.step(d / n); }
+      if (this.started && !this.dead) { this.flS += ((this.spOn('big') ? 1.25 : 1) - this.flS) * Math.min(1, dt * 6); this.postK += ((this.spOn('post') ? 1 : 0) - this.postK) * Math.min(1, dt * 5);
+        if (!this.cap && T > this.capNext && this.bl.some(b => b.md === 'pf')) { const c = P3_CAPS[Math.floor(Math.random() * P3_CAPS.length)]; this.cap = { x: c[0], y: c[1], k: this.pickSp(), until: T + 15 }; } if (this.cap && T > this.cap.until) { this.cap = null; this.capNext = T + 12; } }
+      if (!this.dead && this.started) { const vmax = Math.max(150, ...this.bl.map(b => Math.hypot(b.vx || 0, b.vy || 0))), d = Math.min(dt, .04) * (this.spOn('slow') ? .55 : 1), n = Math.min(26, Math.max(5, Math.ceil(vmax * d / 1.1))); for (let k = 0; k < n; k++) this.step(d / n); }
       else P3.FL.forEach((f, i) => { this.fa[i] = Math.max(0, this.fa[i] - dt * 15); });
       // lançador
       const pb = this.bl.find(b => b.md === 'pl');
@@ -9157,11 +9177,14 @@ function H_medalha() {
       const sh = this.shake > 0 ? (this.shake -= dt, Math.sin(T * 70) * .8 * this.shake) : 0;
       { const c = window.__p3cam || [192, 100, -86, 33]; if (r.cam.fov !== c[3]) { r.cam.fov = c[3]; r.cam.updateProjectionMatrix(); } r.cam.position.set(sh, c[0], c[1]); r.cam.lookAt(0, 0, c[2]); }
       // atualiza objetos
-      r.fl.forEach((g, i) => { g.rotation.y = this.fang(i); });
+      r.fl.forEach((g, i) => { g.rotation.y = this.fang(i); g.userData.m.scale.x = i < 2 ? this.flS : 1; });
+      r.post.position.y = -2.4 + this.postK * 4.65;
+      r.port.forEach((o, k) => { o.g.visible = this.fase >= 2; o.t.rotation.z = T * (k ? -3 : 3); o.sp.material.opacity = .45 + .3 * Math.sin(T * 6 + k); });
+      r.cap.visible = r.capG.visible = !!this.cap; if (this.cap) { const bl = this.cap.until - T < 4 ? (Math.sin(T * 16) > 0 ? 1 : .2) : 1; r.cap.position.copy(r.V(this.cap.x, this.cap.y, 3.4 + Math.sin(T * 3) * .6)); r.cap.rotation.set(T * .7, T * 1.3, 0); r.capG.position.copy(r.cap.position); r.capG.material.opacity = .8 * bl; r.cap.material.emissiveIntensity = .45 * bl; }
       r.dr.forEach((m, i) => { const tgt = this.drops[i] ? 2.3 : -2.6; m.position.y += (tgt - m.position.y) * Math.min(1, dt * 14); });
       r.ha.forEach((o, i) => { const k = Math.max(0, 1 - (T - this.hashT[i]) / .2); o.m.position.x = 6.2 - 50 - k * .6; o.mt.emissiveIntensity = this.hash[i] ? .9 : .25 + k; });
       r.sp.rotation.x = this.spinA;
-      r.bu.forEach((o, i) => { const k = Math.max(0, 1 - (T - this.bumpT[i]) / .18); o.m.emissiveIntensity = .5 + k * 2.5; o.cap.position.y = 4.8 - k * .8; });
+      r.bu.forEach((o, i) => { o.g.visible = P3.C[i].f <= this.fase; if (this.spOn('super')) o.m.emissive.set(Math.sin(T * 12) > 0 ? '#ffffff' : P3_FX[this.fase].bump); else o.m.emissive.set(P3_FX[this.fase].bump); const k = Math.max(0, 1 - (T - this.bumpT[i]) / .18); o.m.emissiveIntensity = .5 + k * 2.5; o.cap.position.y = 4.8 - k * .8; });
       r.sl.forEach((o, i) => { const k = Math.max(0, 1 - (T - this.slT[i]) / .15); o.m.emissiveIntensity = .35 + k * 2; });
       r.dr2.forEach((d, k) => { const on = k ? this.fase >= 3 : this.fase >= 1; d.g.visible = on; if (!on) return; const [dx, dy] = this.dronePos(k), hit = Math.max(0, 1 - (T - (this.droneT || -9)) / .2); d.g.position.copy(r.V(dx, dy, Math.sin(T * 3 + k) * .25)); d.g.rotation.y = T * 1.5;
         const ab = Math.sin(T * 10) > 0; d.ga.material.opacity = ab ? .9 : .1; d.gb.material.opacity = ab ? .1 : .9; d.g.scale.setScalar(1 + hit * .12); });
@@ -9184,6 +9207,8 @@ function H_medalha() {
       ctx.save(); const fe = ctx.createLinearGradient(x0, 0, x0 + vw * .06, 0); fe.addColorStop(0, 'rgba(5,3,12,1)'); fe.addColorStop(1, 'rgba(5,3,12,0)'); ctx.fillStyle = fe; ctx.fillRect(x0, 0, vw * .06, vh);
       const fe2 = ctx.createLinearGradient(x0 + vw, 0, x0 + vw * .94, 0); fe2.addColorStop(0, 'rgba(5,3,12,1)'); fe2.addColorStop(1, 'rgba(5,3,12,0)'); ctx.fillStyle = fe2; ctx.fillRect(x0 + vw * .94, 0, vw * .06, vh); ctx.restore();
       if (this.novaAt && T - this.novaAt < 4 && P3_FX[this.fase].nova) { const a = Math.max(0, Math.min(1, (T - this.novaAt) * 3, (4 - (T - this.novaAt)) * 2)), tt = 'NOVO NA MESA: ' + P3_FX[this.fase].nova; ctx.globalAlpha = a; const w = Math.min(vw * .92, u * 30); glass(x0 + (vw - w) / 2, H * .44, w, u * 3, u * 1, .7); T2(tt, x0 + vw / 2, H * .44 + u * 1.5, njFit(tt, w * .92, u * 1), '#fff', 800, 'center', 'sans-serif'); ctx.globalAlpha = 1; }
+      { let yy = H * .05; Object.keys(this.sp).forEach(k => { const left = this.sp[k] - T; if (left <= 0) return; const d = P3_SP[k], tt = d[2] + ' ' + d[0], w = u * 13.5, hh = u * 2.6; glass(x0 + u * .8, yy, w, hh, hh / 2, .7); T2(tt, x0 + u * 1.8, yy + hh * .42, njFit(tt, w - u * 2, u * .95), '#fff', 800, 'left', 'sans-serif');
+        ctx.fillStyle = 'rgba(255,255,255,.15)'; rr2(x0 + u * 1.8, yy + hh * .72, w - u * 2, u * .3, u * .15); ctx.fill(); ctx.fillStyle = '#ffd36b'; rr2(x0 + u * 1.8, yy + hh * .72, (w - u * 2) * Math.min(1, left / d[1]), u * .3, u * .15); ctx.fill(); yy += hh + u * .5; }); }
       // pontos flutuando
       this.pop = this.pop.filter(p => (p.l -= dt * 1.2) > 0); this.pop.forEach(p => { const [sx, sy] = this.proj(p.x, p.y, 6); ctx.globalAlpha = Math.min(1, p.l * 1.6); T2(p.t, sx, sy - (1 - p.l) * u * 3, u * 1.25, p.c, 900, 'center', 'sans-serif'); }); ctx.globalAlpha = 1;
       // painel à esquerda (placar estilo matriz de pontos)
@@ -9202,7 +9227,7 @@ function H_medalha() {
         if (nx) { const k = Math.min(1, (this.score - F.at) / (nx.at - F.at)); ctx.fillStyle = 'rgba(255,255,255,.12)'; rr2(qx + u * 1.2, H * .085 + u * 3, pw - u * 2.4, u * .55, u * .27); ctx.fill(); ctx.fillStyle = F.neon; rr2(qx + u * 1.2, H * .085 + u * 3, (pw - u * 2.4) * k, u * .55, u * .27); ctx.fill(); T2('próxima: ' + nx.at.toLocaleString('pt-BR') + ' pts', qx + u * 1.2, H * .085 + u * 4.4, u * .8, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); }
         else T2('fase máxima!', qx + u * 1.2, H * .085 + u * 3.6, u * .9, 'rgba(255,255,255,.7)', 700, 'left', 'sans-serif');
         if (pb) T2(this.R ? 'solte para lançar!' : 'segure e solte ▶ para lançar', qx + pw / 2, H * .235, njFit('segure e solte ▶ para lançar', pw, u * 1), '#ffd36b', 800, 'center', 'sans-serif');
-        glass(qx, H * .27, pw, H * .44, u * 1.2, .45); [['🎯 G-A-E-C-O', 'abre o cofre'], ['🔐 cofre aberto', 'multibola'], ['🛝 rampa', 'combo · jackpot'], ['🟢 H-A-S-H', 'pontos em dobro'], ['M-P-G-O', 'bônus maior']].forEach(([a, b2], i) => {
+        glass(qx, H * .27, pw, H * .44, u * 1.2, .45); [['🎁 cápsula ?', 'especial surpresa'], ['🎯 G-A-E-C-O', 'abre o cofre · multibola'], ['🛝 rampa', 'combo · jackpot'], ['🟢 H-A-S-H', 'multiplica os pontos'], ['M-P-G-O', 'bônus maior']].forEach(([a, b2], i) => {
         T2(a, qx + u * 1.2, H * .27 + u * 2 + i * H * .08, njFit(a, pw - u * 2.4, u * 1.05), '#fff', 800, 'left', 'sans-serif'); T2(b2, qx + u * 1.2, H * .27 + u * 3.5 + i * H * .08, u * .85, 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); }); }
       // botões
       const bb = (x, on, txt) => { const w = Math.min(pw, u * 13), hh = H * .15, y = H * .74; ctx.fillStyle = on ? 'rgba(255,211,107,.3)' : 'rgba(255,255,255,.06)'; rr2(x - w / 2, y, w, hh, 18); ctx.fill(); ctx.strokeStyle = on ? '#ffd36b' : 'rgba(255,211,107,.35)'; ctx.lineWidth = 2; ctx.stroke(); T2(txt, x, y + hh / 2, u * 1.4, '#ffd36b', 800, 'center', 'sans-serif'); };
@@ -13523,7 +13548,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !/[?&]mostrar=/.test(location.search)) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795821454';
+window.__VER = '1795821784';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
