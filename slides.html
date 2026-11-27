@@ -1134,6 +1134,15 @@ html,body,#stage{background:#18050c}
 .ob-s{margin-top:3vmin;font:500 clamp(.9rem,2.6vmin,1.5rem)/1.5 var(--sans);color:rgba(255,244,227,.85)}
 .ob-h{margin-top:2.4vmin;font-size:5vmin;animation:obH 1.6s ease-in-out infinite}
 @keyframes obH{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+/* ================= visual padronizado: vidro escuro, cantos e sombras iguais em todos os slides ================= */
+:root{--gl-bg:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.035));--gl-bd:1px solid rgba(255,255,255,.17);--gl-r:2.2vmin;--gl-sh:0 1.6vmin 4.5vmin rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.14)}
+.card,.pw-wrap .card,.cq-panel,.gp3,.rc{background:var(--gl-bg)!important;border:var(--gl-bd)!important;border-radius:var(--gl-r)!important;box-shadow:var(--gl-sh)!important}
+.ic-c{background:var(--gl-bg)!important;border:var(--gl-bd);border-radius:var(--gl-r)!important;box-shadow:var(--gl-sh)!important;color:var(--ink)!important}
+.ic-c b{color:#ffd36b!important}
+.ic-c span{color:rgba(255,255,255,.72)!important}
+.ix-lab,.chip{border-radius:99px!important;border:var(--gl-bd)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.title{text-shadow:0 .6vmin 2.4vmin rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
@@ -1772,6 +1781,9 @@ html,body,#stage{background:#18050c}
     <section class="scene" data-scene="recordes"><div class="cam">
       <div class="game-top copy"><div class="label">● Hall da fama</div><h1 class="title"><span>Nossos</span><em>recordistas</em></h1></div>
     </div></section>
+    <section class="scene" data-scene="podio"><div class="cam">
+      <div class="game-top copy"><div class="label">● Ranking geral</div><h1 class="title"><span>Pódio da</span><em>semana</em></h1></div>
+    </div></section>
     <section class="scene" data-scene="clima"><div class="cam">
       <div class="game-top copy"><div class="label">● Agora</div><h1 class="title"><span>Goiânia</span><em>hoje</em></h1></div>
     </div></section>
@@ -2055,7 +2067,7 @@ html,body,#stage{background:#18050c}
 const CONFIG = {
   segundosPorCena: 18,            // tempo padrão de cada cena
   duracaoEspecial: {              // cenas que precisam de mais tempo (segundos)
-      clima: 15, novorec: 9,
+      clima: 15, novorec: 9, podio: 17,
     avisos: 18, galeria: 14, arvore: 22, pixel: 18, estrelas: 22, amados: 11, obrigado: 16, escava: 22, milhao: 18, terminal: 36, decripta: 18,
     chuva: 10, hash: 12, circuito: 22, atena: 22, sged: 24, tor: 20, consulta: 24, inst: 12, medi: 12, ops: 22, coordenadora: 11, contagem: 24,
     retro: 42, phishing: 16, senha: 16, golpe: 16, particulas: 10, lareira2: 20, soc: 22, virada: 24, floco: 10, estrela: 10, desejos: 22, warp: 10,
@@ -2066,7 +2078,7 @@ const CONFIG = {
     convite: 12, logoluzes: 10, logoholo: 10, logocodigo: 10, espiral: 10, guirlanda: 10, binaria: 10, desafio: 12
   },
   // ordem das cenas (remova as que não quiser)
-  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'clima', 'novorec', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'rena', 'logocodigo', 'enquete', 'recordes', 'desafio', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'sinuca', 'combina', 'esqd', 'espiral', 'estrela', 'virada', 'convite'],
+  cenas: ['logoluzes', 'binaria', 'inst', 'hoje', 'clima', 'novorec', 'avisos', 'muro', 'puzzle', 'hash', 'cofre', 'logoholo', 'phishing', 'campo', 'warp', 'medi', 'pisca', 'decripta', 'guirlanda', 'palavras', 'presentes', 'senha', 'memoria', 'floco', 'terminal2', 'aniver', 'galeria', 'coordenadora', 'reacoes', 'arvore', 'milhao', 'estrelas', 'rena', 'logocodigo', 'enquete', 'recordes', 'podio', 'desafio', 'amados', 'fabricio', 'carlos', 'quizpp', 'corrida', 'globoneve', 'particulas', 'teclado', 'forca', 'quiz', 'golpe', 'caca', 'consulta3', 'difs', 'desejos', 'empilha', 'velha', 'retro', 'obrigado', 'labirinto', 'naval', 'fogos', 'chuva', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'sinuca', 'combina', 'esqd', 'espiral', 'estrela', 'virada', 'convite'],
   equipe3d: false,               // a equipe do hardware (3D) liga cada tela entre as cenas
   vitrine: true,                 // jogos saem da rotação automática (ficam na central e nos convites)
   convidarACada: 0,              // convite para jogar (desligado: são muitos jogos)
@@ -2074,7 +2086,7 @@ const CONFIG = {
   neveGeral: false,              // neve caindo por cima de todos os slides (desligada para ficar mais leve)
   abertura: false,               // abertura completa em 3D no início de cada volta
   fps3d: 30,
-  transicoes: ['canal'],            // leve: só esmaecer (as outras continuam disponíveis: 'cartao', 'diagonal', 'iris', 'deslize', 'abrir', 'subir')
+  transicoes: ['suave'],            // leve: só esmaecer (as outras continuam disponíveis: 'cartao', 'diagonal', 'iris', 'deslize', 'abrir', 'subir')
   frasesTerminal: [
     'compilando boas festas...',
     '0 ameaças detectadas na ceia',
@@ -5128,7 +5140,9 @@ function H_medalha() {
 
   /* ================= v6: jogos de Natal ================= */
   const wrapTxt = (s, maxW, size, weight = 500, font = MONO) => { ctx.font = `${weight} ${size}px ${font}`; const w = s.split(' '), out = []; let line = ''; w.forEach(x => { const tt = line ? line + ' ' + x : x; if (ctx.measureText(tt).width > maxW && line) { out.push(line); line = x; } else line = tt; }); if (line) out.push(line); return out; };
-  const scoreBox = (txt, x, y, u, col = '#ffd36b') => { ctx.font = `700 ${u * 1.1}px ${MONO}`; const w = ctx.measureText(txt).width + u * 2.4; ctx.fillStyle = 'rgba(0,0,0,.35)'; rr2(x - w / 2, y - u * 1.3, w, u * 2.6, u * 1.3); ctx.fill(); T2(txt, x, y, u * 1.1, col, 700, 'center'); };
+  // vidro escuro padrão (pílulas, caixas e placares de todos os jogos)
+  const glass = (x, y, w, h, r, a = .6) => { ctx.save(); ctx.fillStyle = `rgba(10,12,24,${a})`; rr2(x, y, w, h, r); ctx.fill(); const g = ctx.createLinearGradient(0, y, 0, y + h); g.addColorStop(0, 'rgba(255,255,255,.13)'); g.addColorStop(.5, 'rgba(255,255,255,.03)'); g.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = g; ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.2)'; ctx.lineWidth = 1; ctx.stroke(); ctx.restore(); };
+  const scoreBox = (txt, x, y, u, col = '#ffd36b') => { ctx.font = `700 ${u * 1.1}px ${MONO}`; const w = ctx.measureText(txt).width + u * 2.4; glass(x - w / 2, y - u * 1.3, w, u * 2.6, u * 1.3, .5); T2(txt, x, y, u * 1.1, col, 700, 'center'); };
 
   /* ---------- pegue os presentes ---------- */
   const pegue = {
@@ -7033,7 +7047,7 @@ function H_medalha() {
       if (this.drg && b.st === 'rest') { ctx.strokeStyle = 'rgba(255,255,255,.6)'; ctx.lineWidth = 3; ctx.setLineDash([8, 8]); ctx.beginPath(); ctx.moveTo(bp.x, bp.y); ctx.lineTo(this.drg.x, this.drg.y); ctx.stroke(); ctx.setLineDash([]); }
       if (b.st === 'rest' && !this.over && !this.score && this.lives === 3 && !this.drg) { const a = (T * .8) % 1; hand(bp.x + br * 1.6, bp.y - a * H * .16, T, u * 2); }
       // placar
-      ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .82, H * .3, W * .14, H * .2, 14); ctx.fill();
+      glass(W * .82, H * .3, W * .14, H * .2, 14, 0.55);
       T2(String(this.score), W * .89, H * .38, u * 4.2, '#ffe3a0', 400, 'center', SERIF); T2(this.score === 1 ? 'ponto' : 'pontos', W * .89, H * .38 + u * 2.4, u * .9, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
       for (let i = 0; i < 3; i++) T2(i < this.lives ? '🏀' : '·', W * .89 + (i - 1) * u * 2.2, H * .46, u * 1.3, '#fff', 400, 'center', 'sans-serif');
       if (!this.score && b.st === 'rest' && !this.over) T2('arraste a bola para cima, na direção da cesta', W / 2, H * .965, u * 1.05, 'rgba(255,255,255,.85)', 700, 'center', 'sans-serif');
@@ -7327,7 +7341,7 @@ function H_medalha() {
       if (this.sw) { ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = 3; ctx.setLineDash([8, 8]); ctx.beginPath(); ctx.moveTo(this.sw.x0, this.sw.y0); ctx.lineTo(this.sw.x, this.sw.y); ctx.stroke(); ctx.setLineDash([]); }
       else if (!sh && !this.streak && !this.over) { const a = (T * .7) % 1; hand(B.x + u * 3, B.y - a * H * .14, T, u * 2); T2('arraste a bola na direção do canto que você quer', W / 2, H * .97, u * 1.05, 'rgba(255,255,255,.85)', 700, 'center', 'sans-serif'); }
       if (this.res) { const kk = Math.min(1, (T - this.res.t) / .25); T2(this.res.txt, W / 2, G.y - u * 2.6 + (1 - kk) * u * 2, u * 3.4, this.res.goal ? '#3dffa8' : '#ff8fb1', 400, 'center', SERIF); }
-      ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .82, H * .3, W * .14, H * .17, 14); ctx.fill();
+      glass(W * .82, H * .3, W * .14, H * .17, 14, 0.55);
       T2(String(this.streak), W * .89, H * .37, u * 4.2, '#ffe3a0', 400, 'center', SERIF); T2(this.streak === 1 ? 'gol seguido' : 'gols seguidos', W * .89, H * .37 + u * 2.6, u * .9, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
       if (this.over && T > this.over) { ctx.fillStyle = 'rgba(4,6,16,.55)'; ctx.fillRect(0, H * .3, W, H * .7); T2(this.streak + (this.streak === 1 ? ' gol seguido' : ' gols seguidos'), W / 2, H * .6, u * 3.6, '#fff', 400, 'center', SERIF); if (T - this.over > 1.2 && !NE.on) { T2('toque para jogar de novo', W / 2, H * .7, u * 1.2, '#ffd36b', 700, 'center', 'sans-serif'); hand(W / 2, H * .78, T, u * 2.2); } }
       stepBurst(this.sp, dt, 380);
@@ -7641,7 +7655,7 @@ function H_medalha() {
       if (this.miss && T - this.miss.t < .5) { ctx.strokeStyle = `rgba(255,95,122,${1 - (T - this.miss.t) * 2})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(this.miss.x, this.miss.y, R.cell * .45, 0, TAU); ctx.stroke(); T2('−3 s', this.miss.x, this.miss.y - R.cell * .7, u * 1.1, '#ff8fb1', 700, 'center', 'sans-serif'); }
       // placar e tempo
       const left = this.started ? Math.max(0, this.end - T) : 40;
-      ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .82, H * .3, W * .14, H * .26, 14); ctx.fill();
+      glass(W * .82, H * .3, W * .14, H * .26, 14, 0.55);
       T2(String(this.score), W * .89, H * .37, u * 4.2, '#ffe3a0', 400, 'center', SERIF); T2(this.score === 1 ? 'achado' : 'achados', W * .89, H * .37 + u * 2.5, u * .9, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
       T2(`⏱ ${Math.ceil(left)} s`, W * .89, H * .5, u * 1.4, left < 8 && this.started ? '#ff8fb1' : '#fff', 700, 'center', 'sans-serif');
       const bw = W * .58, bx = W * .2, by = H * .225; ctx.fillStyle = 'rgba(255,255,255,.1)'; rr2(bx, by, bw, u * .5, u * .25); ctx.fill(); ctx.fillStyle = left < 8 ? '#ff5f7a' : '#ffd36b'; rr2(bx, by, bw * Math.min(1, left / 40), u * .5, u * .25); ctx.fill();
@@ -7767,7 +7781,7 @@ function H_medalha() {
       stepBurst(this.sp, dt, 380);
       if (this.msg && T - this.msg.t < 1.4) { const a = Math.min(1, (T - this.msg.t) / .2); ctx.globalAlpha = a; T2(this.msg.txt, cx, H * .3, u * 3, this.msg.ok ? '#9fd8a8' : '#ff8fb1', 700, 'center', SERIF); ctx.globalAlpha = 1; }
       // placar
-      ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .74, H * .3, W * .22, H * .42, 14); ctx.fill();
+      glass(W * .74, H * .3, W * .22, H * .42, 14, 0.55);
       T2(String(this.total), W * .85, H * .38, u * 4, '#ffe3a0', 400, 'center', SERIF); T2('pontos', W * .85, H * .38 + u * 2.4, u * .9, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
       for (let i = 0; i < this.R; i++) { const v = this.res[i], y = H * .5 + i * u * 1.7; T2(`rodada ${i + 1}`, W * .77, y, u * .85, i === this.round && !this.over ? '#f2c46d' : 'rgba(255,255,255,.6)', 600, 'left', 'sans-serif'); T2(v == null ? '—' : v === 0 ? '💥 0' : String(v), W * .93, y, u * .9, v === 0 ? '#ff8fb1' : '#fff', 700, 'right', 'sans-serif'); }
       const hint = this.st === 'idle' ? 'segure para encher · solte para parar' : this.st === 'grow' ? 'solte antes de estourar!' : ''; if (hint && !this.over) T2(hint, cx, H * .235, u * 1.15, this.st === 'grow' ? '#f2c46d' : 'rgba(255,255,255,.85)', 700, 'center', 'sans-serif');
@@ -7978,7 +7992,7 @@ function H_medalha() {
       T2('ou', W / 2, C[0].y + C[0].h * .42, u * 1.3, 'rgba(255,255,255,.45)', 400, 'center', SERIF);
       if (A && T - A.t < 1.8) T2(A.ok ? 'acertou! ✓' : 'errou! ✗', W / 2, C[0].y + C[0].h + u * 2, u * 1.5, A.ok ? '#9fd8a8' : '#ff8fb1', 700, 'center', 'sans-serif');
       stepBurst(this.sp, dt, 380);
-      ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(W * .845, H * .33, W * .11, H * .16, 14); ctx.fill(); T2(String(this.streak), W * .9, H * .4, u * 3.6, '#ffe3a0', 400, 'center', SERIF); T2('seguidos', W * .9, H * .4 + u * 2.2, u * .8, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
+      glass(W * .845, H * .33, W * .11, H * .16, 14, 0.55); T2(String(this.streak), W * .9, H * .4, u * 3.6, '#ffe3a0', 400, 'center', SERIF); T2('seguidos', W * .9, H * .4 + u * 2.2, u * .8, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif');
       if (this.over && T > this.over) { ctx.fillStyle = 'rgba(30,6,12,.6)'; ctx.fillRect(0, H * .22, W, H * .78); T2(this.streak + (this.streak === 1 ? ' acerto seguido' : ' acertos seguidos'), W / 2, H * .55, u * 3.6, '#fff', 400, 'center', SERIF); if (T - this.over > 1.2 && !NE.on) T2('👆', W / 2, H * .68 + Math.sin(T * 4) * u * .4, u * 2.2, '#fff', 400, 'center', 'sans-serif'); }
       NE.frame('peso');
     }
@@ -8017,7 +8031,7 @@ function H_medalha() {
     ctx.strokeStyle = st === 1 ? '#3dffa8' : st === 2 ? '#ff5f7a' : 'rgba(242,196,109,.45)'; ctx.lineWidth = st ? 3 : 1.4; ctx.stroke();
     const fs = njFit(txt, b.w * .9, b.h * .34); T2(txt, b.x + b.w / 2, b.y + b.h / 2 + 1, fs, '#fff4e3', 700, 'center', 'sans-serif'); ctx.globalAlpha = 1; };
   const njHit = (B, x, y) => B.findIndex(b => b && x > b.x && x < b.x + b.w && y > b.y && y < b.y + b.h);
-  const njBox = (v, lbl, x, y, w, h) => { const u = UU(); ctx.fillStyle = 'rgba(52,12,24,.6)'; rr2(x, y, w, h, 14); ctx.fill(); T2(String(v), x + w / 2, y + h * .42, Math.min(u * 3.2, h * .5), '#ffe3a0', 400, 'center', SERIF); T2(lbl, x + w / 2, y + h * .8, u * .8, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif'); };
+  const njBox = (v, lbl, x, y, w, h) => { const u = UU(); glass(x, y, w, h, 14, 0.55); T2(String(v), x + w / 2, y + h * .42, Math.min(u * 3.2, h * .5), '#ffe3a0', 400, 'center', SERIF); T2(lbl, x + w / 2, y + h * .8, u * .8, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif'); };
   const njCred = () => T2('fotos: Pixabay e Wikimedia Commons', W / 2, H * .985, UU() * .6, 'rgba(255,255,255,.3)', 500, 'center', 'sans-serif');
   const njLoading = () => T2('carregando…', W / 2, H * .55, UU() * 1.2, 'rgba(255,255,255,.5)', 600, 'center', 'sans-serif');
   const njEnd = (s, T, big, sub) => { const u = UU(); ctx.fillStyle = 'rgba(30,6,12,.72)'; ctx.fillRect(0, H * .2, W, H * .8); T2(big, W / 2, H * .52, u * 3.6, '#fff', 400, 'center', SERIF); if (sub) T2(sub, W / 2, H * .6, u * 1.2, '#ffd36b', 700, 'center', 'sans-serif'); if (T - s.end > 1.2 && !NE.on) { T2('toque para jogar de novo', W / 2, H * .7, u * 1.15, '#ffd36b', 700, 'center', 'sans-serif'); hand(W / 2, H * .79, T, u * 2.2); } };
@@ -9199,7 +9213,7 @@ function H_medalha() {
   window.__CTL = CTL;
 
   /* ================= arcade 2: mais 9 jogos ================= */
-  const arPill = (txt, x, y, sz, col) => { ctx.font = `800 ${sz}px ${SANS}`; const w = ctx.measureText(txt).width + sz * 1.6; ctx.fillStyle = 'rgba(0,0,0,.6)'; rr2(x - w / 2, y - sz * .95, w, sz * 1.9, sz * .95); ctx.fill(); T2(txt, x, y, sz, col || '#fff', 800, 'center', 'sans-serif'); };
+  const arPill = (txt, x, y, sz, col) => { ctx.font = `800 ${sz}px ${SANS}`; const w = ctx.measureText(txt).width + sz * 1.6; glass(x - w / 2, y - sz * .95, w, sz * 1.9, sz * .95, .66); T2(txt, x, y, sz, col || '#fff', 800, 'center', 'sans-serif'); };
   const popAdd = (s, x, y, txt, col) => (s.pops || (s.pops = [])).push({ x, y, txt, col: col || '#ffd36b', l: 1 });
   const popDraw = (s, dt, sz) => { if (!s.pops) return; s.pops = s.pops.filter(p => (p.l -= dt * .9) > 0); s.pops.forEach(p => { p.y -= 40 * dt; ctx.globalAlpha = Math.min(1, p.l * 2); T2(p.txt, p.x, p.y, sz, p.col, 800, 'center', 'sans-serif'); }); ctx.globalAlpha = 1; };
   const hearts = (n, x, y, u, max = 3) => { for (let i = 0; i < max; i++) T2(i < n ? '❤️' : '🖤', x, y + u * i * 2.6, u * 1.7, '#fff', 400, 'center', 'sans-serif'); };
@@ -11542,7 +11556,7 @@ function H_medalha() {
       cards.push(ano === 0 ? ['🎆', 'hoje', 'Feliz Ano Novo!'] : ['🎆', String(ano), ano === 1 ? 'dia para 2027' : 'dias para 2027']);
       const cw = (rw - u * (cards.length - 1)) / cards.length, ch = H * .2;
       cards.forEach(([ic, big, sm2], i) => { const x = rx + i * (cw + u), a = sm(Math.min(1, Math.max(0, (T - .3 - i * .15) / .5))); ctx.globalAlpha = a;
-        ctx.fillStyle = 'rgba(255,244,227,.09)'; rr2(x, ry + (1 - a) * u * 2, cw, ch, 16); ctx.fill();
+        glass(x, ry + (1 - a) * u * 2, cw, ch, 16, 0.35);
         T2(ic, x + u * 1.8, ry + u * 2, u * 1.8, '#000', 400, 'center', 'sans-serif');
         T2(big, x + cw - u * 1.2, ry + ch * .42, big === 'hoje' ? u * 2.2 : u * 3.4, '#f2c46d', 700, 'right', SERIF);
         T2(sm2, x + cw - u * 1.2, ry + ch * .8, u * 1.05, 'rgba(255,244,227,.8)', 500, 'right', 'sans-serif'); ctx.globalAlpha = 1; });
@@ -11556,7 +11570,7 @@ function H_medalha() {
         T2('📌 AVISO', rx + u * 1.5, ry + u * 1.5, u * .85, '#f2c46d', 700, 'left', 'sans-serif'); let yy = ry + u * 3.4;
         tl.forEach(l => { T2(l, rx + u * 1.5, yy, u * 1.6, '#fff4e3', 700, 'left', SERIF); yy += u * 2; }); xl.forEach(l => { T2(l, rx + u * 1.5, yy, u * 1.1, 'rgba(255,244,227,.85)', 500, 'left', 'sans-serif'); yy += u * 1.55; }); ry += h + u * 1.2; }
       const wk = Math.floor((Date.now() / 864e5 + 3) / 7), dica = DICAS[wk % DICAS.length], dl = wrapTxt(dica, rw - u * 6, u * 1.2, 500, SANS), dh = u * 3.6 + dl.length * u * 1.65;
-      if (ry + dh < H * .93) { const a = sm(Math.min(1, Math.max(0, (T - .8) / .5))); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(255,244,227,.09)'; rr2(rx, ry, rw, dh, 18); ctx.fill();
+      if (ry + dh < H * .93) { const a = sm(Math.min(1, Math.max(0, (T - .8) / .5))); ctx.globalAlpha = a; glass(rx, ry, rw, dh, 18, 0.35);
         ctx.fillStyle = '#9fd8a8'; ctx.beginPath(); ctx.arc(rx + u * 2.3, ry + dh / 2, u * 1.3, 0, TAU); ctx.fill(); T2('🛡️', rx + u * 2.3, ry + dh / 2, u * 1.3, '#000', 400, 'center', 'sans-serif');
         T2('DICA DE SEGURANÇA DA SEMANA', rx + u * 4.6, ry + u * 1.6, u * .8, '#9fd8a8', 700, 'left', 'sans-serif'); dl.forEach((l, k2) => T2(l, rx + u * 4.6, ry + u * 3.5 + k2 * u * 1.65, u * 1.2, '#fff4e3', 500, 'left', 'sans-serif')); ctx.globalAlpha = 1; }
     }
@@ -11844,8 +11858,56 @@ function H_medalha() {
     tap() { if (this.r && window.__playGame) window.__playGame((typeof scnOfG === 'function' ? scnOfG(this.r.g) : this.r.g)); }
   };
 
-  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, intruso, explode, penalti, peso, zoom, revela, realia, linha, onde, detalhe, preco, pacote, corre, lado, heli, pula, pinball, tetris, cobra, carro, tanque, tijolos, invasores, asteroides, comecome, atravessa, estilingue, boliche, arco, tower, airhockey, plataforma, moto, patos, duelo, estrada, missil, cores, disputa, labir, mina, andaime, sinuca, combina, esqd, arvore, estrelas, amados, escava, milhao, obrigado, forca, recordes, desafio, enquete, hoje, aniver, convite, avisos, galeria, clima, novorec];
-  const CANVAS = new Set(['clima', 'novorec', 'avisos', 'galeria', 'logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'sinuca', 'combina', 'esqd', 'arvore', 'estrelas', 'amados', 'escava', 'milhao', 'obrigado', 'forca', 'recordes', 'desafio', 'enquete', 'hoje', 'aniver', 'convite']);
+  /* ---------- Pódio da semana: corrida de barras (pontos do ranking geral) ---------- */
+  const PD_PTS = [10, 7, 5, 3, 1];
+  const pdRank = cut => { const o = REC.all(), tot = {};
+    Object.keys(o).forEach(g => { if (g.startsWith('__') || g === 'z' || /^rf\d/.test(g) || !Array.isArray(o[g])) return; const L = REC.norm(g, o[g].filter(e => cut == null || (e.d || 0) <= cut)).filter(e => recVis(e.n));
+      L.slice(0, 5).forEach((e, i) => { const k = String(e.n || '').trim().toUpperCase(); if (!k) return; const r = tot[k] || (tot[k] = { n: k, p: 0, o: 0 }); r.p += PD_PTS[i]; if (!i) r.o++; }); });
+    return Object.values(tot).sort((a, b) => b.p - a.p || b.o - a.o || a.n.localeCompare(b.n)); };
+  const pdCor = n => { let h = 0; for (const c of n) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
+  const podio = {
+    id: 'podio', name: 'pódio da semana · ranking geral', el: $('[data-scene=podio]'),
+    setup() { this.load(); },
+    load() { const now = pdRank(null), prev = pdRank(Date.now() - 7 * 864e5), pv = {}; prev.forEach((r, i) => pv[r.n] = { p: r.p, i });
+      this.R = now.slice(0, 8).map((r, i) => ({ ...r, p0: pv[r.n] ? pv[r.n].p : 0, i0: pv[r.n] ? pv[r.n].i : 99, i1: i, y: null }));
+      const ord0 = this.R.slice().sort((a, b) => b.p0 - a.p0 || a.i0 - b.i0); ord0.forEach((r, k) => r.k0 = k);
+      this.R.forEach(r => { r.up = (r.i0 === 99 ? null : r.i0 - r.i1); });
+      const cand = this.R.filter(r => r.up > 0 || (r.i0 === 99 && r.p > 0)).sort((a, b) => (b.up || 0) - (a.up || 0) || (b.p - b.p0) - (a.p - a.p0)); this.hero = cand[0] || null; },
+    skip() { return !this.R || this.R.length < 3; },
+    enter() { this.t0 = null; this.load(); },
+    frame(t, dt) {
+      const T = T3(this, t), u = UU(), R = this.R || [];
+      ctx.drawImage(bgSpr('pd-bg', W, H, g => { const gr = g.createRadialGradient(W * .3, H * .5, 0, W * .3, H * .5, W * .8); gr.addColorStop(0, 'rgba(255,211,107,.10)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, H); }), 0, 0, W, H);
+      if (R.length < 3) { T2('Ainda poucos jogadores no ranking.', W / 2, H * .55, u * 2, '#fff3d6', 400, 'center', SERIF); return; }
+      // fases: 0–1,4 s semana passada · 1,4–6,4 s corrida · depois resultado
+      const e0 = 1.4, e1 = 6.4, k = Math.max(0, Math.min(1, (T - e0) / (e1 - e0))), ease = k < .5 ? 4 * k * k * k : 1 - (-2 * k + 2) ** 3 / 2;
+      const X0 = W * .05, X1 = W * .6, top = H * .25, bh = Math.min(u * 4.2, (H * .6) / R.length / 1.22), gap = bh * .22, rowH = bh + gap, maxP = Math.max(...R.map(r => Math.max(r.p, r.p0)), 1), nameW = u * 12, barX = X0 + u * 3.4 + nameW, barW = X1 - barX - u * 4.5;
+      // valor e posição atuais (a ordem muda durante a corrida)
+      R.forEach(r => { r.v = r.p0 + (r.p - r.p0) * ease; }); const ord = R.slice().sort((a, b) => b.v - a.v || a.i1 - b.i1); ord.forEach((r, i) => { const ty = top + i * rowH; r.y = r.y == null ? top + r.k0 * rowH : r.y + (ty - r.y) * Math.min(1, dt * 7); r.pos = i; });
+      T2(T < e0 ? 'SEMANA PASSADA' : k < 1 ? 'ESTA SEMANA…' : 'RANKING GERAL · AGORA', X0, top - u * 2.2, u * .95, '#ffd36b', 800, 'left', 'sans-serif');
+      T2('pontos: 1º lugar 10 · 2º 7 · 3º 5 · 4º 3 · 5º 1 (em cada jogo)', X1, top - u * 2.2, u * .7, 'rgba(255,255,255,.5)', 600, 'right', 'sans-serif');
+      ord.forEach(r => { const y = r.y, cy = y + bh / 2, i = r.pos, col = i === 0 ? ['#fff0b0', '#e0a020'] : i === 1 ? ['#f2f5fa', '#9aa6bb'] : i === 2 ? ['#ffd1a8', '#b8682e'] : [`hsl(${pdCor(r.n)},70%,68%)`, `hsl(${pdCor(r.n)},60%,42%)`];
+        T2(String(i + 1), X0 + u * 1.2, cy, u * 1.5, i < 3 ? col[1] : 'rgba(255,255,255,.6)', 900, 'center', 'sans-serif');
+        ctx.fillStyle = `hsl(${pdCor(r.n)},55%,45%)`; ctx.beginPath(); ctx.arc(X0 + u * 3.6, cy, bh * .42, 0, TAU); ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.35)'; ctx.lineWidth = 1.5; ctx.stroke();
+        T2(r.n.split(/\s+/).map(w => w[0]).join('').slice(0, 2), X0 + u * 3.6, cy + 1, bh * .36, '#fff', 800, 'center', 'sans-serif');
+        T2(r.n, X0 + u * 3.6 + bh * .42 + u * .6, cy, njFit(r.n, nameW - bh * .42 - u * 1.6, bh * .42), '#fff', 700, 'left', 'sans-serif');
+        glass(barX, y, barW, bh, bh / 2, .35); const w = Math.max(bh, barW * r.v / maxP), g = ctx.createLinearGradient(barX, 0, barX + w, 0); g.addColorStop(0, col[1]); g.addColorStop(1, col[0]); ctx.fillStyle = g; rr2(barX, y, w, bh, bh / 2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,.25)'; rr2(barX + 2, y + 2, w - 4, bh * .35, bh * .3); ctx.fill();
+        T2(Math.round(r.v) + ' pts', barX + w + u * .6, cy, bh * .4, '#fff', 800, 'left', 'sans-serif');
+        if (k >= 1) { const a = Math.min(1, (T - e1) / .5); ctx.globalAlpha = a; const tx = X1 + u * .2; if (r.i0 === 99) T2('NOVO', tx, cy, bh * .34, '#3dff8a', 900, 'left', 'sans-serif'); else if (r.up > 0) T2('▲' + r.up, tx, cy, bh * .4, '#3dff8a', 900, 'left', 'sans-serif'); else if (r.up < 0) T2('▼' + (-r.up), tx, cy, bh * .4, '#ff8f9a', 900, 'left', 'sans-serif'); else T2('=', tx, cy, bh * .4, 'rgba(255,255,255,.45)', 900, 'left', 'sans-serif'); ctx.globalAlpha = 1; } });
+      // pódio + destaque da semana (à direita)
+      const px = W * .67, pw = W * .29, base = H * .78, sw = pw / 3, hs = [H * .17, H * .24, H * .12], cols = [['#f2f5fa', '#9aa6bb'], ['#fff0b0', '#d49a2a'], ['#ffd1a8', '#a8642e']], top3 = [R[1], R[0], R[2]], show = k >= 1 ? Math.min(1, (T - e1) / .8) : 0;
+      glass(px - u, H * .24, pw + u * 2, H * .62, u * 1.6, .45);
+      T2('🏆 PÓDIO DA SEMANA', px + pw / 2, H * .24 + u * 1.8, u * 1, '#ffd36b', 800, 'center', 'sans-serif');
+      top3.forEach((r, c) => { if (!r) return; const h = hs[c] * (show ? (c === 1 ? Math.min(1, show * 1.2) : show) : .08), x = px + c * sw, y = base - h, cc = cols[c]; const g = ctx.createLinearGradient(0, y, 0, base); g.addColorStop(0, cc[0]); g.addColorStop(1, cc[1]); ctx.fillStyle = g; rr2(x + u * .3, y, sw - u * .6, h, u * .6); ctx.fill();
+        T2(['2', '1', '3'][c], x + sw / 2, y + Math.min(h * .45, u * 2.2), u * 1.8, 'rgba(0,0,0,.35)', 900, 'center', 'sans-serif');
+        if (show) { ctx.globalAlpha = show; T2(['🥈', '🥇', '🥉'][c], x + sw / 2, y - u * 3.6, u * 2.1, '#fff', 400, 'center', 'sans-serif'); T2(r.n, x + sw / 2, y - u * 1.6, njFit(r.n, sw - u * .4, u * 1.05), '#fff', 800, 'center', 'sans-serif'); T2(r.p + ' pts', x + sw / 2, y - u * .4, u * .75, 'rgba(255,255,255,.7)', 700, 'center', 'sans-serif'); ctx.globalAlpha = 1; } });
+      if (show && this.hero) { const h = this.hero, a = Math.min(1, (T - e1 - .8) / .6); if (a > 0) { ctx.globalAlpha = a; const txt = h.i0 === 99 ? `🚀 Estreia da semana: ${h.n}` : `🚀 Quem mais subiu: ${h.n} (+${h.up} posições)`; T2(txt, px + pw / 2, base + u * 2.2, njFit(txt, pw + u, u * 1.05), '#3dff8a', 800, 'center', 'sans-serif'); ctx.globalAlpha = 1; } }
+      if (show && T - e1 < 1.6) for (let i = 0; i < 18; i++) { const q = (T - e1) / 1.6, a = i / 18 * TAU, rr = q * W * .12; ctx.globalAlpha = 1 - q; ctx.fillStyle = ['#ffd36b', '#fff', '#3dff8a'][i % 3]; ctx.fillRect(px + pw / 2 + Math.cos(a) * rr, base - hs[1] - u * 3 + Math.sin(a) * rr * .6 + q * q * u * 6, 4, 8); ctx.globalAlpha = 1; }
+    }
+  };
+  const ALL = [binaria, espiral, guirlanda, radar, terminal, rede, chuva, globo, lareira, decripta, hashScn, tunel, circuito, holo, atena, sged, tor, consulta, logoHolo, logoCodigo, logoLuzes, inst, medi, ops, coordenadora, contagem, retro, phishing, senha, golpe, particulas, lareira2, soc, virada, floco, estrela, desejos, warp, consulta2, teclado, aurora, fabricio, terminal2, consulta3, presentes, globoneve, fogos, treno, bolas, boneco, pisca, raspa, caca, pegue, memoria, rena, velha, quiz, sinos, palavras, puzzle, difs, labirinto, corrida, carlos, memlogos, memequipe, empilha, cofre, cifra, quizpp, campo, detetive, lig4, muro, pixel, reacoes, naval, tempo, reflexo, g2048, basquete, tubos, corte, intruso, explode, penalti, peso, zoom, revela, realia, linha, onde, detalhe, preco, pacote, corre, lado, heli, pula, pinball, tetris, cobra, carro, tanque, tijolos, invasores, asteroides, comecome, atravessa, estilingue, boliche, arco, tower, airhockey, plataforma, moto, patos, duelo, estrada, missil, cores, disputa, labir, mina, andaime, sinuca, combina, esqd, arvore, estrelas, amados, escava, milhao, obrigado, forca, recordes, podio, desafio, enquete, hoje, aniver, convite, avisos, galeria, clima, novorec];
+  const CANVAS = new Set(['podio', 'clima', 'novorec', 'avisos', 'galeria', 'logoholo', 'logocodigo', 'logoluzes', 'binaria', 'espiral', 'guirlanda', 'radar', 'rede', 'chuva', 'globo', 'lareira', 'decripta', 'hash', 'circuito', 'atena', 'sged', 'tor', 'consulta', 'contagem', 'particulas', 'lareira2', 'soc', 'virada', 'floco', 'estrela', 'desejos', 'warp', 'teclado', 'aurora', 'presentes', 'globoneve', 'fogos', 'treno', 'bolas', 'boneco', 'pisca', 'raspa', 'caca', 'pegue', 'memoria', 'rena', 'velha', 'quiz', 'sinos', 'palavras', 'puzzle', 'difs', 'labirinto', 'corrida', 'memlogos', 'memequipe', 'empilha', 'cofre', 'cifra', 'quizpp', 'campo', 'detetive', 'lig4', 'muro', 'pixel', 'reacoes', 'naval', 'tempo', 'reflexo', 'd2048', 'basquete', 'tubos', 'corte', 'intruso', 'explode', 'penalti', 'peso', 'zoom', 'revela', 'realia', 'linha', 'onde', 'detalhe', 'preco', 'pacote', 'corre', 'lado', 'heli', 'pula', 'pinball', 'tetris', 'cobra', 'carro', 'tanque', 'tijolos', 'invasores', 'asteroides', 'comecome', 'atravessa', 'estilingue', 'boliche', 'arco', 'tower', 'airhockey', 'plataforma', 'moto', 'patos', 'duelo', 'estrada', 'missil', 'cores', 'disputa', 'bomba', 'mina', 'andaime', 'sinuca', 'combina', 'esqd', 'arvore', 'estrelas', 'amados', 'escava', 'milhao', 'obrigado', 'forca', 'recordes', 'desafio', 'enquete', 'hoje', 'aniver', 'convite']);
   ALL.forEach(s => { s.cam = s.el.querySelector('.cam'); s.canvas = CANVAS.has(s.id); });
 
   /* ---------- jogos: botão "Iniciar jogo" e espera de até 2 min sem toque ---------- */
@@ -11875,13 +11937,13 @@ function H_medalha() {
   const recCorner = (s, live) => {
     if (NE.on) return; const id = s.recId ? s.recId() : s.id, hf = HF_G.find(g => g[0] === id), k = hf ? hf[2] : RC_X[id]; if (!k) return;
     if (live && GH[s.id]) { let v; try { v = GH[s.id](s); } catch (e) {} if (typeof v === 'number' && isFinite(v)) { const asc = GH_ASC.has(s.id) || REC.ASC.test(id), L = REC.list(id).filter(e => !/^visitante$/i.test(e.n || '')).slice(0, 3), u = Math.min(W / 88, H / 50), x = u * 2, y = H * .14, w = u * 20;
-      if (!L.length) { const h = u * 7.2; ctx.fillStyle = 'rgba(52,12,24,.7)'; rr2(x, y, w, h, u * .9); ctx.fill(); ctx.strokeStyle = 'rgba(255,211,107,.35)'; ctx.lineWidth = 1; ctx.stroke(); T2('🏆 SEM RECORDE AINDA', x + u, y + u * 1.4, u * .95, '#ffd36b', 700, 'left', 'sans-serif'); T2('você: ' + hfFmt(k, v), x + u, y + u * 3.3, u * 1.3, '#fff', 700, 'left', 'sans-serif'); T2('termine e seja o primeiro!', x + u, y + u * 5.2, u * .85, 'rgba(255,255,255,.7)', 600, 'left', 'sans-serif'); return; }
+      if (!L.length) { const h = u * 7.2; glass(x, y, w, h, u * 1.2, .62); T2('🏆 SEM RECORDE AINDA', x + u, y + u * 1.4, u * .95, '#ffd36b', 700, 'left', 'sans-serif'); T2('você: ' + hfFmt(k, v), x + u, y + u * 3.3, u * 1.3, '#fff', 700, 'left', 'sans-serif'); T2('termine e seja o primeiro!', x + u, y + u * 5.2, u * .85, 'rgba(255,255,255,.7)', 600, 'left', 'sans-serif'); return; }
       // posição ao vivo: quantos do top 3 ainda estão à sua frente (empate não passa)
       const pos = v > 0 ? L.filter(e => asc ? e.s <= v : e.s >= v).length : L.length, R0 = s._rk || (s._rk = { p: L.length, last: L.length, fl: 0, who: '' }), now = performance.now();
       if (v <= 0 || R0.g !== id) { R0.p = L.length; R0.last = L.length; R0.g = id; }
       if (pos < R0.last) { R0.fl = now; R0.who = L[pos] ? L[pos].n : ''; R0.np = pos; } R0.last = pos; R0.p += (pos - R0.p) * Math.min(1, .12 * 60 / 60 * 2);
       const lh = u * 1.75, rows = L.length + 1, hh = u * 2.3, h = hh + rows * lh + u * .5, P = R0.p, fl = now - R0.fl < 1800;
-      ctx.fillStyle = 'rgba(52,12,24,.72)'; rr2(x, y, w, h, u * .9); ctx.fill(); ctx.strokeStyle = fl ? `rgba(61,255,168,${.5 + .4 * Math.sin(now / 90)})` : 'rgba(255,211,107,.35)'; ctx.lineWidth = fl ? 2 : 1; ctx.stroke();
+      glass(x, y, w, h, u * 1.2, .62); rr2(x, y, w, h, u * 1.2); ctx.strokeStyle = fl ? `rgba(61,255,168,${.5 + .4 * Math.sin(now / 90)})` : 'rgba(255,211,107,.35)'; ctx.lineWidth = fl ? 2 : 1; ctx.stroke();
       const head = fl ? `⬆ passou ${R0.who}! agora ${R0.np + 1}º` : pos === 0 ? '🔥 NOVO RECORDE!' : `faltam ${difFmt(k, Math.abs(L[pos - 1].s - v))} p/ o ${pos}º`;
       T2('🏆 TOP 3', x + u, y + u * 1.3, u * .9, '#ffd36b', 800, 'left', 'sans-serif'); T2(head, x + w - u, y + u * 1.3, njFit(head, w - u * 7, u * .9), fl || pos === 0 ? '#3dffa8' : 'rgba(255,255,255,.8)', 700, 'right', 'sans-serif');
       const rowY = i => y + hh + i * lh + lh / 2, med = i => ['🥇', '🥈', '🥉', '4º'][Math.max(0, Math.min(3, Math.round(i)))];
@@ -12132,6 +12194,9 @@ function H_medalha() {
       out: [{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.97)', offset: .5 }, { opacity: 0, transform: 'scale(.97)' }],
       in: [{ opacity: 0, transform: 'scale(1.03)' }, { opacity: 0, transform: 'scale(1.03)', offset: .45 }, { opacity: 1, transform: 'scale(1)' }],
       fx: o => { const b = txEl('tx-canal'); const im = document.createElement('img'); im.src = typeof LOGO_SRC !== 'undefined' ? LOGO_SRC : 'as/dee894623e16.png'; b.appendChild(im); b.animate([{ transform: 'translateX(-60vw) skewX(-12deg)' }, { transform: 'translateX(130vw) skewX(-12deg)' }], o).onfinish = () => b.remove(); } }),
+    suave: () => ({ opts: { duration: 1000, easing: 'cubic-bezier(.4,0,.2,1)' },
+      out: [{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.985)' }],
+      in: [{ opacity: 0, transform: 'scale(1.035)' }, { opacity: 1, transform: 'scale(1)' }] }),
     subir: () => ({ opts: { duration: 1200, easing: 'cubic-bezier(.7,0,.2,1)' },
       out: [{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(-8%)', opacity: .25 }],
       in: [{ clipPath: 'inset(100% 0% 0% 0% round 6vmin 6vmin 0 0)', transform: 'translateY(6%)' }, { clipPath: 'inset(0% 0% 0% 0% round 0vmin 0vmin 0 0)', transform: 'translateY(0)' }] })
@@ -12655,7 +12720,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795738469';
+window.__VER = '1795739267';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
