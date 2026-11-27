@@ -904,9 +904,9 @@
 
   /* faixa de ações fixa */
   #hud-scene{display:none!important}
-  #sx-act{position:fixed;left:2vw;bottom:2vh;z-index:21;display:flex;gap:1.2vmin;transition:opacity .3s}
+  #sx-act{position:fixed;right:1.6vw;top:1.8vh;z-index:21;display:flex;gap:1.2vmin;transition:opacity .3s}
   #sx-act[hidden]{display:none}
-  #sx-act button{font:700 clamp(.8rem,2.1vmin,1.2rem)/1 system-ui,sans-serif;color:#f1e8d6;background:rgba(6,10,20,.78);border:1px solid rgba(226,176,74,.55);padding:1.4vmin 2.1vmin;border-radius:6vmin;letter-spacing:.01em;box-shadow:0 .6vmin 2vmin rgba(0,0,0,.35)}
+  #sx-act button{font:700 clamp(.8rem,2.1vmin,1.2rem)/1 system-ui,sans-serif;color:#f1e8d6;background:rgba(6,10,20,.78);border:1px solid rgba(226,176,74,.55);padding:1.1vmin 1.7vmin;border-radius:6vmin;letter-spacing:.01em;font-size:clamp(.72rem,1.8vmin,1.05rem);box-shadow:0 .6vmin 2vmin rgba(0,0,0,.35)}
   #sx-act button.main{background:#e2b04a;color:#140d02;border-color:#ffe08a;animation:actp 2.4s ease-in-out infinite}
   @keyframes actp{0%,100%{box-shadow:0 0 0 0 rgba(226,176,74,.55)}50%{box-shadow:0 0 0 1.6vmin rgba(226,176,74,0)}}
   /* PIN e administração */
@@ -12940,7 +12940,7 @@ function H_medalha() {
     (() => {
       const act = $('#sx-act'); let mode = '';
       const isG = s => !!(s && window.__GAME_IDS && window.__GAME_IDS.has(s.id));
-      const btn = (txt, cls, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; if (cls) b.className = cls; b.addEventListener('pointerdown', e => { e.stopPropagation(); e.preventDefault(); fn(); }); return b; };
+      const btn = (txt, cls, fn) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; if (cls) b.className = cls; b.addEventListener('pointerdown', e => { e.stopPropagation(); }); b.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); fn(); }); return b; };
       const recado = () => { const m = window.__G10 && window.__G10.muro; if (cur && cur.id === 'muro') { m && m.open(); return; } window.__goId('muro'); setTimeout(() => { if (cur && cur.id === 'muro' && m) m.open(); }, 900); };
       const build = m => { act.innerHTML = ''; mode = m;
         if (m === 'game') { act.append(btn('⌂ Voltar ao painel', '', () => window.__home()), btn('🎮 Outros jogos', 'main', () => openMenu('jogos'))); }
@@ -13203,7 +13203,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !/[?&]mostrar=/.test(location.search)) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795796484';
+window.__VER = '1795813024';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
