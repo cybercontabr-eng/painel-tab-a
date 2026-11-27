@@ -1143,6 +1143,45 @@ html,body,#stage{background:#18050c}
 .ic-c span{color:rgba(255,255,255,.72)!important}
 .ix-lab,.chip{border-radius:99px!important;border:var(--gl-bd)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
 .title{text-shadow:0 .6vmin 2.4vmin rgba(0,0,0,.35)}
+
+/* ===== MEDI: celular mais realista, prêmios e órgãos parceiros ===== */
+[data-scene=medi] .phone{border:1vmin solid #23262c!important;box-shadow:0 0 0 .3vmin #8a8f99,0 0 0 .55vmin #3a3d44,0 0 0 .75vmin #9aa0aa,0 4vmin 9vmin rgba(0,0,0,.6),inset 0 0 2vmin rgba(127,227,255,.06)!important;background:radial-gradient(120% 60% at 50% 0%,#1a2230 0%,#0b0e14 60%)!important}
+[data-scene=medi] .phone:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 32%,rgba(255,255,255,0) 70%,rgba(255,255,255,.05) 100%);z-index:6}
+.m-ic{display:inline-grid;place-items:center;width:3vmin;height:3vmin;margin-right:1vmin;border-radius:.8vmin;background:linear-gradient(135deg,#3ad6ff,#2a6ae0);color:#fff;font:800 1.7vmin/1 var(--mono);letter-spacing:0;vertical-align:middle}
+.m-off{font-size:.75em;color:#7fd19a!important;letter-spacing:.08em}
+.m-cap{margin:1.2vmin 2.4vmin 0}
+.m-thumbs{display:flex;gap:.8vmin}
+.m-thumbs i{flex:1;height:7.5vmin;border-radius:.8vmin;background:linear-gradient(#e9eef2,#d8dfe6);position:relative;overflow:hidden;opacity:0;transform:translateY(1vmin) scale(.9);box-shadow:0 .4vmin 1vmin rgba(0,0,0,.4)}
+.m-thumbs i:before{content:'';position:absolute;left:12%;top:18%;width:60%;height:12%;border-radius:.5vmin;background:#fff;box-shadow:0 2.2vmin 0 #c9f0c2,0 4.4vmin 0 #fff}
+.m-thumbs i:after{content:'';position:absolute;left:0;right:0;top:0;height:9%;background:#00a884}
+.scene.play .m-thumbs i{animation:mTh .4s ease both}
+.scene.play .m-thumbs i:nth-child(1){animation-delay:.5s}.scene.play .m-thumbs i:nth-child(2){animation-delay:.75s}.scene.play .m-thumbs i:nth-child(3){animation-delay:1s}.scene.play .m-thumbs i:nth-child(4){animation-delay:1.25s}.scene.play .m-thumbs i:nth-child(5){animation-delay:1.5s}.scene.play .m-thumbs i:nth-child(6){animation-delay:1.75s}
+@keyframes mTh{to{opacity:1;transform:none}}
+.m-prog{margin-top:1vmin;height:.7vmin;border-radius:1vmin;background:rgba(255,255,255,.1);overflow:hidden}
+.m-prog b{display:block;height:100%;width:0;background:linear-gradient(90deg,#3ad6ff,#7fd19a)}
+.scene.play .m-prog b{animation:mPr 2.4s .4s ease-out forwards}
+@keyframes mPr{to{width:100%}}
+.ph-medi .m-row{margin-top:1.1vmin!important;font-size:clamp(.7rem,1.9vmin,1.05rem)!important}
+[data-scene=medi] .phone{height:min(72vh,70vmin)!important}
+.ph-medi .m-hash{font-size:clamp(.62rem,1.6vmin,.9rem)!important;min-height:0!important;padding:1vmin!important;margin-top:1.4vmin!important}
+.ph-medi .m-ok{font-size:clamp(.75rem,2vmin,1.1rem)!important;padding:1vmin!important;margin-top:1.2vmin!important}
+.m-thumbs i{height:6vmin!important}
+.m-pdf{white-space:nowrap;margin:1.6vmin 2.4vmin 0;padding:1.3vmin;border-radius:1.2vmin;text-align:center;font:700 clamp(.75rem,2vmin,1.1rem)/1 var(--mono);color:#fff;background:linear-gradient(90deg,#2a6ae0,#3ad6ff);box-shadow:0 1vmin 2.5vmin rgba(58,214,255,.3);opacity:0}
+.scene.play .m-pdf{animation:chipIn .5s ease both;animation-delay:var(--d)}
+.m-aw{display:flex;flex-direction:column;align-items:flex-start;gap:1.3vmin;margin-top:3vmin}
+.m-aw .award{white-space:nowrap;margin-top:0!important;font-size:clamp(.8rem,2.2vmin,1.25rem)!important;padding:1.1vmin 2.2vmin 1.1vmin 1.4vmin!important}
+.m-aw .award svg{width:3.6vmin;height:3.6vmin}
+.m-aw .aw2{background:linear-gradient(90deg,rgba(127,227,255,.16),rgba(127,227,255,.03))!important;border-color:rgba(127,227,255,.45)!important;color:#bff4ff!important}
+.aw-st{display:inline-grid;place-items:center;width:3.6vmin;height:3.6vmin;border-radius:50%;background:rgba(127,227,255,.18);color:#7fe3ff;font-size:2.2vmin}
+.m-orgs{position:absolute;left:47%;right:6vmin;bottom:13.5vmin;opacity:0;z-index:3}
+[data-scene=medi] .nx-copy{margin-top:-7vmin}
+.scene.play .m-orgs{animation:rise 1s ease both;animation-delay:5s}
+.m-orgs small{display:block;text-align:center;font:700 clamp(.6rem,1.6vmin,.9rem)/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:rgba(191,244,255,.45);margin-bottom:1vmin}
+.m-tr{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.m-tr div{display:flex;gap:1.2vmin;width:max-content}
+.scene.on .m-tr div{animation:mTr 70s linear infinite}
+@keyframes mTr{to{transform:translateX(-50%)}}
+.m-tr i{font:700 clamp(.6rem,1.7vmin,.95rem)/1 var(--mono);letter-spacing:.06em;color:rgba(220,240,255,.42);padding:.8vmin 1.4vmin;border-radius:99px;border:1px solid rgba(220,240,255,.14);background:rgba(255,255,255,.03);font-style:normal;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1302,26 +1341,33 @@ html,body,#stage{background:#18050c}
     <section class="scene nx" data-scene="medi"><div class="cam">
       <div class="nx-split">
         <div class="phone ph-medi"><div class="sbar"><span>14:32</span><span class="si"><i class="sg"><b></b><b></b><b></b><b></b></i>5G<i class="bt"></i></span></div>
-          <div class="bar"><span>MEDI</span><span>● offline</span></div>
-          <div class="m-row" style="--d:1s"><b>1</b>conversa capturada · 42 telas</div>
-          <div class="m-row" style="--d:1.6s"><b>2</b>metadados preservados</div>
-          <div class="m-row" style="--d:2.2s"><b>3</b>calculando hash SHA-256</div>
+          <div class="bar"><span><i class="m-ic">M</i>MEDI</span><span class="m-off">● offline</span></div>
+          <div class="m-cap"><div class="m-thumbs"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="m-prog"><b></b></div></div>
+          <div class="m-row" style="--d:1s"><b>1</b>42 telas capturadas</div>
+          <div class="m-row" style="--d:1.6s"><b>2</b>metadados salvos</div>
+          <div class="m-row" style="--d:2.2s"><b>3</b>hash SHA-256</div>
           <div class="m-hash"><small>HASH</small><span id="medi-hash"></span></div>
           <div class="m-ok" id="medi-ok">✓ integridade verificável</div>
-          <div class="m-row" style="--d:7.4s"><b>4</b>relatório gerado · pronto p/ juntada</div>
+          <div class="m-row" style="--d:7.4s"><b>4</b>relatório pronto</div>
+          <div class="m-pdf" style="--d:8s">📄 Relatório_MEDI.pdf</div>
         </div>
         <div class="nx-copy">
           <div class="label" style="--d:.3s;color:#7fe3ff">Ferramenta própria · CyberGAECO</div>
           <h1 class="title"><span>MEDI</span><em>prova com hash</em></h1>
           <p class="nx-p" style="--d:1.6s">Materializador de Evidências Digitais e Informáticas. <b>Gratuito</b> e funciona <b>sem internet</b>.</p>
           <div class="stats" style="--d:2.2s">
-            <div class="stat"><b data-n="6000" data-suf="+">0</b><span>usuários</span></div>
-            <div class="stat"><b data-n="30" data-suf="+">0</b><span>convênios</span></div>
+            <div class="stat"><b data-n="7000" data-suf="+">0</b><span>usuários</span></div>
+            <div class="stat"><b data-n="37">0</b><span>convênios</span></div>
             <div class="stat"><b data-n="3">0</b><span>países</span></div>
           </div>
-          <div style="--d:4s"><div class="award" style="--d:4.2s"><svg viewBox="0 0 48 48"><path d="M14 6h20v10a10 10 0 0 1-20 0z" fill="#e2b04a"/><path d="M14 9H7a7 7 0 0 0 9 9M34 9h7a7 7 0 0 1-9 9" fill="none" stroke="#e2b04a" stroke-width="3"/><rect x="21" y="25" width="6" height="9" fill="#c4902f"/><rect x="14" y="34" width="20" height="6" rx="2" fill="#e2b04a"/><text x="24" y="17" text-anchor="middle" font-size="10" font-weight="800" fill="#5a3d0c" font-family="monospace">2º</text></svg>2º lugar · Prêmio CNMP 2026</div></div>
+          <div class="m-aw">
+            <div class="award" style="--d:3.6s"><svg viewBox="0 0 48 48"><path d="M14 6h20v10a10 10 0 0 1-20 0z" fill="#e2b04a"/><path d="M14 9H7a7 7 0 0 0 9 9M34 9h7a7 7 0 0 1-9 9" fill="none" stroke="#e2b04a" stroke-width="3"/><rect x="21" y="25" width="6" height="9" fill="#c4902f"/><rect x="14" y="34" width="20" height="6" rx="2" fill="#e2b04a"/><text x="24" y="17" text-anchor="middle" font-size="10" font-weight="800" fill="#5a3d0c" font-family="monospace">2º</text></svg>Prêmio CNMP 2025 e 2026</div>
+            <div class="award" style="--d:4.1s"><svg viewBox="0 0 48 48"><path d="M14 6h20v10a10 10 0 0 1-20 0z" fill="#e2b04a"/><path d="M14 9H7a7 7 0 0 0 9 9M34 9h7a7 7 0 0 1-9 9" fill="none" stroke="#e2b04a" stroke-width="3"/><rect x="21" y="25" width="6" height="9" fill="#c4902f"/><rect x="14" y="34" width="20" height="6" rx="2" fill="#e2b04a"/><text x="24" y="17" text-anchor="middle" font-size="10" font-weight="800" fill="#5a3d0c" font-family="monospace">2º</text></svg>Prêmio Brasil de Inovação 2026</div>
+            <div class="award aw2" style="--d:4.6s"><span class="aw-st">★</span>2 indicações · Prêmio Innovare 2025 e 2026</div>
+          </div>
         </div>
       </div>
+      <div class="m-orgs"><small>37 órgãos em 22 estados usam o MEDI</small><div class="m-tr"><div><i>MPSP</i><i>MPPI</i><i>MPES</i><i>MPMT</i><i>MPM</i><i>MPAM</i><i>MPRJ</i><i>MPRS</i><i>MPF</i><i>MPMS</i><i>MPPE</i><i>MPAP</i><i>MPMG</i><i>MPSC</i><i>MPPR</i><i>MPCE</i><i>MPDFT</i><i>MPRO</i><i>MPRR</i><i>MPPB</i><i>MPTO</i><i>SEJUSP/PC-MS</i><i>PCGO</i><i>PCRR</i><i>PCPB</i><i>PMMG</i><i>SSP/PC-RS</i><i>PMES</i><i>PCSC</i><i>PCPA</i><i>PCAP</i><i>PMSC</i><i>CGM-SP</i><i>TRE-BA</i><i>CGE-RJ</i><i>CBMBA</i><i>PROCON-SC</i><i>MPSP</i><i>MPPI</i><i>MPES</i><i>MPMT</i><i>MPM</i><i>MPAM</i><i>MPRJ</i><i>MPRS</i><i>MPF</i><i>MPMS</i><i>MPPE</i><i>MPAP</i><i>MPMG</i><i>MPSC</i><i>MPPR</i><i>MPCE</i><i>MPDFT</i><i>MPRO</i><i>MPRR</i><i>MPPB</i><i>MPTO</i><i>SEJUSP/PC-MS</i><i>PCGO</i><i>PCRR</i><i>PCPB</i><i>PMMG</i><i>SSP/PC-RS</i><i>PMES</i><i>PCSC</i><i>PCPA</i><i>PCAP</i><i>PMSC</i><i>CGM-SP</i><i>TRE-BA</i><i>CGE-RJ</i><i>CBMBA</i><i>PROCON-SC</i></div></div></div>
     </div></section>
 
 
@@ -12894,7 +12940,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795743978';
+window.__VER = '1795744889';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
