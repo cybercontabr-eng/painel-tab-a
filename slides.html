@@ -2038,7 +2038,7 @@ html,body,#stage{background:#18050c}
  <section data-tab="mod"><h5>📝 Recados do muro</h5><div id="mr-l"></div><div class="ah">Apagar pede um segundo toque para confirmar. Com a nuvem ligada, some também nos outros aparelhos.</div></section>
  <section data-tab="mod"><h5>📊 Enquete personalizada</h5><div id="eq-l"></div><button id="eq-add" type="button">+ nova enquete</button><div class="ah">Na data escolhida, a enquete do dia usa a sua pergunta no lugar da automática. De 2 a 4 respostas.</div></section>
  <section data-tab="num"><h5>📈 Uso do painel</h5><div id="st-v"></div></section>
- <section data-tab="sis"><h5>☁️ Backup na nuvem</h5><div id="cl-st" class="ah"></div><label>Projeto e chave do Firebase (projectId:apiKey)</label><input id="cl-k" placeholder="meu-projeto:AIza..." autocomplete="off"><button id="cl-on" type="button">Conectar</button><button id="cl-off" type="button">Desligar</button></section>
+ <section data-tab="sis"><h5>☁️ Backup na nuvem</h5><div id="cl-st" class="ah"></div><label>Projeto e chave do Firebase (projectId:apiKey)</label><input id="cl-k" placeholder="meu-projeto:AIza..." autocomplete="off"><button id="cl-on" type="button">Conectar</button><button id="cl-off" type="button">Desligar</button><label>Quem envia para a nuvem</label><button id="cl-of" type="button">📡 Este é o painel oficial</button><button id="cl-rd" type="button">👀 Só leitura</button><button id="cl-au" type="button">Automático (tablet)</button></section>
  <section data-tab="sis"><h5>🏆 Recordes</h5><div id="rc-st" class="ah"></div><button id="rc-dl" type="button">⬇️ Baixar cópia dos recordes</button> <button id="rc-up" type="button">⬆️ Restaurar de um arquivo</button><label>Cópias automáticas deste aparelho</label><div id="rc-bk"></div><div class="ah">O painel guarda sozinho uma cópia por dia (últimos 10 dias). Restaurar junta a cópia com os recordes atuais, sem apagar nenhum. Para não perder nada se o tablet for formatado, baixe uma cópia de vez em quando ou ligue o backup na nuvem acima.</div><button class="dng" id="rc-zero" type="button">Zerar todos os recordes</button><div class="ah">Pede confirmação com um segundo toque. Antes de zerar, o painel guarda uma cópia (dá para desfazer pela lista acima).</div></section>
   <section data-tab="sis"><h5>🧹 Zerar murais e telas coletivas</h5><div id="zr-l" class="zr"></div><button class="dng" id="zr-all" type="button">Zerar TUDO acima</button><div class="ah">Cada botão pede confirmação com um segundo toque. Com a nuvem ligada, o zerar também vale para a nuvem.</div></section>
  <section data-tab="sis"><h5>🔒 Segurança</h5><button id="pin-new" type="button">Trocar PIN</button><div class="ah">Recados do muro só podem ser apagados com o modo administrador aberto.</div></section>
@@ -11946,6 +11946,12 @@ function H_medalha() {
       cfg = JSON.parse(localStorage.getItem('cgCloud') || 'null'); } catch (e) {}
     if (!cfg || !cfg.p || !cfg.k) return st;
     st.on = true; st.proj = cfg.p;
+    // só o painel oficial (o tablet) ENVIA para a nuvem; celular, PC e qualquer outro aparelho só LEEM
+    // forçar: ?painel=oficial ou ?painel=leitura (fica salvo no aparelho) — ou pelo admin
+    let role = null; try { const m = /[?&]painel=(oficial|leitura|auto)/.exec(location.search); if (m) { if (m[1] === 'auto') localStorage.removeItem('cgCloudRole'); else localStorage.setItem('cgCloudRole', m[1]); } role = localStorage.getItem('cgCloudRole'); } catch (e) {}
+    st.role = role || 'auto'; st.writer = role === 'oficial';
+    if (!role) { const ua = navigator.userAgent || '', fb = /SM-T\d/i.test(ua) || (/Android/i.test(ua) && Math.min(screen.width, screen.height) >= 590), fin = (v, mdl) => { if (st.roleOk) return; st.roleOk = 1; st.writer = !!v; st.model = mdl || ''; };
+      setTimeout(() => fin(fb), 1200); try { navigator.userAgentData.getHighEntropyValues(['model']).then(x => fin(x && x.model ? /^SM-T/i.test(x.model) : fb, x && x.model)).catch(() => fin(fb)); } catch (e) { fin(fb); } }
     const BASE = `https://firestore.googleapis.com/v1/projects/${cfg.p}/databases/(default)/documents`, docName = k => `projects/${cfg.p}/databases/(default)/documents/painel/${k}`;
     const rawGet = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
     const _set = Storage.prototype.setItem;
@@ -11997,7 +12003,7 @@ function H_medalha() {
         for (const k of ['cgMuralDel', ...keys.filter(k => k !== 'cgMuralDel')]) { if (!keys.includes(k)) continue;
           const L = rawGet(k), M = merge(k, L, R[k]), ms = JSON.stringify(M);
           if (M && ms !== JSON.stringify(L)) { rawSet(k, M); changed = true; }
-          if (M && (forcePush.has(k) || ms !== JSON.stringify(R[k]))) await put(k, M); }
+          if (st.writer && M && (forcePush.has(k) || ms !== JSON.stringify(R[k]))) await put(k, M); }
         st.last = Date.now(); st.err = '';
         if (changed && typeof cur !== 'undefined' && cur && cur.load && !(cur.cmp)) try { cur.load(); } catch (e) {}
       } catch (e) { st.err = navigator.onLine === false ? 'sem internet' : String(e.message || e); }
@@ -12433,7 +12439,7 @@ function H_medalha() {
       const MS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
       const getC = () => { try { return JSON.parse(localStorage.getItem('cgConteudo') || 'null') || {}; } catch (e) { return {}; } };
       const msg = t => { $('#adm-msg').textContent = t; clearTimeout(msg.t); msg.t = setTimeout(() => $('#adm-msg').textContent = '', 4000); };
-      const cloudSt = () => { const c = window.__cloud; $('#cl-st').textContent = !c || !c.on ? 'Desligado: os dados ficam só neste aparelho.' : c.err ? 'Conectado ao projeto ' + c.proj + ', mas com erro: ' + c.err : 'Conectado ao projeto ' + c.proj + (c.last ? ' · última sincronização há ' + Math.round((Date.now() - c.last) / 1000) + ' s' : ''); };
+      const cloudSt = () => { const c = window.__cloud; $('#cl-st').textContent = (!c || !c.on ? 'Desligado: os dados ficam só neste aparelho.' : c.err ? 'Conectado ao projeto ' + c.proj + ', mas com erro: ' + c.err : 'Conectado ao projeto ' + c.proj + (c.last ? ' · última sincronização há ' + Math.round((Date.now() - c.last) / 1000) + ' s' : '')) + (c && c.on ? (c.writer ? ' · 📡 ESTE APARELHO ENVIA (painel oficial)' : ' · 👀 este aparelho só lê, não envia nada') + (c.role === 'auto' ? ' [automático]' : ' [definido à mão]') : ''); };
       /* ---- admin v2 ---- */
       const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
       let tabCur = 'geral';
@@ -12562,6 +12568,8 @@ function H_medalha() {
       $('#adm-close').onclick = () => { closeAdm(); };
       $('#pin-new').onclick = () => { A.hidden = true; openPin('new', openAdm); };
       $('#cl-on').onclick = () => { const v = $('#cl-k').value.trim(), [pp, kk] = v.split(':'); if (!pp || !kk) { msg('Use o formato projeto:chave'); return; } try { localStorage.setItem('cgCloud', JSON.stringify({ p: pp, k: kk })); } catch (e) {} msg('Conectando… o painel vai recarregar.'); setTimeout(() => location.reload(), 900); };
+      const role = v => { try { if (v) localStorage.setItem('cgCloudRole', v); else localStorage.removeItem('cgCloudRole'); } catch (e) {} msg('Pronto. Recarregando…'); setTimeout(() => location.reload(), 900); };
+      $('#cl-of').onclick = () => role('oficial'); $('#cl-rd').onclick = () => role('leitura'); $('#cl-au').onclick = () => role(null);
       $('#cl-off').onclick = () => { try { localStorage.removeItem('cgCloud'); } catch (e) {} msg('Nuvem desligada. Recarregando…'); setTimeout(() => location.reload(), 900); };
       const ZR = [
         ['estrelas', '✨ Universo de estrelas', () => ({ n: 0, s: [], p: 0 }), 'cgEstrelas'],
@@ -12647,7 +12655,7 @@ function H_medalha() {
 <script>
 /* app instalável + atualização automática de madrugada */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
-window.__VER = '1795738085';
+window.__VER = '1795738469';
 var __T0 = Date.now();
 setInterval(function () { var h = new Date().getHours(); if (h >= 3 && h < 6 && Date.now() - __T0 > 6 * 3600000 && navigator.onLine && !(window.__NE && window.__NE.on)) location.reload(); }, 60000);
 </script>
